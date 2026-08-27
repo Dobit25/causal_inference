@@ -1,0 +1,38 @@
+experiment:
+  name: noisycausal_fourgraph_pilot_v0
+  seed: 42
+
+data:
+  source: noisycausal
+  dev_systems: 10
+  holdout_systems: 40
+  observational_sample_size: 2000
+  sensitivity_sample_sizes: [500, 10000]
+  require_resampleable_scm: true
+
+graphs:
+  methods: [llm, scd, hybrid, oracle]
+  scd:
+    primary_algorithm: null  # Set only after T01 artifact audit.
+  hybrid:
+    strategy: confidence_gated_scd_plus_llm
+    edge_stability_threshold: null  # Tune only on the dev split.
+
+reasoner:
+  model: null  # Freeze a stable version before holdout evaluation.
+  temperature: 0
+  graph_encoding: canonical_sorted_edge_list
+  prompt_version: v1
+
+evaluation:
+  graph_built_from: clean_evidence
+  conditions: [clean, IV, CS, CI]
+
+logging:
+  raw_prompts: true
+  raw_outputs: true
+  graph_hashes: true
+  prompt_hashes: true
+  tokens: true
+  latency: true
+
