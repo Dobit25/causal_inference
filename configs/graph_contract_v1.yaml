@@ -1,0 +1,106 @@
+contract:
+  schema_version: fourgraph.graph.v1
+  structure_schema_version: fourgraph.structure.v1
+  reasoner_view_schema_version: fourgraph.reasoner_graph.v1
+  variable_map_schema_version: fourgraph.variable_map.v1
+  status: frozen_after_t06
+
+node_universe:
+  canonical_id_pattern: '^X[0-9]{3}$'
+  ordering: contiguous_schema_order_X000_onward
+  public_mapping_artifact: separate_variable_map
+  graph_artifact_contains_public_names: false
+  max_nodes_for_exact_cpdag_validation: 8
+
+edges:
+  representation: edge_list
+  marks: [directed, undirected]
+  directed_semantics: source_to_target
+  undirected_endpoint_order: lexicographic
+  ordering: [source, target, mark]
+  self_loops: forbidden
+  duplicate_or_conflicting_adjacency: forbidden
+
+graph_conditions:
+  llm:
+    views: [dag]
+    evidence_required: [public_story, public_variable_semantics]
+    evidence_allowed: [public_story, public_variable_semantics, public_schema_types]
+  scd:
+    views: [cpdag, dag, projected_dag]
+    raw_evidence_required: [public_observational_data, public_schema_types]
+    projection_evidence_required: [parent_graph]
+  hybrid:
+    views: [dag]
+    evidence_required: [parent_graph, public_story, public_variable_semantics]
+    preserve_parent_skeleton: true
+    preserve_parent_compelled_directions: true
+    require_parent_equivalence_class: true
+  oracle:
+    views: [dag]
+    evidence_required: [grading_ground_truth]
+
+validation:
+  generic:
+    - exact_node_universe
+    - no_self_loop
+    - no_duplicate_or_conflicting_adjacency
+    - directed_component_acyclic
+  dag:
+    - all_edges_directed
+    - acyclic
+  cpdag:
+    - deterministic_consistent_extension_exists
+    - equals_exact_completed_P-DAG_of_extension
+  projected_dag:
+    - parent_is_raw_scd_cpdag
+    - skeleton_preserved
+    - compelled_directions_preserved
+    - no_new_unshielded_collider
+    - every_arbitrary_orientation_logged
+    - parent_artifact_hash_matches
+    - deterministic_trace_matches
+  hybrid:
+    - parent_is_raw_scd_cpdag
+    - skeleton_preserved
+    - compelled_directions_preserved
+    - parent_equivalence_class_preserved
+    - every_semantic_orientation_logged_once
+
+provenance:
+  config_sha256_required: true
+  source_input_sha256_required: true
+  raw_graph_parent_count: 0
+  projected_and_hybrid_parent_count: 1
+  evidence_allowlists_enforced_by_method: true
+
+serialization:
+  encoding: UTF-8
+  json_keys: lexicographically_sorted
+  separators: compact
+  allow_nan: false
+  record_terminator: LF
+  graph_sha256_scope: normalized_nodes_and_edges_only
+  artifact_sha256_scope: full_artifact_without_artifact_sha256
+  hash_case: uppercase_hex
+
+consumer_views:
+  reasoner:
+    schema: schemas/reasoner_graph_v1.schema.json
+    include: [schema_version, graph_type, nodes, edges]
+    exclude:
+      - scene_id
+      - graph_method
+      - graph_view
+      - provenance
+      - hashes
+      - edge_audit
+  metrics:
+    include: normalized_partial_graph
+  audit:
+    include: full_artifact
+
+t05_compatibility:
+  partial_graph_core_retained: true
+  frozen_t05_artifacts_rewritten: false
+  future_scd_outputs_use_graph_artifact: true
