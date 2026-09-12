@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/llm_graph_response_v1.schema.json",
+  "title": "FourGraph LLM Pairwise Graph Response v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "pair_decisions"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "fourgraph.llm_graph_response.v1"
+    },
+    "pair_decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["left", "right", "relation", "confidence", "rationale"],
+        "properties": {
+          "left": {"type": "string", "pattern": "^X[0-9]{3}$"},
+          "right": {"type": "string", "pattern": "^X[0-9]{3}$"},
+          "relation": {
+            "enum": [
+              "left_causes_right",
+              "right_causes_left",
+              "no_direct_edge"
+            ]
+          },
+          "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+          "rationale": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

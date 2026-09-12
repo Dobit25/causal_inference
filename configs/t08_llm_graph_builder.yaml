@@ -1,0 +1,103 @@
+experiment:
+  task: T08
+  phase: p0_released
+  status: live_backend_frozen
+
+source:
+  benchmark: causalds
+  github_commit: c74671d0a0924efc5bb021fc8966f856d5b80a4f
+  huggingface_revision: 2880dfa710d08e076055cb0248ef0c534a93b0fa
+  variant: clean
+
+scope:
+  split_manifest: data/manifests/p0_frozen_split.json
+  cohort: graph
+  role: dev
+  expected_scenes: 8
+  graph_per_scene: 1
+  task_conditioned_graphs: false
+  forbid_holdout_access: true
+  downstream_reasoner_used: false
+
+evidence:
+  allowed: [public_story, public_variable_semantics, public_schema_types]
+  public_artifacts: [story, schema]
+  allow_observational_table: false
+  allow_tasks_or_queries: false
+  allow_grading_or_oracle: false
+  allow_gold_answers: false
+
+prompt:
+  version: llm_graph_v1
+  template: prompts/llm_graph_v1.md
+  template_sha256: 962F01081997FE852E725214CC79E3C0505850AEB7EDEB065BBC3ADFEF4D509B
+  response_schema: schemas/llm_graph_response_v1.schema.json
+  response_schema_sha256: CC6690AC2B934A5375B084F1C6B1742434D04E6CBAB66DAFB0A2460476300610
+  pair_policy: every_unordered_pair_exactly_once
+  distinguish_direct_from_indirect: true
+  output_json_only: true
+
+llm:
+  live_backend_configured: true
+  provider: openai
+  model_id: gpt-5.4-nano-2026-03-17
+  model_version: gpt-5.4-nano-2026-03-17
+  endpoint: /v1/responses
+  sdk: openai
+  sdk_version: 3.6.0
+  credential_env: OPENAI_API_KEY
+  service_tier: default
+  store: false
+  structured_outputs: json_schema_strict
+  reasoning_effort: none
+  reuse_semantic_model_for_t10_hybrid: true
+  temperature: 0
+  max_tokens: 6000
+  seed: null
+  max_validation_retries: 2
+  transport_max_retries: 2
+  timeout_seconds: 120
+
+validation:
+  exact_pair_coverage: true
+  confidence_range: [0, 1]
+  unknown_fields: reject
+  unknown_nodes: reject
+  self_loops: reject
+  duplicate_pairs: reject
+  cycles: reject_and_retry
+  heuristic_graph_repair: forbidden
+  failure_after_retry: record_without_fallback_graph
+
+graph:
+  schema_version: fourgraph.graph.v1
+  graph_method: llm
+  graph_type: dag
+  graph_view: dag
+  contract_config: configs/graph_contract_v1.yaml
+
+logging:
+  raw_log_cache: results/raw/t08_llm_graph
+  raw_logs_in_git: false
+  persist_prompt_hash: true
+  persist_raw_response_hash: true
+  persist_model_identity: true
+  persist_request_metadata: true
+  persist_tokens_latency_retries: true
+  persist_pair_decisions: true
+
+audit:
+  readiness_output: data/manifests/t08_llm_graph_builder_audit.json
+  dev_graph_output: data/manifests/t08_dev_graphs.jsonl
+  current_expected_status: complete_llm_graph_builder_ready
+
+freeze_anchors:
+  configs/graph_contract_v1.yaml: 76C2778FFE1E89DE0BFC6D5F740DD7F731E7B88F39062EEA91B03B9C2B82DC12
+  data/manifests/p0_frozen_split.json: 9246C8C73D1AD7204E8E8081D2E4F2048AD3561AB3B5085DB242866BAD77A7E9
+  data/manifests/t07_oracle_loader_audit.json: E030123FAC39DA52EE0BD9ABFE96123D6598FCD60AB5A099CD82D3E9513F5AB5
+  src/fourgraph/causalds_public.py: 9283D59F1828D1212D14917C86EC394123B17571C7E776A0C4FF4AA6C4B6F7B5
+  src/fourgraph/llm_backend.py: BF7583A63B08119DD42BC8104D39B022A687B611C9C3B4DA847166E52D053B6A
+  src/fourgraph/llm_graph.py: AE243242DB1C8D5CB3469C04F5B9D51EF58DC0627E1D12169A69BA0F1671B642
+  src/fourgraph/openai_backend.py: 71F4A8EE86D2DD4F899360BA943F6DFA423AA8EE6EEC24299D9F3B42D0786CCF
+  scripts/audit_causalds_t08.py: 7AB98C9620FE12958AEA2D32A9858A5A6BDFA85C7620E150D16280A23964B47A
+  scripts/run_causalds_t08_live.py: CA9B4118C3C6EA082A2AB45E75077FE5BD22C5CD7245180E06AE41D6F2611D01
