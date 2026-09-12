@@ -47,6 +47,7 @@ Ngoài ra, projected `G_SCD` DAG được giữ như một sensitivity view, kh�
 | T10 | 2026-09-02 | Sinh development Hybrid H1 artifacts | Hoàn thành |
 | T11 | 2026-09-02 | Đánh giá structural graph metrics trên development | Hoàn thành |
 | T12 | 2026-09-04–11 | Fixed reasoner, conservative CPDAG semantics, hai scorer và conformance refinement | V3 đạt 146/150 synthetic, 34/35 Oracle-development và hoàn tất matrix 175 records; reasoner đã freeze, chưa mở holdout |
+| T13 | 2026-09-12 | Đóng băng toàn bộ cấu hình thực thi holdout | Khóa 25 graph scenes = 20 primary + 5 supplementary, 500 primary records dự kiến; 4 artifact replay byte-for-byte, 0 API call, holdout chưa mở |
 
 ---
 

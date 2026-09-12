@@ -90,3 +90,5 @@ T11 completes the development structural layer with 40 type-aware records and an
 ## Scientific claims boundary
 
 The released P0 may establish feasibility and an exploratory signal. General claims require fresh P1. A null or adverse result remains valid when the design, exclusions, and analysis are frozen before holdout evaluation.
+
+T13 has converted that principle into an executable pre-registration. It freezes the exact nested holdout membership, five graph conditions, primary task panel, evidence boundaries, model/method versions, two downstream scorers, structural metrics and scene-level paired/BH analysis before T14 opens any holdout content. The supplementary cohort remains explicitly exploratory and cannot alter the primary estimand.

@@ -126,3 +126,5 @@ Clean P0/P1 covers A–D. E–G enter only in their declared later analyses. Rep
 ## Freeze rule
 
 Before holdout, freeze scene/task IDs, all graph builders, CPDAG semantics, DAG projection, reasoner model/version, prompts, graph encoding, parser, scorers, statistics, and exclusion rules. Any later change creates a new experiment version.
+
+T13 has completed this freeze. T14 is authorized for one execution of 25 graph scenes, with downstream inference restricted to the nested 20-scene primary panel (five tasks × five graph conditions = 500 records). The five supplementary scenes remain graph-evaluable and downstream-exploratory only. Authorization does not itself start T14.

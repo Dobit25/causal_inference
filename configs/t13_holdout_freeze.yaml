@@ -1,0 +1,225 @@
+schema_version: fourgraph.t13_holdout_freeze.v1
+experiment_id: causalds_p0_holdout_v1
+status: frozen_pre_holdout
+
+scope:
+  split_manifest: data/manifests/p0_frozen_split.json
+  primary_task_manifest: data/manifests/p0_primary_task_manifest.jsonl
+  supplementary_task_manifest: data/manifests/p0_supplementary_task_manifest.jsonl
+  graph_holdout_scenes: 25
+  primary_holdout_scenes: 20
+  supplementary_holdout_scenes: 5
+  tasks_per_primary_scene: 5
+  supplementary_role: exploratory_only
+
+graph_conditions:
+  - G_LLM
+  - G_SCD_RAW
+  - G_SCD_PROJECTED
+  - G_HYBRID
+  - G_ORACLE
+
+frozen_protocol:
+  llm_builder:
+    provider: openai
+    model_snapshot: gpt-5.4-nano-2026-03-17
+    endpoint: /v1/responses
+    reasoning_effort: none
+    temperature: 0
+    max_output_tokens: 6000
+    structured_outputs: json_schema_strict
+    service_tier: default
+    store: false
+    prompt: llm_graph_v1
+    max_validation_retries: 2
+    transport_max_retries: 2
+    timeout_seconds: 120
+  scd:
+    algorithm: BOSS
+    score: BasisFunctionBicScore
+    output: CPDAG
+    penalty_discount: 1.0
+    truncation_limit: 3
+    num_starts: 1
+    use_bes: false
+    use_data_order: true
+    projection: Dor_Tarsi_lexicographic_consistent_extension
+    singularity_lambda: 0.0
+    do_one_equation_only: false
+    output_cpdag: true
+  hybrid:
+    strategy: SCD_skeleton_plus_semantic_orientation
+    semantic_configuration: exact_T08_configuration
+    prompt: hybrid_orientation_v1
+    preserve_skeleton_compelled_directions_and_equivalence_class: true
+    max_validation_retries: 2
+    transport_max_retries: 2
+    timeout_seconds: 120
+  reasoner:
+    provider: openai
+    model_snapshot: gpt-5.4-mini-2026-03-17
+    endpoint: /v1/responses
+    reasoning_effort: medium
+    temperature: omitted
+    max_output_tokens: 10240
+    structured_outputs: true
+    service_tier: default
+    store: false
+    prompt: reasoner_cpdag_conservative_v3
+    graph_encoding: canonical_json_edge_list
+    node_labels: X000_style
+    semantics: conservative_compatible_DAG_invariance
+    max_validation_retries: 2
+    transport_max_retries: 2
+    timeout_seconds: 180
+  scoring:
+    primary: oracle_answer_accuracy
+    secondary: uncertainty_aware_correctness
+    official_sentinel_no_valid_adjustment_set: no_backdoor
+
+legacy_replay_disclosure:
+  fully_replayable_checks: [T06, T07]
+  historical_source_anchor_drift:
+    T08: [src/fourgraph/llm_backend.py]
+    T09: [src/fourgraph/causalds_scd.py]
+    T10: [src/fourgraph/graph_contract.py, src/fourgraph/llm_backend.py]
+    T11: [src/fourgraph/graph_contract.py]
+  historical_configs_and_artifacts_modified: false
+  t13_resolution: pin_current_implementation_bytes_as_the_T14_baseline
+  policy: any_additional_drift_fails_T13_byte_check
+
+frozen_dependencies:
+  - configs/p0_released.yaml
+  - configs/t05_scd_frozen.yaml
+  - configs/graph_contract_v1.yaml
+  - configs/t07_oracle_loader.yaml
+  - configs/t08_llm_graph_builder.yaml
+  - configs/t09_scd_graph_builder.yaml
+  - configs/t10_hybrid_graph_builder.yaml
+  - configs/t11_graph_metrics.yaml
+  - configs/t12_v3_openai_mini_full_development.yaml
+  - configs/t12_v3_prompt.yaml
+  - data/manifests/causalds.json
+  - data/manifests/p0_data_integrity.json
+  - data/manifests/p0_frozen_split.json
+  - data/manifests/p0_primary_task_manifest.jsonl
+  - data/manifests/p0_supplementary_task_manifest.jsonl
+  - data/manifests/t12_v3_prompt_contract.json
+  - data/manifests/t12_v3_openai_mini_full_dev_audit.json
+  - schemas/graph_contract_v1.schema.json
+  - schemas/variable_map_v1.schema.json
+  - schemas/reasoner_graph_v1.schema.json
+  - schemas/reasoner_one_valid_adjustment_set_v2.schema.json
+  - schemas/reasoner_all_minimal_adjustment_sets_v2.schema.json
+  - schemas/reasoner_minimal_adjustment_set_size_v2.schema.json
+  - schemas/reasoner_n_valid_adjustment_sets_v2.schema.json
+  - schemas/reasoner_forbidden_controls_list_v2.schema.json
+  - schemas/llm_graph_response_v1.schema.json
+  - schemas/hybrid_orientation_response_v1.schema.json
+  - schemas/graph_metric_record_v1.schema.json
+  - prompts/llm_graph_v1.md
+  - prompts/hybrid_orientation_v1.md
+  - prompts/reasoner_v3/base.txt
+  - prompts/reasoner_v3/one_valid_adjustment_set.txt
+  - prompts/reasoner_v3/all_minimal_adjustment_sets.txt
+  - prompts/reasoner_v3/minimal_adjustment_set_size.txt
+  - prompts/reasoner_v3/n_valid_adjustment_sets.txt
+  - prompts/reasoner_v3/forbidden_controls_list.txt
+  - src/fourgraph/causalds_public.py
+  - src/fourgraph/causalds_scd.py
+  - src/fourgraph/causalds_oracle.py
+  - src/fourgraph/graph_contract.py
+  - src/fourgraph/graph_metrics.py
+  - src/fourgraph/hybrid_graph.py
+  - src/fourgraph/llm_graph.py
+  - src/fourgraph/reasoner_v3.py
+  - src/fourgraph/causalds_scoring.py
+  - src/fourgraph/openai_backend.py
+  - src/fourgraph/t10_openai_backend.py
+  - src/fourgraph/t12_openai_backend.py
+  - src/fourgraph/llm_backend.py
+  - src/fourgraph/holdout_freeze.py
+  - scripts/freeze_t13_holdout_execution.py
+
+execution:
+  order:
+    - public_input_preflight
+    - build_G_LLM
+    - build_G_SCD_RAW_and_G_SCD_PROJECTED
+    - build_G_HYBRID
+    - seal_non_oracle_graphs
+    - load_G_ORACLE_in_memory_for_grading
+    - compute_graph_metrics
+    - run_primary_reasoner
+    - run_dual_scorers
+    - seal_t14_audit
+  graph_scenes_per_condition: 25
+  graph_metric_records: 125
+  primary_query_records: 100
+  primary_downstream_records: 500
+  supplementary_inventory_records: 77
+  supplementary_reasoner_records: 0
+  logical_run_id: causalds_p0_holdout_v1_t14
+  one_opening_definition: one_logical_run_with_exact_identity_resume_only
+  builder_scene_order: sha256_seeded_order
+  builder_scene_order_seed: 13014
+  reasoner_unique_input_order: sha256_seeded_order_after_non_oracle_graph_seal
+  reasoner_order_seed: 13014
+
+statistics:
+  unit: scene
+  primary_summary: equal_weight_scene_macro
+  comparison: paired
+  uncertainty: scene_cluster_bootstrap
+  bootstrap_replicates: 5000
+  bootstrap_seed: 13015
+  confidence_interval: percentile
+  confidence_level: 0.95
+  pairwise_contrasts: all_10_unordered_pairs_of_5_graph_conditions
+  tests: two_sided
+  binary_sensitivity: mcnemar
+  multiple_testing: benjamini_hochberg
+  bh_alpha: 0.05
+  bh_scope: within_each_declared_phase_and_outcome_family
+  outcome_policy: co_equal_exploratory_by_phase
+  outcomes:
+    A: graph_quality_ranking
+    B: downstream_graph_condition_ranking
+    C: structural_downstream_ranking_disagreement
+    D: oracle_gap_and_residual_oracle_error
+    E: sid_aid_relationship_when_compatible
+    F: controlled_graph_perturbation_effects
+    G: observation_layer_robustness
+  p0_applicable_outcomes: [A, B, C, D]
+
+failure_policy:
+  retry: use_builder_or_reasoner_frozen_policy
+  cache: canonical_input_identity_excludes_graph_source_label
+  resume: exact_identity_only
+  invalid_graph: record_failure_no_fallback
+  incomplete_reasoner: record_failure_after_frozen_retries
+  partial_run: seal_as_incomplete_and_do_not_relabel_complete
+  reasoner_failure_primary_score: incorrect_and_report_failure_rate
+  graph_failure_downstream_score: all_scheduled_tasks_incorrect_and_report_failure_rate
+  graph_failure_structural_score: unavailable_and_report_completion_rate
+  analysis_before_all_scheduled_identities_terminal: forbidden
+
+outputs:
+  primary_tasks: data/manifests/t13_primary_holdout_tasks.jsonl
+  supplementary_tasks: data/manifests/t13_supplementary_holdout_tasks.jsonl
+  execution_manifest: data/manifests/t13_holdout_execution.json
+  audit: data/manifests/t13_holdout_execution_audit.json
+  t14_root: results/raw/t14_holdout/
+  t14_graphs: results/raw/t14_holdout/graphs/
+  t14_graph_metrics: results/raw/t14_holdout/graph_metrics.jsonl
+  t14_primary_scores: results/raw/t14_holdout/primary_scores.jsonl
+  t14_attempt_log: results/raw/t14_holdout/attempts.jsonl
+  t14_cache: results/raw/t14_holdout/cache.jsonl
+  t14_audit: results/raw/t14_holdout/audit.json
+
+lifecycle:
+  t13_api_calls_allowed: false
+  holdout_artifact_access_allowed: false
+  gold_or_oracle_access_allowed: false
+  accuracy_computation_allowed: false
+  t14_auto_start_allowed: false

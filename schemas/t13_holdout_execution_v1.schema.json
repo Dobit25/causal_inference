@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fourgraph.t13_holdout_execution.v1",
+  "type": "object",
+  "required": ["schema_version", "experiment_id", "cohorts", "graph_conditions", "frozen_components", "frozen_protocol", "legacy_replay_disclosure", "execution", "metrics", "statistics", "evidence_boundary", "lifecycle"],
+  "properties": {
+    "schema_version": {"const": "fourgraph.t13_holdout_execution.v1"},
+    "experiment_id": {"type": "string"},
+    "cohorts": {"type": "object"},
+    "graph_conditions": {"type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true},
+    "frozen_components": {"type": "array", "minItems": 1},
+    "frozen_protocol": {"type": "object"},
+    "legacy_replay_disclosure": {"type": "object"},
+    "execution": {"type": "object"},
+    "metrics": {"type": "object"},
+    "statistics": {"type": "object"},
+    "evidence_boundary": {"type": "object"},
+    "lifecycle": {"type": "object"}
+  },
+  "additionalProperties": false
+}

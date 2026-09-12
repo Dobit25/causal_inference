@@ -41,6 +41,8 @@ Apply these deterministic graph-cohort eligibility rules:
 
 The release audit verifies a 33-scene graph cohort. The nested primary downstream cohort contains the 27 scenes that additionally provide all five frozen tasks; the remaining 6 scenes form a supplementary exploratory cohort. T03 constructed the deterministic graph 8/25, primary 7/20, and supplementary 1/5 allocation. T04 verified all 33 scenes and froze those IDs unchanged. A scene keeps the same development/holdout role across every cohort to which it belongs.
 
+T13 freezes the holdout slice without opening scene contents: graph 25, primary 20 and supplementary 5 exact IDs. It derives a 100-row primary five-task manifest and a separate 77-row supplementary exploratory inventory from T04 metadata. Supplementary rows are not pooled with primary and are not scheduled through the fixed five-task reasoner.
+
 ## Frozen P0 task priority
 
 1. `identification__one_valid_adjustment_set`

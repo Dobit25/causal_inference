@@ -233,3 +233,5 @@ The matrix produced 175 records from 105 unique canonical inputs, inheriting 35 
 - Historical NoisyCausal negative audit: `docs/data_audit.md`.
 
 Raw benchmark artifacts, generated scenes, and raw experiment outputs remain outside Git and are tracked through immutable manifests and hashes.
+
+T13 has frozen the P0 holdout execution without opening holdout data. The exact 25-scene graph panel, nested 20-scene primary/five-scene supplementary roles, five graph conditions, reasoner/builders, metrics and statistical plan are recorded in `data/manifests/t13_holdout_execution.json`; T14 is authorized but has not started.

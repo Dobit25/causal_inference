@@ -74,7 +74,9 @@ The fresh sealed v3 conformance suite was generated with seed 1203: 150 five-nod
 
 The separately registered T12 v3 Oracle-development gate ran on the seven frozen primary development scenes and only `G_ORACLE`: 34/35 = 0.9714 correct, all 35 outputs schema-valid on the first attempt, every task at least 6/7, and all 12 required empty-sentinel records correct.
 
-The subsequently registered full development matrix is also complete: 175 records across `G_LLM`, raw/projected `G_SCD`, `G_HYBRID`, and `G_ORACLE`, representing 105 unique canonical inputs. Thirty-five parent Oracle calls were inherited, 70 new calls were made, and 70 duplicate-input records reused an identical response. Oracle-answer accuracy was 34/35 Oracle, 33/35 LLM, 31/35 Hybrid, 6/35 projected SCD, and 4/35 raw SCD; uncertainty-aware correctness was respectively 34/35, 34/35, 32/35, 33/35, and 35/35. All integrity gates passed, replay is byte-identical, the reasoner is frozen/holdout-ready, and no holdout was accessed. T13 is now eligible but remains unstarted.
+The subsequently registered full development matrix is also complete: 175 records across `G_LLM`, raw/projected `G_SCD`, `G_HYBRID`, and `G_ORACLE`, representing 105 unique canonical inputs. Thirty-five parent Oracle calls were inherited, 70 new calls were made, and 70 duplicate-input records reused an identical response. Oracle-answer accuracy was 34/35 Oracle, 33/35 LLM, 31/35 Hybrid, 6/35 projected SCD, and 4/35 raw SCD; uncertainty-aware correctness was respectively 34/35, 34/35, 32/35, 33/35, and 35/35. All integrity gates passed, replay is byte-identical, and the reasoner is frozen/holdout-ready.
+
+T13 is complete and has hash-frozen the exact 25-scene holdout execution: 20 primary scenes with five fixed tasks across five graph conditions, plus five supplementary scenes retained separately as exploratory inventory. It made no API calls and read no holdout content, gold answer, or Oracle edge. `t14_authorized: true` and `t14_started: false`; any post-freeze change requires a new experiment version.
 
 ## Non-negotiable controls
 

@@ -87,7 +87,7 @@ The separately registered full development matrix is complete: 7 scenes × 5 tas
 
 ### T13 — Frozen task manifest
 
-Confirm the T04-frozen primary and supplementary task manifests against implemented loaders/scorers before holdout; any change requires a new experiment version.
+Complete: froze the exact 25-scene graph holdout (20 primary + 5 supplementary), the common five-task primary panel, all five graph conditions, model snapshots/API parameters, prompts/schemas/parser/scorers, SCD/Hybrid/graph contract, retry/cache/resume/failure rules, T14 order/paths/counts, metrics and paired scene-clustered/BH analysis. The 77 supplementary rows remain exploratory inventory with zero fixed-reasoner records. Four T13 artifacts replay byte-for-byte; zero API call or holdout/gold/Oracle-edge access occurred. T14 is authorized but not started; any change requires a new experiment version.
 
 ### T14 — Released P0
 

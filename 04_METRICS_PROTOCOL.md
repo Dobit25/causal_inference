@@ -116,3 +116,5 @@ A–G are co-equal exploratory research outcomes, evaluated only in applicable p
   "retry_count": 0
 }
 ```
+
+T13 freezes the P0 holdout metric plan before any holdout content is opened: 125 structural records (25 scenes × 5 graph conditions) and 500 primary downstream records (20 × 5 tasks × 5 conditions). Primary comparisons are paired at scene level, uncertainty uses 5,000 scene-cluster bootstrap replicates, binary sensitivity uses McNemar, and co-equal phase outcomes use Benjamini–Hochberg correction. Supplementary results are reported separately and never enter primary accuracy.

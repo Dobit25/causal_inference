@@ -81,3 +81,5 @@ Before any holdout run, freeze:
 - statistical analysis and exclusion rules.
 
 Any change after holdout begins requires a new experiment name/version and a complete audit trail.
+
+T13 has now frozen these choices in `configs/t13_holdout_freeze.yaml` and `data/manifests/t13_holdout_execution.json`. Expected T14 counts are 100 persisted non-Oracle graphs, 25 in-memory Oracle graphs, 125 graph-metric records and 500 primary downstream records. Supplementary has 77 frozen exploratory task rows but zero records under the fixed five-task reasoner. T13 performed no inference or holdout-content access.
