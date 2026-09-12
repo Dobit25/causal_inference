@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/graph_contract_v1.schema.json",
+  "title": "FourGraph Canonical Graph Artifact v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "scene_id",
+    "graph_method",
+    "graph_type",
+    "graph_view",
+    "nodes",
+    "edges",
+    "provenance",
+    "edge_audit",
+    "graph_sha256",
+    "artifact_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": "fourgraph.graph.v1"},
+    "scene_id": {"type": "string", "pattern": "^scene_[0-9]+$"},
+    "graph_method": {"enum": ["llm", "scd", "hybrid", "oracle"]},
+    "graph_type": {"enum": ["dag", "cpdag"]},
+    "graph_view": {"enum": ["dag", "cpdag", "projected_dag"]},
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^X[0-9]{3}$"}
+    },
+    "edges": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/edge"}
+    },
+    "provenance": {"$ref": "#/$defs/provenance"},
+    "edge_audit": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/edge_audit"}
+    },
+    "graph_sha256": {"$ref": "#/$defs/sha256"},
+    "artifact_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9A-F]{64}$"},
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "target", "mark"],
+      "properties": {
+        "source": {"type": "string", "pattern": "^X[0-9]{3}$"},
+        "target": {"type": "string", "pattern": "^X[0-9]{3}$"},
+        "mark": {"enum": ["directed", "undirected"]}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "builder_id",
+        "builder_version",
+        "operation",
+        "evidence_sources",
+        "config_sha256",
+        "input_artifact_sha256",
+        "parent_artifact_sha256",
+        "seed"
+      ],
+      "properties": {
+        "builder_id": {"type": "string", "pattern": "^[A-Za-z0-9_.:-]+$"},
+        "builder_version": {"type": "string", "pattern": "^[A-Za-z0-9_.:-]+$"},
+        "operation": {"enum": ["learned", "loaded", "semantic_orientation", "consistent_extension"]},
+        "evidence_sources": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "public_story",
+              "public_variable_semantics",
+              "public_schema_types",
+              "public_schema_mapping",
+              "public_observational_data",
+              "parent_graph",
+              "grading_ground_truth"
+            ]
+          }
+        },
+        "config_sha256": {"$ref": "#/$defs/sha256"},
+        "input_artifact_sha256": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/sha256"}},
+        "parent_artifact_sha256": {"type": "array", "maxItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/sha256"}},
+        "seed": {"type": ["integer", "null"]}
+      }
+    },
+    "edge_audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step", "source", "target", "action", "before_mark", "after_mark", "actor", "reason", "arbitrary", "confidence"],
+      "properties": {
+        "step": {"type": "integer", "minimum": 0},
+        "source": {"type": "string", "pattern": "^X[0-9]{3}$"},
+        "target": {"type": "string", "pattern": "^X[0-9]{3}$"},
+        "action": {"enum": ["orient", "preserve", "add", "delete", "reject"]},
+        "before_mark": {"enum": ["absent", "directed", "undirected"]},
+        "after_mark": {"enum": ["absent", "directed", "undirected"]},
+        "actor": {"enum": ["projection", "llm", "scd", "hybrid", "oracle", "validator"]},
+        "reason": {"type": "string", "minLength": 1},
+        "arbitrary": {"type": "boolean"},
+        "confidence": {"oneOf": [{"type": "number", "minimum": 0, "maximum": 1}, {"type": "null"}]}
+      }
+    }
+  }
+}

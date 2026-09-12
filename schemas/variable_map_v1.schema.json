@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/variable_map_v1.schema.json",
+  "title": "FourGraph Variable Map v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scene_id", "variables", "mapping_sha256"],
+  "properties": {
+    "schema_version": {"const": "fourgraph.variable_map.v1"},
+    "scene_id": {"type": "string", "pattern": "^scene_[0-9]+$"},
+    "variables": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["canonical_id", "public_name", "variable_type"],
+        "properties": {
+          "canonical_id": {"type": "string", "pattern": "^X[0-9]{3}$"},
+          "public_name": {"type": "string", "minLength": 1},
+          "variable_type": {"enum": ["binary", "continuous", "categorical", "ordinal", "count"]}
+        }
+      }
+    },
+    "mapping_sha256": {"type": "string", "pattern": "^[0-9A-F]{64}$"}
+  }
+}

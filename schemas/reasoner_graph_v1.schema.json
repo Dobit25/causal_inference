@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/reasoner_graph_v1.schema.json",
+  "title": "FourGraph Provenance-Blind Reasoner Graph v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "graph_type", "nodes", "edges"],
+  "properties": {
+    "schema_version": {"const": "fourgraph.reasoner_graph.v1"},
+    "graph_type": {"enum": ["dag", "cpdag"]},
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^X[0-9]{3}$"}
+    },
+    "edges": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source", "target", "mark"],
+        "properties": {
+          "source": {"type": "string", "pattern": "^X[0-9]{3}$"},
+          "target": {"type": "string", "pattern": "^X[0-9]{3}$"},
+          "mark": {"enum": ["directed", "undirected"]}
+        }
+      }
+    }
+  }
+}
