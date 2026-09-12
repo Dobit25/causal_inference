@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FourGraph fixed reasoner response v1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "fourgraph.reasoner_response.v1"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["answered", "undetermined"]
+    },
+    "answer": {
+      "anyOf": [
+        {"type": "integer", "minimum": 0},
+        {"type": "string", "enum": ["no_backdoor", "non_id", "undetermined"]},
+        {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {"type": "string", "pattern": "^X[0-9]{3}$"},
+              {"type": "array", "items": {"type": "string", "pattern": "^X[0-9]{3}$"}}
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "required": ["schema_version", "status", "answer"]
+}

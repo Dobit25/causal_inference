@@ -1,0 +1,55 @@
+schema_version: fourgraph.t12_config.v1
+task: T12_fixed_reasoner_and_scorers
+source:
+  variant: clean
+  split_manifest: data/manifests/p0_frozen_split.json
+  task_manifest: data/manifests/p0_primary_task_manifest.jsonl
+scope:
+  cohort: primary_downstream
+  split: dev
+  expected_scenes: 7
+  tasks_per_scene: 5
+  holdout_accessed: false
+graphs:
+  - {condition: G_LLM, manifest: data/manifests/t08_dev_graphs.jsonl}
+  - {condition: G_SCD_RAW, manifest: data/manifests/t09_dev_scd_cpdag.jsonl}
+  - {condition: G_SCD_PROJECTED, manifest: data/manifests/t09_dev_scd_projected_dag.jsonl}
+  - {condition: G_HYBRID, manifest: data/manifests/t10_dev_hybrid_graphs.jsonl}
+  - {condition: G_ORACLE, loader: fourgraph.causalds_oracle}
+reasoner:
+  provider: google_ai_studio
+  model_id: gemma-4-31b-it
+  model_version: gemma-4-31b-it
+  sdk: google-genai
+  sdk_version: 2.21.0
+  credential_env: GEMINI_API_KEY
+  credential_separator: comma
+  credential_rotation: quota_errors_only
+  temperature: 0
+  max_tokens: 1024
+  max_validation_retries: 3
+  timeout_seconds: 120
+  prompt_version: cpdag_conservative_v1
+prompt:
+  template: prompts/reasoner_cpdag_conservative_v1.txt
+  response_schema: schemas/reasoner_response_v1.schema.json
+evidence_contract:
+  graph_payload: fourgraph.reasoner_graph.v1
+  query_payload: fourgraph.reasoner_query.v1
+  glossary: canonical_id_and_type_only
+  allow_public_semantic_names: false
+  allow_story: false
+  allow_observational_table: false
+  allow_graph_provenance: false
+  allow_gold_answer: false
+cpdag_semantics:
+  rule: invariant_across_all_compatible_dag_extensions
+  ambiguous_answer: undetermined
+  one_valid_set_rule: nonempty_intersection_of_valid_sets
+scorers:
+  - oracle_answer_accuracy
+  - uncertainty_aware_correctness
+outputs:
+  records: data/manifests/t12_dev_reasoner_scores.jsonl
+  audit: data/manifests/t12_reasoner_audit.json
+  raw_log_cache: results/raw/t12_reasoner
