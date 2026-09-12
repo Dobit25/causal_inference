@@ -6,3 +6,10 @@ __pycache__/
 build/
 dist/
 
+# Retrieved or generated research data are tracked through data/MANIFEST.json.
+data/raw/
+data/interim/
+data/processed/
+data/generated/
+results/raw/
+.env

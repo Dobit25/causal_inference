@@ -1,0 +1,12 @@
+configs/*.yaml text eol=lf
+data/manifests/*.json text eol=lf
+data/manifests/*.jsonl text eol=lf
+schemas/*.json text eol=lf
+prompts/*.md text eol=lf
+prompts/*.txt text eol=lf
+prompts/**/*.txt text eol=lf
+*.py text eol=lf
+*.toml text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+.gitignore text eol=lf
