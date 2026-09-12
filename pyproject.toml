@@ -9,12 +9,20 @@ description = "Controlled four-graph experiments for causal reasoning"
 readme = "README.md"
 requires-python = ">=3.10,<3.11"
 dependencies = [
+  "JPype1>=1.6,<2",
+  "numpy>=1.26,<2",
+  "pyarrow>=15,<24",
   "PyYAML>=6.0,<7",
 ]
 
 [project.optional-dependencies]
 dev = [
   "pytest>=8,<9",
+]
+live = [
+  "google-genai==2.21.0",
+  "openai==3.6.0",
+  "python-dotenv==1.2.3",
 ]
 
 [project.scripts]
@@ -29,4 +37,3 @@ where = ["src"]
 [tool.pytest.ini_options]
 addopts = "-q"
 testpaths = ["tests"]
-
