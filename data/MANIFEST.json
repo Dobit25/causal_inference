@@ -1,0 +1,254 @@
+{
+  "manifest_version": 24,
+  "description": "Index of immutable source manifests and versioned derived manifests used by the four-graph project.",
+  "active_primary_source": "causalds",
+  "sources": [
+    {
+      "name": "causalds",
+      "role": "released_p0_and_fresh_p1_generator",
+      "manifest": "data/manifests/causalds.json"
+    },
+    {
+      "name": "noisycausal",
+      "role": "historical_negative_artifact_audit",
+      "manifest": "data/manifests/noisycausal.json"
+    }
+  ],
+  "derived": [
+    {
+      "name": "causalds_t03_scene_inventory",
+      "role": "complete_100_scene_metadata_inventory",
+      "manifest": "data/manifests/causalds_scene_inventory.jsonl"
+    },
+    {
+      "name": "causalds_p0_provisional_split",
+      "role": "deterministic_nested_split_not_frozen_until_t04",
+      "manifest": "data/manifests/p0_provisional_split.json"
+    },
+    {
+      "name": "causalds_p0_data_integrity",
+      "role": "t04_parquet_mapping_graph_task_and_boundary_audit",
+      "manifest": "data/manifests/p0_data_integrity.json"
+    },
+    {
+      "name": "causalds_p0_frozen_split",
+      "role": "t04_integrity_gated_nested_split",
+      "manifest": "data/manifests/p0_frozen_split.json"
+    },
+    {
+      "name": "causalds_p0_primary_task_manifest",
+      "role": "frozen_27_by_5_primary_downstream_panel",
+      "manifest": "data/manifests/p0_primary_task_manifest.jsonl"
+    },
+    {
+      "name": "causalds_p0_supplementary_task_manifest",
+      "role": "frozen_six_scene_exploratory_task_inventory",
+      "manifest": "data/manifests/p0_supplementary_task_manifest.jsonl"
+    },
+    {
+      "name": "causalds_p0_scd_selection",
+      "role": "t05_preregistered_dev_only_method_selection_and_verdict",
+      "manifest": "data/manifests/p0_scd_selection.json"
+    },
+    {
+      "name": "causalds_t05_dev_graphs",
+      "role": "t05_full_grid_rerun_projection_and_half_sample_stability_records",
+      "manifest": "data/manifests/t05_dev_graphs.jsonl"
+    },
+    {
+      "name": "fourgraph_canonical_graph_contract_v1",
+      "role": "t06_cross_builder_schema_hash_validation_and_reproducible_examples",
+      "manifest": "data/manifests/graph_contract_v1.json"
+    },
+    {
+      "name": "causalds_t07_oracle_loader_audit",
+      "role": "development_only_grading_access_mapping_dag_and_leakage_audit",
+      "manifest": "data/manifests/t07_oracle_loader_audit.json"
+    },
+    {
+      "name": "causalds_t08_llm_graph_builder_audit",
+      "role": "public_only_live_llm_graph_builder_and_replay_readiness_audit",
+      "manifest": "data/manifests/t08_llm_graph_builder_audit.json"
+    },
+    {
+      "name": "causalds_t08_development_llm_graphs",
+      "role": "eight_frozen_development_canonical_llm_dag_artifacts",
+      "manifest": "data/manifests/t08_dev_graphs.jsonl"
+    },
+    {
+      "name": "causalds_t09_scd_graph_builder_audit",
+      "role": "development_only_anonymous_observational_scd_builder_and_reproducibility_audit",
+      "manifest": "data/manifests/t09_scd_graph_builder_audit.json"
+    },
+    {
+      "name": "causalds_t09_development_raw_scd_cpdag",
+      "role": "eight_frozen_development_primary_canonical_scd_cpdag_artifacts",
+      "manifest": "data/manifests/t09_dev_scd_cpdag.jsonl"
+    },
+    {
+      "name": "causalds_t09_development_projected_scd_dag",
+      "role": "eight_frozen_development_sensitivity_only_consistent_dag_extensions",
+      "manifest": "data/manifests/t09_dev_scd_projected_dag.jsonl"
+    },
+    {
+      "name": "causalds_t10_hybrid_graph_builder_audit",
+      "role": "development_only_skeleton_preserving_semantic_orientation_and_replay_audit",
+      "manifest": "data/manifests/t10_hybrid_graph_builder_audit.json"
+    },
+    {
+      "name": "causalds_t10_development_hybrid_dags",
+      "role": "eight_frozen_development_parent_linked_hybrid_h1_dag_artifacts",
+      "manifest": "data/manifests/t10_dev_hybrid_graphs.jsonl"
+    },
+    {
+      "name": "causalds_t11_development_graph_metrics",
+      "role": "forty_type_aware_per_scene_structural_graph_metric_records",
+      "manifest": "data/manifests/t11_dev_graph_metrics.jsonl"
+    },
+    {
+      "name": "causalds_t11_graph_metrics_audit",
+      "role": "development_graph_metric_conventions_summaries_freeze_and_boundary_audit",
+      "manifest": "data/manifests/t11_graph_metrics_audit.json"
+    },
+    {
+      "name": "causalds_t12_development_reasoner_scores",
+      "role": "fixed_reasoner_two_scorer_development_records",
+      "manifest": "data/manifests/t12_dev_reasoner_scores.jsonl"
+    },
+    {
+      "name": "causalds_t12_reasoner_audit",
+      "role": "reasoner_contract_replay_and_holdout_readiness_audit",
+      "manifest": "data/manifests/t12_reasoner_audit.json"
+    },
+    {
+      "name": "t12_v1_baseline_status",
+      "role": "immutable_diagnostic_baseline_and_holdout_ineligibility_amendment",
+      "manifest": "data/manifests/t12_v1_baseline_status.json"
+    },
+    {
+      "name": "t12_v2_synthetic_conformance",
+      "role": "causalds_answer_free_balanced_reasoner_calibration_suite",
+      "manifest": "data/manifests/t12_v2_synthetic_conformance.jsonl"
+    },
+    {
+      "name": "t12_construct_validity_sensitivity",
+      "role": "official_causalds_vs_pearl_backdoor_development_target_audit",
+      "manifest": "data/manifests/t12_construct_validity_dev.jsonl"
+    },
+    {
+      "name": "t12_v2_gemma_conformance_scores",
+      "role": "answer_free_gemma_candidate_conformance_results",
+      "manifest": "data/manifests/t12_v2_gemma_conformance_scores.jsonl"
+    },
+    {
+      "name": "t12_v2_gemma_conformance_audit",
+      "role": "prospective_gate_results_and_holdout_ineligibility",
+      "manifest": "data/manifests/t12_v2_gemma_conformance_audit.json"
+    },
+    {
+      "name": "t12_v2_measurement_audit",
+      "role": "independent_150_case_target_check_and_stratified_manual_review",
+      "manifest": "data/manifests/t12_v2_measurement_audit.json"
+    },
+    {
+      "name": "t12_v2_manual_review_panel",
+      "role": "twenty_case_five_task_four_stratum_measurement_review_panel",
+      "manifest": "data/manifests/t12_v2_manual_review_panel.jsonl"
+    },
+    {
+      "name": "t12_v2_openai_mini_smoke_manifest",
+      "role": "deterministic_two_per_task_engineering_smoke_selection",
+      "manifest": "data/manifests/t12_v2_openai_mini_smoke.json"
+    },
+    {
+      "name": "t12_v2_openai_mini_smoke_audit",
+      "role": "failed_reasoning_budget_gate_and_downstream_stop_decision",
+      "manifest": "data/manifests/t12_v2_openai_mini_smoke_audit.json"
+    },
+    {
+      "name": "t12_v2_openai_mini_b_smoke_audit",
+      "role": "8192_token_single_change_diagnostic_smoke_result",
+      "manifest": "data/manifests/t12_v2_openai_mini_b_smoke_audit.json"
+    },
+    {
+      "name": "t12_v2_openai_mini_c_smoke_audit",
+      "role": "10240_token_headroom_gate_failure_with_incomplete_retry",
+      "manifest": "data/manifests/t12_v2_openai_mini_c_smoke_audit.json"
+    },
+    {
+      "name": "t12_v2_openai_mini_d_smoke_audit",
+      "role": "medium_effort_10240_token_controlled_runaway_reasoning_diagnostic",
+      "manifest": "data/manifests/t12_v2_openai_mini_d_smoke_audit.json"
+    },
+    {
+      "name": "t12_v2_openai_mini_d_conformance_scores",
+      "role": "medium_effort_150_case_answer_free_conformance_records",
+      "manifest": "data/manifests/t12_v2_openai_mini_d_conformance_scores.jsonl"
+    },
+    {
+      "name": "t12_v2_openai_mini_d_conformance_audit",
+      "role": "prospective_gate_failure_and_oracle_development_stop_decision",
+      "manifest": "data/manifests/t12_v2_openai_mini_d_conformance_audit.json"
+    },
+    {
+      "name": "t12_v3_prompt_contract",
+      "role": "shared_base_five_task_modules_sentinel_mapping_and_pre_live_boundary",
+      "manifest": "data/manifests/t12_v3_prompt_contract.json"
+    },
+    {
+      "name": "t12_v3_synthetic_conformance",
+      "role": "sealed_seed_1203_balanced_answer_free_five_task_suite",
+      "manifest": "data/manifests/t12_v3_synthetic_conformance.jsonl"
+    },
+    {
+      "name": "t12_v3_synthetic_conformance_audit",
+      "role": "production_independent_solver_agreement_balance_and_boundary_audit",
+      "manifest": "data/manifests/t12_v3_synthetic_conformance_audit.json"
+    },
+    {
+      "name": "t12_v3_manual_review_panel",
+      "role": "twenty_case_five_task_four_stratum_manual_measurement_panel",
+      "manifest": "data/manifests/t12_v3_manual_review_panel.jsonl"
+    },
+    {
+      "name": "t12_v3_openai_mini_smoke_manifest",
+      "role": "frozen_seed_1203_two_per_task_pre_live_smoke_selection",
+      "manifest": "data/manifests/t12_v3_openai_mini_smoke.json"
+    },
+    {
+      "name": "t12_v3_openai_mini_smoke_audit",
+      "role": "ten_case_live_engineering_gate_usage_and_diagnostic_accuracy",
+      "manifest": "data/manifests/t12_v3_openai_mini_smoke_audit.json"
+    },
+    {
+      "name": "t12_v3_openai_mini_conformance_scores",
+      "role": "sealed_150_case_task_specific_prompt_scientific_conformance_records",
+      "manifest": "data/manifests/t12_v3_openai_mini_conformance_scores.jsonl"
+    },
+    {
+      "name": "t12_v3_openai_mini_conformance_audit",
+      "role": "prospective_gate_results_failure_diagnostics_and_oracle_eligibility",
+      "manifest": "data/manifests/t12_v3_openai_mini_conformance_audit.json"
+    },
+    {
+      "name": "t12_v3_openai_mini_oracle_development_scores",
+      "role": "seven_scene_five_task_grading_only_oracle_development_records",
+      "manifest": "data/manifests/t12_v3_openai_mini_oracle_dev_scores.jsonl"
+    },
+    {
+      "name": "t12_v3_openai_mini_oracle_development_audit",
+      "role": "oracle_development_gate_usage_replay_and_full_matrix_eligibility",
+      "manifest": "data/manifests/t12_v3_openai_mini_oracle_dev_audit.json"
+    },
+    {
+      "name": "t12_v3_openai_mini_full_development_scores",
+      "role": "seven_scene_five_task_five_graph_condition_reasoner_records",
+      "manifest": "data/manifests/t12_v3_openai_mini_full_dev_scores.jsonl"
+    },
+    {
+      "name": "t12_v3_openai_mini_full_development_audit",
+      "role": "canonical_cache_integrity_graph_condition_summary_and_reasoner_freeze",
+      "manifest": "data/manifests/t12_v3_openai_mini_full_dev_audit.json"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "manifest_version": 1,
+  "role": "historical_negative_artifact_audit",
+  "benchmark": {
+    "name": "NoisyCausal",
+    "title": "NoisyCausal: A Benchmark for Evaluating Causal Reasoning Under Structured Noise",
+    "authors": [
+      "Zhi Xu",
+      "Yun Fu"
+    ],
+    "acl_anthology_id": "2026.acl-long.1833",
+    "doi": "10.18653/v1/2026.acl-long.1833",
+    "arxiv_id": "2605.04313v1"
+  },
+  "audit": {
+    "task": "T01",
+    "retrieved_at": "2026-08-27T16:37:42+07:00",
+    "scope": "Public, author-linked or first-party artifacts available without private credentials",
+    "raw_storage_policy": "Downloaded source materials are cached under data/raw and excluded from Git; only this manifest and the audit report are versioned."
+  },
+  "artifacts": [
+    {
+      "name": "2026.acl-long.1833.pdf",
+      "kind": "official_paper",
+      "source_url": "https://aclanthology.org/2026.acl-long.1833.pdf",
+      "local_cache": "data/raw/noisycausal/2026.acl-long.1833.pdf",
+      "size_bytes": 489369,
+      "sha256": "BF79980CEC2607EE381BBE8AC86333F29E4D04EF0E5425E98652E10BDC9A132B",
+      "version": "ACL 2026 proceedings version",
+      "license": "CC BY 4.0 for ACL Anthology materials published in or after 2016",
+      "git_policy": "ignore_raw"
+    },
+    {
+      "name": "2026.acl-long.1833.checklist.pdf",
+      "kind": "official_responsible_nlp_checklist",
+      "source_url": "https://aclanthology.org/attachments/2026.acl-long.1833.checklist.pdf",
+      "local_cache": "data/raw/noisycausal/2026.acl-long.1833.checklist.pdf",
+      "size_bytes": 63766,
+      "sha256": "D79696033DA996276875F7A406C71C4A4B3AD5554A340B23C6E2374B883224DB",
+      "version": "ACL 2026 checklist",
+      "license": "ACL Anthology publication terms; no separate dataset license stated",
+      "git_policy": "ignore_raw"
+    },
+    {
+      "name": "2605.04313v1-source.tar",
+      "kind": "official_arxiv_source",
+      "source_url": "https://export.arxiv.org/e-print/2605.04313",
+      "local_cache": "data/raw/noisycausal/2605.04313v1-source.tar",
+      "size_bytes": 297368,
+      "sha256": "AE25FAFA3DE9B51F2DD2BA9FDB5CDAE527F4941F4A50C13FD0E01F73B6FF0896",
+      "version": "arXiv:2605.04313v1, submitted 2026-05-05",
+      "license": "CC BY 4.0",
+      "contents_summary": {
+        "files": 12,
+        "types": {
+          "json": 1,
+          "tex": 3,
+          "bib": 1,
+          "sty": 1,
+          "bst": 1,
+          "pdf_figures": 5
+        },
+        "contains_dataset_records": false,
+        "contains_executable_sampler": false,
+        "contains_code": false
+      },
+      "git_policy": "ignore_raw"
+    }
+  ],
+  "public_artifact_search": [
+    {
+      "source": "ACL Anthology landing page and attachments",
+      "url": "https://aclanthology.org/2026.acl-long.1833/",
+      "result": "Paper PDF and Responsible NLP Checklist only; no code, dataset, model, or supplementary-data attachment listed."
+    },
+    {
+      "source": "arXiv abstract, HTML, and source archive",
+      "url": "https://arxiv.org/abs/2605.04313",
+      "result": "Paper and LaTeX/figure source only; no repository, dataset URL, data files, or executable generator."
+    },
+    {
+      "source": "Author GitHub profile linked by DBLP",
+      "url": "https://github.com/zhix9767",
+      "result": "Two public repositories were listed on 2026-08-27; neither is related to NoisyCausal."
+    },
+    {
+      "source": "GitHub repository search",
+      "url": "https://api.github.com/search/repositories?q=NoisyCausal+in:name,description,readme",
+      "result": "0 repositories returned on 2026-08-27."
+    },
+    {
+      "source": "Hugging Face datasets API",
+      "url": "https://huggingface.co/api/datasets?search=NoisyCausal&limit=100&full=true",
+      "result": "0 datasets returned on 2026-08-27."
+    },
+    {
+      "source": "Zenodo records API",
+      "url": "https://zenodo.org/api/records/?q=NoisyCausal",
+      "result": "0 records returned on 2026-08-27."
+    },
+    {
+      "source": "OpenReview public submission/search surface",
+      "url": "https://openreview.net/forum?id=9kGjeJIBiE",
+      "result": "A paper submission/PDF was discoverable, but no downloadable dataset or code artifact was verified; direct note/API access returned an access challenge during the audit."
+    }
+  ],
+  "dataset_release": {
+    "verified": false,
+    "download_url": null,
+    "release": null,
+    "commit": null,
+    "license": null,
+    "schema_available": false,
+    "reason": "No public author-linked dataset or code release was found. Publication artifacts describe the benchmark but do not expose its records or generator."
+  },
+  "paper_reported_composition": {
+    "qa_pairs": 10617,
+    "graph": "A corresponding directed causal graph per instance",
+    "variables": "Semantic label, binary/categorical/continuous type, observed/latent status, and causal role",
+    "scm": "Logic-based or probabilistic structural rules sampled and executed in topological order",
+    "assignments": "Clean and noisy variable assignments",
+    "questions": "Observational, interventional, counterfactual, and attributional questions",
+    "noise_codes": [
+      "VP",
+      "IV",
+      "PM",
+      "CS",
+      "CI",
+      "QP"
+    ],
+    "answer": "Computed from the clean SCM and causal graph"
+  },
+  "readiness": {
+    "artifact_verified": false,
+    "reasoning_ready": false,
+    "graph_eval_ready": false,
+    "noise_eval_ready": false,
+    "scd_ready": false,
+    "oracle_ready": false
+  },
+  "verdict": {
+    "scd_ready": false,
+    "reason": "The public first-party materials contain the paper, checklist, and LaTeX/figure source, but no dataset records, complete per-system SCM/CPD files, executable sampler, or repeated observational samples grouped by causal system. Paper descriptions and example probabilities are not a resampleable artifact."
+  }
+}
