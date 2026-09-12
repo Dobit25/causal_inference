@@ -1,0 +1,97 @@
+experiment:
+  task: T09
+  phase: p0_released
+  status: frozen_development_builder
+
+source:
+  benchmark: causalds
+  github_commit: c74671d0a0924efc5bb021fc8966f856d5b80a4f
+  huggingface_revision: 2880dfa710d08e076055cb0248ef0c534a93b0fa
+  variant: clean
+
+scope:
+  split_manifest: data/manifests/p0_frozen_split.json
+  cohort: graph
+  role: dev
+  expected_scenes: 8
+  rows_per_scene: 16000
+  graph_per_scene: 1
+  forbid_holdout_access: true
+
+evidence:
+  allowed: [public_observational_data, public_schema_types]
+  public_artifacts: [data, schema]
+  allow_story_or_semantics: false
+  allow_tasks_or_queries: false
+  allow_llm_graph: false
+  allow_grading_or_oracle: false
+  allow_gold_answers: false
+
+preprocessing:
+  pool_scenes: false
+  canonical_names: X000_X001_etc
+  preserve_row_order: true
+  continuous: per_scene_sample_zscore_ddof_1
+  binary: exact_0_1_discrete_categories
+  reject_missing_or_nonfinite: true
+  reject_constant_continuous: true
+
+discovery:
+  selected_method_id: boss_basis_bic__p1__t3
+  algorithm: BOSS
+  score: BasisFunctionBicScore
+  output: CPDAG
+  parameters:
+    penalty_discount: 1.0
+    truncation_limit: 3
+    singularity_lambda: 0.0
+    do_one_equation_only: false
+    num_starts: 1
+    use_bes: false
+    use_data_order: true
+    output_cpdag: true
+  seed: null
+
+projection:
+  role: sensitivity_only
+  algorithm: Dor_Tarsi_sink_elimination
+  sink_tie_break: lexicographically_smallest_eligible_node
+  preserve_skeleton: true
+  preserve_compelled_directions: true
+  forbid_cycles: true
+  forbid_new_unshielded_colliders: true
+  audit_every_unresolved_edge: true
+
+runtime:
+  python: 3.10.21
+  java: 21.0.10
+  jpype: 1.6.0
+  numpy: 1.26.4
+  pyarrow: 23.0.1
+  tetrad_jar_implementation_version: 7.6.11-SNAPSHOT
+  tetrad_jar: data/raw/t05/py-tetrad/pytetrad/resources/tetrad-current.jar
+  tetrad_jar_sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051
+
+graph:
+  schema_version: fourgraph.graph.v1
+  raw: {graph_method: scd, graph_type: cpdag, graph_view: cpdag}
+  projection: {graph_method: scd, graph_type: dag, graph_view: projected_dag}
+  contract_config: configs/graph_contract_v1.yaml
+
+logging:
+  runtime_log: results/raw/t09_scd/runtime.jsonl
+  raw_logs_in_git: false
+
+outputs:
+  raw_cpdag: data/manifests/t09_dev_scd_cpdag.jsonl
+  projected_dag: data/manifests/t09_dev_scd_projected_dag.jsonl
+  audit: data/manifests/t09_scd_graph_builder_audit.json
+
+freeze_anchors:
+  configs/t05_scd_frozen.yaml: 729861541366775AFDCFB302E008C34866D2F2282D3614BA6578B79051330A33
+  configs/graph_contract_v1.yaml: 76C2778FFE1E89DE0BFC6D5F740DD7F731E7B88F39062EEA91B03B9C2B82DC12
+  data/manifests/p0_frozen_split.json: 9246C8C73D1AD7204E8E8081D2E4F2048AD3561AB3B5085DB242866BAD77A7E9
+  data/manifests/p0_data_integrity.json: 8156AB5F8199488EBB7C48902E787FB5483ACF9143FEAEEA9086B3616B423523
+  src/fourgraph/causalds_scd.py: 29AE960188B2E74E25A54DA6E9593D17DC6D091AE548124E2B1F0BA3FE7999F4
+  src/fourgraph/scd_graph.py: EB311ADF02C3D21C5969BCEEFC4BD8A56CAB9E5E1CF22B37D7AB756E60D2A260
+  scripts/build_causalds_t09.py: C42FDED8F3B0F65E283AF28B9FE7042036B4985E1035B504188B1DCE2064B51D
