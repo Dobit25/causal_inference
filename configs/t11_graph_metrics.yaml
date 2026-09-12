@@ -1,0 +1,82 @@
+experiment:
+  task: T11
+  phase: p0_released
+  status: frozen_development_evaluator
+
+scope:
+  split_manifest: data/manifests/p0_frozen_split.json
+  cohort: graph
+  role: dev
+  expected_scenes: 8
+  expected_conditions_per_scene: 5
+  expected_records: 40
+  forbid_holdout_access: true
+  allow_builder_tuning: false
+  allow_llm_calls: false
+  allow_tasks_or_queries: false
+
+inputs:
+  llm_dag: data/manifests/t08_dev_graphs.jsonl
+  scd_raw_cpdag: data/manifests/t09_dev_scd_cpdag.jsonl
+  scd_projected_dag: data/manifests/t09_dev_scd_projected_dag.jsonl
+  hybrid_dag: data/manifests/t10_dev_hybrid_graphs.jsonl
+  oracle_loader_config: configs/t07_oracle_loader.yaml
+  oracle_access: grading_only_in_memory
+  persist_oracle_edges: false
+
+conditions:
+  - {id: G_LLM, input: llm_dag, role: primary}
+  - {id: G_SCD_RAW, input: scd_raw_cpdag, role: primary}
+  - {id: G_SCD_PROJECTED, input: scd_projected_dag, role: sensitivity}
+  - {id: G_HYBRID, input: hybrid_dag, role: primary}
+  - {id: G_ORACLE, input: oracle, role: sanity}
+
+conventions:
+  metric_schema_version: fourgraph.graph_metric_record.v1
+  metrics_input: GraphArtifact.metrics_view
+  floating_precision_decimals: 8
+  precision_empty_prediction: 1_if_truth_also_empty_else_0
+  recall_empty_truth: 1
+  skeleton_shd: false_positive_plus_false_negative
+  dag_shd: unordered_pair_state_mismatch_reversal_cost_1
+  cpdag_state_shd: unordered_pair_absent_undirected_forward_reverse_mismatch
+  normalization: divide_by_n_choose_2
+  macro_unit: scene
+  inferential_statistics: deferred_to_t15
+
+metric_families:
+  common: [skeleton_precision, skeleton_recall, skeleton_f1, adjacency_fp, adjacency_fn, skeleton_shd, validity, node_consistency]
+  raw_cpdag: [compelled_correct, compelled_incorrect, compelled_missed, compelled_precision, compelled_recall, unresolved_rate, cpdag_state_shd]
+  dag: [directed_precision, directed_recall, directed_f1, orientation_accuracy_on_common_adjacencies, shd_reversal_cost_one, normalized_shd]
+  hybrid_attribution: [inherited_skeleton_error, inherited_compelled_error, semantic_orientation_correctness, projected_orientation_correctness, semantic_projection_disagreement]
+
+functional_metrics:
+  sid:
+    status: unavailable
+    reason: no_pinned_validated_implementation
+    raw_cpdag_policy: never_silently_project
+  aid:
+    status: unavailable
+    reason: no_pinned_validated_implementation
+    raw_cpdag_policy: never_silently_project
+  unavailable_is_not_zero: true
+
+outputs:
+  records: data/manifests/t11_dev_graph_metrics.jsonl
+  audit: data/manifests/t11_graph_metrics_audit.json
+
+freeze_anchors:
+  data/manifests/p0_frozen_split.json: 9246C8C73D1AD7204E8E8081D2E4F2048AD3561AB3B5085DB242866BAD77A7E9
+  configs/t07_oracle_loader.yaml: 7FB32E85360DD3BF1DC28119FC002DB66D14BAA73D943CC763CBEDBB7AF01DDF
+  data/manifests/t07_oracle_loader_audit.json: E030123FAC39DA52EE0BD9ABFE96123D6598FCD60AB5A099CD82D3E9513F5AB5
+  data/manifests/t08_dev_graphs.jsonl: D76119CAFB7C89A3D38830075890BCA8651B166565F19AC2EB79BDD19B2F212D
+  data/manifests/t09_dev_scd_cpdag.jsonl: 393222B83F7170B8E33357CDAA091CE61295C910D4CFC5FBAAC0CABEB0209CA0
+  data/manifests/t09_dev_scd_projected_dag.jsonl: 43E2242C8C8971DBD40CB73605EFF091232EAA5BBED465D4CA5BB070956696A6
+  data/manifests/t10_dev_hybrid_graphs.jsonl: BD16C234E6B1B6AA261FA505E5F357C5160D61AB0768515C5116577AA0ADF18A
+  configs/graph_contract_v1.yaml: 76C2778FFE1E89DE0BFC6D5F740DD7F731E7B88F39062EEA91B03B9C2B82DC12
+  schemas/graph_metric_record_v1.schema.json: BEA21CE15CA11E5FB0FCB8947017A2E23FA49193A98AFE3293FB0998B5FE5E23
+  src/fourgraph/causalds_oracle.py: FBDA46C9D8D29C7FD550B54E67CE0E6F0169F878F5610F699750C509BCE24BF2
+  src/fourgraph/graph_contract.py: 2D46B126288E6DE06A1FD9B0AD0596D2942CF8BE3FBE7BF7B406049AEA2BB7BE
+  src/fourgraph/graph_metrics.py: AA0BB96E1E37C07DA739CE9E7771C6DFCBD592607C0A482212A0811FA6FB515E
+  src/fourgraph/partial_graph.py: C303359DD2D1B955E895AA34719AE7F80BF2AAE50985F0A383028532A622BB35
+  scripts/evaluate_causalds_t11.py: 8C5140CA4764060C8B5070BE2AA19AAEC91F2097DA6A3DB6794F58A2C3D25409

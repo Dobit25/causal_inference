@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/graph_metric_record_v1.schema.json",
+  "title": "FourGraph per-scene graph metric record v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scene_id", "graph_condition", "evaluation_role", "graph_method", "graph_type", "graph_view", "graph_schema_version", "variable_mapping_sha256", "graph_sha256", "graph_artifact_sha256", "oracle_graph_sha256", "oracle_artifact_sha256", "node_count", "graph_valid", "node_set_consistent", "skeleton", "cpdag", "dag", "functional", "hybrid_attribution"],
+  "properties": {
+    "schema_version": {"const": "fourgraph.graph_metric_record.v1"},
+    "scene_id": {"type": "string", "pattern": "^scene_[0-9]+$"},
+    "graph_condition": {"enum": ["G_LLM", "G_SCD_RAW", "G_SCD_PROJECTED", "G_HYBRID", "G_ORACLE"]},
+    "evaluation_role": {"enum": ["primary", "sensitivity", "sanity"]},
+    "graph_method": {"enum": ["llm", "scd", "hybrid", "oracle"]},
+    "graph_type": {"enum": ["dag", "cpdag"]},
+    "graph_view": {"enum": ["dag", "cpdag", "projected_dag"]},
+    "graph_schema_version": {"const": "fourgraph.graph.v1"},
+    "variable_mapping_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "graph_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "graph_artifact_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "oracle_graph_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "oracle_artifact_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "node_count": {"type": "integer", "minimum": 1, "maximum": 8},
+    "graph_valid": {"const": true},
+    "node_set_consistent": {"const": true},
+    "skeleton": {"type": "object"},
+    "cpdag": {"type": ["object", "null"]},
+    "dag": {"type": ["object", "null"]},
+    "functional": {"type": "object"},
+    "hybrid_attribution": {"type": ["object", "null"]}
+  }
+}
