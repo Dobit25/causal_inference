@@ -1,0 +1,5 @@
+Task: identification__all_minimal_adjustment_sets. Required field: adjustment_sets.
+
+For each DAG whose family A is nonempty, find the minimum cardinality among members of A and return every member with that cardinality. Sort node IDs inside each set and sort the list of sets lexicographically. If A contains the empty set, the result is the list whose sole member is empty: [[]]. If A is empty, output {"adjustment_sets":"no_backdoor"}.
+
+For a CPDAG, compare the complete per-DAG minimal-set lists, including any "no_backdoor" result. Output the common result only if every compatible DAG has exactly the same list or sentinel. Otherwise output {"adjustment_sets":"undetermined"}.

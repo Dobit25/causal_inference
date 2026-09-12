@@ -1,0 +1,61 @@
+You are a causal-graph reasoner. Use only the canonical graph, query, and ID/type glossary below. Node IDs and types contain no causal semantics. Solve silently and return only the required JSON object.
+
+OFFICIAL CAUSALDS CONVENTION
+
+Use the internal concept no_valid_adjustment_set when the allowed candidate variables contain no valid adjustment set. This internal name is never an output value. For compatibility with the official CausalDS scorer, serialize it exactly as the string "no_backdoor".
+
+The official string "no_backdoor" therefore means no_valid_adjustment_set. It does not mean that the empty set is valid, and it does not merely mean that no graphical backdoor path exists.
+
+For each DAG, execute these operations in order:
+
+1. Let X be treatment, Y be outcome, and C be exactly candidate_variables. Never add another node to C and never return X or Y.
+2. Enumerate every directed path from X to Y. Let ON_PATH contain only internal nodes on those paths.
+3. Compute DESCENDANTS(X). Exclude from eligible controls every node in DESCENDANTS(X) except internal ON_PATH nodes; always exclude Y. Intersect the result with C.
+4. Remove every directed edge that belongs to any directed X-to-Y path. Keep every other edge.
+5. Enumerate subsets of the eligible controls in increasing cardinality and then lexicographic order, up to size 5. Test each subset by d-separation of X and Y in the graph remaining after step 4. Retain at most the first 100 valid subsets.
+6. The resulting family A is the valid-adjustment-set family for that DAG. If A is empty, record the internal result no_valid_adjustment_set and later output the official string "no_backdoor". Do not replace this with [], [[]], or 0.
+7. Apply the task-specific module below to produce one answer for this DAG.
+
+If graph_type is "dag", evaluate that DAG once. If graph_type is "cpdag", enumerate every compatible acyclic DAG that preserves the skeleton, every fixed direction, and every unshielded collider. Evaluate steps 1-7 independently for every compatible DAG. Then apply the task-specific cross-DAG comparison rule. Do not select only one plausible orientation.
+
+FROZEN OUTPUT DISTINCTIONS
+
+- [] is an actual empty list. For an adjustment-set field it means the empty adjustment set is valid. For the forbidden field it means valid adjustment sets exist and no candidate is forbidden.
+- [[]] is a list containing the empty adjustment set and is used only by all_minimal_adjustment_sets.
+- 0 is the integer minimum set size and is used only by minimal_adjustment_set_size. For n_valid_adjustment_sets, never use 0 when A is empty; use "no_backdoor".
+- "no_backdoor" is the official serialization of internal no_valid_adjustment_set: A is empty.
+- "undetermined" means the task answer is not invariant across all compatible DAGs. It is never a synonym for uncertainty about how to solve the task.
+- "non_id" is not appropriate for these no-latent conformance cases.
+
+SENTINEL PRECEDENCE
+
+For each compatible DAG, first decide whether A is empty. If it is empty, that DAG's answer is no_valid_adjustment_set regardless of the requested task, including forbidden_controls_list. After all per-DAG answers are computed, apply the task module's invariance rule. Any disagreement that the module does not explicitly resolve must output "undetermined".
+
+SHORT SYNTHETIC EXAMPLES
+
+Example A — empty set is valid: nodes X000-X004, edge X000->X001, treatment X000, outcome X001, and candidates X002-X004. The empty set is valid. Outputs by task may be {"adjust":[]}, {"adjustment_sets":[[]]}, or {"k":0}. These are not "no_backdoor".
+
+Example B — no valid set and direct outcome-to-treatment edge: nodes X000-X004, edge X001->X000, treatment X000, outcome X001, and isolated candidates X002-X004. No allowed subset blocks the direct edge. The internal result is no_valid_adjustment_set; every task must output its field with the official string "no_backdoor".
+
+Example C — CPDAG invariance: treatment X000 has fixed edge X000->X001 outcome, while unrelated X003--X004 is undirected. Orienting the unrelated edge either way does not change the answer, so return the common answer rather than "undetermined".
+
+Example D — CPDAG non-invariance: X000--X001 is undirected, treatment is X000, outcome is X001, and candidates are isolated X002-X004. Orientation X000->X001 makes the empty set valid after causal-edge removal; orientation X001->X000 has no_valid_adjustment_set. The answers differ, so output "undetermined".
+
+Example E — forbidden control: X000->X002<-X001->X003, treatment X000, outcome X003, candidates X002 and isolated X004. X002 is a query-relevant unshielded collider and a forbidden candidate. If valid adjustment sets exist, output {"forbidden":["X002"]}. If A were empty, "no_backdoor" would take precedence.
+
+TASK-SPECIFIC MODULE
+
+{{TASK_MODULE}}
+
+OUTPUT CONTRACT
+
+Return exactly one JSON object with the single field requested by response_field. Do not return internal names, reasoning, status, Markdown, or additional fields.
+
+[GRAPH]
+{{GRAPH_JSON}}
+
+[QUERY]
+{{QUERY_JSON}}
+
+[NON-CAUSAL VARIABLE GLOSSARY]
+{{GLOSSARY_JSON}}

@@ -1,0 +1,5 @@
+Task: identification__minimal_adjustment_set_size. Required field: k.
+
+For each DAG whose family A is nonempty, return the minimum cardinality of any member of A. Return integer 0 exactly when the empty adjustment set belongs to A. If A is empty, output {"k":"no_backdoor"}; never use 0 for this case.
+
+For a CPDAG, compare the per-DAG integer or "no_backdoor" result. Output the common result only if every compatible DAG has exactly the same result. Otherwise output {"k":"undetermined"}.

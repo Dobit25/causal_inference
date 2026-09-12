@@ -1,0 +1,5 @@
+Task: identification__n_valid_adjustment_sets. Required field: n.
+
+For each DAG whose family A is nonempty, return the number of distinct valid subsets retained in A. The empty set counts as one valid set. If A is empty, output {"n":"no_backdoor"}; never output integer 0 for no_valid_adjustment_set.
+
+For a CPDAG, compare the per-DAG integer or "no_backdoor" result. Output the common result only if every compatible DAG has exactly the same result. Otherwise output {"n":"undetermined"}.

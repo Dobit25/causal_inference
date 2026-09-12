@@ -1,0 +1,12 @@
+Task: bias_diagnostic__forbidden_controls_list. Required field: forbidden.
+
+First compute the valid-set family A exactly as specified in the shared procedure. If A is empty, stop this DAG and record no_valid_adjustment_set; output "no_backdoor" after the cross-DAG rule. Do not output an empty forbidden list for this case.
+
+Only when A is nonempty, compute the forbidden candidates for that DAG:
+
+1. FORBIDDEN_DESCENDANTS are descendants of treatment excluding internal nodes on directed treatment-to-outcome paths and excluding outcome.
+2. A query-relevant unshielded collider is the middle node M in A->M<-B where A and B are nonadjacent, M is neither treatment nor outcome, at least one of the two parents is an ancestor or descendant of treatment, and at least one is an ancestor or descendant of outcome.
+3. The forbidden list is candidate_variables intersected with the union of FORBIDDEN_DESCENDANTS and query-relevant unshielded colliders. Sort it lexicographically.
+4. Return [] only when A is nonempty and that intersection is empty.
+
+For a CPDAG, compare the complete per-DAG forbidden list or "no_backdoor" result. Output the common result only if every compatible DAG has exactly the same result. Otherwise output {"forbidden":"undetermined"}.

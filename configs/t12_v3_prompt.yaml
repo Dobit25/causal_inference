@@ -1,0 +1,105 @@
+schema_version: fourgraph.t12_v3_prompt_design.v1
+status: prompt_contract_and_new_sealed_suite_frozen_offline
+parent_candidate:
+  config: configs/t12_v2_openai_mini_d.yaml
+  conformance_audit: data/manifests/t12_v2_openai_mini_d_conformance_audit.json
+  conformance_audit_sha256: FCDF82156F88AE355D6A50E6C60C888FCC88BE70DCD7E8C09FC332E02F4C770A
+  conformance_records_sha256: DD0F3D5604CA682C44939BF63C6FA4DD1013970459319C106977146264B62E62
+  outcome: engineering_passed_scientific_conformance_failed
+  immutable: true
+controlled_change:
+  field: prompt_contract
+  from: prompts/reasoner_cpdag_conservative_v2.txt
+  to: shared_base_plus_five_task_specific_v3_modules
+reasoner:
+  provider: openai
+  model_id: gpt-5.4-mini-2026-03-17
+  model_version: gpt-5.4-mini-2026-03-17
+  endpoint: /v1/responses
+  sdk: openai
+  sdk_version: 3.6.0
+  credential_env: OPENAI_API_KEY
+  reasoning_effort: medium
+  sampling_temperature: omitted
+  max_output_tokens: 10240
+  max_validation_retries: 2
+  transport_max_retries: 2
+  timeout_seconds: 180
+  service_tier: default
+  store: false
+  structured_outputs: true
+  provider_schema_transform: openai_strict_subset_then_full_local_validation
+graph_encoding:
+  schema_version: fourgraph.reasoner_graph.v1
+  format: canonical_json_edge_list
+  node_labels: X000_style
+  unchanged_from_mini_d: true
+prompt_bundle:
+  base: prompts/reasoner_v3/base.txt
+  modules:
+    identification__one_valid_adjustment_set: prompts/reasoner_v3/one_valid_adjustment_set.txt
+    identification__all_minimal_adjustment_sets: prompts/reasoner_v3/all_minimal_adjustment_sets.txt
+    identification__minimal_adjustment_set_size: prompts/reasoner_v3/minimal_adjustment_set_size.txt
+    identification__n_valid_adjustment_sets: prompts/reasoner_v3/n_valid_adjustment_sets.txt
+    bias_diagnostic__forbidden_controls_list: prompts/reasoner_v3/forbidden_controls_list.txt
+  contract_manifest: data/manifests/t12_v3_prompt_contract.json
+  internal_no_valid_set_name: no_valid_adjustment_set
+  official_no_valid_set_serialization: no_backdoor
+  task_routing: exactly_one_module_per_request
+  reasoning_visibility: solve_silently
+sentinel_contract:
+  empty_list: actual_empty_list_answer
+  list_containing_empty_list: empty_set_is_the_minimal_adjustment_set
+  integer_zero: minimum_adjustment_set_size_is_zero
+  no_backdoor: official_serialization_of_no_valid_adjustment_set
+  undetermined: compatible_DAG_task_answers_differ
+evidence_contract:
+  graph: fourgraph.reasoner_graph.v1
+  query: fourgraph.reasoner_query.v2
+  glossary: canonical_id_and_type_only
+  allow_story: false
+  allow_public_semantic_names: false
+  allow_observational_table: false
+  allow_graph_provenance: false
+  allow_gold_answer: false
+response_schemas:
+  identification__one_valid_adjustment_set: schemas/reasoner_one_valid_adjustment_set_v2.schema.json
+  identification__all_minimal_adjustment_sets: schemas/reasoner_all_minimal_adjustment_sets_v2.schema.json
+  identification__minimal_adjustment_set_size: schemas/reasoner_minimal_adjustment_set_size_v2.schema.json
+  identification__n_valid_adjustment_sets: schemas/reasoner_n_valid_adjustment_sets_v2.schema.json
+  bias_diagnostic__forbidden_controls_list: schemas/reasoner_forbidden_controls_list_v2.schema.json
+calibration:
+  opened_v2_suite:
+    path: data/manifests/t12_v2_synthetic_conformance.jsonl
+    role: prompt_development_diagnostic_only
+    eligible_for_v3_final_gate: false
+  new_sealed_suite:
+    path: data/manifests/t12_v3_synthetic_conformance.jsonl
+    audit: data/manifests/t12_v3_synthetic_conformance_audit.json
+    cases: 150
+    seed: 1203
+    uses_causalds_story: false
+    uses_causalds_answer: false
+    status: generated_independently_audited_and_frozen
+    hash_pinned: true
+    suite_sha256: 55B8B8DBB5024E8F4A815FDB5227A8E5EDD53E5B5F86AB2D3D5BB07B9022EECD
+    audit: data/manifests/t12_v3_synthetic_conformance_audit.json
+    review_panel: data/manifests/t12_v3_manual_review_panel.jsonl
+    smoke_manifest: data/manifests/t12_v3_openai_mini_smoke.json
+  prospective_gates:
+    parse_success_rate_min: 1.0
+    first_attempt_schema_compliance_min: 0.95
+    overall_accuracy_min: 0.90
+    dag_answered_accuracy_min: 0.90
+    cpdag_answered_accuracy_min: 0.90
+    cpdag_undetermined_accuracy_min: 0.90
+    per_task_accuracy_min: 0.80
+  gate_policy: all_thresholds_must_pass_before_causalds_oracle_development
+live_execution:
+  allowed: false
+  reason: design_record_only_use_the_separate_frozen_live_candidate_config
+  candidate_config: configs/t12_v3_openai_mini.yaml
+holdout:
+  accessed: false
+  eligible: false
+  reason: v3_is_prompt_contract_only_and_has_no_sealed_conformance_result

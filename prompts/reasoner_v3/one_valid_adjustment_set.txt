@@ -1,0 +1,5 @@
+Task: identification__one_valid_adjustment_set. Required field: adjust.
+
+For each DAG whose family A is nonempty, A contains every valid candidate subset. For a DAG input, return one member of A; choose minimum cardinality and then lexicographic order for reproducibility.
+
+For a CPDAG, intersect the valid-set families from every compatible DAG. If the intersection is nonempty, return its minimum-cardinality, lexicographically first member. If every compatible DAG has no_valid_adjustment_set, output {"adjust":"no_backdoor"}. Otherwise, if there is no common valid set, output {"adjust":"undetermined"}.
