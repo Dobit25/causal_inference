@@ -1,0 +1,441 @@
+{
+  "manifest_version": 8,
+  "benchmark": {
+    "name": "CausalDS",
+    "title": "CausalDS: Benchmarking Causal Reasoning in Data-Science Agents",
+    "authors": [
+      "Andrej Leban",
+      "Yuekai Sun"
+    ],
+    "arxiv_id": "2607.08093v1",
+    "arxiv_doi": "10.48550/arXiv.2607.08093"
+  },
+  "audit": {
+    "task": "T02",
+    "retrieved_at": "2026-08-30T18:30:51+07:00",
+    "scope": "Official GitHub source archive and official Hugging Face main/grading catalogs at immutable revisions",
+    "raw_storage_policy": "Downloaded and extracted artifacts are cached under data/raw/causalds and excluded from Git. This manifest and the audit report are versioned."
+  },
+  "pins": {
+    "github": {
+      "repository": "https://github.com/andleb/causalds",
+      "commit": "c74671d0a0924efc5bb021fc8966f856d5b80a4f",
+      "commit_date": "2026-07-17T20:37:54Z",
+      "code_license": "Apache-2.0",
+      "data_license": "CC0-1.0",
+      "causenet_attribution": "CauseNet-seeded verbalizations derive from CC BY 4.0 material"
+    },
+    "huggingface": {
+      "repository": "https://huggingface.co/datasets/andleb/causalds",
+      "revision": "2880dfa710d08e076055cb0248ef0c534a93b0fa",
+      "last_modified": "2026-07-25T16:10:17Z",
+      "private": false,
+      "data_license": "CC0-1.0"
+    },
+    "paper": {
+      "url": "https://arxiv.org/abs/2607.08093v1",
+      "version": "v1",
+      "submitted": "2026-07-09T04:03:26Z"
+    }
+  },
+  "artifacts": [
+    {
+      "name": "causalds-c74671d0.zip",
+      "kind": "official_github_source_archive",
+      "source_url": "https://github.com/andleb/causalds/archive/c74671d0a0924efc5bb021fc8966f856d5b80a4f.zip",
+      "local_cache": "data/raw/causalds/causalds-c74671d0.zip",
+      "size_bytes": 236872831,
+      "sha256": "C0D9DC32671C46A989AEE2A0903CE46127372F5C9485AA0B9D9250C69F3E804F",
+      "extracted_files": 1555,
+      "extracted_size_bytes": 398556967,
+      "git_policy": "ignore_raw"
+    },
+    {
+      "name": "main.parquet",
+      "kind": "official_huggingface_public_exam_catalog",
+      "source_url": "https://huggingface.co/datasets/andleb/causalds/resolve/2880dfa710d08e076055cb0248ef0c534a93b0fa/catalogs/main.parquet",
+      "local_cache": "data/raw/causalds/main-2880dfa7.parquet",
+      "size_bytes": 168811,
+      "sha256": "2F941D1D754DBFB2AF0495480FE62DDFF2FC27620F5C1260BF55A55BC9C01D2D",
+      "git_policy": "ignore_raw"
+    },
+    {
+      "name": "grading.parquet",
+      "kind": "official_huggingface_grading_catalog",
+      "source_url": "https://huggingface.co/datasets/andleb/causalds/resolve/2880dfa710d08e076055cb0248ef0c534a93b0fa/catalogs/grading.parquet",
+      "local_cache": "data/raw/causalds/grading-2880dfa7.parquet",
+      "size_bytes": 12491813,
+      "sha256": "48E5DFFFFCF4B1978CBEBC5212E6EA484FE0C1A33367CD10BACD28D9DC58FF58",
+      "git_policy": "ignore_raw"
+    }
+  ],
+  "audit_scope": {
+    "files": 300,
+    "definition": "Sorted relative path, byte size, and SHA-256 for 100 tasks.json, 100 schema.json, and 100 ground_truth.json files from the pinned GitHub archive",
+    "aggregate_sha256": "2cf937101fbd5ba2e16c16ffe851e61dd7808e0868cf71500f3a3b1b6b6fc68c"
+  },
+  "release_inventory": {
+    "main_scenes": 100,
+    "complete_task_catalogs": 100,
+    "ground_truth_files": 100,
+    "complete_catalog_tasks": 2589,
+    "rung2_tasks": 1223,
+    "clean_scenes": 48,
+    "clean_no_latent_scenes": 33
+  },
+  "p0_cohorts": {
+    "graph": {
+      "verified": true,
+      "scene_count": 33,
+      "observation_variant": "clean",
+      "latent_nodes": 0,
+      "observational_rows_per_scene": 16000,
+      "node_count_range": [
+        3,
+        7
+      ],
+      "scene_ids": [
+        "scene_000098",
+        "scene_000172",
+        "scene_000215",
+        "scene_000224",
+        "scene_000253",
+        "scene_000255",
+        "scene_000281",
+        "scene_000338",
+        "scene_000372",
+        "scene_000395",
+        "scene_000399",
+        "scene_000402",
+        "scene_000415",
+        "scene_000425",
+        "scene_000499",
+        "scene_000511",
+        "scene_000521",
+        "scene_000594",
+        "scene_000628",
+        "scene_000665",
+        "scene_000699",
+        "scene_000719",
+        "scene_000757",
+        "scene_000778",
+        "scene_000792",
+        "scene_000814",
+        "scene_000822",
+        "scene_000836",
+        "scene_000864",
+        "scene_000907",
+        "scene_000966",
+        "scene_000976",
+        "scene_000977"
+      ],
+      "provisional_split": {
+        "dev": 8,
+        "holdout": 25,
+        "finalized_after": "T04 data integrity"
+      }
+    },
+    "primary_downstream": {
+      "verified": true,
+      "scene_count": 27,
+      "tasks_per_scene": 5,
+      "required_task_ids": [
+        "identification__one_valid_adjustment_set",
+        "identification__all_minimal_adjustment_sets",
+        "identification__minimal_adjustment_set_size",
+        "identification__n_valid_adjustment_sets",
+        "bias_diagnostic__forbidden_controls_list"
+      ],
+      "scene_ids": [
+        "scene_000098",
+        "scene_000172",
+        "scene_000215",
+        "scene_000224",
+        "scene_000253",
+        "scene_000255",
+        "scene_000281",
+        "scene_000372",
+        "scene_000395",
+        "scene_000399",
+        "scene_000415",
+        "scene_000425",
+        "scene_000499",
+        "scene_000511",
+        "scene_000594",
+        "scene_000665",
+        "scene_000719",
+        "scene_000757",
+        "scene_000778",
+        "scene_000792",
+        "scene_000814",
+        "scene_000822",
+        "scene_000836",
+        "scene_000864",
+        "scene_000907",
+        "scene_000976",
+        "scene_000977"
+      ],
+      "provisional_split": {
+        "dev": 7,
+        "holdout": 20,
+        "finalized_after": "T04 data integrity"
+      }
+    },
+    "supplementary": {
+      "verified": true,
+      "scene_count": 6,
+      "downstream_role": "exploratory_only",
+      "pool_with_primary_accuracy": false,
+      "common_symbolic_task_ids": [
+        "causal_sketch__edges_only",
+        "causal_sketch__skeleton_edges",
+        "identification__identifiable_boolean",
+        "identification__method_label"
+      ],
+      "scene_ids": [
+        "scene_000338",
+        "scene_000402",
+        "scene_000521",
+        "scene_000628",
+        "scene_000699",
+        "scene_000966"
+      ],
+      "provisional_split": {
+        "dev": 1,
+        "holdout": 5,
+        "finalized_after": "T04 data integrity"
+      }
+    },
+    "nesting_rule": "Primary and supplementary cohorts partition the graph cohort. A scene must have the same dev/holdout role in every cohort to which it belongs."
+  },
+  "derived_artifacts": {
+    "t03_scene_inventory": {
+      "path": "data/manifests/causalds_scene_inventory.jsonl",
+      "generator": "scripts/build_causalds_t03.py",
+      "records": 100,
+      "size_bytes": 259895,
+      "sha256": "24B27919AAA0E8828C2F635627856D35FA3D3785A1C1933B59E1A18C8D739562",
+      "scope": "Metadata inventory from tasks.json, schema.json, file presence, and grading-only graph/mechanism metadata; excludes parquet content inspection"
+    },
+    "t03_provisional_split": {
+      "path": "data/manifests/p0_provisional_split.json",
+      "generator": "scripts/build_causalds_t03.py",
+      "status": "provisional_until_t04_integrity",
+      "size_bytes": 17590,
+      "sha256": "4D6FAB447F955954BF421D2A2EE6CE3396D470A01DF086AE4553AE6ED3498508",
+      "split": {
+        "graph": "8 dev / 25 holdout",
+        "primary_downstream": "7 dev / 20 holdout",
+        "supplementary": "1 dev / 5 holdout"
+      }
+    },
+    "t04_data_integrity": {
+      "path": "data/manifests/p0_data_integrity.json",
+      "generator": "scripts/audit_causalds_t04.py",
+      "status": "complete_integrity_ready",
+      "size_bytes": 343064,
+      "sha256": "8156AB5F8199488EBB7C48902E787FB5483ACF9143FEAEEA9086B3616B423523",
+      "result": "33/33 graph scenes passed"
+    },
+    "t04_primary_task_manifest": {
+      "path": "data/manifests/p0_primary_task_manifest.jsonl",
+      "records": 135,
+      "size_bytes": 81801,
+      "sha256": "7E16EFF8853ED8A434C5F184D6649710B8E1DDCFAF05B367726386CBB7D016A9"
+    },
+    "t04_supplementary_task_manifest": {
+      "path": "data/manifests/p0_supplementary_task_manifest.jsonl",
+      "records": 89,
+      "downstream_role": "exploratory_only",
+      "size_bytes": 49588,
+      "sha256": "1560942AF77DFB79A19F1CA56EE2994A7403844C4E959E2CF061B8EB2084D83B"
+    },
+    "t04_frozen_split": {
+      "path": "data/manifests/p0_frozen_split.json",
+      "status": "frozen_after_t04_integrity",
+      "size_bytes": 18277,
+      "sha256": "9246C8C73D1AD7204E8E8081D2E4F2048AD3561AB3B5085DB242866BAD77A7E9",
+      "split": {
+        "graph": "8 dev / 25 holdout",
+        "primary_downstream": "7 dev / 20 holdout",
+        "supplementary": "1 dev / 5 holdout"
+      }
+    },
+    "t05_scd_selection": {
+      "path": "data/manifests/p0_scd_selection.json",
+      "status": "complete_scd_ready",
+      "size_bytes": 16948,
+      "sha256": "45BAACE1E4289786F927771BF37041A57A2A81D436541B1795D9D903839282F1",
+      "selected_method": "boss_basis_bic__p1__t3",
+      "dev_scenes": 8,
+      "holdout_accessed": false
+    },
+    "t05_dev_graphs": {
+      "path": "data/manifests/t05_dev_graphs.jsonl",
+      "records": 384,
+      "size_bytes": 253684,
+      "sha256": "60AE168B4D06AE1BD2C22B3D262D71D4CDC149CAFBA8A7013737135A62D08261"
+    },
+    "t06_graph_contract": {
+      "path": "data/manifests/graph_contract_v1.json",
+      "status": "complete_canonical_graph_contract_v1",
+      "size_bytes": 2500,
+      "sha256": "886766E5F3D4D44454186C34C30293A82E552434409906DE895B3D173159A1C4",
+      "schema_version": "fourgraph.graph.v1",
+      "graph_examples": 5,
+      "holdout_accessed": false,
+      "t05_artifacts_rewritten": false
+    },
+    "t07_oracle_loader": {
+      "path": "data/manifests/t07_oracle_loader_audit.json",
+      "status": "complete_oracle_loader_ready",
+      "size_bytes": 6594,
+      "sha256": "E030123FAC39DA52EE0BD9ABFE96123D6598FCD60AB5A099CD82D3E9513F5AB5",
+      "config": "configs/t07_oracle_loader.yaml",
+      "config_sha256": "7FB32E85360DD3BF1DC28119FC002DB66D14BAA73D943CC763CBEDBB7AF01DDF",
+      "development_scenes_valid": 8,
+      "holdout_accessed": false,
+      "raw_grading_document_returned": false
+    },
+    "t08_llm_graph_builder": {
+      "path": "data/manifests/t08_llm_graph_builder_audit.json",
+      "status": "complete_llm_graph_builder_ready",
+      "size_bytes": 11686,
+      "sha256": "0DFC97EFAAC7D0DCF9815C4D3192B5E2C16545216F6683C4A6589ABE4CD03667",
+      "config": "configs/t08_llm_graph_builder.yaml",
+      "config_sha256": "85D7FB0BFA6E6B1C491045FF7DF1450B725F9A4B00FA3D426B487A24E45AA3D8",
+      "prompt": "prompts/llm_graph_v1.md",
+      "prompt_sha256": "962F01081997FE852E725214CC79E3C0505850AEB7EDEB065BBC3ADFEF4D509B",
+      "response_schema": "schemas/llm_graph_response_v1.schema.json",
+      "response_schema_sha256": "CC6690AC2B934A5375B084F1C6B1742434D04E6CBAB66DAFB0A2460476300610",
+      "development_graphs": "data/manifests/t08_dev_graphs.jsonl",
+      "development_graphs_size_bytes": 22243,
+      "development_graphs_sha256": "D76119CAFB7C89A3D38830075890BCA8651B166565F19AC2EB79BDD19B2F212D",
+      "provider": "openai",
+      "model_version": "gpt-5.4-nano-2026-03-17",
+      "development_public_inputs_valid": 8,
+      "development_graphs_generated": 8,
+      "live_backend_configured": true,
+      "holdout_accessed": false
+    },
+    "t09_scd_graph_builder": {
+      "path": "data/manifests/t09_scd_graph_builder_audit.json",
+      "status": "complete_scd_graph_builder_ready",
+      "size_bytes": 8912,
+      "sha256": "C4AD77DAA4D9510F96983455C4A1F7B927631F1BD133C8411390B729537DD61A",
+      "config": "configs/t09_scd_graph_builder.yaml",
+      "config_sha256": "7FDCED6C39794E739F08FF8C806E9596BBD747347DE5260E6577D26C7703C5A0",
+      "raw_cpdag": "data/manifests/t09_dev_scd_cpdag.jsonl",
+      "raw_cpdag_size_bytes": 14614,
+      "raw_cpdag_sha256": "393222B83F7170B8E33357CDAA091CE61295C910D4CFC5FBAAC0CABEB0209CA0",
+      "projected_dag": "data/manifests/t09_dev_scd_projected_dag.jsonl",
+      "projected_dag_size_bytes": 13257,
+      "projected_dag_sha256": "43E2242C8C8971DBD40CB73605EFF091232EAA5BBED465D4CA5BB070956696A6",
+      "selected_method_id": "boss_basis_bic__p1__t3",
+      "development_raw_cpdag_generated": 8,
+      "development_projected_dag_generated": 8,
+      "holdout_accessed": false,
+      "story_or_semantics_accessed": false,
+      "grading_or_oracle_accessed": false
+    },
+    "t10_hybrid_graph_builder": {
+      "path": "data/manifests/t10_hybrid_graph_builder_audit.json",
+      "status": "complete_hybrid_h1_ready",
+      "size_bytes": 14899,
+      "sha256": "6F84CBDAA8686B073C80AF39A90197CB52B433617B37F806668DA90597FE6536",
+      "config": "configs/t10_hybrid_graph_builder.yaml",
+      "config_sha256": "EE6ABDF6C4819F19570BAA01F10C4F459D7CB72022F6522974E1F504F7B13A93",
+      "development_graphs": "data/manifests/t10_dev_hybrid_graphs.jsonl",
+      "development_graphs_size_bytes": 19641,
+      "development_graphs_sha256": "BD16C234E6B1B6AA261FA505E5F357C5160D61AB0768515C5116577AA0ADF18A",
+      "provider": "openai",
+      "model_version": "gpt-5.4-nano-2026-03-17",
+      "development_graphs_generated": 8,
+      "unresolved_edges_oriented": 27,
+      "validation_retries": 0,
+      "holdout_accessed": false,
+      "grading_or_oracle_accessed": false
+    },
+    "t11_graph_metrics": {
+      "path": "data/manifests/t11_graph_metrics_audit.json",
+      "status": "complete_development_graph_metrics",
+      "size_bytes": 15307,
+      "sha256": "B0CEC26D62F37018A6E61839860E44F24E8F6E05D9355DA81F9BC6595291CC10",
+      "config": "configs/t11_graph_metrics.yaml",
+      "config_sha256": "C49EACA54BBD9F5218C768DCD16F5F0CFDCC8B1514166F12D225D1DC6280A6E2",
+      "records": "data/manifests/t11_dev_graph_metrics.jsonl",
+      "records_size_bytes": 63166,
+      "records_sha256": "96FC8C99E19EBA11F2F8177DC744769D93F5662A6AAE1E9DE0D3A5C6106F7A9D",
+      "development_scenes": 8,
+      "graph_views_per_scene": 5,
+      "records_generated": 40,
+      "sid_aid_ready": false,
+      "builder_tuning_performed": false,
+      "holdout_accessed": false
+    },
+    "t12_fixed_reasoner": {
+      "path": "data/manifests/t12_reasoner_audit.json",
+      "status": "complete_development_reasoner_holdout_blocked",
+      "size_bytes": 873,
+      "sha256": "7B53BEA2B06D1C441FB90F5245E8A69EBC17D9C25CBE80B01C7163B13ABF5E9C",
+      "config": "configs/t12_reasoner.yaml",
+      "config_sha256": "28DB680ECC8199320D1D331E8E4A2188AFCDC0DF89BA4DF8090C8E886E8E4126",
+      "prompt": "prompts/reasoner_cpdag_conservative_v1.txt",
+      "prompt_sha256": "4CF1D1A59CF15531024FAE68F63B913D60BA5C693A3B57E1E2E5B32612D42009",
+      "response_schema": "schemas/reasoner_response_v1.schema.json",
+      "response_schema_sha256": "4CA0EA98EE6B23CF1ECC765E13245D8FAA751D32EC468F7391B4ED97E3DAB76A",
+      "records": "data/manifests/t12_dev_reasoner_scores.jsonl",
+      "records_size_bytes": 248546,
+      "records_sha256": "BF7515CA02A2DC5B97266E34BE7251A8566860577854B27036F8F146B33C7F5B",
+      "provider": "google_ai_studio",
+      "model_version": "gemma-4-31b-it",
+      "development_scenes": 7,
+      "records_generated": 175,
+      "fixed_reasoner_contract_ready": true,
+      "holdout_reasoner_ready": false,
+      "holdout_accessed": false
+    },
+    "t12_v2_design_amendment": {
+      "status": "implementation_ready_model_unselected",
+      "config": "configs/t12_v2_design.yaml",
+      "config_sha256": "06616C24AA80C955E6B82ED6CB981685275379FACC44C41ABCB476E91D0BA0D6",
+      "v1_status": "data/manifests/t12_v1_baseline_status.json",
+      "v1_status_sha256": "BB306BA8DE4A4DBE54D63726EFA2F7B0E9E893687FFB92C3A565642ADA766359",
+      "synthetic_conformance": "data/manifests/t12_v2_synthetic_conformance.jsonl",
+      "synthetic_conformance_sha256": "B7B31BFE0202CD80861175DA166B0D06FF70537A69DA1AB9F78CC9CD19FB72F1",
+      "construct_validity_records": "data/manifests/t12_construct_validity_dev.jsonl",
+      "construct_validity_records_sha256": "A6168E890B8B54A9008B8E90122851DC5E70395A46F332C66B67A9E3A67B9857",
+      "synthetic_cases": 150,
+      "task_specific_response_schemas": 5,
+      "canonical_identical_input_cache": true,
+      "model_selected": false,
+      "holdout_accessed": false
+    }
+  },
+  "readiness": {
+    "artifact_verified": true,
+    "reasoning_ready": true,
+    "graph_eval_ready": true,
+    "task_panel_ready": true,
+    "observational_data_ready": true,
+    "oracle_ready": true,
+    "p0_scd_method_selected": true,
+    "p0_scd_ready": true,
+    "canonical_graph_contract_ready": true,
+    "oracle_loader_ready": true,
+    "llm_graph_builder_implementation_ready": true,
+    "llm_graph_builder_ready": true,
+    "scd_graph_builder_ready": true,
+    "hybrid_graph_builder_ready": true,
+    "structural_graph_metrics_ready": true,
+    "fixed_reasoner_contract_ready": true,
+    "t12_v2_model_independent_foundation_ready": true,
+    "holdout_reasoner_ready": false,
+    "sid_aid_ready": false,
+    "p1_generation_ready": false
+  },
+  "verdict": {
+    "p0_artifact_ready": true,
+    "reason": "The released P0 artifact, nested cohorts, graph contract, four graph construction paths, and structural metrics are ready. T12 additionally produced 175 replay-verified development reasoner records using graph/query/ID-type glossary only and implemented both official-answer and conservative-CPDAG scorers. However, Gemma achieved only 19/35 on the Oracle-graph sanity condition, so the current reasoner must be refined or replaced under a new version before holdout. Holdout remains unopened; SID/AID and P1 generation remain pending."
+  }
+}
