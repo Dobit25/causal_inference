@@ -1,120 +1,118 @@
-# Metrics Protocol
+# Metrics and Statistics Protocol
 
-Use three layers.
+## Layer 1 — Graph quality
 
-## Layer 1 — Structural graph quality
+### Metrics valid for all graph conditions
 
-- Skeleton precision / recall / F1.
-- Directed-edge precision / recall / F1.
-- Orientation accuracy.
+- Skeleton precision, recall, and F1.
+- Adjacency false-positive/false-negative counts.
+- Graph validity and node-set consistency.
+
+Metrics must consume `GraphArtifact.metrics_view()` so every method is compared on the same normalized `PartialGraph`. They may use method/view labels to choose a valid metric family, but never silently coerce a raw CPDAG into a DAG.
+
+### Raw CPDAG metrics
+
+- Correct compelled orientations.
+- Incorrect compelled orientations.
+- Unresolved orientation rate.
+- CPDAG-compatible skeleton SHD.
+
+Do not count an undirected CPDAG edge as an ordinary directed error without reporting that convention.
+
+### DAG metrics
+
+For `G_LLM`, `G_HYBRID`, `G_ORACLE`, P1 SCD DAG, and P0 projected-DAG sensitivity:
+
+- Directed-edge precision, recall, and F1.
+- Orientation accuracy conditional on correct adjacency.
 - SHD and normalized SHD.
 
-These separate:
-- adjacency mistakes;
-- direction mistakes;
-- overall edit distance.
+Clearly label projected-DAG metrics; arbitrary compatible orientations are not raw SCD discoveries.
 
-## Layer 2 — Causal-functional graph quality
+## Layer 2 — Causal-functional quality
 
-### SID — Structural Intervention Distance
-Reference:
-https://doi.org/10.1162/NECO_a_00708
+- SID only for compatible DAG node sets and implementations.
+- AID only after graph-type compatibility is established.
+- Query-relevant structural error as an explicitly exploratory project metric.
 
-SID measures discrepancies in intervention implications, not only edge edits.
+Outcome E is unavailable rather than zero when SID/AID assumptions are not satisfied.
 
-### AID / Adjustment Identification Distance family
-Reference:
-https://proceedings.mlr.press/v244/henckel24a.html
+T11 freezes the concrete structural conventions: skeleton SHD is adjacency FP + FN; DAG SHD is an unordered-pair state mismatch with reversal cost one; CPDAG state SHD distinguishes absent, undirected, forward, and reverse; normalized SHD divides by `n choose 2`; floating summaries use eight decimal places. SID/AID are currently `unavailable` with null values because no implementation has yet been pinned and validated. Raw CPDAGs are never silently projected.
 
-These distances focus on differences in adjustment-based causal identification.
+The completed development evaluation contains 40 records (8 scenes × 5 graph views). These results are descriptive only and cannot be used to reopen T08–T10. Full scene-level inference remains deferred to T15.
 
-### Query-relevant structural error
-Exploratory:
-measure errors only in the treatment/outcome-relevant causal subgraph.
+## Layer 3 — Downstream utility
 
-Do not present as a standard metric unless formally defined.
+### Oracle-answer accuracy
 
-## Layer 3 — Downstream LLM utility
+Scores the reasoner's answer against the scene's ground-truth task answer.
 
-- Final-answer accuracy.
-- Accuracy by query type.
-- Accuracy by noise type.
-- Robustness drop.
+For adjustment tasks, official CausalDS scoring remains primary for benchmark comparability. T12 v2 adds a separately labelled Pearl back-door total-effect sensitivity: controls may not be descendants of treatment and d-separation is evaluated after removing treatment's outgoing arrows. The bespoke `forbidden_controls_list` task is not assigned a standards-based value because the constructs are not equivalent.
 
-Define:
+### Uncertainty-aware correctness
+
+- If all CPDAG-compatible DAG extensions imply the same answer, that invariant answer is correct.
+- If compatible extensions imply different answers, `undetermined` is correct.
+- A definitive answer in an ambiguous case is uncertainty-incorrect even if it coincides with the oracle DAG by chance.
+
+### Derived summaries
 
 ```text
-NoiseDrop(method,z)
-= Accuracy_clean(method) - Accuracy_noise_z(method)
+OracleGap(method) = Accuracy(G_ORACLE) - Accuracy(G_method)
+ResidualOracleError = 1 - Accuracy(G_ORACLE)
 ```
 
-### Oracle gap
+Report task-type results and scene-macro results. Never retain aggregate accuracy without per-scene/task records.
 
-```text
-OracleGap(method)
-= Accuracy(G_ORACLE) - Accuracy(G_method)
-```
+## Independent unit and aggregation
 
-### Residual oracle error
+The independent statistical unit is `scene_id`. Tasks and graph methods are repeated measurements within a scene.
 
-```text
-ResidualOracleError
-= 1 - Accuracy(G_ORACLE)
-```
+Use all 33 graph-cohort scenes for graph-level metrics. Compute primary downstream summaries only on the fixed 27-scene, five-task panel. Report the 6 supplementary scenes separately as exploratory cases; do not pool their available tasks into primary accuracy.
 
-## Optional structured causal-answer scoring
+First compute:
 
-If the reasoner returns structured outputs, score:
-- query type;
-- treatment variable;
-- outcome variable;
-- identifiability;
-- adjustment set;
-- causal formula;
-- final answer.
+\[
+Accuracy_{s,m}=\frac{1}{T_s}\sum_t Correct_{s,t,m}.
+\]
 
-This distinguishes:
-`correct graph + wrong reasoning`
-from:
-`wrong graph + internally consistent reasoning`.
+Then aggregate scenes with equal weight. Do not treat `scene × task × graph` rows as independent samples.
 
-## Cost logs
+## Inference
 
-Always log:
-- graph-builder calls;
-- reasoner calls;
-- latency;
-- token usage if available;
-- retries;
-- invalid JSON/output count.
+- Primary uncertainty: paired scene-clustered bootstrap.
+- Bootstrap resampling unit: complete scene, retaining every task and graph condition.
+- Repetitions: 5000 unless an experiment version declares otherwise.
+- McNemar: sensitivity only because ordinary task-level McNemar ignores scene clustering.
+- Correlation: Spearman with scene-clustered uncertainty or method-specific scene-level analysis.
+- Multiple testing: Benjamini–Hochberg within each declared phase/outcome family.
 
-## Main analyses
+## Outcome policy
 
-1. Rank four graph methods by F1/SHD/SID/AID/downstream accuracy.
-2. Compare ranking disagreement.
-3. Spearman correlations from graph metrics to downstream accuracy.
-4. Analyze error types: deletion, false edge, reversal, confounder, off-path.
-5. Analyze graph condition × NoisyCausal noise type.
+A–G are co-equal exploratory research outcomes, evaluated only in applicable phases. Report estimates and intervals even when non-significant or adverse. GO/REFINE/STOP is based on data integrity, graph variance, reasoner responsiveness, scoring validity, and reproducibility—not on manufacturing a positive result.
 
-## Required per-item record
+## Required record
 
 ```json
 {
-  "system_id": "...",
-  "question_id": "...",
+  "scene_id": "...",
+  "task_id": "...",
   "graph_method": "llm|scd|hybrid|oracle",
-  "noise_type": "clean|IV|CS|CI|...",
-  "graph_hash": "...",
+  "graph_view": "cpdag|projected_dag|dag",
+  "graph_schema_version": "fourgraph.graph.v1",
+  "variable_mapping_sha256": "...",
+  "graph_sha256": "...",
+  "graph_artifact_sha256": "...",
   "prompt_hash": "...",
   "model_id": "...",
   "raw_output": "...",
   "parsed_answer": "...",
   "gold_answer": "...",
-  "is_correct": true,
+  "oracle_answer_correct": true,
+  "uncertainty_aware_correct": true,
   "latency_ms": null,
   "input_tokens": null,
-  "output_tokens": null
+  "output_tokens": null,
+  "retry_count": 0
 }
 ```
-
-Never retain only aggregate accuracy.
