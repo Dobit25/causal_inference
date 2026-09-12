@@ -1,0 +1,114 @@
+experiment:
+  task: T10
+  phase: p0_released
+  status: frozen_live_development_builder
+
+source:
+  benchmark: causalds
+  github_commit: c74671d0a0924efc5bb021fc8966f856d5b80a4f
+  huggingface_revision: 2880dfa710d08e076055cb0248ef0c534a93b0fa
+  variant: clean
+
+scope:
+  split_manifest: data/manifests/p0_frozen_split.json
+  cohort: graph
+  role: dev
+  expected_scenes: 8
+  stress_gate_scene: scene_000511
+  expected_unresolved_edges: 27
+  forbid_holdout_access: true
+
+parent:
+  raw_cpdag: data/manifests/t09_dev_scd_cpdag.jsonl
+  projected_dag_forbidden: true
+  preserve_skeleton: true
+  preserve_compelled_directions: true
+  preserve_markov_equivalence_class: true
+
+evidence:
+  allowed: [parent_graph, public_story, public_variable_semantics, public_schema_types]
+  public_artifacts: [story, schema]
+  allow_observational_table: false
+  allow_t08_llm_graph: false
+  allow_t09_projected_dag: false
+  allow_tasks_or_queries: false
+  allow_grading_or_oracle: false
+  allow_gold_answers: false
+
+prompt:
+  version: hybrid_orientation_v1
+  template: prompts/hybrid_orientation_v1.md
+  template_sha256: B7E76D22DACD19F60552A1B2E514D638A844A55D5584AC1D54EF552F96716048
+  response_schema: schemas/hybrid_orientation_response_v1.schema.json
+  response_schema_sha256: 652A1D22607ADAB5EB62839566AE8DFD3176ADBF8476B2AEA46DD844D9F58FF6
+  pair_policy: every_unresolved_edge_exactly_once
+  output_json_only: true
+
+llm:
+  source_freeze: configs/t08_llm_graph_builder.yaml
+  live_backend_configured: true
+  provider: openai
+  model_id: gpt-5.4-nano-2026-03-17
+  model_version: gpt-5.4-nano-2026-03-17
+  endpoint: /v1/responses
+  sdk: openai
+  sdk_version: 3.6.0
+  credential_env: OPENAI_API_KEY
+  service_tier: default
+  store: false
+  structured_outputs: json_schema_strict
+  reasoning_effort: none
+  temperature: 0
+  max_tokens: 6000
+  seed: null
+  max_validation_retries: 2
+  transport_max_retries: 2
+  timeout_seconds: 120
+
+validation:
+  exact_unresolved_pair_coverage: true
+  confidence_range: [0, 1]
+  unknown_fields: reject
+  unknown_nodes: reject
+  duplicate_pairs: reject
+  skeleton_changes: reject
+  compelled_direction_changes: reject
+  cycles: reject_and_retry
+  new_unshielded_colliders: reject_and_retry
+  equivalence_class_mismatch: reject_and_retry
+  heuristic_graph_repair: forbidden
+  projected_dag_fallback: forbidden
+  failure_after_retry: record_without_fallback_graph
+
+graph:
+  schema_version: fourgraph.graph.v1
+  graph_method: hybrid
+  graph_type: dag
+  graph_view: dag
+  contract_config: configs/graph_contract_v1.yaml
+
+logging:
+  raw_log_cache: results/raw/t10_hybrid
+  raw_logs_in_git: false
+  persist_prompt_and_response: true
+  persist_request_metadata: true
+  persist_tokens_latency_retries: true
+  persist_orientation_audit: true
+
+outputs:
+  dev_graphs: data/manifests/t10_dev_hybrid_graphs.jsonl
+  audit: data/manifests/t10_hybrid_graph_builder_audit.json
+
+freeze_anchors:
+  configs/t08_llm_graph_builder.yaml: 85D7FB0BFA6E6B1C491045FF7DF1450B725F9A4B00FA3D426B487A24E45AA3D8
+  configs/graph_contract_v1.yaml: 76C2778FFE1E89DE0BFC6D5F740DD7F731E7B88F39062EEA91B03B9C2B82DC12
+  data/manifests/p0_frozen_split.json: 9246C8C73D1AD7204E8E8081D2E4F2048AD3561AB3B5085DB242866BAD77A7E9
+  data/manifests/t09_dev_scd_cpdag.jsonl: 393222B83F7170B8E33357CDAA091CE61295C910D4CFC5FBAAC0CABEB0209CA0
+  src/fourgraph/causalds_public.py: 9283D59F1828D1212D14917C86EC394123B17571C7E776A0C4FF4AA6C4B6F7B5
+  src/fourgraph/graph_adapters.py: 3DBC2662AD554DF8A5E4DA506B42A329F1E4E38744F1D69417902D3283A42326
+  src/fourgraph/graph_contract.py: 2D46B126288E6DE06A1FD9B0AD0596D2942CF8BE3FBE7BF7B406049AEA2BB7BE
+  src/fourgraph/hybrid_graph.py: E388F8D0E927CA94E50F61102601F4B625D104ACC5A84FAAFC69DDAD43A1E35B
+  src/fourgraph/llm_backend.py: BF7583A63B08119DD42BC8104D39B022A687B611C9C3B4DA847166E52D053B6A
+  src/fourgraph/t10_openai_backend.py: 32096FE5332C3C25386DB57FC144C23B395B7D702F815C44A0F78ABF69204911
+  scripts/audit_causalds_t10.py: 0021834436DD971F4AA437AD04775AECBF217F2CCB269A0CBD10424893E35D3E
+  scripts/run_causalds_t10_live.py: A03EBB04933207913FEB5020266ACF59DFD738A6982CCD078A43A794BB1192D2
