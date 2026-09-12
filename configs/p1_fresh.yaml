@@ -1,0 +1,89 @@
+experiment:
+  name: causalds_fresh_homogeneous_p1_v1
+  phase: p1_fresh
+  role: primary_scientific_study
+  seed: 42
+
+source:
+  generator: causalds
+  github_commit: c74671d0a0924efc5bb021fc8966f856d5b80a4f
+  base_manifest: data/manifests/causalds.json
+  generated_manifest: data/manifests/causalds_p1_generated.json
+
+generation:
+  scenes: 100
+  split:
+    unit: scene_id
+    method: deterministic_stratified
+    dev_scenes: 20
+    holdout_scenes: 80
+  graph:
+    type: dag
+    node_counts: [5, 6, 7]
+    node_count_sampling: stratified
+    require_connected: true
+    require_no_latent: true
+  scm:
+    family: linear_non_gaussian
+    causal_sufficiency: true
+    independent_exogenous_noise: true
+  observations:
+    primary_sample_size: 2000
+    sensitivity_sample_sizes: [500, 10000]
+    sensitivity_scenes: 20
+  seeds_and_generator_outputs_must_be_persisted: true
+
+tasks:
+  family: adjustment_control
+  minimum_per_scene: 2
+  maximum_per_scene: 5
+  frozen_priority:
+    - identification__one_valid_adjustment_set
+    - identification__all_minimal_adjustment_sets
+    - identification__minimal_adjustment_set_size
+    - identification__n_valid_adjustment_sets
+    - bias_diagnostic__forbidden_controls_list
+
+graphs:
+  methods: [llm, scd, hybrid, oracle]
+  canonical_encoding: fourgraph.graph.v1
+  contract_config: configs/graph_contract_v1.yaml
+  contract_manifest: data/manifests/graph_contract_v1.json
+  graph_schema: schemas/graph_contract_v1.schema.json
+  variable_map_encoding: fourgraph.variable_map.v1
+  variable_map_schema: schemas/variable_map_v1.schema.json
+  reasoner_graph_schema: schemas/reasoner_graph_v1.schema.json
+  structure_hash: graph_sha256
+  audited_artifact_hash: artifact_sha256
+  scd:
+    primary_algorithm: direct_lingam
+    expected_output: dag
+    assumption_match: linear_acyclic_non_gaussian_independent_errors
+  hybrid:
+    strategy: scd_skeleton_semantic_orientation
+    preserve_scd_adjacency: true
+    allow_edge_addition: false
+    allow_edge_deletion: false
+
+reasoner:
+  model: null
+  temperature: 0
+  evidence_view: graph_query_noncausal_variable_glossary
+  graph_payload_schema: fourgraph.reasoner_graph.v1
+  allow_causal_story: false
+  provenance_blind: true
+
+statistics:
+  independent_unit: scene_id
+  aggregation: scene_macro_accuracy
+  inference: paired_scene_cluster_bootstrap
+  bootstrap_repetitions: 5000
+  multiple_testing: benjamini_hochberg
+
+evaluation:
+  outcomes:
+    policy: co_equal_exploratory_by_phase
+    clean_p0_p1: [A, B, C, D]
+    sid_aid_compatible: [E]
+    graph_perturbation: [F]
+    observation_robustness: [G]

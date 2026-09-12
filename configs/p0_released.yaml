@@ -1,0 +1,311 @@
+experiment:
+  name: causalds_released_p0_v1
+  phase: p0_released
+  role: exploratory
+  seed: 42
+
+source:
+  benchmark: causalds
+  github_commit: c74671d0a0924efc5bb021fc8966f856d5b80a4f
+  huggingface_revision: 2880dfa710d08e076055cb0248ef0c534a93b0fa
+  manifest: data/manifests/causalds.json
+
+cohorts:
+  graph:
+    observation_variant: clean
+    require_no_latent: true
+    require_dag_oracle: true
+    expected_scenes: 33
+    split:
+      unit: scene_id
+      method: deterministic_stratified
+      dev_scenes: 8
+      holdout_scenes: 25
+      status: frozen_after_t04_integrity
+      ids: from_frozen_manifest
+      ids_manifest: data/manifests/p0_frozen_split.json
+  primary_downstream:
+    parent: graph
+    require_all_frozen_tasks: true
+    expected_scenes: 27
+    tasks_per_scene: 5
+    split:
+      dev_scenes: 7
+      holdout_scenes: 20
+      status: frozen_after_t04_integrity
+      ids: from_frozen_manifest
+      ids_manifest: data/manifests/p0_frozen_split.json
+  supplementary:
+    parent: graph
+    expected_scenes: 6
+    downstream_role: exploratory_only
+    pool_with_primary_accuracy: false
+    split:
+      dev_scenes: 1
+      holdout_scenes: 5
+      status: frozen_after_t04_integrity
+      ids: from_frozen_manifest
+      ids_manifest: data/manifests/p0_frozen_split.json
+
+nesting:
+  primary_and_supplementary_partition_graph: true
+  preserve_split_role_across_cohorts: true
+
+t03:
+  status: complete_superseded_by_t04_freeze
+  inventory: data/manifests/causalds_scene_inventory.jsonl
+  split_manifest: data/manifests/p0_provisional_split.json
+  metadata_scope: tasks_schema_file_presence_and_grading_metadata_only
+  parquet_content_audit: deferred_to_t04
+  stratification:
+    algorithm: deterministic_nested_balance_v1
+    restarts: 64
+    numeric_features:
+      - graph_node_count
+      - graph_edge_density
+      - binary_node_fraction
+      - special_mechanism_node_fraction
+    categorical_features:
+      - graph_size_band
+      - graph_density_band
+      - data_type_family
+      - structural_label
+    common_stratum_minimum_count: 3
+    tie_break: lexicographic_scene_id_after_sha256_seeded_starts
+
+t04:
+  status: complete_integrity_ready
+  integrity_ready: true
+  parquet_engine: pyarrow_23.0.1
+  integrity_manifest: data/manifests/p0_data_integrity.json
+  frozen_split_manifest: data/manifests/p0_frozen_split.json
+  primary_task_manifest: data/manifests/p0_primary_task_manifest.jsonl
+  supplementary_task_manifest: data/manifests/p0_supplementary_task_manifest.jsonl
+  grading_access_purpose: integrity_audit
+  grading_parquet_values_read: false
+  all_33_scenes_passed: true
+
+t05:
+  status: complete_scd_ready
+  p0_scd_ready: true
+  preregistration: configs/t05_scd_selection.yaml
+  frozen_config: configs/t05_scd_frozen.yaml
+  selection_manifest: data/manifests/p0_scd_selection.json
+  dev_graphs: data/manifests/t05_dev_graphs.jsonl
+  selected_on: graph_dev_8_only
+  holdout_accessed: false
+  downstream_reasoner_used: false
+
+t06:
+  status: complete_canonical_graph_contract_v1
+  contract_config: configs/graph_contract_v1.yaml
+  manifest: data/manifests/graph_contract_v1.json
+  graph_schema: schemas/graph_contract_v1.schema.json
+  variable_map_schema: schemas/variable_map_v1.schema.json
+  holdout_accessed: false
+  t05_artifacts_rewritten: false
+
+t07:
+  status: complete_oracle_loader_ready
+  config: configs/t07_oracle_loader.yaml
+  audit_manifest: data/manifests/t07_oracle_loader_audit.json
+  implementation: fourgraph.causalds_oracle
+  validated_on: graph_dev_8_only
+  holdout_accessed: false
+  downstream_reasoner_used: false
+
+t08:
+  status: complete_llm_graph_builder_ready
+  complete: true
+  implementation_ready: true
+  llm_graph_builder_ready: true
+  config: configs/t08_llm_graph_builder.yaml
+  audit_manifest: data/manifests/t08_llm_graph_builder_audit.json
+  validated_public_inputs: 8
+  generated_dev_graphs: 8
+  live_backend_configured: true
+  holdout_accessed: false
+  downstream_reasoner_used: false
+
+t09:
+  status: complete_scd_graph_builder_ready
+  complete: true
+  scd_graph_builder_ready: true
+  config: configs/t09_scd_graph_builder.yaml
+  audit_manifest: data/manifests/t09_scd_graph_builder_audit.json
+  raw_cpdag_manifest: data/manifests/t09_dev_scd_cpdag.jsonl
+  projected_dag_manifest: data/manifests/t09_dev_scd_projected_dag.jsonl
+  generated_dev_raw_cpdag: 8
+  generated_dev_projected_dag: 8
+  holdout_accessed: false
+  story_or_semantics_accessed: false
+  grading_or_oracle_accessed: false
+  downstream_reasoner_used: false
+
+tasks:
+  family: adjustment_control
+  minimum_per_scene: 2
+  maximum_per_scene: 5
+  frozen_priority:
+    - identification__one_valid_adjustment_set
+    - identification__all_minimal_adjustment_sets
+    - identification__minimal_adjustment_set_size
+    - identification__n_valid_adjustment_sets
+    - bias_diagnostic__forbidden_controls_list
+  primary_manifest: data/manifests/p0_primary_task_manifest.jsonl
+  supplementary_manifest: data/manifests/p0_supplementary_task_manifest.jsonl
+
+graphs:
+  methods: [llm, scd, hybrid, oracle]
+  canonical_encoding: fourgraph.graph.v1
+  contract_config: configs/graph_contract_v1.yaml
+  contract_manifest: data/manifests/graph_contract_v1.json
+  graph_schema: schemas/graph_contract_v1.schema.json
+  variable_map_encoding: fourgraph.variable_map.v1
+  variable_map_schema: schemas/variable_map_v1.schema.json
+  reasoner_graph_schema: schemas/reasoner_graph_v1.schema.json
+  structure_hash: graph_sha256
+  audited_artifact_hash: artifact_sha256
+  llm:
+    input_view: public_story_and_variable_semantics
+    public_loader: fourgraph.causalds_public
+    builder: fourgraph.llm_graph
+    config: configs/t08_llm_graph_builder.yaml
+    graph_per_scene: 1
+    task_conditioned_graphs: false
+    pair_policy: every_unordered_pair_exactly_once
+    invalid_output_policy: bounded_retry_then_record_failure_without_fallback
+    live_backend_configured: true
+    provider: openai
+    model_version: gpt-5.4-nano-2026-03-17
+    endpoint: /v1/responses
+    service_tier: default
+    allow_observational_table: false
+    allow_tasks_or_queries: false
+    allow_oracle: false
+  scd:
+    input_view: anonymized_observational_table
+    primary_algorithm: boss_basis_bic
+    primary_config: configs/t05_scd_frozen.yaml
+    builder: fourgraph.scd_graph
+    builder_config: configs/t09_scd_graph_builder.yaml
+    raw_cpdag_manifest: data/manifests/t09_dev_scd_cpdag.jsonl
+    projected_dag_manifest: data/manifests/t09_dev_scd_projected_dag.jsonl
+    parameters:
+      penalty_discount: 1.0
+      truncation_limit: 3
+      num_starts: 1
+      use_bes: false
+      use_data_order: true
+    primary_output: cpdag
+    allow_semantics: false
+    allow_oracle: false
+    dag_projection:
+      enabled: true
+      role: sensitivity
+      method: deterministic_consistent_extension
+      tie_break: lexicographic
+      preserve_compelled_orientations: true
+      forbid_new_unshielded_colliders: true
+  hybrid:
+    strategy: scd_skeleton_semantic_orientation
+    input_graph: scd_cpdag
+    builder: fourgraph.hybrid_graph
+    builder_config: configs/t10_hybrid_graph_builder.yaml
+    development_manifest: data/manifests/t10_dev_hybrid_graphs.jsonl
+    audit_manifest: data/manifests/t10_hybrid_graph_builder_audit.json
+    semantic_model_source: configs/t08_llm_graph_builder.yaml
+    preserve_scd_adjacency: true
+    preserve_compelled_orientations: true
+    preserve_markov_equivalence_class: true
+    allow_edge_addition: false
+    allow_edge_deletion: false
+    allow_t08_llm_graph: false
+    allow_projected_dag: false
+    allow_observational_table: false
+    allow_tasks_or_queries: false
+    allow_oracle: false
+    validate_acyclicity: true
+    log_edge_arbitration: true
+  oracle:
+    input_view: grading_only_ground_truth
+    loader: fourgraph.causalds_oracle
+    access_purpose: oracle
+    canonical_output: fourgraph.graph.v1
+    return_raw_grading_document: false
+    allow_non_oracle_access: false
+
+reasoner:
+  provider: google_ai_studio
+  model: gemma-4-31b-it
+  model_version: gemma-4-31b-it
+  development_config: configs/t12_reasoner.yaml
+  development_contract_complete: true
+  holdout_ready: false
+  holdout_blocker: development_oracle_condition_accuracy_19_of_35
+  temperature: 0
+  prompt_version: cpdag_conservative_v1
+  evidence_view: graph_query_noncausal_variable_glossary
+  graph_payload_schema: fourgraph.reasoner_graph.v1
+  allow_causal_story: false
+  allow_observational_table: false
+  provenance_blind: true
+  cpdag_semantics:
+    undirected_edge: direction_unknown
+    decision_rule: invariant_across_consistent_extensions
+    ambiguous_answer: undetermined
+
+t12_v2_amendment:
+  status: implementation_ready_model_unselected
+  config: configs/t12_v2_design.yaml
+  preserve_t12_v1: true
+  synthetic_conformance_cases: 150
+  task_specific_response_schemas: 5
+  canonical_identical_input_cache: true
+  construct_validity_sensitivity: pearl_backdoor_total_effect
+  holdout_ready: false
+  holdout_accessed: false
+
+evaluation:
+  primary_graph_view: cpdag
+  sensitivity_graph_view: projected_dag
+  graph_metrics:
+    config: configs/t11_graph_metrics.yaml
+    evaluator: fourgraph.graph_metrics
+    records: data/manifests/t11_dev_graph_metrics.jsonl
+    audit: data/manifests/t11_graph_metrics_audit.json
+    metrics_input: GraphArtifact.metrics_view
+    skeleton_shd: false_positive_plus_false_negative
+    dag_reversal_cost: 1
+    normalization: n_choose_2
+    sid_aid_status: unavailable_pending_pinned_validated_implementation
+  scorers:
+    - oracle_answer_accuracy
+    - uncertainty_aware_correctness
+  outcomes:
+    policy: co_equal_exploratory_by_phase
+    clean_p0_p1: [A, B, C, D]
+    sid_aid_compatible: [E]
+    graph_perturbation: [F]
+    observation_robustness: [G]
+
+statistics:
+  independent_unit: scene_id
+  aggregation: scene_macro_accuracy
+  inference: paired_scene_cluster_bootstrap
+  bootstrap_repetitions: 5000
+  mcnemar_role: sensitivity_only
+  correlation: spearman_with_scene_clustered_uncertainty
+  multiple_testing: benjamini_hochberg
+
+logging:
+  raw_prompts: true
+  raw_outputs: true
+  variable_mapping_hashes: true
+  graph_structure_hashes: true
+  graph_artifact_hashes: true
+  prompt_hashes: true
+  edge_arbitration: true
+  tokens: true
+  latency: true
+  retries: true
