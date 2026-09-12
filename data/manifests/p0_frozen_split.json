@@ -1,0 +1,597 @@
+{
+  "algorithm": {
+    "baseline_start_median_loss": 2.68333173,
+    "categorical_features": [
+      "graph_size_band",
+      "graph_density_band",
+      "data_type_family",
+      "structural_label"
+    ],
+    "feature_encoding": {
+      "categorical_levels": {
+        "data_type_family": [
+          "continuous_only",
+          "mixed_binary_continuous"
+        ],
+        "graph_density_band": [
+          "dense_gt_0_75",
+          "medium_0_50_0_75",
+          "sparse_le_0_50"
+        ],
+        "graph_size_band": [
+          "large_6_plus",
+          "medium_4_5",
+          "small_3"
+        ],
+        "structural_label": [
+          "arrowhead",
+          "chain",
+          "collider",
+          "confounding",
+          "fork",
+          "grafted",
+          "mediation"
+        ]
+      },
+      "numeric": {
+        "binary_node_fraction": {
+          "mean": 0.3088744584848485,
+          "std": 0.2198205151228907
+        },
+        "graph_edge_density": {
+          "mean": 0.7989898996969698,
+          "std": 0.22600093039438718
+        },
+        "graph_node_count": {
+          "mean": 3.6363636363636362,
+          "std": 1.1232577571424627
+        },
+        "special_mechanism_node_fraction": {
+          "mean": 0.08181818212121213,
+          "std": 0.1950724484002936
+        }
+      }
+    },
+    "name": "deterministic_nested_balance_v1",
+    "numeric_features": [
+      "graph_node_count",
+      "graph_edge_density",
+      "binary_node_fraction",
+      "special_mechanism_node_fraction"
+    ],
+    "objective": "minimize equal-weight graph + primary + supplementary centroid loss after satisfying common-stratum coverage",
+    "restarts": 64,
+    "seed": 42,
+    "selected_objective_loss": 0.32865675,
+    "tie_break": "lexicographic scene_id after SHA-256 seeded starts"
+  },
+  "balance": {
+    "graph": {
+      "categorical": {
+        "data_type_family": {
+          "all": {
+            "continuous_only": 6,
+            "mixed_binary_continuous": 27
+          },
+          "dev": {
+            "continuous_only": 1,
+            "mixed_binary_continuous": 7
+          },
+          "holdout": {
+            "continuous_only": 5,
+            "mixed_binary_continuous": 20
+          }
+        },
+        "graph_density_band": {
+          "all": {
+            "dense_gt_0_75": 18,
+            "medium_0_50_0_75": 10,
+            "sparse_le_0_50": 5
+          },
+          "dev": {
+            "dense_gt_0_75": 5,
+            "medium_0_50_0_75": 2,
+            "sparse_le_0_50": 1
+          },
+          "holdout": {
+            "dense_gt_0_75": 13,
+            "medium_0_50_0_75": 8,
+            "sparse_le_0_50": 4
+          }
+        },
+        "graph_size_band": {
+          "all": {
+            "large_6_plus": 3,
+            "medium_4_5": 6,
+            "small_3": 24
+          },
+          "dev": {
+            "large_6_plus": 1,
+            "medium_4_5": 1,
+            "small_3": 6
+          },
+          "holdout": {
+            "large_6_plus": 2,
+            "medium_4_5": 5,
+            "small_3": 18
+          }
+        },
+        "structural_label": {
+          "all": {
+            "arrowhead": 1,
+            "chain": 2,
+            "collider": 2,
+            "confounding": 14,
+            "fork": 3,
+            "grafted": 8,
+            "mediation": 3
+          },
+          "dev": {
+            "arrowhead": 1,
+            "chain": 1,
+            "confounding": 3,
+            "fork": 1,
+            "grafted": 1,
+            "mediation": 1
+          },
+          "holdout": {
+            "chain": 1,
+            "collider": 2,
+            "confounding": 11,
+            "fork": 2,
+            "grafted": 7,
+            "mediation": 2
+          }
+        }
+      },
+      "numeric": {
+        "binary_node_fraction": {
+          "absolute_standardized_mean_difference": 0.05865175,
+          "all_mean": 0.30887446,
+          "dev_mean": 0.29910714,
+          "holdout_mean": 0.312
+        },
+        "graph_edge_density": {
+          "absolute_standardized_mean_difference": 0.07890823,
+          "all_mean": 0.7989899,
+          "dev_mean": 0.8125,
+          "holdout_mean": 0.79466667
+        },
+        "graph_node_count": {
+          "absolute_standardized_mean_difference": 0.01335401,
+          "all_mean": 3.63636364,
+          "dev_mean": 3.625,
+          "holdout_mean": 3.64
+        },
+        "special_mechanism_node_fraction": {
+          "absolute_standardized_mean_difference": 0.0102526,
+          "all_mean": 0.08181818,
+          "dev_mean": 0.08333333,
+          "holdout_mean": 0.08133333
+        }
+      }
+    },
+    "primary_downstream": {
+      "categorical": {
+        "data_type_family": {
+          "all": {
+            "continuous_only": 5,
+            "mixed_binary_continuous": 22
+          },
+          "dev": {
+            "continuous_only": 1,
+            "mixed_binary_continuous": 6
+          },
+          "holdout": {
+            "continuous_only": 4,
+            "mixed_binary_continuous": 16
+          }
+        },
+        "graph_density_band": {
+          "all": {
+            "dense_gt_0_75": 18,
+            "medium_0_50_0_75": 5,
+            "sparse_le_0_50": 4
+          },
+          "dev": {
+            "dense_gt_0_75": 5,
+            "medium_0_50_0_75": 1,
+            "sparse_le_0_50": 1
+          },
+          "holdout": {
+            "dense_gt_0_75": 13,
+            "medium_0_50_0_75": 4,
+            "sparse_le_0_50": 3
+          }
+        },
+        "graph_size_band": {
+          "all": {
+            "large_6_plus": 3,
+            "medium_4_5": 5,
+            "small_3": 19
+          },
+          "dev": {
+            "large_6_plus": 1,
+            "medium_4_5": 1,
+            "small_3": 5
+          },
+          "holdout": {
+            "large_6_plus": 2,
+            "medium_4_5": 4,
+            "small_3": 14
+          }
+        },
+        "structural_label": {
+          "all": {
+            "arrowhead": 1,
+            "chain": 2,
+            "confounding": 14,
+            "grafted": 7,
+            "mediation": 3
+          },
+          "dev": {
+            "arrowhead": 1,
+            "chain": 1,
+            "confounding": 3,
+            "grafted": 1,
+            "mediation": 1
+          },
+          "holdout": {
+            "chain": 1,
+            "confounding": 11,
+            "grafted": 6,
+            "mediation": 2
+          }
+        }
+      },
+      "numeric": {
+        "binary_node_fraction": {
+          "absolute_standardized_mean_difference": 0.0114943,
+          "all_mean": 0.29603175,
+          "dev_mean": 0.29421769,
+          "holdout_mean": 0.29666667
+        },
+        "graph_edge_density": {
+          "absolute_standardized_mean_difference": 0.02930717,
+          "all_mean": 0.83827161,
+          "dev_mean": 0.83333333,
+          "holdout_mean": 0.84
+        },
+        "graph_node_count": {
+          "absolute_standardized_mean_difference": 0.01210093,
+          "all_mean": 3.7037037,
+          "dev_mean": 3.71428571,
+          "holdout_mean": 3.7
+        },
+        "special_mechanism_node_fraction": {
+          "absolute_standardized_mean_difference": 0.01690429,
+          "all_mean": 0.09259259,
+          "dev_mean": 0.0952381,
+          "holdout_mean": 0.09166667
+        }
+      }
+    },
+    "supplementary": {
+      "categorical": {
+        "data_type_family": {
+          "all": {
+            "continuous_only": 1,
+            "mixed_binary_continuous": 5
+          },
+          "dev": {
+            "mixed_binary_continuous": 1
+          },
+          "holdout": {
+            "continuous_only": 1,
+            "mixed_binary_continuous": 4
+          }
+        },
+        "graph_density_band": {
+          "all": {
+            "medium_0_50_0_75": 5,
+            "sparse_le_0_50": 1
+          },
+          "dev": {
+            "medium_0_50_0_75": 1
+          },
+          "holdout": {
+            "medium_0_50_0_75": 4,
+            "sparse_le_0_50": 1
+          }
+        },
+        "graph_size_band": {
+          "all": {
+            "medium_4_5": 1,
+            "small_3": 5
+          },
+          "dev": {
+            "small_3": 1
+          },
+          "holdout": {
+            "medium_4_5": 1,
+            "small_3": 4
+          }
+        },
+        "structural_label": {
+          "all": {
+            "collider": 2,
+            "fork": 3,
+            "grafted": 1
+          },
+          "dev": {
+            "fork": 1
+          },
+          "holdout": {
+            "collider": 2,
+            "fork": 2,
+            "grafted": 1
+          }
+        }
+      },
+      "numeric": {
+        "binary_node_fraction": {
+          "absolute_standardized_mean_difference": 0.16694602,
+          "all_mean": 0.36666667,
+          "dev_mean": 0.33333333,
+          "holdout_mean": 0.37333333
+        },
+        "graph_edge_density": {
+          "absolute_standardized_mean_difference": 0.53665631,
+          "all_mean": 0.62222223,
+          "dev_mean": 0.66666667,
+          "holdout_mean": 0.61333334
+        },
+        "graph_node_count": {
+          "absolute_standardized_mean_difference": 0.53665631,
+          "all_mean": 3.33333333,
+          "dev_mean": 3.0,
+          "holdout_mean": 3.4
+        },
+        "special_mechanism_node_fraction": {
+          "absolute_standardized_mean_difference": 0.53665631,
+          "all_mean": 0.03333333,
+          "dev_mean": 0.0,
+          "holdout_mean": 0.04
+        }
+      }
+    }
+  },
+  "balance_checks": {
+    "common_graph_strata_covered": true,
+    "common_primary_strata_covered": true,
+    "selected_loss_below_baseline_median": true,
+    "supplementary_single_dev_limit": "Only one of six supplementary scenes can be development; full motif coverage is impossible and results remain exploratory."
+  },
+  "cohorts": {
+    "graph": {
+      "dev_ids": [
+        "scene_000098",
+        "scene_000172",
+        "scene_000402",
+        "scene_000415",
+        "scene_000511",
+        "scene_000719",
+        "scene_000792",
+        "scene_000814"
+      ],
+      "holdout_ids": [
+        "scene_000215",
+        "scene_000224",
+        "scene_000253",
+        "scene_000255",
+        "scene_000281",
+        "scene_000338",
+        "scene_000372",
+        "scene_000395",
+        "scene_000399",
+        "scene_000425",
+        "scene_000499",
+        "scene_000521",
+        "scene_000594",
+        "scene_000628",
+        "scene_000665",
+        "scene_000699",
+        "scene_000757",
+        "scene_000778",
+        "scene_000822",
+        "scene_000836",
+        "scene_000864",
+        "scene_000907",
+        "scene_000966",
+        "scene_000976",
+        "scene_000977"
+      ],
+      "scene_count": 33
+    },
+    "primary_downstream": {
+      "dev_ids": [
+        "scene_000098",
+        "scene_000172",
+        "scene_000415",
+        "scene_000511",
+        "scene_000719",
+        "scene_000792",
+        "scene_000814"
+      ],
+      "holdout_ids": [
+        "scene_000215",
+        "scene_000224",
+        "scene_000253",
+        "scene_000255",
+        "scene_000281",
+        "scene_000372",
+        "scene_000395",
+        "scene_000399",
+        "scene_000425",
+        "scene_000499",
+        "scene_000594",
+        "scene_000665",
+        "scene_000757",
+        "scene_000778",
+        "scene_000822",
+        "scene_000836",
+        "scene_000864",
+        "scene_000907",
+        "scene_000976",
+        "scene_000977"
+      ],
+      "required_task_ids": [
+        "identification__one_valid_adjustment_set",
+        "identification__all_minimal_adjustment_sets",
+        "identification__minimal_adjustment_set_size",
+        "identification__n_valid_adjustment_sets",
+        "bias_diagnostic__forbidden_controls_list"
+      ],
+      "scene_count": 27,
+      "tasks_per_scene": 5
+    },
+    "supplementary": {
+      "available_task_ids_by_scene": {
+        "scene_000338": [
+          "association__delta_point__z",
+          "association__delta_sign_only__z",
+          "association__effect_size_point",
+          "association__sign_before_after__z",
+          "association__sign_only",
+          "bias_diagnostic__collider_bias_boolean__z",
+          "causal_sketch__edges_only",
+          "causal_sketch__skeleton_edges",
+          "collider_phenomenon__induced_association_boolean__z",
+          "collider_phenomenon__induced_association_sign_only__z",
+          "collider_phenomenon__induced_association_strength_point__z",
+          "counterfactual_identification__identifiable_boolean__ett",
+          "identification__identifiable_boolean",
+          "identification__method_label",
+          "prediction__point_predictor"
+        ],
+        "scene_000402": [
+          "association__delta_point__z",
+          "association__delta_sign_only__z",
+          "association__effect_size_point",
+          "association__sign_before_after__z",
+          "association__sign_only",
+          "causal_sketch__edges_only",
+          "causal_sketch__skeleton_edges",
+          "counterfactual_identification__identifiable_boolean__ett",
+          "identification__identifiable_boolean",
+          "identification__method_label",
+          "prediction__point_predictor",
+          "prediction__prediction_interval"
+        ],
+        "scene_000521": [
+          "association__delta_point__z",
+          "association__delta_sign_only__z",
+          "association__effect_size_point",
+          "association__sign_before_after__z",
+          "association__sign_only",
+          "causal_sketch__edges_only",
+          "causal_sketch__skeleton_edges",
+          "counterfactual_identification__identifiable_boolean__ett",
+          "identification__identifiable_boolean",
+          "identification__method_label",
+          "prediction__point_predictor",
+          "prediction__prediction_interval"
+        ],
+        "scene_000628": [
+          "association__argmax_change",
+          "association__delta_point__aux1_x",
+          "association__delta_point__aux1_y",
+          "association__delta_point__z",
+          "association__delta_sign_only__aux1_x",
+          "association__delta_sign_only__aux1_y",
+          "association__delta_sign_only__z",
+          "association__effect_size_point",
+          "association__sign_before_after__aux1_x",
+          "association__sign_before_after__aux1_y",
+          "association__sign_before_after__z",
+          "association__sign_only",
+          "bias_diagnostic__collider_bias_boolean__z",
+          "causal_sketch__edges_only",
+          "causal_sketch__skeleton_edges",
+          "collider_phenomenon__induced_association_boolean__z",
+          "collider_phenomenon__induced_association_sign_only__z",
+          "collider_phenomenon__induced_association_strength_point__z",
+          "counterfactual_identification__identifiable_boolean__ett",
+          "identification__identifiable_boolean",
+          "identification__method_label",
+          "prediction__point_predictor",
+          "prediction__prediction_interval"
+        ],
+        "scene_000699": [
+          "association__delta_point__z",
+          "association__delta_sign_only__z",
+          "association__effect_size_point",
+          "association__sign_before_after__z",
+          "association__sign_only",
+          "bias_diagnostic__collider_bias_boolean__z",
+          "causal_sketch__edges_only",
+          "causal_sketch__skeleton_edges",
+          "collider_phenomenon__induced_association_boolean__z",
+          "collider_phenomenon__induced_association_sign_only__z",
+          "collider_phenomenon__induced_association_strength_point__z",
+          "counterfactual_identification__identifiable_boolean__ett",
+          "identification__identifiable_boolean",
+          "identification__method_label",
+          "prediction__point_predictor",
+          "prediction__prediction_interval"
+        ],
+        "scene_000966": [
+          "association__delta_point__z",
+          "association__delta_sign_only__z",
+          "association__effect_size_point",
+          "association__sign_before_after__z",
+          "association__sign_only",
+          "causal_sketch__edges_only",
+          "causal_sketch__skeleton_edges",
+          "counterfactual_identification__identifiable_boolean__ett",
+          "identification__identifiable_boolean",
+          "identification__method_label",
+          "prediction__point_predictor"
+        ]
+      },
+      "dev_ids": [
+        "scene_000402"
+      ],
+      "downstream_role": "exploratory_only",
+      "holdout_ids": [
+        "scene_000338",
+        "scene_000521",
+        "scene_000628",
+        "scene_000699",
+        "scene_000966"
+      ],
+      "pool_with_primary_accuracy": false,
+      "scene_count": 6
+    }
+  },
+  "freeze_gate": {
+    "all_33_scenes_passed": true,
+    "integrity_manifest": "data/manifests/p0_data_integrity.json",
+    "primary_task_manifest": "data/manifests/p0_primary_task_manifest.jsonl",
+    "primary_task_manifest_sha256": "7e16eff8853ed8a434c5f184d6649710b8e1ddcfaf05b367726386cbb7d016a9",
+    "supplementary_task_manifest": "data/manifests/p0_supplementary_task_manifest.jsonl",
+    "supplementary_task_manifest_sha256": "1560942af77dfb79a19f1ca56ee2994a7403844c4e959e2cf061b8eb2084d83b"
+  },
+  "manifest_version": 1,
+  "nesting_checks": {
+    "dev_partition_matches_graph_dev": true,
+    "holdout_partition_matches_graph_holdout": true,
+    "one_role_per_scene": true,
+    "primary_and_supplementary_partition_graph": true
+  },
+  "next_gate": "T05 selects and freezes the P0 CPDAG-producing SCD method; frozen scene/task membership cannot change without a new experiment version.",
+  "not_frozen": false,
+  "source": {
+    "benchmark": "CausalDS",
+    "github_commit": "c74671d0a0924efc5bb021fc8966f856d5b80a4f",
+    "huggingface_revision": "2880dfa710d08e076055cb0248ef0c534a93b0fa",
+    "inventory_path": "data/manifests/causalds_scene_inventory.jsonl",
+    "inventory_scene_count": 100,
+    "inventory_sha256": "24b27919aaa0e8828c2f635627856d35fa3d3785a1c1933b59e1a18c8d739562",
+    "metadata_scope": "tasks.json, schema.json, file presence, and grading-only graph/mechanism metadata; no parquet content inspection",
+    "provisional_split_path": "data/manifests/p0_provisional_split.json",
+    "provisional_split_sha256": "4d6fab447f955954bf421d2a2ee6ce3396d470a01df086ae4553ae6ed3498508"
+  },
+  "status": "frozen_after_t04_integrity",
+  "task": "T04"
+}
