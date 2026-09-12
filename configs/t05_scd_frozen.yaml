@@ -1,0 +1,72 @@
+experiment:
+  task: T05
+  phase: p0_released
+  status: frozen_after_dev_selection
+  selected_method_id: boss_basis_bic__p1__t3
+
+selection_evidence:
+  preregistration: configs/t05_scd_selection.yaml
+  preregistration_sha256: 6DDB755A2E3D2BE2F2BBCC21DFD9B78A677E69C0894CAC2C08EDD13F5D97ECCA
+  result_manifest: data/manifests/p0_scd_selection.json
+  result_manifest_sha256: 45BAACE1E4289786F927771BF37041A57A2A81D436541B1795D9D903839282F1
+  dev_graphs: data/manifests/t05_dev_graphs.jsonl
+  dev_graphs_sha256: 60AE168B4D06AE1BD2C22B3D262D71D4CDC149CAFBA8A7013737135A62D08261
+  selected_on: graph_dev_8_only
+  holdout_accessed: false
+  downstream_reasoner_used: false
+
+backend:
+  adapter: direct_jpype_tetrad
+  python: 3.10.20
+  java: 21.0.10
+  py_tetrad_repository: https://github.com/cmu-phil/py-tetrad
+  py_tetrad_commit: 092a8cf13a9b31809d4256fd9aa3c98c52b88002
+  tetrad_jar_implementation_version: 7.6.11-SNAPSHOT
+  tetrad_jar_sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051
+  raw_cache: data/raw/t05/py-tetrad
+
+data_view:
+  input: public_clean_data_parquet
+  rows_per_scene: 16000
+  pool_scenes: false
+  anonymized_names: X000_X001_etc
+  conceptual_types: schema_and_mechanism_metadata
+  continuous_preprocessing: per_scene_sample_zscore
+  binary_preprocessing: exact_0_1_discrete_categories
+  allow_story_or_semantics: false
+  allow_oracle: false
+
+discovery:
+  algorithm: BOSS
+  score: BasisFunctionBicScore
+  output: CPDAG
+  parameters:
+    penalty_discount: 1.0
+    truncation_limit: 3
+    singularity_lambda: 0.0
+    do_one_equation_only: false
+    num_starts: 1
+    use_bes: false
+    use_data_order: true
+    output_cpdag: true
+  assumptions:
+    - iid_rows_within_scene
+    - acyclic_causally_sufficient_DAG
+    - causal_Markov_and_faithfulness
+    - no_selection_bias_or_measurement_error
+    - smooth_dependence_is_adequately_represented_by_truncated_basis_expansion
+    - finite_variance_and_BIC_local_score_adequacy
+  limitations:
+    - greedy_order_search_is_not_globally_optimal
+    - released_mechanisms_are_heterogeneous_and_not_all_exactly_in_the_basis_family
+    - raw_cpdag_orientation_coverage_is_low_and_must_not_be_reported_as_a_DAG
+
+projection:
+  role: sensitivity_only
+  implementation: fourgraph.partial_graph.consistent_extension
+  algorithm: Dor_Tarsi_sink_elimination
+  sink_tie_break: lexicographically_smallest_eligible_node
+  preserve_skeleton: true
+  preserve_compelled_directions: true
+  forbid_cycles: true
+  forbid_new_unshielded_colliders: true

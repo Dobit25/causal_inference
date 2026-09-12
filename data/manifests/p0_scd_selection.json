@@ -1,0 +1,509 @@
+{
+  "artifacts": {
+    "dev_graphs": "data/manifests/t05_dev_graphs.jsonl",
+    "dev_graphs_records": 384,
+    "dev_graphs_sha256": "60AE168B4D06AE1BD2C22B3D262D71D4CDC149CAFBA8A7013737135A62D08261"
+  },
+  "assumptions_common": [
+    "iid_rows_within_scene",
+    "acyclic_causally_sufficient_DAG",
+    "causal_Markov_and_faithfulness",
+    "no_selection_bias_or_measurement_error",
+    "stable_mechanism_within_scene"
+  ],
+  "candidate_count": 18,
+  "candidate_summaries": [
+    {
+      "candidate_id": "boss_basis_bic__p1__t2",
+      "eligible_for_primary": true,
+      "errors": [],
+      "family": "boss_basis_bic",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 0.875,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 0.75,
+      "macro_runtime_seconds": 0.12192612,
+      "macro_skeleton_f1": 0.95294118,
+      "macro_skeleton_precision": 0.92083333,
+      "macro_skeleton_recall": 1.0,
+      "macro_unresolved_edge_rate": 0.85,
+      "mean_endpoint_state_agreement": 0.99940476,
+      "mean_skeleton_jaccard": 0.99886364,
+      "parameters": {
+        "penalty_discount": 1.0,
+        "truncation_limit": 2
+      },
+      "scenes_succeeded": 8,
+      "stability_runs_expected": 80,
+      "stability_runs_succeeded": 80
+    },
+    {
+      "candidate_id": "boss_basis_bic__p1__t3",
+      "eligible_for_primary": true,
+      "errors": [],
+      "family": "boss_basis_bic",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 1.0,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 0.375,
+      "macro_runtime_seconds": 0.03204613,
+      "macro_skeleton_f1": 0.959375,
+      "macro_skeleton_precision": 0.93055556,
+      "macro_skeleton_recall": 1.0,
+      "macro_unresolved_edge_rate": 0.9,
+      "mean_endpoint_state_agreement": 0.99702381,
+      "mean_skeleton_jaccard": 0.99722222,
+      "parameters": {
+        "penalty_discount": 1.0,
+        "truncation_limit": 3
+      },
+      "scenes_succeeded": 8,
+      "stability_runs_expected": 80,
+      "stability_runs_succeeded": 80
+    },
+    {
+      "candidate_id": "boss_basis_bic__p2__t2",
+      "eligible_for_primary": true,
+      "errors": [],
+      "family": "boss_basis_bic",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 0.875,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 0.75,
+      "macro_runtime_seconds": 0.03746075,
+      "macro_skeleton_f1": 0.95294118,
+      "macro_skeleton_precision": 0.92083333,
+      "macro_skeleton_recall": 1.0,
+      "macro_unresolved_edge_rate": 0.85,
+      "parameters": {
+        "penalty_discount": 2.0,
+        "truncation_limit": 2
+      },
+      "scenes_succeeded": 8
+    },
+    {
+      "candidate_id": "boss_basis_bic__p2__t3",
+      "eligible_for_primary": true,
+      "errors": [],
+      "family": "boss_basis_bic",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 1.0,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 0.375,
+      "macro_runtime_seconds": 0.02733937,
+      "macro_skeleton_f1": 0.959375,
+      "macro_skeleton_precision": 0.93055556,
+      "macro_skeleton_recall": 1.0,
+      "macro_unresolved_edge_rate": 0.9,
+      "mean_endpoint_state_agreement": 0.84583333,
+      "mean_skeleton_jaccard": 0.90263889,
+      "parameters": {
+        "penalty_discount": 2.0,
+        "truncation_limit": 3
+      },
+      "scenes_succeeded": 8,
+      "stability_runs_expected": 80,
+      "stability_runs_succeeded": 80
+    },
+    {
+      "candidate_id": "boss_basis_bic__p4__t2",
+      "eligible_for_primary": true,
+      "errors": [],
+      "family": "boss_basis_bic",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 0.875,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 0.875,
+      "macro_runtime_seconds": 0.0211605,
+      "macro_skeleton_f1": 0.92794118,
+      "macro_skeleton_precision": 0.92083333,
+      "macro_skeleton_recall": 0.95833333,
+      "macro_unresolved_edge_rate": 0.85,
+      "parameters": {
+        "penalty_discount": 4.0,
+        "truncation_limit": 2
+      },
+      "scenes_succeeded": 8
+    },
+    {
+      "candidate_id": "boss_basis_bic__p4__t3",
+      "eligible_for_primary": true,
+      "errors": [],
+      "family": "boss_basis_bic",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 0.875,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 1.0,
+      "macro_runtime_seconds": 0.02400575,
+      "macro_skeleton_f1": 0.9,
+      "macro_skeleton_precision": 0.92708333,
+      "macro_skeleton_recall": 0.89880952,
+      "macro_unresolved_edge_rate": 0.775,
+      "parameters": {
+        "penalty_discount": 4.0,
+        "truncation_limit": 3
+      },
+      "scenes_succeeded": 8
+    },
+    {
+      "candidate_id": "pcmax_basis_lrt__a0p001__t2",
+      "eligible_for_primary": true,
+      "errors": [],
+      "family": "pcmax_basis_lrt",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 0.875,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 1.5,
+      "macro_runtime_seconds": 0.03558287,
+      "macro_skeleton_f1": 0.93823529,
+      "macro_skeleton_precision": 0.90833333,
+      "macro_skeleton_recall": 0.98214286,
+      "macro_unresolved_edge_rate": 0.8,
+      "parameters": {
+        "alpha": 0.001,
+        "truncation_limit": 2
+      },
+      "scenes_succeeded": 8
+    },
+    {
+      "candidate_id": "pcmax_basis_lrt__a0p001__t3",
+      "eligible_for_primary": true,
+      "errors": [],
+      "family": "pcmax_basis_lrt",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 0.875,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 1.375,
+      "macro_runtime_seconds": 0.10531063,
+      "macro_skeleton_f1": 0.94375,
+      "macro_skeleton_precision": 0.91666667,
+      "macro_skeleton_recall": 0.98214286,
+      "macro_unresolved_edge_rate": 0.78888889,
+      "parameters": {
+        "alpha": 0.001,
+        "truncation_limit": 3
+      },
+      "scenes_succeeded": 8
+    },
+    {
+      "candidate_id": "pcmax_basis_lrt__a0p01__t2",
+      "eligible_for_primary": true,
+      "errors": [],
+      "family": "pcmax_basis_lrt",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 0.875,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 1.625,
+      "macro_runtime_seconds": 0.02998687,
+      "macro_skeleton_f1": 0.93333333,
+      "macro_skeleton_precision": 0.90151515,
+      "macro_skeleton_recall": 0.98214286,
+      "macro_unresolved_edge_rate": 0.79772727,
+      "parameters": {
+        "alpha": 0.01,
+        "truncation_limit": 2
+      },
+      "scenes_succeeded": 8
+    },
+    {
+      "candidate_id": "pcmax_basis_lrt__a0p01__t3",
+      "eligible_for_primary": true,
+      "errors": [],
+      "family": "pcmax_basis_lrt",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 0.875,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 1.625,
+      "macro_runtime_seconds": 0.06580725,
+      "macro_skeleton_f1": 0.93333333,
+      "macro_skeleton_precision": 0.90151515,
+      "macro_skeleton_recall": 0.98214286,
+      "macro_unresolved_edge_rate": 0.79772727,
+      "parameters": {
+        "alpha": 0.01,
+        "truncation_limit": 3
+      },
+      "scenes_succeeded": 8
+    },
+    {
+      "candidate_id": "pcmax_basis_lrt__a0p05__t2",
+      "eligible_for_primary": true,
+      "errors": [],
+      "family": "pcmax_basis_lrt",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 0.875,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 1.75,
+      "macro_runtime_seconds": 0.04330738,
+      "macro_skeleton_f1": 0.92894737,
+      "macro_skeleton_precision": 0.89583333,
+      "macro_skeleton_recall": 0.98214286,
+      "macro_unresolved_edge_rate": 0.79583333,
+      "parameters": {
+        "alpha": 0.05,
+        "truncation_limit": 2
+      },
+      "scenes_succeeded": 8
+    },
+    {
+      "candidate_id": "pcmax_basis_lrt__a0p05__t3",
+      "eligible_for_primary": true,
+      "errors": [],
+      "family": "pcmax_basis_lrt",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 0.875,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 1.75,
+      "macro_runtime_seconds": 0.03939587,
+      "macro_skeleton_f1": 0.92894737,
+      "macro_skeleton_precision": 0.89583333,
+      "macro_skeleton_recall": 0.98214286,
+      "macro_unresolved_edge_rate": 0.79583333,
+      "parameters": {
+        "alpha": 0.05,
+        "truncation_limit": 3
+      },
+      "scenes_succeeded": 8
+    },
+    {
+      "candidate_id": "pcmax_conditional_gaussian_lrt__a0p001",
+      "eligible_for_primary": false,
+      "errors": [],
+      "family": "pcmax_conditional_gaussian_lrt",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 0.875,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 1.625,
+      "macro_runtime_seconds": 2.19545125,
+      "macro_skeleton_f1": 0.93333333,
+      "macro_skeleton_precision": 0.90151515,
+      "macro_skeleton_recall": 0.98214286,
+      "macro_unresolved_edge_rate": 0.79772727,
+      "parameters": {
+        "alpha": 0.001
+      },
+      "scenes_succeeded": 8
+    },
+    {
+      "candidate_id": "pcmax_conditional_gaussian_lrt__a0p01",
+      "eligible_for_primary": false,
+      "errors": [],
+      "family": "pcmax_conditional_gaussian_lrt",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 1.0,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 0.875,
+      "macro_runtime_seconds": 2.58709288,
+      "macro_skeleton_f1": 0.9375,
+      "macro_skeleton_precision": 0.90064103,
+      "macro_skeleton_recall": 1.0,
+      "macro_unresolved_edge_rate": 0.9,
+      "parameters": {
+        "alpha": 0.01
+      },
+      "scenes_succeeded": 8
+    },
+    {
+      "candidate_id": "pcmax_conditional_gaussian_lrt__a0p05",
+      "eligible_for_primary": false,
+      "errors": [],
+      "family": "pcmax_conditional_gaussian_lrt",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 0.875,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 1.75,
+      "macro_runtime_seconds": 2.236561,
+      "macro_skeleton_f1": 0.92954545,
+      "macro_skeleton_precision": 0.89166667,
+      "macro_skeleton_recall": 1.0,
+      "macro_unresolved_edge_rate": 0.79166667,
+      "parameters": {
+        "alpha": 0.05
+      },
+      "scenes_succeeded": 8
+    },
+    {
+      "candidate_id": "pcmax_degenerate_gaussian_lrt__a0p001",
+      "eligible_for_primary": false,
+      "errors": [],
+      "family": "pcmax_degenerate_gaussian_lrt",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 1.0,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 0.625,
+      "macro_runtime_seconds": 0.02035063,
+      "macro_skeleton_f1": 0.94722222,
+      "macro_skeleton_precision": 0.91287879,
+      "macro_skeleton_recall": 1.0,
+      "macro_unresolved_edge_rate": 0.9,
+      "parameters": {
+        "alpha": 0.001
+      },
+      "scenes_succeeded": 8
+    },
+    {
+      "candidate_id": "pcmax_degenerate_gaussian_lrt__a0p01",
+      "eligible_for_primary": false,
+      "errors": [],
+      "family": "pcmax_degenerate_gaussian_lrt",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 0.875,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 1.25,
+      "macro_runtime_seconds": 0.01042937,
+      "macro_skeleton_f1": 0.93333333,
+      "macro_skeleton_precision": 0.90151515,
+      "macro_skeleton_recall": 0.98214286,
+      "macro_unresolved_edge_rate": 0.80909091,
+      "parameters": {
+        "alpha": 0.01
+      },
+      "scenes_succeeded": 8
+    },
+    {
+      "candidate_id": "pcmax_degenerate_gaussian_lrt__a0p05",
+      "eligible_for_primary": false,
+      "errors": [],
+      "family": "pcmax_degenerate_gaussian_lrt",
+      "hard_gate_pass": true,
+      "macro_compelled_orientation_precision": 0.875,
+      "macro_compelled_orientation_recall": 1.0,
+      "macro_cpdag_shd": 2.0,
+      "macro_runtime_seconds": 0.01092838,
+      "macro_skeleton_f1": 0.92142857,
+      "macro_skeleton_precision": 0.88690476,
+      "macro_skeleton_recall": 0.98214286,
+      "macro_unresolved_edge_rate": 0.78392857,
+      "parameters": {
+        "alpha": 0.05
+      },
+      "scenes_succeeded": 8
+    }
+  ],
+  "data_view": {
+    "allow_semantic_variable_names": false,
+    "allow_story_or_glossary": false,
+    "anonymized_names": "X000_X001_etc",
+    "binary_preprocessing": "exact_0_1_discrete_categories",
+    "column_order": "public_schema_order",
+    "conceptual_types_from": "schema_and_mechanism_metadata",
+    "continuous_preprocessing": "per_scene_sample_zscore",
+    "missing_data_policy": "fail",
+    "physical_float_dtype_does_not_override_binary_metadata": true,
+    "pool_scenes": false,
+    "rows_per_scene": 16000,
+    "source": "public clean data.parquet only"
+  },
+  "finalists": [
+    "boss_basis_bic__p1__t3",
+    "boss_basis_bic__p2__t3",
+    "boss_basis_bic__p1__t2"
+  ],
+  "full_runs": 144,
+  "hard_gates": {
+    "allowed_edge_marks": [
+      "directed",
+      "undirected"
+    ],
+    "deterministic_exact_rerun": true,
+    "exact_node_set": true,
+    "maximum_seconds_per_full_scene": 120,
+    "no_nonfinite_values_or_runtime_error": true,
+    "successful_full_run": "8_of_8_scenes",
+    "valid_cpdag_with_consistent_extension": true
+  },
+  "manifest_version": 1,
+  "p0_scd_ready": true,
+  "pins": {
+    "config": "configs/t05_scd_selection.yaml",
+    "config_sha256": "6DDB755A2E3D2BE2F2BBCC21DFD9B78A677E69C0894CAC2C08EDD13F5D97ECCA",
+    "frozen_split": "data/manifests/p0_frozen_split.json",
+    "frozen_split_sha256": "9246C8C73D1AD7204E8E8081D2E4F2048AD3561AB3B5085DB242866BAD77A7E9",
+    "java": "21.0.10",
+    "py_tetrad_commit": "092a8cf13a9b31809d4256fd9aa3c98c52b88002",
+    "python": "3.10.20",
+    "tetrad_jar_implementation_version": "7.6.11-SNAPSHOT",
+    "tetrad_jar_sha256": "5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051"
+  },
+  "projection": {
+    "forbid_cycles": true,
+    "forbid_new_unshielded_colliders": true,
+    "method": "deterministic_consistent_extension",
+    "preserve_compelled_directions": true,
+    "preserve_skeleton": true,
+    "role": "sensitivity_only",
+    "sink_choice": "lexicographically_smallest_eligible_node"
+  },
+  "reason": "A preregistered basis-function candidate passed all validity, determinism, structural-quality, stability, and runtime gates.",
+  "scope": {
+    "dev_oracle_use": "structural_scoring_after_preregistration_only",
+    "downstream_reasoner_used": false,
+    "holdout_accessed": false,
+    "scene_ids": [
+      "scene_000098",
+      "scene_000172",
+      "scene_000402",
+      "scene_000415",
+      "scene_000511",
+      "scene_000719",
+      "scene_000792",
+      "scene_000814"
+    ],
+    "scene_role": "graph_dev_only"
+  },
+  "selected": {
+    "candidate_id": "boss_basis_bic__p1__t3",
+    "eligible_for_primary": true,
+    "errors": [],
+    "family": "boss_basis_bic",
+    "hard_gate_pass": true,
+    "macro_compelled_orientation_precision": 1.0,
+    "macro_compelled_orientation_recall": 1.0,
+    "macro_cpdag_shd": 0.375,
+    "macro_runtime_seconds": 0.03204613,
+    "macro_skeleton_f1": 0.959375,
+    "macro_skeleton_precision": 0.93055556,
+    "macro_skeleton_recall": 1.0,
+    "macro_unresolved_edge_rate": 0.9,
+    "mean_endpoint_state_agreement": 0.99702381,
+    "mean_skeleton_jaccard": 0.99722222,
+    "parameters": {
+      "penalty_discount": 1.0,
+      "truncation_limit": 3
+    },
+    "scenes_succeeded": 8,
+    "stability_runs_expected": 80,
+    "stability_runs_succeeded": 80
+  },
+  "selection_rule": {
+    "allowed_verdicts": [
+      "p0_scd_ready_true_with_selected_method",
+      "p0_scd_ready_false_no_candidate_passes"
+    ],
+    "final_priority": [
+      "assumption_coverage",
+      "validity",
+      "structural_quality",
+      "stability",
+      "reproducibility",
+      "runtime"
+    ],
+    "finalist_ranking_before_stability": [
+      "hard_gate_pass",
+      "assumption_coverage",
+      "macro_skeleton_f1",
+      "macro_cpdag_shd_ascending",
+      "macro_compelled_orientation_precision",
+      "candidate_id_lexicographic"
+    ],
+    "minimum_quality_guard": {
+      "macro_compelled_orientation_precision": 0.5,
+      "macro_skeleton_f1": 0.5,
+      "mean_skeleton_jaccard": 0.5
+    },
+    "tie_policy": "Treat macro skeleton F1 differences below 0.02 and CPDAG SHD differences below 0.10 as practically tied; within a tie prefer higher stability, then the simpler truncation limit, then the sparser regularization setting, then lexicographic candidate ID."
+  },
+  "stability_runs": 240,
+  "status": "complete",
+  "task": "T05"
+}

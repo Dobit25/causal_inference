@@ -1,0 +1,177 @@
+experiment:
+  task: T05
+  name: causalds_p0_scd_method_selection_v1
+  preregistered_at: 2026-08-30
+  seed: 42
+  status: preregistered_before_dev_oracle_scoring
+
+scope:
+  split_manifest: data/manifests/p0_frozen_split.json
+  split_manifest_sha256: 9246C8C73D1AD7204E8E8081D2E4F2048AD3561AB3B5085DB242866BAD77A7E9
+  scenes: graph_dev_only
+  expected_scene_ids:
+    - scene_000098
+    - scene_000172
+    - scene_000402
+    - scene_000415
+    - scene_000511
+    - scene_000719
+    - scene_000792
+    - scene_000814
+  forbid_holdout_access: true
+  oracle_access:
+    allowed_after_preregistration: true
+    purpose: dev_structural_scoring_only
+    forbidden_as_discovery_input: true
+  downstream_reasoner_used_for_selection: false
+
+backend:
+  adapter: direct_jpype_tetrad
+  python: "3.10"
+  java_minimum: 21
+  source_repository: https://github.com/cmu-phil/py-tetrad
+  source_commit: 092a8cf13a9b31809d4256fd9aa3c98c52b88002
+  jar_relative_path: pytetrad/resources/tetrad-current.jar
+  jar_implementation_version: 7.6.11-SNAPSHOT
+  jar_sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051
+  raw_cache: data/raw/t05/py-tetrad
+  note: >-
+    The project does not import the current py-tetrad Python wrapper, whose
+    README requests Python 3.12 or newer. The adapter calls the pinned Tetrad
+    Java jar directly through JPype so the frozen cau Python 3.10 environment
+    is retained.
+
+data_view:
+  source: public clean data.parquet only
+  rows_per_scene: 16000
+  pool_scenes: false
+  column_order: public_schema_order
+  anonymized_names: X000_X001_etc
+  conceptual_types_from: schema_and_mechanism_metadata
+  physical_float_dtype_does_not_override_binary_metadata: true
+  continuous_preprocessing: per_scene_sample_zscore
+  binary_preprocessing: exact_0_1_discrete_categories
+  missing_data_policy: fail
+  allow_story_or_glossary: false
+  allow_semantic_variable_names: false
+
+assumptions_common:
+  - iid_rows_within_scene
+  - acyclic_causally_sufficient_DAG
+  - causal_Markov_and_faithfulness
+  - no_selection_bias_or_measurement_error
+  - stable_mechanism_within_scene
+
+candidates:
+  eligible:
+    pcmax_basis_lrt:
+      algorithm: PC
+      output: CPDAG
+      stable_fas: true
+      collider_orientation_style: max_p
+      depth: unlimited
+      test: BasisFunctionLrt
+      alpha: [0.001, 0.01, 0.05]
+      truncation_limit: [2, 3]
+      effective_sample_size: actual
+      assumptions:
+        - smooth_dependence_is_adequately_represented_by_truncated_basis_expansion
+        - Wilks_Bartlett_block_test_is_well_calibrated
+    boss_basis_bic:
+      algorithm: BOSS
+      output: CPDAG
+      num_starts: 1
+      use_bes: false
+      use_data_order: true
+      score: BasisFunctionBicScore
+      penalty_discount: [1.0, 2.0, 4.0]
+      truncation_limit: [2, 3]
+      singularity_lambda: 0.0
+      assumptions:
+        - smooth_dependence_is_adequately_represented_by_truncated_basis_expansion
+        - finite_variance_and_BIC_local_score_adequacy
+      caveat: greedy_order_search_is_not_globally_optimal
+  stress_baselines:
+    pcmax_conditional_gaussian_lrt:
+      algorithm: PC
+      output: CPDAG
+      alpha: [0.001, 0.01, 0.05]
+      discretize_continuous: false
+      min_sample_size_per_cell: 4
+      eligibility_for_primary: false
+      reason: nonlinear_and_non_Gaussian_mechanisms_violate_the_model_family
+    pcmax_degenerate_gaussian_lrt:
+      algorithm: PC
+      output: CPDAG
+      alpha: [0.001, 0.01, 0.05]
+      singularity_lambda: 0.0
+      eligibility_for_primary: false
+      reason: indicator_Gaussian_approximation_does_not_cover_released_mechanism_heterogeneity
+
+hard_gates:
+  successful_full_run: 8_of_8_scenes
+  exact_node_set: true
+  allowed_edge_marks: [directed, undirected]
+  valid_cpdag_with_consistent_extension: true
+  deterministic_exact_rerun: true
+  maximum_seconds_per_full_scene: 120
+  no_nonfinite_values_or_runtime_error: true
+
+dev_metrics:
+  aggregation: scene_macro
+  structural:
+    - skeleton_precision
+    - skeleton_recall
+    - skeleton_f1
+    - compelled_orientation_precision
+    - compelled_orientation_recall
+    - unresolved_edge_rate
+    - cpdag_shd
+  stability:
+    scheme: fixed_without_replacement_half_samples
+    replicates_per_scene_for_finalists: 10
+    finalist_count: 3
+    row_seed: sha256_of_global_seed_scene_id_replication
+    measures:
+      - base_to_subsample_skeleton_jaccard
+      - base_to_subsample_endpoint_state_agreement
+  operations:
+    - full_scene_runtime_seconds
+    - deterministic_rerun_match
+
+selection:
+  finalist_ranking_before_stability:
+    - hard_gate_pass
+    - assumption_coverage
+    - macro_skeleton_f1
+    - macro_cpdag_shd_ascending
+    - macro_compelled_orientation_precision
+    - candidate_id_lexicographic
+  final_priority:
+    - assumption_coverage
+    - validity
+    - structural_quality
+    - stability
+    - reproducibility
+    - runtime
+  minimum_quality_guard:
+    macro_skeleton_f1: 0.50
+    macro_compelled_orientation_precision: 0.50
+    mean_skeleton_jaccard: 0.50
+  tie_policy: >-
+    Treat macro skeleton F1 differences below 0.02 and CPDAG SHD differences
+    below 0.10 as practically tied; within a tie prefer higher stability,
+    then the simpler truncation limit, then the sparser regularization setting,
+    then lexicographic candidate ID.
+  allowed_verdicts:
+    - p0_scd_ready_true_with_selected_method
+    - p0_scd_ready_false_no_candidate_passes
+
+projection:
+  role: sensitivity_only
+  method: deterministic_consistent_extension
+  sink_choice: lexicographically_smallest_eligible_node
+  preserve_skeleton: true
+  preserve_compelled_directions: true
+  forbid_cycles: true
+  forbid_new_unshielded_colliders: true
