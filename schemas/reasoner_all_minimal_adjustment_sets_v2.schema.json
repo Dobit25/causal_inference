@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "T12 v2 all minimal adjustment sets",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "adjustment_sets": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {"type": "array", "items": {"type": "string", "pattern": "^X[0-9]{3}$"}, "uniqueItems": true}
+        },
+        {"type": "string", "enum": ["no_backdoor", "non_id", "undetermined"]}
+      ]
+    }
+  },
+  "required": ["adjustment_sets"]
+}

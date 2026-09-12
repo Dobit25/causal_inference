@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "T12 v2 one valid adjustment set",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "adjust": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string", "pattern": "^X[0-9]{3}$"}, "uniqueItems": true},
+        {"type": "string", "enum": ["no_backdoor", "non_id", "undetermined"]}
+      ]
+    }
+  },
+  "required": ["adjust"]
+}

@@ -1,0 +1,82 @@
+schema_version: fourgraph.t12_v2_design.v1
+status: gemma_conformance_complete_gate_failed
+parent_run:
+  config: configs/t12_reasoner.yaml
+  config_sha256: 28DB680ECC8199320D1D331E8E4A2188AFCDC0DF89BA4DF8090C8E886E8E4126
+  records: data/manifests/t12_dev_reasoner_scores.jsonl
+  records_sha256: BF7515CA02A2DC5B97266E34BE7251A8566860577854B27036F8F146B33C7F5B
+  role: development_diagnostic_baseline
+  holdout_eligible: false
+reasoner:
+  provider: google_ai_studio
+  model_id: gemma-4-31b-it
+  model_version: gemma-4-31b-it
+  sdk: google-genai
+  sdk_version: 2.21.0
+  credential_env: GEMINI_API_KEY
+  credential_separator: comma
+  credential_rotation: quota_errors_only
+  temperature: 0
+  max_tokens: 1024
+  max_validation_retries: 2
+  timeout_seconds: 120
+  prompt: prompts/reasoner_cpdag_conservative_v2.txt
+  response_contract: task_specific_v2
+  provider_schema_transform: strip_pattern_then_validate_ids_locally
+  provider_schema_nested_array_relaxation: adjustment_sets_only_validate_locally
+  role: candidate_retest_after_v2_amendment
+  model_selection_pending: false
+  primary_reasoner_selected: false
+evidence_contract:
+  graph: fourgraph.reasoner_graph.v1
+  query: fourgraph.reasoner_query.v2
+  query_excludes_scene_id: true
+  glossary: canonical_id_and_type_only
+  allow_story: false
+  allow_public_semantic_names: false
+  allow_observational_table: false
+  allow_graph_provenance: false
+  allow_gold_answer: false
+response_schemas:
+  identification__one_valid_adjustment_set: schemas/reasoner_one_valid_adjustment_set_v2.schema.json
+  identification__all_minimal_adjustment_sets: schemas/reasoner_all_minimal_adjustment_sets_v2.schema.json
+  identification__minimal_adjustment_set_size: schemas/reasoner_minimal_adjustment_set_size_v2.schema.json
+  identification__n_valid_adjustment_sets: schemas/reasoner_n_valid_adjustment_sets_v2.schema.json
+  bias_diagnostic__forbidden_controls_list: schemas/reasoner_forbidden_controls_list_v2.schema.json
+cache:
+  schema_version: fourgraph.reasoner_cache_key.v1
+  fields:
+    - model_version
+    - prompt_template_sha256
+    - graph_reasoner_view_sha256
+    - query_sha256
+    - glossary_sha256
+    - decoding_config_sha256
+  excludes_graph_condition_label: true
+  identical_input_policy: reuse_exact_response
+scoring:
+  primary: official_causalds
+  sensitivity: pearl_backdoor_total_effect
+  sensitivity_forbidden_controls: not_applicable_construct_differs
+calibration:
+  suite: data/manifests/t12_v2_synthetic_conformance.jsonl
+  cases: 150
+  use_causalds_answers: false
+  prospective_gates:
+    parse_success_rate_min: 1.0
+    first_attempt_schema_compliance_min: 0.95
+    overall_accuracy_min: 0.90
+    dag_answered_accuracy_min: 0.90
+    cpdag_answered_accuracy_min: 0.90
+    cpdag_undetermined_accuracy_min: 0.90
+    per_task_accuracy_min: 0.80
+  gate_policy: all_thresholds_must_pass_before_causalds_oracle_development
+outputs:
+  records: data/manifests/t12_v2_gemma_conformance_scores.jsonl
+  audit: data/manifests/t12_v2_gemma_conformance_audit.json
+  raw_log: results/raw/t12_v2_gemma/conformance_raw.jsonl
+  cache: results/raw/t12_v2_gemma/conformance_cache.jsonl
+holdout:
+  accessed: false
+  eligible: false
+  reason: gemma_candidate_failed_prospective_synthetic_conformance_gates

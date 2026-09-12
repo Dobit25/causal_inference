@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "T12 v2 minimal adjustment-set size",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "k": {
+      "oneOf": [
+        {"type": "integer", "minimum": 0},
+        {"type": "string", "enum": ["no_backdoor", "non_id", "undetermined"]}
+      ]
+    }
+  },
+  "required": ["k"]
+}

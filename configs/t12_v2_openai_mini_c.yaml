@@ -1,0 +1,101 @@
+schema_version: fourgraph.t12_v2_openai_candidate.v1
+candidate_id: t12_v2_openai_mini_c_high_10240
+status: candidate_frozen_pre_live_run
+comparison_role: final_headroom_diagnostic_with_model_prompt_suite_contract_and_reasoning_effort_held_fixed
+parent_candidate:
+  config: configs/t12_v2_openai_mini_b.yaml
+  audit: data/manifests/t12_v2_openai_mini_b_smoke_audit.json
+  outcome: passed_engineering_smoke_but_observed_97_percent_utilization_at_8192
+  immutable: true
+single_planned_change:
+  field: reasoner.max_output_tokens
+  from: 8192
+  to: 10240
+reasoner:
+  provider: openai
+  model_id: gpt-5.4-mini-2026-03-17
+  model_version: gpt-5.4-mini-2026-03-17
+  endpoint: /v1/responses
+  sdk: openai
+  sdk_version: 3.6.0
+  credential_env: OPENAI_API_KEY
+  reasoning_effort: high
+  sampling_temperature: omitted
+  max_output_tokens: 10240
+  max_validation_retries: 2
+  transport_max_retries: 2
+  timeout_seconds: 180
+  service_tier: default
+  store: false
+  structured_outputs: true
+  provider_schema_transform: openai_strict_subset_then_full_local_validation
+evidence_contract:
+  graph: fourgraph.reasoner_graph.v1
+  query: fourgraph.reasoner_query.v2
+  glossary: canonical_id_and_type_only
+  allow_story: false
+  allow_public_semantic_names: false
+  allow_observational_table: false
+  allow_graph_provenance: false
+  allow_gold_answer: false
+frozen_inputs:
+  prompt: prompts/reasoner_cpdag_conservative_v2.txt
+  prompt_sha256: D8A5F981B6BA5B3679F37A8F2A7C694377E4847A14C5E29F0C027EA3F9A0D0D1
+  suite: data/manifests/t12_v2_synthetic_conformance.jsonl
+  suite_sha256: B7B31BFE0202CD80861175DA166B0D06FF70537A69DA1AB9F78CC9CD19FB72F1
+  cases: 150
+  response_schemas:
+    identification__one_valid_adjustment_set: schemas/reasoner_one_valid_adjustment_set_v2.schema.json
+    identification__all_minimal_adjustment_sets: schemas/reasoner_all_minimal_adjustment_sets_v2.schema.json
+    identification__minimal_adjustment_set_size: schemas/reasoner_minimal_adjustment_set_size_v2.schema.json
+    identification__n_valid_adjustment_sets: schemas/reasoner_n_valid_adjustment_sets_v2.schema.json
+    bias_diagnostic__forbidden_controls_list: schemas/reasoner_forbidden_controls_list_v2.schema.json
+measurement_audit:
+  audit: data/manifests/t12_v2_measurement_audit.json
+  review_panel: data/manifests/t12_v2_manual_review_panel.jsonl
+  required_ready: true
+smoke:
+  manifest: data/manifests/t12_v2_openai_mini_smoke.json
+  cases: 10
+  technical_gate:
+    parsed: 10
+    model_snapshot_match: 10
+    usage_present: 10
+    holdout_accessed: false
+    max_output_token_utilization_max: 0.80
+calibration:
+  prospective_gates:
+    parse_success_rate_min: 1.0
+    first_attempt_schema_compliance_min: 0.95
+    overall_accuracy_min: 0.90
+    dag_answered_accuracy_min: 0.90
+    cpdag_answered_accuracy_min: 0.90
+    cpdag_undetermined_accuracy_min: 0.90
+    per_task_accuracy_min: 0.80
+  gate_policy: all_thresholds_must_pass_before_causalds_oracle_development
+oracle_development_gate:
+  enabled_only_if_conformance_passes: true
+  scenes: 7
+  tasks_per_scene: 5
+  accuracy_min_count: 30
+  per_task_min_count: 5
+  systematic_sentinel_failure_allowed: false
+budget:
+  pricing_usd_per_million_tokens:
+    uncached_input: 0.75
+    cached_input: 0.075
+    output_including_reasoning: 4.50
+  smoke_upper_bound_usd_before_retries: 0.47
+  conformance_upper_bound_usd_before_retries: 6.99
+  stop_after_smoke_for_manual_review: true
+  do_not_auto_start_conformance: true
+outputs:
+  smoke_audit: data/manifests/t12_v2_openai_mini_c_smoke_audit.json
+  records: data/manifests/t12_v2_openai_mini_c_conformance_scores.jsonl
+  audit: data/manifests/t12_v2_openai_mini_c_conformance_audit.json
+  raw_log: results/raw/t12_v2_openai_mini_c/conformance_raw.jsonl
+  cache: results/raw/t12_v2_openai_mini_c/conformance_cache.jsonl
+holdout:
+  accessed: false
+  eligible: false
+  reason: candidate_has_not_passed_smoke_conformance_and_oracle_development_gates

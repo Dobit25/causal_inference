@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "T12 v2 number of valid adjustment sets",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "n": {
+      "oneOf": [
+        {"type": "integer", "minimum": 0},
+        {"type": "string", "enum": ["no_backdoor", "non_id", "undetermined"]}
+      ]
+    }
+  },
+  "required": ["n"]
+}

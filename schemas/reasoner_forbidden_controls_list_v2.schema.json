@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "T12 v2 forbidden controls",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "forbidden": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string", "pattern": "^X[0-9]{3}$"}, "uniqueItems": true},
+        {"type": "string", "enum": ["no_backdoor", "non_id", "undetermined"]}
+      ]
+    }
+  },
+  "required": ["forbidden"]
+}
