@@ -1,0 +1,54 @@
+experiment:
+  task: T07
+  phase: p0_released
+  status: frozen_after_t07
+
+source:
+  benchmark: causalds
+  github_commit: c74671d0a0924efc5bb021fc8966f856d5b80a4f
+  huggingface_revision: 2880dfa710d08e076055cb0248ef0c534a93b0fa
+  variant: clean
+
+scope:
+  split_manifest: data/manifests/p0_frozen_split.json
+  cohort: graph
+  role: dev
+  expected_scenes: 8
+  forbid_holdout_access: true
+  downstream_reasoner_used: false
+
+access:
+  public_artifacts: [schema]
+  grading_purpose: oracle
+  grading_artifacts: [ground_truth]
+  return_raw_grading_document: false
+  consume_gold_answer_fields: false
+  allow_grading_test_values: false
+  allow_graph_image: false
+
+mapping:
+  source: public_schema_order
+  canonical_ids: contiguous_X000_onward
+  require_public_ground_truth_bijection: true
+
+graph:
+  schema_version: fourgraph.graph.v1
+  variable_map_schema_version: fourgraph.variable_map.v1
+  graph_method: oracle
+  graph_type: dag
+  graph_view: dag
+  require_no_latent: true
+  require_acyclic: true
+  contract_config: configs/graph_contract_v1.yaml
+
+audit:
+  output: data/manifests/t07_oracle_loader_audit.json
+  include_edges: false
+  include_raw_ground_truth: false
+  include_input_and_output_hashes: true
+
+t05_freeze_anchors:
+  configs/t05_scd_selection.yaml: 6DDB755A2E3D2BE2F2BBCC21DFD9B78A677E69C0894CAC2C08EDD13F5D97ECCA
+  configs/t05_scd_frozen.yaml: 729861541366775AFDCFB302E008C34866D2F2282D3614BA6578B79051330A33
+  data/manifests/p0_scd_selection.json: 45BAACE1E4289786F927771BF37041A57A2A81D436541B1795D9D903839282F1
+  data/manifests/t05_dev_graphs.jsonl: 60AE168B4D06AE1BD2C22B3D262D71D4CDC149CAFBA8A7013737135A62D08261
