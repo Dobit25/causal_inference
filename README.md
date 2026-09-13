@@ -241,4 +241,6 @@ T16 closes P0 with decision `REFINE`; the claim boundary and P1 redesign require
 
 T17 freezes the prospective P1 Hybrid protocol without generating data or calling a model. Replay its dependency/hash audit with `python scripts/freeze_t17_p1_hybrid_protocol.py --check`.
 
-T18 materializes the deterministic P1 substrate: 100 fresh linear non-Gaussian SCMs, 500 task fixtures, exact 20/80 split, `N=2000` observations and nested sensitivity samples. Its report is `reports/t18_p1_generation.md`; replay every versioned and ignored raw artifact byte-for-byte with `python scripts/build_p1_t18.py --check`. T19 offline story generation is the only newly authorized stage.
+T18 materializes the deterministic P1 substrate: 100 fresh linear non-Gaussian SCMs, 500 task fixtures, exact 20/80 split, `N=2000` observations and nested sensitivity samples. Its report is `reports/t18_p1_generation.md`; replay every versioned and ignored raw artifact byte-for-byte with `python scripts/build_p1_t18.py --check`.
+
+T19 freezes 300 deterministic full/partial/ambiguous semantic-story stimuli, adapter-only alias maps and a development-only blinded QA panel. Read `reports/t19_p1_semantic_stories.md` and replay all versioned plus ignored artifacts with `python scripts/build_p1_t19.py --check`. Only T20 offline H2 implementation/conformance is authorized next; no live model or P1 holdout execution is authorized.

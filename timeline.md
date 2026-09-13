@@ -1,8 +1,8 @@
-# Timeline dự án Causal Inference: T00–T18
+# Timeline dự án Causal Inference: T00–T19
 
 ## 1. Mục đích của tài liệu
 
-Tài liệu này mô tả tuyến tính quá trình phát triển dự án từ T00 đến hết T18: mỗi task bắt đầu từ vấn đề nào, được thực hiện để làm gì, đã làm những gì, điều kiện hoàn thành ra sao và kết quả thực tế là gì.
+Tài liệu này mô tả tuyến tính quá trình phát triển dự án từ T00 đến hết T19: mỗi task bắt đầu từ vấn đề nào, được thực hiện để làm gì, đã làm những gì, điều kiện hoàn thành ra sao và kết quả thực tế là gì.
 
 Toàn bộ công việc được thực hiện trong môi trường Conda `cau`, dùng Python 3.10. Dự án tuân theo nguyên tắc không dùng holdout để điều chỉnh thiết kế, không trộn observations giữa các causal scene, và không để ground-truth Oracle rò rỉ vào các graph builder.
 
@@ -53,6 +53,7 @@ Ngoài ra, projected `G_SCD` DAG được giữ như một sensitivity view, kh�
 | T16 | 2026-09-13 | Khóa findings và quyết định P0 | Chốt claim được/không được hỗ trợ, giữ null/adverse results, chọn `REFINE`; chỉ cấp quyền thiết kế protocol T17 |
 | T17 | 2026-09-13 | Xây và đóng băng thiết kế P1 Hybrid trước generation/H2 | Khóa 100-scene fresh-SCM contract, semantic doses, BOSS CPDAG, H2 forced/selective, abstention, metrics/statistics và stage gates; 0 scene, 0 API call, chỉ cấp quyền T18 generator/inventory |
 | T18 | 2026-09-13 | Sinh và đóng băng fresh-SCM substrate P1 | Sinh 100 SCM, 500 task với solver agreement 500/500, observations và exact split 20/80; replay 480 raw files byte-for-byte, 0 API/H2/holdout evaluation; chỉ cấp quyền T19 |
+| T19 | 2026-09-13 | Sinh ba mức semantic evidence và kiểm định stimulus | 300 story full/partial/ambiguous, 100 alias maps, text-level truth audit, internal blinded QA 20/20 development scenes; 0 API/method/holdout manual review; chỉ cấp quyền T20 offline |
 
 ---
 
@@ -932,6 +933,16 @@ T16 giữ cả kết quả thuận lợi, null, adverse, hai Hybrid failures và
 T17 khóa trước 100 fresh homogeneous SCMs, exact five-task contract, query/motif/noise balance, BOSS raw CPDAG chính, DirectLiNGAM structural sensitivity, ba semantic doses (`full`, `partial`, `ambiguous`), H1 baseline, H2-Forced và H2-Selective. H2-Selective trả nguyên raw CPDAG khi không đủ chắc chắn; không xóa observation như missing.
 
 Protocol cũng khóa 12 structural views/scene, 11 downstream views/scene, hypotheses, metrics, scene-paired statistics, threshold grid và forbidden selection inputs. T17 tạo 0 scene, gọi 0 API, chưa implement H2 và không truy cập P1 holdout. Bước duy nhất được phép tiếp theo là T18 xây generator/inventory và đóng băng exact 20/80 IDs; live semantic calls và H2 vẫn bị chặn.
+
+## 23. T18 — Sinh fresh-SCM substrate và exact split P1
+
+T18 hiện thực hóa contract T17 thành 100 linear non-Gaussian SCMs có 5–7 observed continuous nodes, 500 task fixtures với hai solver khớp 500/500, `N=2000` cho mọi scene và nested raw samples trên 20 sensitivity scenes. Exact split được khóa ở 20 development / 80 holdout; toàn bộ 480 raw artifacts và versioned manifests replay byte-for-byte. Không model hay phương pháp nghiên cứu nào được chạy.
+
+## 24. T19 — Semantic-story variants và blinded stimulus audit
+
+T19 sinh cùng một alias map và clause order cho ba variants của mỗi SCM. `full` định hướng toàn bộ 684 edge claims; `partial` định hướng 367/684 theo round-half-up ở từng scene và dùng association language cho phần còn lại; `ambiguous` định hướng 0/684. Parser độc lập đọc ngược public text xác nhận không false direction, nonedge claim, canonical ID, arrow hay generator metadata.
+
+Panel mù dùng đúng 20 development scenes, shuffle ba slot mỗi scene và loại scene/study ID, split, variant, mapping, graph truth cùng seed. Internal text QA đạt 20/20 scenes, phân loại đúng 60/60 evidence slots và naturalness tối thiểu 4/5. Đây không phải independent external human validation và không được trình bày như vậy. Holdout stories chỉ được sinh/kiểm tra tự động, không xuất hiện trong panel. T19 gọi 0 API, không chạy SCD/LLM/reasoner/H1/H2 và chỉ cấp quyền T20 offline conformance.
 
 ## 23. T18 — Fresh-SCM generator và inventory P1
 

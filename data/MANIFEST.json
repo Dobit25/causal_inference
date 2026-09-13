@@ -1,5 +1,5 @@
 {
-  "manifest_version": 28,
+  "manifest_version": 29,
   "description": "Index of immutable source manifests and versioned derived manifests used by the four-graph project.",
   "active_primary_source": "causalds",
   "sources": [
@@ -304,6 +304,26 @@
       "name": "p1_t18_generation_audit",
       "role": "offline_generator_solver_agreement_raw_tree_replay_and_t19_authorization",
       "manifest": "data/manifests/t18_p1_generation_audit.json"
+    },
+    {
+      "name": "p1_t19_story_manifest",
+      "role": "three_hundred_hash_pinned_full_partial_ambiguous_public_story_artifacts",
+      "manifest": "data/manifests/t19_p1_story_manifest.jsonl"
+    },
+    {
+      "name": "p1_t19_alias_manifest",
+      "role": "one_hundred_adapter_only_alias_mapping_commitments_without_public_names",
+      "manifest": "data/manifests/t19_p1_alias_manifest.jsonl"
+    },
+    {
+      "name": "p1_t19_blinded_review_panel",
+      "role": "development_only_twenty_scene_sixty_story_identity_and_variant_blinded_panel",
+      "manifest": "data/manifests/t19_p1_blinded_review_panel.jsonl"
+    },
+    {
+      "name": "p1_t19_story_audit",
+      "role": "text_level_truth_dose_internal_blinded_qa_replay_and_t20_authorization",
+      "manifest": "data/manifests/t19_p1_story_audit.json"
     }
   ]
 }

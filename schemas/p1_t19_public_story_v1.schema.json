@@ -1,0 +1,20 @@
+{
+  "$id": "https://fourgraph.local/schemas/p1_t19_public_story_v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_id": {"pattern": "^P1S[0-9]{3}:(full|partial|ambiguous)$", "type": "string"},
+    "builder_input": {
+      "additionalProperties": false,
+      "properties": {"story": {"minLength": 100, "type": "string"}},
+      "required": ["story"],
+      "type": "object"
+    },
+    "evidence_variant": {"enum": ["full", "partial", "ambiguous"]},
+    "scene_id": {"pattern": "^scene_1[0-9]{5}$", "type": "string"},
+    "schema_version": {"const": "fourgraph.p1_public_story.v1"},
+    "study_id": {"pattern": "^P1S[0-9]{3}$", "type": "string"}
+  },
+  "required": ["schema_version", "artifact_id", "study_id", "scene_id", "evidence_variant", "builder_input"],
+  "type": "object"
+}

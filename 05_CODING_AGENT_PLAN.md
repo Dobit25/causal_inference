@@ -109,9 +109,13 @@ Complete: froze the fresh-SCM generator contract, exact task/query balance, thre
 
 Complete: implemented and audited the deterministic 100-scene generator, five tasks per scene, exact 20/80 split, primary `N=2000` samples, nested raw `N=500/10000` prefixes on 20 scenes, and Oracle-CPDAG eligibility. Production and independent solvers agreed 500/500; byte replay covers all 480 ignored raw artifacts and versioned manifests. No semantic model, SCD, Hybrid, H2, or holdout scoring ran.
 
-### T19–T24 — P1 execution and analysis
+### T19 — Controlled semantic-story variants
 
-T19 freezes semantic story variants; T20 implements and conformances H2 offline; T21 uses development only to construct graphs and select abstention thresholds; T22 freezes holdout execution; T23 opens holdout once; T24 performs scene-paired analysis and freezes findings. Nonlinear robustness and CLadder replication require a later versioned decision.
+Complete: generated 300 deterministic stories for 100 scenes with exact full/partial/ambiguous evidence rules, 100 neutral alias maps assigned independently of graph position, a story-only model allowlist, public-text truth parsing, and a 20-development-scene blinded internal QA panel. QA passed 20/20 scenes and 60/60 evidence classifications, but is explicitly internal rather than independent external human validation. No API, SCD, LLM, reasoner, H1/H2 or holdout evaluation ran.
+
+### T20–T24 — P1 execution and analysis
+
+T20 implements and conformances H2 offline; T21 uses development only to construct graphs and select abstention thresholds; T22 freezes holdout execution; T23 opens holdout once; T24 performs scene-paired analysis and freezes findings. Nonlinear robustness and CLadder replication require a later versioned decision.
 
 ## Research integrity checklist
 

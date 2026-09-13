@@ -1,0 +1,126 @@
+schema_version: fourgraph.p1_t19_semantic_stories.v1
+experiment_id: causalds_fresh_hybrid_p1_v1
+task: T19
+parent_protocol: configs/p1_hybrid_v1.yaml
+parent_generation_audit: data/manifests/t18_p1_generation_audit.json
+parent_split: data/manifests/t18_p1_frozen_split.json
+parent_inventory: data/manifests/t18_p1_scene_inventory.jsonl
+
+randomness:
+  master_seed: 1701
+  numpy_version: 1.26.4
+  generator: numpy.random.Generator
+  bit_generator: PCG64DXSM
+  seed_derivation: t18_sha256_seed64
+  streams: [semantic_aliases, semantic_partial_edges, semantic_clause_order, blinded_panel_order, blinded_variant_order]
+
+aliases:
+  assignment: seeded_per_scene_permutation_independent_of_graph
+  grammatical_form: neutral_codeword_index
+  lexicon:
+    - Amber index
+    - Beryl index
+    - Cobalt index
+    - Dahlia index
+    - Ember index
+    - Fallow index
+    - Grove index
+  uniqueness_within_scene: true
+  canonical_mapping_model_visible: false
+  canonical_mapping_reasoner_visible: false
+
+stories:
+  variants: [full, partial, ambiguous]
+  same_alias_map_and_clause_order_across_variants: true
+  exhaustive_skeleton_statement: true
+  unlisted_pair_statement: no_direct_connection
+  directional_template: "Within this process, changes in {source} directly influence {target}."
+  symmetric_template: "{left} and {right} are directly connected in the process, but this description does not establish which one influences the other."
+  full:
+    directional_fraction: 1.0
+    selected_edges: all_true_edges
+  partial:
+    directional_fraction: 0.5
+    selection: lowest_sha256_rank_per_scene
+    selected_edge_count: round_half_up_half_of_true_edge_count
+    remaining_edges: symmetric
+  ambiguous:
+    directional_fraction: 0.0
+    selected_edges: none
+    all_true_edges: symmetric
+  false_directional_claims_allowed: 0
+  nonedge_direct_claims_allowed: 0
+  canonical_id_pattern_forbidden_in_story: "X[0-9]{3}"
+  machine_edge_notation_forbidden: ["->", "→"]
+
+public_builder_view:
+  fields: [story]
+  semantic_names_occur_only_inside_story: true
+  forbidden_fields: [study_id, scene_id, split, evidence_variant, alias_map, oracle_dag, oracle_cpdag, edges, weights, query, gold_answer, seeds]
+  response_endpoints: public_aliases
+  canonicalization: adapter_maps_aliases_after_response
+
+automated_audit:
+  scenes: 100
+  stories: 300
+  required_full_directional_claims: all_true_edges
+  required_partial_directional_claims: round_half_up_half_of_true_edges
+  required_ambiguous_directional_claims: 0
+  required_skeleton_coverage: all_true_edges_once_per_variant
+  no_false_direction: true
+  no_nonedge_claim: true
+  alias_assignment_uses_graph: false
+
+blinded_manual_audit:
+  panel_scenes: 20
+  eligible_scenes: development_only
+  panel_selection: all_frozen_development_scenes
+  items_per_scene: 3
+  variant_slots: seeded_and_blinded
+  panel_excludes: [study_id, scene_id, split, variant, canonical_ids, alias_map, truth_edges, seeds]
+  reviewer_sees: [blind_scene_id, slot, story]
+  criteria:
+    - grammatical_and_readable
+    - self_contained_variable_universe
+    - no_machine_metadata_or_canonical_ids
+    - classify_directional_evidence_as_all_mixed_or_none
+    - no_obvious_direction_in_symmetric_clauses
+  required_passes: 20_of_20_scenes
+  internal_review_limitation_must_be_reported: true
+
+artifacts:
+  raw_root: data/generated/p1_hybrid_v1/t19
+  public_story_pattern: "{study_id}/story_{variant}.json"
+  alias_map_pattern: "{study_id}/alias_map.json"
+  grading_truth_pattern: "{study_id}/story_truth.json"
+  blinded_key: data/generated/p1_hybrid_v1/t19/_audit/blinded_review_key.json
+  story_manifest: data/manifests/t19_p1_story_manifest.jsonl
+  alias_manifest: data/manifests/t19_p1_alias_manifest.jsonl
+  blinded_panel: data/manifests/t19_p1_blinded_review_panel.jsonl
+  blinded_review: data/reviews/t19_p1_blinded_review.jsonl
+  audit: data/manifests/t19_p1_story_audit.json
+  report: reports/t19_p1_semantic_stories.md
+  canonical_json: sorted_keys_compact_utf8_lf
+
+access_boundary:
+  api_calls: 0
+  provider_sdk_imports_allowed: false
+  SCD_execution_authorized: false
+  LLM_execution_authorized: false
+  reasoner_execution_authorized: false
+  H1_execution_authorized: false
+  H2_implementation_or_execution_authorized: false
+  holdout_stories_may_be_generated_and_automatically_validated: true
+  holdout_story_content_manual_review_authorized: false
+  holdout_method_evaluation_authorized: false
+  holdout_downstream_scoring_authorized: false
+  next_action_if_all_gates_pass: T20_H2_OFFLINE_IMPLEMENTATION_AND_CONFORMANCE
+
+dependencies:
+  - configs/p1_hybrid_v1.yaml
+  - data/manifests/t17_p1_hybrid_protocol_freeze.json
+  - configs/t18_p1_generation.yaml
+  - data/manifests/t18_p1_generation_audit.json
+  - data/manifests/t18_p1_frozen_split.json
+  - data/manifests/t18_p1_scene_inventory.jsonl
+  - src/fourgraph/p1_generation.py

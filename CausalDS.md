@@ -1,6 +1,6 @@
 # Master Plan — Released CausalDS P0 → Fresh Homogeneous Hybrid P1
 
-> Status: P0 closed with `REFINE`; the versioned P1 Hybrid protocol was frozen at T17 and its deterministic fresh-SCM substrate was generated and frozen at T18 on 2026-09-13. This document supersedes the former NoisyCausal-first execution plan while retaining its negative artifact audit as project history.
+> Status: P0 closed with `REFINE`; the versioned P1 Hybrid protocol, fresh-SCM substrate, and controlled semantic-story stimuli were frozen through T19 on 2026-09-13. This document supersedes the former NoisyCausal-first execution plan while retaining its negative artifact audit as project history.
 
 ## 1. Research objective
 
@@ -441,7 +441,7 @@ Development permits loader/parser debugging, P0 SCD choice, prompt syntax, and p
 - T16 P0 findings and GO/REFINE/STOP — complete with `REFINE`. P0 supports semantic orientation over deterministic projection for direction and official downstream adjustment/control answers, but does not establish H1 superiority over standalone LLM or universal CPDAG/DAG superiority. The two Hybrid failures and residual Oracle-reasoner error remain part of the findings. T17 subsequently converted this decision into the frozen prospective P1 Hybrid protocol; P1 generation/live execution has not started.
 - T17 P1 Hybrid protocol design — complete; the generator, semantic-evidence doses, H1/H2 rules, abstention selection, graph/downstream schedule, statistics, evidence boundaries, and stage gates are hash-frozen without generating scenes or calling a model.
 - T18 fresh SCM generator, inventory, deterministic split, and task/query generation — complete. The frozen substrate contains 100 eligible linear non-Gaussian SCMs, 500 solver-agreed tasks, exact 20/80 IDs, `N=2000` for every scene, and nested `N=500/10000` for 20 scenes. No live LLM/SCD/Hybrid execution or holdout scoring occurred.
-- T19 semantic story variants and blinded manual audit.
+- T19 semantic story variants and blinded manual audit — complete. Generated 300 deterministic public stories (`full`, `partial`, `ambiguous`), hash-pinned 100 adapter-only alias maps, passed text-level truth validation, and completed a 20-development-scene internal blinded QA panel. This QA is explicitly not independent external human validation. No model/method execution or holdout manual review occurred.
 - T20 H2 implementation and offline conformance.
 - T21 development-only graph construction and threshold selection.
 - T22 P1 holdout execution freeze.
