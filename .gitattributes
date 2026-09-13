@@ -1,6 +1,7 @@
 configs/*.yaml text eol=lf
 data/manifests/*.json text eol=lf
 data/manifests/*.jsonl text eol=lf
+data/MANIFEST.json text eol=lf
 schemas/*.json text eol=lf
 prompts/*.md text eol=lf
 prompts/*.txt text eol=lf
