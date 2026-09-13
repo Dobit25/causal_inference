@@ -1,5 +1,5 @@
 {
-  "manifest_version": 29,
+  "manifest_version": 30,
   "description": "Index of immutable source manifests and versioned derived manifests used by the four-graph project.",
   "active_primary_source": "causalds",
   "sources": [
@@ -324,6 +324,21 @@
       "name": "p1_t19_story_audit",
       "role": "text_level_truth_dose_internal_blinded_qa_replay_and_t20_authorization",
       "manifest": "data/manifests/t19_p1_story_audit.json"
+    },
+    {
+      "name": "p1_t20_valid_h2_conformance",
+      "role": "synthetic_valid_cpdag_preference_forced_and_selective_h2_decisions",
+      "manifest": "data/manifests/t20_h2_valid_conformance.jsonl"
+    },
+    {
+      "name": "p1_t20_invalid_h2_conformance",
+      "role": "strict_semantic_preference_and_cpdag_contract_rejection_cases",
+      "manifest": "data/manifests/t20_h2_invalid_conformance.jsonl"
+    },
+    {
+      "name": "p1_t20_h2_conformance_audit",
+      "role": "offline_production_reference_agreement_invariants_and_t21_authorization",
+      "manifest": "data/manifests/t20_h2_conformance_audit.json"
     }
   ]
 }

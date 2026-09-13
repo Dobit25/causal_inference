@@ -1,0 +1,43 @@
+{
+  "$id": "https://fourgraph.local/schemas/h2_decision_v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "best_log_score": {"type": "number"},
+        "consistent_extension_count": {"minimum": 1, "type": "integer"},
+        "method": {"const": "H2_FORCED"},
+        "normalized_conflict_mass": {"maximum": 1, "minimum": 0, "type": "number"},
+        "normalized_margin": {"oneOf": [{"minimum": 0, "type": "number"}, {"const": "infinity"}]},
+        "overridden_edges": {"type": "array"},
+        "parent_graph_sha256": {"pattern": "^[0-9A-F]{64}$", "type": "string"},
+        "preference_artifact_sha256": {"pattern": "^[0-9A-F]{64}$", "type": "string"},
+        "schema_version": {"const": "fourgraph.h2_decision.v1"},
+        "second_best_log_score": {"type": ["number", "null"]},
+        "selected_graph": {"type": "object"},
+        "selected_graph_sha256": {"pattern": "^[0-9A-F]{64}$", "type": "string"},
+        "tie_breaking": {"const": "lexicographic_canonical_edge_serialization"}
+      },
+      "required": ["schema_version", "method", "parent_graph_sha256", "preference_artifact_sha256", "selected_graph", "selected_graph_sha256", "consistent_extension_count", "best_log_score", "second_best_log_score", "normalized_margin", "normalized_conflict_mass", "overridden_edges", "tie_breaking"],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "abstention_semantics": {"type": ["string", "null"]},
+        "decision": {"enum": ["accept", "abstain"]},
+        "forced_graph_sha256": {"pattern": "^[0-9A-F]{64}$", "type": "string"},
+        "method": {"const": "H2_SELECTIVE"},
+        "output_graph": {"type": "object"},
+        "output_graph_sha256": {"pattern": "^[0-9A-F]{64}$", "type": "string"},
+        "parent_graph_sha256": {"pattern": "^[0-9A-F]{64}$", "type": "string"},
+        "schema_version": {"const": "fourgraph.h2_decision.v1"},
+        "tau_conflict": {"minimum": 0, "type": "number"},
+        "tau_margin": {"minimum": 0, "type": "number"}
+      },
+      "required": ["schema_version", "method", "parent_graph_sha256", "forced_graph_sha256", "tau_margin", "tau_conflict", "decision", "output_graph", "output_graph_sha256", "abstention_semantics"],
+      "type": "object"
+    }
+  ]
+}

@@ -1,8 +1,8 @@
-# Timeline dự án Causal Inference: T00–T19
+# Timeline dự án Causal Inference: T00–T20
 
 ## 1. Mục đích của tài liệu
 
-Tài liệu này mô tả tuyến tính quá trình phát triển dự án từ T00 đến hết T19: mỗi task bắt đầu từ vấn đề nào, được thực hiện để làm gì, đã làm những gì, điều kiện hoàn thành ra sao và kết quả thực tế là gì.
+Tài liệu này mô tả tuyến tính quá trình phát triển dự án từ T00 đến hết T20: mỗi task bắt đầu từ vấn đề nào, được thực hiện để làm gì, đã làm những gì, điều kiện hoàn thành ra sao và kết quả thực tế là gì.
 
 Toàn bộ công việc được thực hiện trong môi trường Conda `cau`, dùng Python 3.10. Dự án tuân theo nguyên tắc không dùng holdout để điều chỉnh thiết kế, không trộn observations giữa các causal scene, và không để ground-truth Oracle rò rỉ vào các graph builder.
 
@@ -54,6 +54,7 @@ Ngoài ra, projected `G_SCD` DAG được giữ như một sensitivity view, kh�
 | T17 | 2026-09-13 | Xây và đóng băng thiết kế P1 Hybrid trước generation/H2 | Khóa 100-scene fresh-SCM contract, semantic doses, BOSS CPDAG, H2 forced/selective, abstention, metrics/statistics và stage gates; 0 scene, 0 API call, chỉ cấp quyền T18 generator/inventory |
 | T18 | 2026-09-13 | Sinh và đóng băng fresh-SCM substrate P1 | Sinh 100 SCM, 500 task với solver agreement 500/500, observations và exact split 20/80; replay 480 raw files byte-for-byte, 0 API/H2/holdout evaluation; chỉ cấp quyền T19 |
 | T19 | 2026-09-13 | Sinh ba mức semantic evidence và kiểm định stimulus | 300 story full/partial/ambiguous, 100 alias maps, text-level truth audit, internal blinded QA 20/20 development scenes; 0 API/method/holdout manual review; chỉ cấp quyền T20 offline |
+| T20 | 2026-09-14 | Triển khai H2 và kiểm định offline | 150/150 forced và 3.000/3.000 selective decisions khớp independent solver; từ chối 30/30 input lỗi; 0 API/P1 access; chỉ cấp quyền T21 development-only |
 
 ---
 
@@ -943,6 +944,14 @@ T18 hiện thực hóa contract T17 thành 100 linear non-Gaussian SCMs có 5–
 T19 sinh cùng một alias map và clause order cho ba variants của mỗi SCM. `full` định hướng toàn bộ 684 edge claims; `partial` định hướng 367/684 theo round-half-up ở từng scene và dùng association language cho phần còn lại; `ambiguous` định hướng 0/684. Parser độc lập đọc ngược public text xác nhận không false direction, nonedge claim, canonical ID, arrow hay generator metadata.
 
 Panel mù dùng đúng 20 development scenes, shuffle ba slot mỗi scene và loại scene/study ID, split, variant, mapping, graph truth cùng seed. Internal text QA đạt 20/20 scenes, phân loại đúng 60/60 evidence slots và naturalness tối thiểu 4/5. Đây không phải independent external human validation và không được trình bày như vậy. Holdout stories chỉ được sinh/kiểm tra tự động, không xuất hiện trong panel. T19 gọi 0 API, không chạy SCD/LLM/reasoner/H1/H2 và chỉ cấp quyền T20 offline conformance.
+
+## 25. T20 — H2 offline implementation và conformance
+
+T20 hiện thực hóa hai biến thể đã đăng ký. `H2-Forced` chọn DAG có tổng log-probability hướng cạnh lớn nhất trong toàn bộ các consistent extensions của CPDAG; vì tối ưu toàn cục, nó không được định hướng từng cạnh độc lập nếu lựa chọn đó tạo cycle hoặc collider trái CPDAG. `H2-Selective` chỉ trả DAG cưỡng ép khi normalized margin đủ lớn và conflict mass đủ thấp; nếu không, nó trả lại chính xác CPDAG cha để bảo toàn uncertainty.
+
+Kiểm định hoàn toàn synthetic gồm 150 valid cases cân bằng theo 3–7 node, năm motif và sáu chế độ semantic preference; thêm 30 malformed cases cho strict validator. Production solver duyệt tổ hợp hướng cạnh, còn independent solver duyệt topological orders. Hai cách độc lập khớp 150/150 forced decisions và 3.000/3.000 selective decisions trên lưới 20 threshold pairs; 30/30 malformed inputs bị từ chối. Tất cả kết quả giữ nguyên node set, skeleton, compelled directions, acyclicity và unshielded colliders; input không bị mutate.
+
+Trong 39/150 valid cases, chọn hướng mạnh nhất riêng lẻ cho từng cạnh tạo graph không hợp lệ, cho thấy nhu cầu của global consistency. Con số 1.783 accept và 1.217 abstain trên toàn lưới chỉ kiểm tra implementation; T20 không dùng chúng để chọn threshold hay claim hiệu quả khoa học. Bước này gọi 0 API, không đọc P1 SCM/story, không chạy development hoặc holdout. Audit chỉ cấp quyền T21 chạy trên development để xây graph và chọn threshold theo protocol đã đóng băng.
 
 ## 23. T18 — Fresh-SCM generator và inventory P1
 

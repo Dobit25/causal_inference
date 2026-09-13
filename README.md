@@ -243,4 +243,6 @@ T17 freezes the prospective P1 Hybrid protocol without generating data or callin
 
 T18 materializes the deterministic P1 substrate: 100 fresh linear non-Gaussian SCMs, 500 task fixtures, exact 20/80 split, `N=2000` observations and nested sensitivity samples. Its report is `reports/t18_p1_generation.md`; replay every versioned and ignored raw artifact byte-for-byte with `python scripts/build_p1_t18.py --check`.
 
-T19 freezes 300 deterministic full/partial/ambiguous semantic-story stimuli, adapter-only alias maps and a development-only blinded QA panel. Read `reports/t19_p1_semantic_stories.md` and replay all versioned plus ignored artifacts with `python scripts/build_p1_t19.py --check`. Only T20 offline H2 implementation/conformance is authorized next; no live model or P1 holdout execution is authorized.
+T19 freezes 300 deterministic full/partial/ambiguous semantic-story stimuli, adapter-only alias maps and a development-only blinded QA panel. Read `reports/t19_p1_semantic_stories.md` and replay all versioned plus ignored artifacts with `python scripts/build_p1_t19.py --check`.
+
+T20 implements H2-Forced and H2-Selective as a global consistent-extension optimizer with auditable abstention. Its 150 valid cases, 30 invalid cases and 3,000 threshold-grid decisions replay with `python scripts/build_t20_h2_conformance.py --check`; see `reports/t20_h2_conformance.md`. Only T21 development execution is authorized next. P1 holdout remains sealed.

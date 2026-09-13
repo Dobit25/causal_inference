@@ -1,0 +1,90 @@
+schema_version: fourgraph.t20_h2_conformance.v1
+experiment_id: causalds_fresh_hybrid_p1_v1
+task: T20
+parent_protocol: configs/p1_hybrid_v1.yaml
+parent_story_audit: data/manifests/t19_p1_story_audit.json
+
+randomness:
+  suite_seed: 17020
+  generator: numpy.random.Generator
+  bit_generator: PCG64DXSM
+  numpy_version: 1.26.4
+
+preference_contract:
+  schema_version: fourgraph.semantic_preferences.v1
+  endpoint_order: lexicographic
+  exact_coverage: every_unresolved_edge_once
+  probability_clip: [0.001, 0.999]
+  reverse_probability: one_minus_forward
+  local_tie_break: left_causes_right
+  forbidden_metadata: [oracle, gold_answer, graph_source_result, story, split]
+
+h2_forced:
+  feasible_set: all_consistent_dag_extensions_of_parent_cpdag
+  objective: sum_natural_log_selected_direction_probability
+  constraints:
+    - preserve_parent_nodes
+    - preserve_parent_skeleton
+    - preserve_compelled_directions
+    - acyclic
+    - preserve_unshielded_colliders
+  tie_breaking: lexicographic_canonical_edge_serialization
+  normalized_margin: best_minus_second_log_score_divided_by_unresolved_edge_count
+  single_feasible_extension_margin: infinity
+  normalized_conflict_mass: sum_abs_two_p_minus_one_for_overridden_local_argmax_divided_by_unresolved_edge_count
+
+h2_selective:
+  accept_if: margin_greater_or_equal_and_conflict_less_or_equal
+  accept_output: exact_h2_forced_dag
+  abstain_output: exact_unchanged_parent_cpdag
+  partial_edge_abstention: false
+  threshold_grid:
+    tau_margin: [0.0, 0.02, 0.05, 0.1, 0.2]
+    tau_conflict: [0.0, 0.05, 0.1, 0.2]
+
+conformance:
+  valid_cases: 150
+  valid_node_count_allocation: {3: 30, 4: 30, 5: 30, 6: 30, 7: 30}
+  preference_regimes:
+    strong_consistent: 25
+    weak_consistent: 25
+    uniform_tie: 25
+    mixed_conflict: 25
+    near_tie: 25
+    strong_reverse_lexicographic: 25
+  invalid_cases: 30
+  invalid_case_policy: fail_closed_with_registered_error_code
+  production_enumerator: binary_unresolved_edge_orientation
+  independent_reference: topological_order_enumeration_and_deduplication
+  selective_decisions: 3000
+  exact_agreement_required: true
+  floating_absolute_tolerance: 1.0e-12
+  deterministic_replay: byte_for_byte
+
+artifacts:
+  valid_cases: data/manifests/t20_h2_valid_conformance.jsonl
+  invalid_cases: data/manifests/t20_h2_invalid_conformance.jsonl
+  audit: data/manifests/t20_h2_conformance_audit.json
+  report: reports/t20_h2_conformance.md
+  canonical_json: sorted_keys_compact_utf8_lf
+
+access_boundary:
+  api_calls: 0
+  provider_sdk_imports_allowed: false
+  P1_scm_or_story_access_authorized: false
+  P1_development_execution_authorized: false
+  P1_holdout_access_authorized: false
+  SCD_execution_authorized: false
+  LLM_execution_authorized: false
+  reasoner_execution_authorized: false
+  H2_on_P1_scenes_authorized: false
+  threshold_selection_authorized: false
+  next_action_if_all_gates_pass: T21_DEVELOPMENT_ONLY_GRAPH_CONSTRUCTION_AND_THRESHOLD_SELECTION
+
+dependencies:
+  - configs/p1_hybrid_v1.yaml
+  - data/manifests/t17_p1_hybrid_protocol_freeze.json
+  - data/manifests/t19_p1_story_audit.json
+  - src/fourgraph/partial_graph.py
+  - src/fourgraph/graph_contract.py
+  - src/fourgraph/p1_generation.py

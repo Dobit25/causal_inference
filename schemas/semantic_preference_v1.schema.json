@@ -1,0 +1,24 @@
+{
+  "$id": "https://fourgraph.local/schemas/semantic_preference_v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "parent_graph_sha256": {"pattern": "^[0-9A-F]{64}$", "type": "string"},
+    "preferences": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "left": {"pattern": "^X[0-9]{3}$", "type": "string"},
+          "probability_left_causes_right": {"maximum": 0.999, "minimum": 0.001, "type": "number"},
+          "right": {"pattern": "^X[0-9]{3}$", "type": "string"}
+        },
+        "required": ["left", "right", "probability_left_causes_right"],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schema_version": {"const": "fourgraph.semantic_preferences.v1"}
+  },
+  "required": ["schema_version", "parent_graph_sha256", "preferences"],
+  "type": "object"
+}

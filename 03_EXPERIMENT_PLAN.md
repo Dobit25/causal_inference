@@ -133,4 +133,4 @@ T13 has completed this freeze. T14 is authorized for one execution of 25 graph s
 
 T14 executed this manifest without retuning. T15 then aggregated the sealed 125 graph and 500 downstream rows offline, using equal-weight scene macros, 5,000 paired cluster-bootstrap replicates, two-sided contrasts and BH correction. Outcomes A–D are now reported; T16 must interpret them without reopening P0 builders or the reasoner.
 
-T16 interpreted A–D and selected `REFINE`. T17 froze the P1 Hybrid protocol; T18 completed the generator/inventory layer and exact split; T19 froze deterministic full/partial/ambiguous story stimuli and their evidence-boundary audit. T20 offline H2 conformance is next; live method execution remains gated.
+T16 interpreted A–D and selected `REFINE`. T17 froze the P1 Hybrid protocol; T18 completed the generator/inventory layer and exact split; T19 froze deterministic full/partial/ambiguous story stimuli and their evidence-boundary audit. T20 completed offline H2 conformance without P1 access. T21 is next and is restricted to development-only graph construction and threshold selection.

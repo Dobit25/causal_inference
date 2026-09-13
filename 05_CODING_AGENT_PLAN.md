@@ -113,9 +113,13 @@ Complete: implemented and audited the deterministic 100-scene generator, five ta
 
 Complete: generated 300 deterministic stories for 100 scenes with exact full/partial/ambiguous evidence rules, 100 neutral alias maps assigned independently of graph position, a story-only model allowlist, public-text truth parsing, and a 20-development-scene blinded internal QA panel. QA passed 20/20 scenes and 60/60 evidence classifications, but is explicitly internal rather than independent external human validation. No API, SCD, LLM, reasoner, H1/H2 or holdout evaluation ran.
 
-### T20–T24 — P1 execution and analysis
+### T20 — H2 offline implementation and conformance
 
-T20 implements and conformances H2 offline; T21 uses development only to construct graphs and select abstention thresholds; T22 freezes holdout execution; T23 opens holdout once; T24 performs scene-paired analysis and freezes findings. Nonlinear robustness and CLadder replication require a later versioned decision.
+Complete: implemented strict semantic-preference input validation, global H2-Forced optimization over consistent CPDAG extensions, and H2-Selective exact-parent abstention. Production and independent solvers agreed on 150/150 forced and 3,000/3,000 selective decisions; 30/30 invalid inputs were rejected. No API or P1 scene was accessed.
+
+### T21–T24 — P1 execution and analysis
+
+T21 uses development only to construct graphs and select abstention thresholds; T22 freezes holdout execution; T23 opens holdout once; T24 performs scene-paired analysis and freezes findings. Nonlinear robustness and CLadder replication require a later versioned decision.
 
 ## Research integrity checklist
 
