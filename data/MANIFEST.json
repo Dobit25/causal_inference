@@ -1,5 +1,5 @@
 {
-  "manifest_version": 26,
+  "manifest_version": 27,
   "description": "Index of immutable source manifests and versioned derived manifests used by the four-graph project.",
   "active_primary_source": "causalds",
   "sources": [
@@ -279,6 +279,11 @@
       "name": "causalds_t16_p0_findings_audit",
       "role": "hash_pinned_claim_boundary_refine_decision_and_t17_authorization",
       "manifest": "data/manifests/t16_p0_findings_audit.json"
+    },
+    {
+      "name": "causalds_t17_p1_hybrid_protocol_freeze",
+      "role": "pre_generation_hash_pinned_p1_hybrid_design_and_t18_authorization",
+      "manifest": "data/manifests/t17_p1_hybrid_protocol_freeze.json"
     }
   ]
 }

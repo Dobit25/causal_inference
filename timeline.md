@@ -1,8 +1,8 @@
-# Timeline dự án Causal Inference: T00–T12
+# Timeline dự án Causal Inference: T00–T17
 
 ## 1. Mục đích của tài liệu
 
-Tài liệu này mô tả tuyến tính quá trình phát triển dự án từ T00 đến hết T12: mỗi task bắt đầu từ vấn đề nào, được thực hiện để làm gì, đã làm những gì, điều kiện hoàn thành ra sao và kết quả thực tế là gì.
+Tài liệu này mô tả tuyến tính quá trình phát triển dự án từ T00 đến hết T17: mỗi task bắt đầu từ vấn đề nào, được thực hiện để làm gì, đã làm những gì, điều kiện hoàn thành ra sao và kết quả thực tế là gì.
 
 Toàn bộ công việc được thực hiện trong môi trường Conda `cau`, dùng Python 3.10. Dự án tuân theo nguyên tắc không dùng holdout để điều chỉnh thiết kế, không trộn observations giữa các causal scene, và không để ground-truth Oracle rò rỉ vào các graph builder.
 
@@ -51,6 +51,7 @@ Ngoài ra, projected `G_SCD` DAG được giữ như một sensitivity view, kh�
 | T14 | 2026-09-12–13 | Mở holdout đúng một logical resumable run | 98/100 non-Oracle graphs thành công, 2 Hybrid failures; 125 graph rows và 500 downstream rows terminal; replay offline đạt, chưa chạy T15 |
 | T15 | 2026-09-13 | Phân tích thống kê P0 holdout đã seal | 225 scene summaries, 36 paired contrasts, 5.000 cluster bootstraps/contrast, BH và McNemar sensitivity; replay offline đạt |
 | T16 | 2026-09-13 | Khóa findings và quyết định P0 | Chốt claim được/không được hỗ trợ, giữ null/adverse results, chọn `REFINE`; chỉ cấp quyền thiết kế protocol T17 |
+| T17 | 2026-09-13 | Xây và đóng băng thiết kế P1 Hybrid trước generation/H2 | Khóa 100-scene fresh-SCM contract, semantic doses, BOSS CPDAG, H2 forced/selective, abstention, metrics/statistics và stage gates; 0 scene, 0 API call, chỉ cấp quyền T18 generator/inventory |
 
 ---
 
@@ -906,3 +907,27 @@ Matrix dùng đúng 7 primary development scenes, năm task và năm graph condi
 Oracle-answer accuracy lần lượt là `G_ORACLE` 34/35, `G_LLM` 33/35, `G_HYBRID` 31/35, projected `G_SCD` 6/35 và raw `G_SCD` 4/35. Uncertainty-aware correctness lần lượt là 34/35, 34/35, 32/35, 33/35 và 35/35. Raw CPDAG đạt uncertainty-aware cao vì 31/35 query thực sự undetermined; projected DAG được reasoner đọc đúng nhưng thường không khớp Oracle answer. Đây mới là mô tả development, chưa phải phân tích thống kê cuối.
 
 Incremental cost ước tính USD 0,5237385. Replay từ cache khớp byte-for-byte và mọi integrity gate đều đạt. Reasoner được freeze cho holdout, `t13_eligible: true`; T13 và holdout vẫn chưa được chạy.
+
+---
+
+## 18. T13 — Đóng băng P0 holdout execution
+
+T13 khóa chính xác 25 graph-holdout scenes, gồm 20 primary và 5 supplementary. Năm task, năm graph conditions, model snapshots, prompts, schemas, cache/retry/failure policy, output counts và paired scene-clustered/BH analysis đều được hash-pin. Bước này không gọi API, không đọc holdout content/gold/Oracle edges và không tạo accuracy; nó chỉ cấp quyền chạy T14 đúng cấu hình.
+
+## 19. T14 — Mở P0 holdout đúng một lần
+
+T14 chạy logical resumable execution đã đăng ký: 25 LLM DAG, 25 raw CPDAG, 25 projected DAG và 23 Hybrid DAG thành công; hai Hybrid conditions kết thúc bằng terminal failure theo đúng no-fallback policy. Toàn bộ 125 graph rows và 500 downstream rows đạt trạng thái terminal và replay offline được; không có retry nghiên cứu hay retuning sau khi thấy kết quả.
+
+## 20. T15 — Phân tích P0 holdout
+
+T15 dùng scene làm đơn vị độc lập, chạy 5.000 paired cluster-bootstrap replicates và BH correction. Hybrid vượt deterministic projection rõ về directed F1 và official downstream accuracy; tuy nhiên Hybrid không chứng minh được ưu thế downstream so với standalone LLM. Uncertainty-aware correctness được báo riêng và không bị diễn giải nhầm thành graph truth.
+
+## 21. T16 — Chốt findings và quyết định P0
+
+T16 giữ cả kết quả thuận lợi, null, adverse, hai Hybrid failures và residual Oracle-reasoner error. Quyết định là `REFINE`: không mở rộng nguyên H1 thành P1, mà đăng ký một P1 mới tập trung vào global CPDAG consistency và selective abstention.
+
+## 22. T17 — Đóng băng thiết kế P1 Hybrid
+
+T17 khóa trước 100 fresh homogeneous SCMs, exact five-task contract, query/motif/noise balance, BOSS raw CPDAG chính, DirectLiNGAM structural sensitivity, ba semantic doses (`full`, `partial`, `ambiguous`), H1 baseline, H2-Forced và H2-Selective. H2-Selective trả nguyên raw CPDAG khi không đủ chắc chắn; không xóa observation như missing.
+
+Protocol cũng khóa 12 structural views/scene, 11 downstream views/scene, hypotheses, metrics, scene-paired statistics, threshold grid và forbidden selection inputs. T17 tạo 0 scene, gọi 0 API, chưa implement H2 và không truy cập P1 holdout. Bước duy nhất được phép tiếp theo là T18 xây generator/inventory và đóng băng exact 20/80 IDs; live semantic calls và H2 vẫn bị chặn.

@@ -92,9 +92,11 @@ Generate 100 scenes with:
 - linear non-Gaussian SCMs with independent exogenous errors;
 - primary `N=2000` observations per SCM;
 - `N=500` and `N=10000` sensitivity on 20 scenes;
-- the same 2–5 adjustment/control task contract.
+- exactly the same five adjustment/control tasks per scene;
+- deterministic `full`, `partial`, and `ambiguous` semantic-evidence variants;
+- a query-target allocation balanced across valid-empty, one-minimal-nonempty, multiple-minimal, and no-valid-adjustment-set cases.
 
-Persist generator commit, resolved config, seeds, generated SCMs, story-generation model/version, hashes, and the generated-scene manifest. Do not merge fresh and released results silently.
+Persist generator commit, resolved config, seeds, generated SCMs, deterministic story-template/version hashes, split IDs, task fixtures, and the generated-scene manifest. Production and independent solvers must agree before a task enters P1. Do not merge fresh and released results silently.
 
 ## Raw-data policy
 
@@ -104,4 +106,4 @@ Persist generator commit, resolved config, seeds, generated SCMs, story-generati
 
 T15 consumes only the sealed T14 metric/score rows. It creates no new benchmark observation, graph, or Oracle-edge artifact. The five supplementary holdout scenes contribute only to structural summaries; the 20 primary scenes remain the sole downstream estimand.
 
-T16 closes P0 without creating data. Its `REFINE` decision does not authorize fresh P1 generation; T17 must first register the new generator, evidence variants, split and access boundary.
+T17 now freezes the generator contract, evidence variants, split algorithm, tasks, H2 family, and access boundary without creating data. T18 may implement the fresh-SCM generator/inventory and freeze exact split IDs; it may not call the semantic model, implement/run H2, or access P1 holdout results.

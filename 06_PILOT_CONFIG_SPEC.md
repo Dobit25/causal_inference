@@ -1,9 +1,10 @@
 # Experiment Configuration Specification
 
-Two canonical configs are maintained:
+The canonical study configs are:
 
 - `configs/p0_released.yaml`: released CausalDS exploratory pilot.
-- `configs/p1_fresh.yaml`: fresh homogeneous primary study.
+- `configs/p1_hybrid_v1.yaml`: frozen prospective fresh homogeneous Hybrid study.
+- `configs/p1_fresh.yaml`: preserved, hash-pinned, unexecuted historical P1 design superseded by T17.
 
 ## P0 frozen design
 
@@ -48,18 +49,22 @@ T10 is frozen in `configs/t10_hybrid_graph_builder.yaml`. It takes only the raw 
 
 T11 is frozen in `configs/t11_graph_metrics.yaml`. It evaluates five graph views per development scene through `GraphArtifact.metrics_view()`, uses grading-only Oracle graphs in memory, records 40 per-scene results, and never coerces raw CPDAGs into DAGs. Projected SCD is sensitivity-only; SID/AID are null/unavailable pending a pinned validated implementation.
 
-## P1 frozen design
+## P1 Hybrid frozen design
 
 ```yaml
-experiment: causalds_fresh_homogeneous_p1_v1
+experiment: causalds_fresh_hybrid_p1_v1
 scenes: 100
 split: 20 development / 80 holdout
 nodes: stratified 5–7
 SCM: linear, acyclic, non-Gaussian, causally sufficient
-SCD: DirectLiNGAM
+SCD primary: BOSS + BasisFunctionBicScore CPDAG
+SCD sensitivity: DirectLiNGAM, structural only
 primary_N: 2000
 sensitivity_N: [500, 10000] on 20 scenes
-tasks: same adjustment/control contract
+tasks: exact frozen five-task panel
+semantic_evidence: [full, partial, ambiguous]
+hybrid: H1 plus globally constrained H2 forced/selective
+selective_abstention: unchanged raw CPDAG
 graph_contract: same fourgraph.graph.v1 interface as P0
 statistics: paired scene-clustered bootstrap
 ```
@@ -86,4 +91,4 @@ T13 has now frozen these choices in `configs/t13_holdout_freeze.yaml` and `data/
 
 T14 reached terminal state for every scheduled unit. T15 has now consumed those sealed records using the T13 statistical contract and writes only aggregate/scene-level result artifacts. `scripts/analyze_t15.py --check` verifies byte-identical replay; it performs no API call and does not mutate T14.
 
-T16 pins `REFINE` in `configs/t16_p0_decision.yaml`. Only T17 protocol design is enabled; existing `configs/p1_fresh.yaml` remains an unexecuted prior design until a versioned Hybrid amendment explicitly supersedes it.
+T16 pins `REFINE` in `configs/t16_p0_decision.yaml`. T17 supplies that versioned amendment in `configs/p1_hybrid_v1.yaml` and freezes it through `data/manifests/t17_p1_hybrid_protocol_freeze.json`. Only T18 generator/inventory work is enabled; live model calls, H2 implementation/execution, and P1 holdout access remain disabled.

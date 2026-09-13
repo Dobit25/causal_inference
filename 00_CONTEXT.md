@@ -23,7 +23,9 @@ Released CausalDS P0
 Fresh homogeneous CausalDS P1
   -> 100 generated scenes
   -> linear non-Gaussian SCMs
-  -> primary scientific study
+  -> BOSS CPDAG + globally constrained semantic H2
+  -> forced orientation and selective CPDAG-preserving abstention
+  -> primary controlled Hybrid study
 
 CLadder
   -> optional external replication after a defensible P1 result
@@ -31,7 +33,7 @@ CLadder
 
 P0 uses nested cohorts. After T04 integrity checks, the graph cohort is frozen at 33 released scenes split into 8 development and 25 holdout scenes. Within it, the primary downstream cohort has 27 scenes with the same five frozen graph-sensitive adjustment/control tasks (7/20), while the remaining 6 scenes form a supplementary exploratory cohort (1/5). Supplementary task results are never pooled into primary accuracy.
 
-P1 uses 100 fresh scenes, split into 20 development and 80 holdout scenes, with 5–7 nodes and `N=2000` primary observations per SCM. Sample-size sensitivity uses `N=500` and `N=10000` on 20 scenes.
+P1 uses 100 fresh scenes, split into 20 development and 80 holdout scenes, with 5–7 nodes and `N=2000` primary observations per SCM. Sample-size sensitivity uses `N=500` and `N=10000` on 20 scenes. T17 freezes BOSS CPDAG as the primary statistical substrate, DirectLiNGAM as structural sensitivity only, deterministic full/partial/ambiguous semantic evidence, global H2 orientation, and selective abstention to the unchanged raw CPDAG.
 
 ## Critical experimental control
 
@@ -80,7 +82,7 @@ T13 is complete and has hash-frozen the exact 25-scene holdout execution: 20 pri
 
 T14 is complete as one logical resumable holdout run. T15 has now analyzed the sealed records offline: 5,000 paired scene-cluster bootstrap replicates, all registered contrasts, exact McNemar sensitivity and BH correction. Hybrid substantially improves direction over deterministic projection (directed F1 0.918 versus 0.296 on available graphs), while official downstream accuracy ranks Oracle 0.930, LLM 0.820, Hybrid 0.710, projected SCD 0.110 and raw SCD 0.080. The raw CPDAG's 0.940 uncertainty-aware score measures correct conservative use of its uncertainty, not graph truth. No T14 artifact was changed or failure rerun.
 
-T16 closes released P0 with decision `REFINE`. The next permitted activity is T17 protocol design for a fresh homogeneous P1 centered on globally constrained semantic orientation and preregistered abstention; P1 generation and live calls remain unauthorized.
+T16 closes released P0 with decision `REFINE`. T17 has now frozen the versioned fresh-P1 Hybrid protocol around globally constrained semantic orientation and preregistered abstention. Only T18 fresh-SCM generator/inventory work is authorized next; live semantic-model calls, H2 execution, and P1 holdout access remain unauthorized.
 
 ## Non-negotiable controls
 

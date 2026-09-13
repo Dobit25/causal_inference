@@ -54,8 +54,10 @@ For `G_LLM`, T08 uses a separate public-only loader and strict all-pairs JSON/DA
 ### Fresh homogeneous CausalDS P1
 
 - Generates linear, acyclic, non-Gaussian, causally sufficient SCMs.
-- Matches those assumptions to DirectLiNGAM.
-- Provides the primary controlled scientific result.
+- Uses a BOSS CPDAG as the primary statistical substrate and DirectLiNGAM only as a structural sensitivity comparator.
+- Tests whether globally constrained semantic orientation improves over arbitrary projection, and whether selective abstention preserves useful uncertainty as semantic evidence weakens.
+- Uses deterministic `full`, `partial`, and `ambiguous` evidence variants, five fixed tasks, and the same provenance-blind reasoner.
+- Provides the primary controlled Hybrid scientific result.
 - Adds nonlinear additive-noise SCMs only as a later robustness extension.
 
 ## Hybrid scope
@@ -95,4 +97,4 @@ T13 has converted that principle into an executable pre-registration. It freezes
 
 T14 materialized the sealed holdout records without changing those choices. T15 has now completed the pre-registered offline comparison while retaining all construction/reasoner failures. Semantic orientation greatly outperforms deterministic projection on direction and official downstream answers, but does not significantly outperform the standalone LLM graph on downstream accuracy. Conservative CPDAG correctness remains high only under the graph-conditioned uncertainty-aware scorer; it is not evidence that the CPDAG matches Oracle truth.
 
-T16 therefore selects `REFINE`: preserve the controlled fresh-SCM goal, but redesign P1 around a global constraint-aware Hybrid and abstention instead of treating DirectLiNGAM as the sole primary SCD. This is a prospective design decision; no P1 data or results exist yet.
+T16 therefore selected `REFINE`. T17 prospectively freezes that redesign: controlled fresh SCMs, a CPDAG-producing statistical substrate, global constraint-aware H2, semantic-evidence doses, and selective abstention. No P1 data or results exist yet; only the T18 generator/inventory stage is authorized.

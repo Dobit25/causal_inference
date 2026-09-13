@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/p1_hybrid_protocol_v1.schema.json",
+  "title": "FourGraph P1 Hybrid Protocol v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "experiment",
+    "research_question",
+    "claim_boundary",
+    "generation",
+    "tasks",
+    "semantic_evidence",
+    "graph_contract",
+    "statistical_discovery",
+    "semantic_backend",
+    "graph_views",
+    "hybrid_methods",
+    "development_selection",
+    "reasoner",
+    "hypotheses",
+    "metrics",
+    "statistics",
+    "access_and_freeze",
+    "dependencies"
+  ],
+  "properties": {
+    "schema_version": {"const": "fourgraph.p1_hybrid_protocol.v1"},
+    "experiment": {
+      "type": "object",
+      "required": ["id", "phase", "role", "master_seed", "supersedes_unexecuted_design", "parent_decision"]
+    },
+    "research_question": {"type": "string", "minLength": 80},
+    "claim_boundary": {"type": "object", "required": ["primary_claim", "selective_claim", "forbidden_claims"]},
+    "generation": {"type": "object", "required": ["scene_count", "split", "eligibility", "graph", "scm", "observations"]},
+    "tasks": {"type": "object", "required": ["tasks_per_scene", "task_ids", "query_target_strata", "independent_target_solver_required"]},
+    "semantic_evidence": {"type": "object", "required": ["variants", "full", "partial", "ambiguous", "audit"]},
+    "graph_contract": {"type": "object", "required": ["graph_schema_version", "selective_abstention_output"]},
+    "statistical_discovery": {"type": "object", "required": ["cpdag_primary", "deterministic_projection", "direct_lingam"]},
+    "semantic_backend": {"type": "object", "required": ["model_snapshot", "one_preference_call_per_scene_story_variant", "live_calls_authorized_at_T17"]},
+    "graph_views": {"type": "object", "required": ["structural_per_scene", "static", "semantic", "scheduled_counts"]},
+    "hybrid_methods": {"type": "object", "required": ["shared_preference_rule", "H1", "H2_FORCED", "H2_SELECTIVE"]},
+    "development_selection": {"type": "object", "required": ["stage", "threshold_grid", "selection_rule", "forbidden_selection_inputs"]},
+    "reasoner": {"type": "object", "required": ["model_snapshot", "prompt", "causal_story_allowed", "graph_provenance_allowed", "live_calls_authorized_at_T17"]},
+    "hypotheses": {"type": "object", "required": ["primary", "key_secondary", "direction_not_preregistered"]},
+    "metrics": {"type": "object", "required": ["structural", "downstream", "operational"]},
+    "statistics": {"type": "object", "required": ["independent_unit", "bootstrap_replicates", "bootstrap_seed", "multiple_testing", "bh_alpha"]},
+    "access_and_freeze": {"type": "object", "required": ["current_status", "T17_api_calls", "T17_generated_scenes", "T17_p1_holdout_accessed", "next_authorized_action", "amendment_policy"]},
+    "dependencies": {"type": "array", "minItems": 10, "items": {"type": "string"}, "uniqueItems": true}
+  },
+  "additionalProperties": false
+}

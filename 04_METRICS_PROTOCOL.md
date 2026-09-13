@@ -21,7 +21,7 @@ Do not count an undirected CPDAG edge as an ordinary directed error without repo
 
 ### DAG metrics
 
-For `G_LLM`, `G_HYBRID`, `G_ORACLE`, P1 SCD DAG, and P0 projected-DAG sensitivity:
+For DAG-compatible views (`G_LLM`, forced/accepted `G_HYBRID`, `G_ORACLE`, DirectLiNGAM sensitivity, and deterministic SCD projection):
 
 - Directed-edge precision, recall, and F1.
 - Orientation accuracy conditional on correct adjacency.
@@ -121,4 +121,4 @@ T13 freezes the P0 holdout metric plan before any holdout content is opened: 125
 
 T14 populated the schedules while preserving failure status: 123/125 structural rows are available and all 500 downstream rows are terminal. T15 has now produced 225 scene summaries and 36 pairwise records: 10 skeleton, 6 DAG-direction and 20 downstream contrasts. Bootstrap/BH is primary; exact McNemar is a record-level sensitivity because it does not model scene clustering. Structural Hybrid failures remain unavailable, while downstream graph/reasoner failures remain incorrect as frozen in T13.
 
-T16 freezes the interpretation boundary: uncertainty-aware correctness is graph-conditioned reasoner conformance, not graph truth; raw CPDAG and DAG direction scores are not collapsed into one ranking. P1 must add validity, coverage, abstention and semantic-evidence interaction metrics prospectively.
+T16 freezes the interpretation boundary: uncertainty-aware correctness is graph-conditioned reasoner conformance, not graph truth; raw CPDAG and DAG direction scores are not collapsed into one ranking. T17 prospectively adds validity, forced-orientation precision, selective coverage/abstention, confident-wrong rate, and semantic-evidence-dose interactions. Abstention returns the unchanged raw CPDAG and remains a scored observation rather than missing data.

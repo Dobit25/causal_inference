@@ -32,7 +32,7 @@ Before entering the reasoner or metrics, every condition is normalized as `fourg
 - P0 primary output: CPDAG.
 - P0 method: T05-frozen BOSS + `BasisFunctionBicScore` (`penalty_discount=1.0`, `truncation_limit=3`, one deterministic data-order start).
 - P0 sensitivity: deterministic consistent DAG extension with lexicographic tie-breaking.
-- P1: DirectLiNGAM DAG under matched linear non-Gaussian assumptions.
+- P1 primary: BOSS CPDAG under the frozen basis-function score; DirectLiNGAM DAG is structural sensitivity only.
 - Output: canonical SCD CPDAG/DAG artifact; the projected sensitivity artifact references its raw CPDAG parent hash and complete deterministic orientation trace.
 - T09 is complete on the frozen development split: 8/8 raw CPDAGs and 8/8 projected-DAG sensitivity artifacts reproduce byte-for-byte without story, Oracle, tasks, or holdout access.
 - T10 is complete on the frozen development split: the T08-frozen semantic configuration oriented 27/27 unresolved raw-T09 CPDAG edges into 8/8 valid parent-linked Hybrid DAGs. Skeletons, compelled directions, and equivalence classes are unchanged; replay is byte-exact and holdout remains unopened.
@@ -103,9 +103,11 @@ Use all 33 scenes for eligible graph-level analyses, the fixed `27 x 5` panel fo
 
 - 100 fresh homogeneous scenes: 20 development, 80 holdout.
 - 5–7 nodes, linear non-Gaussian causally sufficient SCMs.
-- DirectLiNGAM primary SCD.
+- BOSS CPDAG primary SCD substrate; DirectLiNGAM structural sensitivity only.
 - `N=2000` observations; `N=500` and `N=10000` sensitivity on 20 scenes.
-- Same reasoner isolation, graph builders, tasks, scorers, and scene-level analysis architecture as P0.
+- Three deterministic semantic-evidence doses: full, partial, and ambiguous.
+- H2 forced performs global maximum-score consistent extension; H2 selective retains the unchanged raw CPDAG when development-frozen confidence/conflict thresholds reject orientation.
+- Same reasoner isolation, five tasks, scorers, and scene-level analysis architecture as P0.
 
 Nonlinear additive-noise SCMs are a later robustness extension, not part of the initial P1 claim.
 
@@ -131,4 +133,4 @@ T13 has completed this freeze. T14 is authorized for one execution of 25 graph s
 
 T14 executed this manifest without retuning. T15 then aggregated the sealed 125 graph and 500 downstream rows offline, using equal-weight scene macros, 5,000 paired cluster-bootstrap replicates, two-sided contrasts and BH correction. Outcomes A–D are now reported; T16 must interpret them without reopening P0 builders or the reasoner.
 
-T16 has interpreted A–D and selected `REFINE`. T17 must specify a versioned P1 Hybrid protocol with fresh homogeneous SCMs, CPDAG-producing SCD, a DirectLiNGAM sensitivity comparator, controlled semantic-evidence levels, global consistency and abstention before any new generation or live execution.
+T16 interpreted A–D and selected `REFINE`. T17 has frozen the versioned P1 Hybrid protocol with fresh homogeneous SCMs, CPDAG-producing SCD, a DirectLiNGAM sensitivity comparator, controlled semantic-evidence levels, global consistency, and abstention. T18 may now implement only the generator/inventory layer; live execution remains gated.

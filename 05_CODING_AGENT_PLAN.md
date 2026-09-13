@@ -99,15 +99,19 @@ Complete: computed scene-macro summaries, 5,000 paired scene-clustered bootstrap
 
 ### T16 — P0 findings
 
-Complete: published `reports/p0_findings.md`, froze supported/unsupported claims, retained null/adverse findings and selected `REFINE`. T17 protocol design is authorized, but P1 generation, H2 live calls and P1 holdout access remain blocked.
+Complete: published `reports/p0_findings.md`, froze supported/unsupported claims, retained null/adverse findings and selected `REFINE`. This authorized T17 design only; T17 has since frozen that protocol without starting P1 execution.
 
-### T17 — Fresh P1 generation
+### T17 — Freeze P1 Hybrid protocol
 
-Generate and audit 100 homogeneous linear non-Gaussian scenes at the frozen commit/config.
+Complete: froze the fresh-SCM generator contract, exact task/query balance, three semantic-evidence doses, BOSS CPDAG primary substrate, DirectLiNGAM sensitivity role, global H2 forced/selective rules, abstention selection, evaluation schedule, statistics, evidence boundaries, and stage gates. No scene was generated and no model/H2/holdout execution occurred.
 
-### T18+ — P1, robustness, and replication
+### T18 — Fresh SCM generator and inventory
 
-Run the primary P1 study, then optional nonlinear SCM, SID/AID, perturbation, observation robustness, and CLadder replication phases.
+Implement and audit the deterministic 100-scene generator, five tasks, exact 20/80 split, sample-size prefixes, and Oracle CPDAG eligibility. Do not call the semantic model or run H2.
+
+### T19–T24 — P1 execution and analysis
+
+T19 freezes semantic story variants; T20 implements and conformances H2 offline; T21 uses development only to construct graphs and select abstention thresholds; T22 freezes holdout execution; T23 opens holdout once; T24 performs scene-paired analysis and freezes findings. Nonlinear robustness and CLadder replication require a later versioned decision.
 
 ## Research integrity checklist
 

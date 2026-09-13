@@ -12,7 +12,7 @@ For each causal scene it compares:
 ## Frozen direction
 
 1. Released CausalDS P0: exploratory nested cohorts with 33 clean, causally sufficient graph scenes, a primary `27 x 5` downstream panel, and 6 separately reported supplementary scenes.
-2. Fresh homogeneous CausalDS P1: primary study on 100 linear non-Gaussian SCMs.
+2. Fresh homogeneous CausalDS P1: controlled Hybrid study on 100 linear non-Gaussian SCMs, with global CPDAG-consistent semantic orientation and selective uncertainty preservation.
 3. Optional nonlinear robustness and CLadder external replication.
 
 The detailed source of truth is [CausalDS.md](CausalDS.md). Compact protocols are [00_CONTEXT.md](00_CONTEXT.md) through [06_PILOT_CONFIG_SPEC.md](06_PILOT_CONFIG_SPEC.md).
@@ -25,7 +25,7 @@ The project uses the existing conda environment `cau` with Python 3.10. T05 addi
 conda run -n cau python -m pytest
 conda run -n cau python -m fourgraph --help
 conda run -n cau python -m fourgraph validate-config configs/p0_released.yaml
-conda run -n cau python -m fourgraph validate-config configs/p1_fresh.yaml
+conda run -n cau python scripts/freeze_t17_p1_hybrid_protocol.py --check
 ```
 
 Reproduce the T02 release/cohort audit against the extracted pinned source archive:
@@ -229,6 +229,7 @@ The development matrix produced 175 records from 105 unique canonical inputs, in
 - T12 v2 GPT-5.4 Mini-C headroom report: `reports/t12_v2_openai_mini_c.md`.
 - T12 v2 GPT-5.4 Mini-D effort report: `reports/t12_v2_openai_mini_d.md`.
 - T12 v3 task-specific prompt design: `reports/t12_v3_prompt_design.md`.
+- T17 frozen P1 Hybrid protocol: `reports/t17_p1_hybrid_protocol.md`.
 - Source manifest index: `data/MANIFEST.json`.
 - Historical NoisyCausal negative audit: `docs/data_audit.md`.
 
@@ -237,3 +238,5 @@ Raw benchmark artifacts, generated scenes, and raw experiment outputs remain out
 T13 froze the P0 holdout execution before access; T14 completed every scheduled unit with pre-registered failure handling. T15 has now completed the paired scene-clustered/BH analysis offline. See `reports/t15_p0_holdout_analysis.md` and replay it with `python scripts/analyze_t15.py --check`.
 
 T16 closes P0 with decision `REFINE`; the claim boundary and P1 redesign requirements are in `reports/p0_findings.md`. Replay the decision audit with `python scripts/finalize_t16_p0.py --check`.
+
+T17 freezes the prospective P1 Hybrid protocol without generating data or calling a model. Replay its dependency/hash audit with `python scripts/freeze_t17_p1_hybrid_protocol.py --check`; only the T18 fresh-SCM generator/inventory stage is authorized next.

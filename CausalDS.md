@@ -1,6 +1,6 @@
-# Master Plan — Released CausalDS P0 → Fresh Homogeneous P1
+# Master Plan — Released CausalDS P0 → Fresh Homogeneous Hybrid P1
 
-> Status: design frozen on 2026-08-30. This document supersedes the former NoisyCausal-first execution plan while retaining its negative artifact audit as project history.
+> Status: P0 closed with `REFINE`; the versioned P1 Hybrid protocol was frozen at T17 on 2026-09-13. This document supersedes the former NoisyCausal-first execution plan while retaining its negative artifact audit as project history.
 
 ## 1. Research objective
 
@@ -39,16 +39,19 @@ Released scenes have mixed data profiles and heterogeneous SCM mechanisms. P0 mu
 
 ### P1 — Fresh homogeneous CausalDS
 
-P1 is the primary scientific study:
+P1 is the primary controlled Hybrid study:
 
 - 100 fresh scenes;
 - 20 development and 80 holdout;
 - stratified 5–7 node connected DAGs;
 - no latent confounding;
 - linear non-Gaussian SCMs with independent exogenous noise;
-- DirectLiNGAM as the matched primary SCD method;
+- BOSS + `BasisFunctionBicScore` as the primary CPDAG-producing SCD method;
+- DirectLiNGAM as a structural sensitivity comparator only;
 - `N=2000` observations per SCM;
 - `N=500` and `N=10000` sensitivity on 20 scenes.
+
+Each scene has deterministic `full`, `partial`, and `ambiguous` semantic-evidence variants. H2 performs one global CPDAG-consistent orientation rather than independent edge decisions. The forced view always returns the best consistent extension; the selective view returns that DAG only when development-frozen confidence/conflict rules accept it, otherwise it preserves the unchanged raw CPDAG. Exact details and evidence boundaries are frozen in `configs/p1_hybrid_v1.yaml`.
 
 Nonlinear additive-noise SCMs and an ANM-compatible SCD method form a later robustness extension, not part of the first P1 result.
 
@@ -190,7 +193,7 @@ The raw CPDAG is primary. The projected DAG is sensitivity only. T05 selected BO
 
 T09 materialized this frozen method on all eight development scenes as canonical `fourgraph.graph.v1` artifacts: 8/8 raw CPDAGs and 8/8 parent-linked deterministic projected DAGs. A full rerun reproduced the artifacts byte-for-byte, the raw graphs exactly match the T05-selected outputs, and no story, LLM, task, Oracle, grading, or holdout input was accessed.
 
-P1 uses DirectLiNGAM because fresh SCM assumptions are deliberately matched to linear, acyclic, non-Gaussian independent-error identification.
+P1 uses BOSS + `BasisFunctionBicScore` as its primary statistical method because the central object is a CPDAG whose unresolved directions can be preserved or semantically oriented. DirectLiNGAM remains a DAG-producing structural sensitivity comparator under the deliberately matched linear, acyclic, non-Gaussian independent-error assumptions; it is not a downstream primary condition.
 
 ### 7.3 G_HYBRID H1
 
@@ -435,9 +438,15 @@ Development permits loader/parser debugging, P0 SCD choice, prompt syntax, and p
 - T13 holdout execution freeze — complete. Exact graph holdout membership is 25 scenes, partitioned into 20 primary and 5 supplementary scenes. The primary panel is fixed at 20 × 5 tasks × 5 graph conditions = 500 downstream records; the 77 supplementary task rows are frozen as exploratory inventory and are not sent through the fixed five-task reasoner or pooled into primary accuracy. Builder/reasoner snapshots, prompts, schemas, canonical `X000...` encoding, SCD/Hybrid methods, retry/cache/failure policy, output paths, structural/downstream metrics, and paired scene-clustered/BH analysis are hash-pinned in `data/manifests/t13_holdout_execution.json`. T13 made zero API calls, read no holdout content/gold/Oracle edges, computed no accuracy, and reports `holdout_accessed: false`, `t14_authorized: true`, `t14_started: false`.
 - T14 released P0 — complete as one logical resumable holdout run. The 25-scene graph panel produced 25 LLM DAGs, 25 raw SCD CPDAGs, 25 projected DAGs and 23 Hybrid DAGs; two Hybrid attempts terminated outside the parent equivalence class after frozen retries and no fallback. Grading-only Oracle loading followed the non-Oracle seal and persisted no Oracle edges. All 125 graph schedule rows and 500 primary downstream rows are terminal; the latter comprise 493 answered, five graph-failure and two reasoner-failure records over 245 canonical identities. Outputs replay offline, supplementary downstream remained zero, and T15 aggregate analysis has not started.
 - T15 scene-clustered analysis — complete offline with 5,000 paired scene-cluster bootstrap replicates, all registered pairwise contrasts, exact McNemar sensitivity and BH correction by metric family. Holdout directed F1 is 0.949 for LLM, 0.296 for projected SCD and 0.918 for the 23 successful Hybrid graphs. Official downstream accuracy is 0.930 Oracle, 0.820 LLM, 0.710 Hybrid, 0.110 projected SCD and 0.080 raw SCD; uncertainty-aware graph-conformance is reported separately and must not be interpreted as ground-truth graph accuracy. T14 remains byte-replayable and no API call, failure rerun or post-holdout retuning occurred.
-- T16 P0 findings and GO/REFINE/STOP — complete with `REFINE`. P0 supports semantic orientation over deterministic projection for direction and official downstream adjustment/control answers, but does not establish H1 superiority over standalone LLM or universal CPDAG/DAG superiority. The two Hybrid failures and residual Oracle-reasoner error remain part of the findings. Only T17 P1 Hybrid protocol design is authorized; P1 generation/live execution has not started.
-- T17 fresh P1 generation.
-- T18+ P1, robustness, and optional CLadder replication.
+- T16 P0 findings and GO/REFINE/STOP — complete with `REFINE`. P0 supports semantic orientation over deterministic projection for direction and official downstream adjustment/control answers, but does not establish H1 superiority over standalone LLM or universal CPDAG/DAG superiority. The two Hybrid failures and residual Oracle-reasoner error remain part of the findings. T17 subsequently converted this decision into the frozen prospective P1 Hybrid protocol; P1 generation/live execution has not started.
+- T17 P1 Hybrid protocol design — complete; the generator, semantic-evidence doses, H1/H2 rules, abstention selection, graph/downstream schedule, statistics, evidence boundaries, and stage gates are hash-frozen without generating scenes or calling a model.
+- T18 fresh SCM generator, inventory, deterministic split, and task/query generation — authorized; no live LLM/H2 execution.
+- T19 semantic story variants and blinded manual audit.
+- T20 H2 implementation and offline conformance.
+- T21 development-only graph construction and threshold selection.
+- T22 P1 holdout execution freeze.
+- T23 one-time P1 holdout execution.
+- T24 P1 analysis, findings, and optional robustness/CLadder replication decision.
 
 ## 16. Final information flow
 

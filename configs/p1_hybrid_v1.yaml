@@ -1,0 +1,414 @@
+schema_version: fourgraph.p1_hybrid_protocol.v1
+experiment:
+  id: causalds_fresh_hybrid_p1_v1
+  phase: p1_fresh_homogeneous
+  role: confirmatory_primary_study
+  master_seed: 1701
+  supersedes_unexecuted_design: configs/p1_fresh.yaml
+  parent_decision: configs/t16_p0_decision.yaml
+
+research_question: >-
+  When a statistical discovery method identifies a CPDAG, can globally
+  constrained semantic orientation improve causal adjustment/control decisions
+  over arbitrary DAG projection while retaining uncertainty when semantic
+  evidence is weak or conflicts with the statistical equivalence class?
+
+claim_boundary:
+  primary_claim: >-
+    Constraint-aware semantic augmentation improves official downstream
+    adjustment/control accuracy over deterministic CPDAG projection without
+    producing an invalid graph.
+  selective_claim: >-
+    A preregistered abstention rule trades coverage for fewer confident errors
+    as semantic evidence weakens.
+  forbidden_claims:
+    - globally_optimal_hybrid_over_all_possible_methods
+    - causal_truth_proven_from_text
+    - automatic_real_world_causal_decision_making
+    - universal_cpdag_or_dag_superiority
+
+generation:
+  implementation_stage: T18
+  scene_count: 100
+  scene_ids: P1S000_through_P1S099
+  split:
+    unit: scene_id
+    method: deterministic_stratified_after_oracle_only_inventory
+    seed: 17018
+    development: 20
+    holdout: 80
+    exact_ids_status: freeze_at_T18_before_any_method_development
+    stratification:
+      - node_count
+      - edge_count_band
+      - motif
+      - oracle_cpdag_unresolved_edge_band
+      - query_target_stratum
+      - exogenous_noise_family
+  eligibility:
+    connected_dag: true
+    observed_nodes_only: true
+    latent_confounding: false
+    oracle_cpdag_minimum_unresolved_edges: 2
+    selection_must_not_use:
+      - SCD_output
+      - LLM_output
+      - Hybrid_output
+      - reasoner_output
+  graph:
+    node_counts: [5, 6, 7]
+    node_count_allocation: [34, 33, 33]
+    node_count_assignment: sha256_seeded_balanced_permutation
+    edge_count_range_by_nodes:
+      5: [4, 7]
+      6: [5, 8]
+      7: [6, 9]
+    edge_count_sampling: discrete_uniform_within_node_specific_range
+    primary_motif_allocation:
+      chain: 20
+      fork: 20
+      collider: 20
+      mediator: 20
+      diamond: 20
+    primary_motif_assignment: sha256_seeded_balanced_permutation
+    motifs_may_overlap: true
+    candidate_generation:
+      topological_order: sha256_seeded_permutation_of_canonical_nodes
+      edge_set: sample_exact_edge_count_from_forward_pairs_without_replacement
+      acceptance:
+        - weakly_connected
+        - contains_assigned_primary_motif
+        - oracle_cpdag_has_at_least_two_unresolved_edges
+        - admits_query_in_assigned_target_stratum
+      rejection_sequence: deterministic_scene_rng
+      maximum_attempts_per_scene: 10000
+      exhaustion_action: fail_T18_without_replacement_or_rule_change
+  scm:
+    family: linear_non_gaussian_acyclic
+    structural_form: X_j=sum_i_B_ij_X_i+epsilon_j
+    causal_sufficiency: true
+    independent_exogenous_noise: true
+    edge_weight_absolute_range: [0.5, 2.0]
+    edge_weight_magnitude_distribution: uniform
+    edge_sign_allocation: within_scene_counts_differ_by_at_most_one_then_seeded_shuffle
+    intercepts: 0
+    one_noise_family_per_scene: true
+    exogenous_noise_families: [laplace, logistic, student_t_df5]
+    exogenous_noise_family_allocation: [34, 33, 33]
+    exogenous_noise_family_assignment: sha256_seeded_balanced_permutation
+    variance_standardized: true
+    variable_type: continuous
+    sampling_order: accepted_topological_order
+  observations:
+    primary_n: 2000
+    sensitivity_n: [500, 10000]
+    sensitivity_scene_count: 20
+    sensitivity_split: {development: 4, holdout: 16}
+    nested_prefix_samples: true
+    maximum_sample_generated_for_sensitivity_scene: 10000
+    seed_derivation: sha256_master_seed_scene_id
+    raw_and_standardized_views_hashed_separately: true
+
+tasks:
+  tasks_per_scene: 5
+  shared_treatment_outcome_candidates_within_scene: true
+  task_ids:
+    - identification__one_valid_adjustment_set
+    - identification__all_minimal_adjustment_sets
+    - identification__minimal_adjustment_set_size
+    - identification__n_valid_adjustment_sets
+    - bias_diagnostic__forbidden_controls_list
+  query_target_strata:
+    valid_empty: 25
+    one_minimal_nonempty: 25
+    multiple_minimal: 25
+    no_valid_adjustment_set: 25
+  query_stratum_assignment: sha256_seeded_balanced_permutation
+  query_selection:
+    enumerate_all_ordered_treatment_outcome_pairs: true
+    candidates_for_each_pair: all_remaining_observed_nodes
+    candidate_order: sha256_seeded_per_scene
+    select: first_pair_matching_assigned_stratum_and_both_solvers
+    no_matching_pair_action: reject_graph_candidate_and_continue_deterministically
+  candidate_controls: all_observed_nodes_except_treatment_and_outcome
+  convention: frozen_causalds_adjustment_convention
+  official_no_valid_sentinel: no_backdoor
+  independent_target_solver_required: true
+  production_independent_agreement_required: 500_of_500
+
+semantic_evidence:
+  implementation_stage: T19
+  variants_per_scene: 3
+  variants: [full, partial, ambiguous]
+  same_scm_data_query_and_alias_map_across_variants: true
+  aliases:
+    canonical_ids: X000_style
+    builder_visible: true
+    reasoner_visible: false
+    role_balanced_lexicon: true
+    assigned_independently_of_graph_position: true
+  generation: deterministic_template_based
+  full:
+    directional_evidence_fraction: 1.0
+    form: mechanistic_directional_clauses_without_arrow_notation
+  partial:
+    directional_evidence_fraction: 0.5
+    selected_edges: sha256_seeded_per_scene
+    selected_edge_count: round_half_up_half_of_true_edge_count
+    remaining_edges: symmetric_association_language
+  ambiguous:
+    directional_evidence_fraction: 0.0
+    form: symmetric_association_language_only
+  false_directional_statements_in_primary_p1: 0
+  conflicting_or_misleading_evidence: deferred_robustness_extension
+  audit:
+    all_true_edges_covered_as_declared: true
+    no_nonedge_direct_causal_claims: true
+    no_canonical_ids_in_story: true
+    manual_panel_scenes: 20
+
+graph_contract:
+  graph_schema_version: fourgraph.graph.v1
+  variable_map_schema_version: fourgraph.variable_map.v1
+  reasoner_view_schema_version: fourgraph.reasoner_graph.v1
+  canonical_json_edge_list: true
+  structure_and_artifact_hashes_separate: true
+  partial_edge_pdag_not_supported_in_v1: true
+  selective_abstention_output: unchanged_raw_cpdag
+
+statistical_discovery:
+  cpdag_primary:
+    algorithm: BOSS
+    score: BasisFunctionBicScore
+    source_config: configs/t05_scd_frozen.yaml
+    input: standardized_anonymous_observations_and_types
+    semantic_names_allowed: false
+    output: CPDAG
+  deterministic_projection:
+    algorithm: Dor_Tarsi_consistent_extension
+    tie_breaking: lexicographic
+    role: arbitrary_orientation_baseline
+  direct_lingam:
+    role: structural_sensitivity_only
+    assumption_match: linear_acyclic_non_gaussian_independent_errors
+    downstream_reasoner_scheduled: false
+
+semantic_backend:
+  provider: openai
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  endpoint: /v1/responses
+  reasoning_effort: none
+  temperature: 0
+  service_tier: default
+  store: false
+  structured_outputs: json_schema_strict
+  max_validation_retries: 2
+  transport_max_retries: 2
+  timeout_seconds: 120
+  one_preference_call_per_scene_story_variant: true
+  preference_artifact_reused_by: [G_HYBRID_H1_FULL, G_HYBRID_H2_FORCED, G_HYBRID_H2_SELECTIVE]
+  output_per_unresolved_edge:
+    - lexicographic_endpoints
+    - probability_left_causes_right
+    - concise_evidence
+  probability_clip: [0.001, 0.999]
+  live_calls_authorized_at_T17: false
+
+graph_views:
+  structural_per_scene: 12
+  static:
+    - {id: G_SCD_RAW, story_variant: none, downstream: true}
+    - {id: G_SCD_PROJECTED, story_variant: none, downstream: true}
+    - {id: G_DIRECTLINGAM, story_variant: none, downstream: false}
+    - {id: G_ORACLE, story_variant: none, downstream: true, grading_only: true}
+  semantic:
+    - {id: G_LLM_FULL, story_variant: full, downstream: true}
+    - {id: G_HYBRID_H1_FULL, story_variant: full, downstream: true}
+    - {id: G_HYBRID_H2_FORCED_FULL, story_variant: full, downstream: true}
+    - {id: G_HYBRID_H2_FORCED_PARTIAL, story_variant: partial, downstream: true}
+    - {id: G_HYBRID_H2_FORCED_AMBIGUOUS, story_variant: ambiguous, downstream: true}
+    - {id: G_HYBRID_H2_SELECTIVE_FULL, story_variant: full, downstream: true}
+    - {id: G_HYBRID_H2_SELECTIVE_PARTIAL, story_variant: partial, downstream: true}
+    - {id: G_HYBRID_H2_SELECTIVE_AMBIGUOUS, story_variant: ambiguous, downstream: true}
+  scheduled_counts:
+    structural_total: 1200
+    downstream_views_per_scene: 11
+    downstream_tasks_total: 5500
+    development_downstream_tasks: 1100
+    holdout_downstream_tasks: 4400
+
+hybrid_methods:
+  shared_preference_rule:
+    forward_probability: clipped_model_probability
+    reverse_probability: one_minus_forward_probability
+    edge_log_score: natural_log_probability_of_selected_direction
+  H1:
+    role: legacy_local_orientation_baseline
+    story_variant: full
+    decision: independent_argmax_per_edge
+    tie_breaking: lexicographic
+    global_repair: false
+    invalid_output: terminal_graph_failure
+    retry_after_valid_semantic_preference_artifact: false
+  H2_FORCED:
+    role: global_constraint_ablation
+    feasible_set: all_consistent_dag_extensions_of_parent_cpdag
+    objective: maximize_sum_edge_log_score
+    constraints:
+      - preserve_parent_skeleton
+      - preserve_compelled_directions
+      - acyclic
+      - no_new_unshielded_collider_outside_equivalence_class
+    tie_breaking: lexicographic_canonical_edge_serialization
+    expected_invalid_rate: 0
+  H2_SELECTIVE:
+    role: primary_hybrid_method
+    forced_parent: corresponding_H2_FORCED_graph
+    accept_output: forced_parent_dag
+    abstain_output: unchanged_G_SCD_RAW_cpdag
+    abstain_if:
+      - normalized_best_second_extension_margin_below_tau_margin
+      - normalized_conflict_mass_above_tau_conflict
+    normalized_margin: best_minus_second_best_log_score_divided_by_unresolved_edge_count
+    normalized_conflict_mass: sum_preference_margin_for_solver_overrides_divided_by_unresolved_edge_count
+    single_feasible_extension_margin: infinity
+
+development_selection:
+  stage: T21
+  oracle_access_scope: development_only
+  evidence_variant_weighting: equal_weight_full_partial_ambiguous
+  threshold_grid:
+    tau_margin: [0.0, 0.02, 0.05, 0.1, 0.2]
+    tau_conflict: [0.0, 0.05, 0.1, 0.2]
+  selection_rule:
+    eligibility:
+      graph_validity: 1.0
+      selective_orientation_precision_minimum: 0.95
+    optimize: maximum_orientation_coverage
+    tie_breakers:
+      - minimum_confident_wrong_rate
+      - lower_tau_margin
+      - higher_tau_conflict
+  forbidden_selection_inputs:
+    - holdout_graph_truth
+    - holdout_tasks_or_answers
+    - reasoner_downstream_ranking
+  no_eligible_threshold_action: amend_protocol_and_remain_pre_holdout
+
+reasoner:
+  provider: openai
+  model_snapshot: gpt-5.4-mini-2026-03-17
+  endpoint: /v1/responses
+  reasoning_effort: medium
+  max_output_tokens: 10240
+  service_tier: default
+  store: false
+  prompt: reasoner_cpdag_conservative_v3
+  graph_encoding: canonical_json_edge_list
+  labels: X000_style
+  evidence_view: graph_query_noncausal_glossary
+  causal_story_allowed: false
+  graph_provenance_allowed: false
+  cache_identity_excludes_graph_source_label: true
+  max_validation_retries: 2
+  transport_max_retries: 2
+  timeout_seconds: 180
+  live_calls_authorized_at_T17: false
+
+hypotheses:
+  primary:
+    - id: H_P1_1
+      statement: H2_FORCED_FULL has higher official downstream accuracy than G_SCD_PROJECTED.
+    - id: H_P1_2
+      statement: H2_FORCED has lower invalid-graph rate than H1 under the same full semantic preference artifacts.
+  key_secondary:
+    - id: H_P1_3
+      statement: H2_SELECTIVE reduces confident-wrong rate relative to H2_FORCED as semantic evidence weakens.
+    - id: H_P1_4
+      statement: H2 semantic benefit exhibits the ordered pattern full greater_than partial greater_than ambiguous.
+    - id: H_P1_5
+      statement: H2_FULL improves directed edge recovery over deterministic projection.
+  direction_not_preregistered:
+    - G_LLM_FULL_versus_H2_FULL
+    - G_DIRECTLINGAM_versus_semantic_methods
+
+metrics:
+  structural:
+    - skeleton_precision_recall_f1
+    - directed_precision_recall_f1_for_dag_outputs
+    - shd_by_compatible_graph_type
+    - cpdag_state_error_and_unresolved_rate
+    - valid_graph_and_completion_rate
+    - orientation_precision_and_coverage
+    - orientation_net_utility_correct_minus_incorrect_over_evaluable
+    - semantic_solver_conflict_rate
+    - graph_level_abstention_rate
+  downstream:
+    - oracle_answer_accuracy
+    - uncertainty_aware_correctness
+    - response_coverage
+    - selective_error_rate_among_non_undetermined_answers
+    - confident_wrong_rate
+    - failure_rate
+  operational:
+    - input_cached_reasoning_and_output_tokens
+    - latency
+    - retries_and_incomplete_responses
+    - cost_per_scene_and_graph_view
+
+statistics:
+  independent_unit: scene_id
+  repeated_factors: [graph_view, semantic_evidence_variant, sample_size]
+  primary_summary: equal_weight_scene_macro
+  comparison: paired
+  bootstrap_replicates: 5000
+  bootstrap_seed: 17015
+  confidence_interval: percentile_95
+  tests: two_sided
+  multiple_testing: benjamini_hochberg
+  bh_alpha: 0.05
+  bh_scope: within_each_declared_metric_family
+  binary_sensitivity: exact_mcnemar
+  failures:
+    downstream: incorrect_and_report_rate
+    structural: unavailable_and_report_completion
+  abstention:
+    graph_output: raw_cpdag_not_missing
+    undetermined_answer: incorrect_official_but_potentially_correct_uncertainty_aware
+  supplementary_descriptive:
+    - condition_level_rank_correlations
+    - task_and_motif_subgroups
+  subgroup_results_cannot_replace_primary_estimand: true
+
+access_and_freeze:
+  current_status: frozen_protocol_pre_generation
+  T17_api_calls: 0
+  T17_generated_scenes: 0
+  T17_h2_implemented: false
+  T17_p1_holdout_accessed: false
+  next_authorized_action: T18_FRESH_SCM_GENERATOR_AND_INVENTORY
+  T18_live_llm_calls_authorized: false
+  T18_h2_implementation_authorized: false
+  P1_holdout_execution_authorized: false
+  model_snapshot_unavailable_action: stop_and_create_new_protocol_version
+  budget_policy:
+    required_before_T21: rendered_prompt_token_forecast_and_user_authorization
+    required_before_T23: remaining_budget_at_least_1_25_times_forecast
+    automatic_provider_or_model_substitution: false
+    call_caps_must_be_frozen_per_live_stage: true
+  amendment_policy: any_change_requires_new_protocol_version_and_audit
+
+dependencies:
+  - configs/t16_p0_decision.yaml
+  - data/manifests/t16_p0_findings_audit.json
+  - configs/p1_fresh.yaml
+  - configs/t05_scd_frozen.yaml
+  - configs/graph_contract_v1.yaml
+  - schemas/graph_contract_v1.schema.json
+  - schemas/variable_map_v1.schema.json
+  - schemas/reasoner_graph_v1.schema.json
+  - configs/t08_llm_graph_builder.yaml
+  - prompts/llm_graph_v1.md
+  - configs/t12_v3_openai_mini_full_development.yaml
+  - configs/t12_v3_prompt.yaml
+  - data/manifests/causalds.json
