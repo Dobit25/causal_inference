@@ -1,5 +1,5 @@
 {
-  "manifest_version": 27,
+  "manifest_version": 28,
   "description": "Index of immutable source manifests and versioned derived manifests used by the four-graph project.",
   "active_primary_source": "causalds",
   "sources": [
@@ -284,6 +284,26 @@
       "name": "causalds_t17_p1_hybrid_protocol_freeze",
       "role": "pre_generation_hash_pinned_p1_hybrid_design_and_t18_authorization",
       "manifest": "data/manifests/t17_p1_hybrid_protocol_freeze.json"
+    },
+    {
+      "name": "p1_t18_scene_inventory",
+      "role": "one_hundred_scene_non_gold_scm_graph_observation_and_stratum_inventory",
+      "manifest": "data/manifests/t18_p1_scene_inventory.jsonl"
+    },
+    {
+      "name": "p1_t18_frozen_split",
+      "role": "exact_hash_pinned_twenty_development_eighty_holdout_and_sensitivity_split",
+      "manifest": "data/manifests/t18_p1_frozen_split.json"
+    },
+    {
+      "name": "p1_t18_task_manifest",
+      "role": "five_hundred_query_and_target_hash_records_without_versioned_gold_answers",
+      "manifest": "data/manifests/t18_p1_task_manifest.jsonl"
+    },
+    {
+      "name": "p1_t18_generation_audit",
+      "role": "offline_generator_solver_agreement_raw_tree_replay_and_t19_authorization",
+      "manifest": "data/manifests/t18_p1_generation_audit.json"
     }
   ]
 }

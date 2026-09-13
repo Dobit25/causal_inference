@@ -1,0 +1,40 @@
+{
+  "$id": "https://fourgraph.local/schemas/p1_t18_generation_v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "access_boundary": {"type": "object"},
+    "artifacts": {"type": "object"},
+    "dependencies": {"items": {"type": "string"}, "minItems": 5, "type": "array", "uniqueItems": true},
+    "experiment_id": {"const": "causalds_fresh_hybrid_p1_v1"},
+    "graph_generation": {"type": "object"},
+    "identifiers": {"type": "object"},
+    "observations": {"type": "object"},
+    "parent_freeze": {"const": "data/manifests/t17_p1_hybrid_protocol_freeze.json"},
+    "parent_protocol": {"const": "configs/p1_hybrid_v1.yaml"},
+    "randomness": {"type": "object"},
+    "schema_version": {"const": "fourgraph.p1_t18_generation.v1"},
+    "scm": {"type": "object"},
+    "split": {"type": "object"},
+    "task": {"const": "T18"},
+    "tasks": {"type": "object"}
+  },
+  "required": [
+    "schema_version",
+    "experiment_id",
+    "task",
+    "parent_protocol",
+    "parent_freeze",
+    "identifiers",
+    "randomness",
+    "graph_generation",
+    "scm",
+    "observations",
+    "tasks",
+    "split",
+    "artifacts",
+    "access_boundary",
+    "dependencies"
+  ],
+  "type": "object"
+}

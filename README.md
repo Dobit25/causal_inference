@@ -239,4 +239,6 @@ T13 froze the P0 holdout execution before access; T14 completed every scheduled 
 
 T16 closes P0 with decision `REFINE`; the claim boundary and P1 redesign requirements are in `reports/p0_findings.md`. Replay the decision audit with `python scripts/finalize_t16_p0.py --check`.
 
-T17 freezes the prospective P1 Hybrid protocol without generating data or calling a model. Replay its dependency/hash audit with `python scripts/freeze_t17_p1_hybrid_protocol.py --check`; only the T18 fresh-SCM generator/inventory stage is authorized next.
+T17 freezes the prospective P1 Hybrid protocol without generating data or calling a model. Replay its dependency/hash audit with `python scripts/freeze_t17_p1_hybrid_protocol.py --check`.
+
+T18 materializes the deterministic P1 substrate: 100 fresh linear non-Gaussian SCMs, 500 task fixtures, exact 20/80 split, `N=2000` observations and nested sensitivity samples. Its report is `reports/t18_p1_generation.md`; replay every versioned and ignored raw artifact byte-for-byte with `python scripts/build_p1_t18.py --check`. T19 offline story generation is the only newly authorized stage.

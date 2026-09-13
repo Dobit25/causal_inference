@@ -1,8 +1,8 @@
-# Timeline dự án Causal Inference: T00–T17
+# Timeline dự án Causal Inference: T00–T18
 
 ## 1. Mục đích của tài liệu
 
-Tài liệu này mô tả tuyến tính quá trình phát triển dự án từ T00 đến hết T17: mỗi task bắt đầu từ vấn đề nào, được thực hiện để làm gì, đã làm những gì, điều kiện hoàn thành ra sao và kết quả thực tế là gì.
+Tài liệu này mô tả tuyến tính quá trình phát triển dự án từ T00 đến hết T18: mỗi task bắt đầu từ vấn đề nào, được thực hiện để làm gì, đã làm những gì, điều kiện hoàn thành ra sao và kết quả thực tế là gì.
 
 Toàn bộ công việc được thực hiện trong môi trường Conda `cau`, dùng Python 3.10. Dự án tuân theo nguyên tắc không dùng holdout để điều chỉnh thiết kế, không trộn observations giữa các causal scene, và không để ground-truth Oracle rò rỉ vào các graph builder.
 
@@ -52,6 +52,7 @@ Ngoài ra, projected `G_SCD` DAG được giữ như một sensitivity view, kh�
 | T15 | 2026-09-13 | Phân tích thống kê P0 holdout đã seal | 225 scene summaries, 36 paired contrasts, 5.000 cluster bootstraps/contrast, BH và McNemar sensitivity; replay offline đạt |
 | T16 | 2026-09-13 | Khóa findings và quyết định P0 | Chốt claim được/không được hỗ trợ, giữ null/adverse results, chọn `REFINE`; chỉ cấp quyền thiết kế protocol T17 |
 | T17 | 2026-09-13 | Xây và đóng băng thiết kế P1 Hybrid trước generation/H2 | Khóa 100-scene fresh-SCM contract, semantic doses, BOSS CPDAG, H2 forced/selective, abstention, metrics/statistics và stage gates; 0 scene, 0 API call, chỉ cấp quyền T18 generator/inventory |
+| T18 | 2026-09-13 | Sinh và đóng băng fresh-SCM substrate P1 | Sinh 100 SCM, 500 task với solver agreement 500/500, observations và exact split 20/80; replay 480 raw files byte-for-byte, 0 API/H2/holdout evaluation; chỉ cấp quyền T19 |
 
 ---
 
@@ -931,3 +932,11 @@ T16 giữ cả kết quả thuận lợi, null, adverse, hai Hybrid failures và
 T17 khóa trước 100 fresh homogeneous SCMs, exact five-task contract, query/motif/noise balance, BOSS raw CPDAG chính, DirectLiNGAM structural sensitivity, ba semantic doses (`full`, `partial`, `ambiguous`), H1 baseline, H2-Forced và H2-Selective. H2-Selective trả nguyên raw CPDAG khi không đủ chắc chắn; không xóa observation như missing.
 
 Protocol cũng khóa 12 structural views/scene, 11 downstream views/scene, hypotheses, metrics, scene-paired statistics, threshold grid và forbidden selection inputs. T17 tạo 0 scene, gọi 0 API, chưa implement H2 và không truy cập P1 holdout. Bước duy nhất được phép tiếp theo là T18 xây generator/inventory và đóng băng exact 20/80 IDs; live semantic calls và H2 vẫn bị chặn.
+
+## 23. T18 — Fresh-SCM generator và inventory P1
+
+T18 hiện thực hóa đúng protocol T17 bằng seed `1701`: 100 linear non-Gaussian SCMs với 5–7 observed continuous nodes, cân bằng năm motif và ba noise families. Mỗi scene có `N=2000`; 20 scene có thêm raw nested prefixes `N=500/10000`. Mỗi Oracle CPDAG còn ít nhất hai cạnh chưa định hướng, tạo variation cần thiết cho nghiên cứu uncertainty và semantic orientation.
+
+Generator tạo đúng năm task cho mỗi scene. Production solver và một independent solver khớp 500/500 expected targets. Inventory cân bằng bốn query strata, split deterministic khóa 20 development / 80 holdout với maximum rounded marginal deviation bằng 1, thấp hơn gate 2. Hai namespace được ánh xạ một-một: `P1S000…P1S099` cho study và `scene_100000…scene_100099` cho graph contract.
+
+Toàn bộ 480 raw files cùng manifests/config/seeds được hash; `--check` tái sinh byte-for-byte. Raw SCMs, gold task records và arrays nằm ngoài Git. T18 gọi 0 API, không chạy SCD/LLM/Hybrid/H2 và không chấm holdout. Audit chỉ cấp quyền T19 tạo ba semantic story variants; mọi live method execution vẫn bị khóa.

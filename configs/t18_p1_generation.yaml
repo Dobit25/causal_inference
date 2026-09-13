@@ -1,0 +1,160 @@
+schema_version: fourgraph.p1_t18_generation.v1
+experiment_id: causalds_fresh_hybrid_p1_v1
+task: T18
+parent_protocol: configs/p1_hybrid_v1.yaml
+parent_freeze: data/manifests/t17_p1_hybrid_protocol_freeze.json
+
+identifiers:
+  study_id_format: P1S{index:03d}
+  study_index_range: [0, 99]
+  graph_contract_id_format: scene_{offset_plus_index:06d}
+  graph_contract_numeric_offset: 100000
+  mapping: one_to_one_and_frozen_in_inventory
+
+randomness:
+  master_seed: 1701
+  derivation: sha256_utf8_master_seed_colon_study_id_colon_component_first_8_bytes_big_endian
+  generator: numpy.random.Generator
+  bit_generator: PCG64DXSM
+  numpy_version: 1.26.4
+  component_streams:
+    - graph_candidates
+    - edge_weights
+    - observations
+    - query_order
+    - allocation_node_count
+    - allocation_primary_motif
+    - allocation_noise_family
+    - allocation_query_stratum
+
+graph_generation:
+  node_count_allocation: {5: 34, 6: 33, 7: 33}
+  edge_count_range_by_nodes:
+    5: [4, 7]
+    6: [5, 8]
+    7: [6, 9]
+  edge_count_sampling: discrete_uniform_inclusive
+  topological_order: seeded_permutation
+  edge_sampling: exact_count_without_replacement_from_forward_pairs
+  primary_motif_allocation:
+    chain: 20
+    fork: 20
+    collider: 20
+    mediator: 20
+    diamond: 20
+  motif_definitions:
+    chain: directed_path_with_at_least_2_edges
+    fork: one_node_with_at_least_2_children
+    collider: unshielded_collider
+    mediator: directed_path_with_at_least_3_edges
+    diamond: A_to_B_A_to_C_B_to_D_C_to_D_for_distinct_nodes
+  acceptance:
+    weakly_connected: true
+    assigned_primary_motif_present: true
+    oracle_cpdag_minimum_unresolved_edges: 2
+    assigned_query_stratum_available: true
+  maximum_attempts_per_scene: 10000
+  exhaustion_action: fail_closed
+
+scm:
+  family: linear_non_gaussian_acyclic
+  intercept: 0.0
+  magnitude_distribution: uniform
+  edge_weight_absolute_range: [0.5, 2.0]
+  sign_rule: counts_differ_by_at_most_one_then_seeded_shuffle
+  noise_family_allocation: {laplace: 34, logistic: 33, student_t_df5: 33}
+  noise_scaling:
+    laplace: scale_1_over_sqrt_2
+    logistic: scale_sqrt_3_over_pi
+    student_t_df5: scale_sqrt_3_over_5
+  exogenous_variance: 1.0
+  sampling_order: accepted_topological_order
+  latent_nodes: 0
+  observed_variable_type: continuous
+
+observations:
+  primary_n: 2000
+  sensitivity_n: [500, 10000]
+  sensitivity_scene_count: 20
+  sensitivity_by_split: {development: 4, holdout: 16}
+  sensitivity_selection: lowest_sha256_rank_within_split_role
+  nested_prefix: true
+  raw_dtype: little_endian_float64
+  storage: numpy_npy_allow_pickle_false
+  standardization: per_sample_size_columnwise_mean_zero_population_sd_one
+  standardization_ddof: 0
+  non_sensitivity_files: [raw_n2000, standardized_n2000]
+  sensitivity_files: [raw_n500, standardized_n500, raw_n2000, standardized_n2000, raw_n10000, standardized_n10000]
+
+tasks:
+  tasks_per_scene: 5
+  task_ids:
+    - identification__one_valid_adjustment_set
+    - identification__all_minimal_adjustment_sets
+    - identification__minimal_adjustment_set_size
+    - identification__n_valid_adjustment_sets
+    - bias_diagnostic__forbidden_controls_list
+  query_stratum_allocation:
+    valid_empty: 25
+    one_minimal_nonempty: 25
+    multiple_minimal: 25
+    no_valid_adjustment_set: 25
+  ordered_pair_order: sha256_rank_of_study_id_treatment_outcome
+  candidates: all_observed_nodes_except_treatment_and_outcome
+  convention: frozen_causalds_adjustment_convention
+  production_solver: fourgraph.reasoner.task_semantics
+  independent_solver: fourgraph.conformance_audit.independent_target
+  required_agreement: 500_of_500
+  grading_target_storage: ignored_per_scene_tasks_grading_json
+  versioned_task_manifest: query_and_target_hash_only
+
+split:
+  seed: 17018
+  development_count: 20
+  holdout_count: 80
+  features:
+    - node_count
+    - edge_count_band
+    - assigned_primary_motif
+    - oracle_cpdag_unresolved_edge_band
+    - query_target_stratum
+    - exogenous_noise_family
+  optimizer: deterministic_multistart_pair_swap_marginal_balance
+  restarts: 256
+  objective: sum_squared_count_deviation_divided_by_max_target_one
+  target_fraction: 0.2
+  maximum_allowed_rounded_marginal_count_deviation: 2
+  tie_breaking: lexicographic_study_id_tuple
+
+artifacts:
+  raw_root: data/generated/p1_hybrid_v1/t18
+  raw_scene_files:
+    - scm.json
+    - tasks_grading.json
+    - observations_raw_n{N}.npy
+    - observations_standardized_n{N}.npy
+  inventory: data/manifests/t18_p1_scene_inventory.jsonl
+  split: data/manifests/t18_p1_frozen_split.json
+  task_manifest: data/manifests/t18_p1_task_manifest.jsonl
+  audit: data/manifests/t18_p1_generation_audit.json
+  report: reports/t18_p1_generation.md
+  canonical_json: sorted_keys_compact_utf8_lf
+  raw_tree_hash: sha256_of_canonical_sorted_path_hash_byte_count_records
+
+access_boundary:
+  api_calls: 0
+  llm_imports_allowed: false
+  H2_implementation_authorized: false
+  statistical_or_semantic_method_execution_authorized: false
+  holdout_generation_and_oracle_inventory_authorized: true
+  holdout_method_evaluation_authorized: false
+  holdout_downstream_scoring_authorized: false
+  next_action_if_all_gates_pass: T19_SEMANTIC_STORY_VARIANTS_AND_AUDIT
+
+dependencies:
+  - configs/p1_hybrid_v1.yaml
+  - data/manifests/t17_p1_hybrid_protocol_freeze.json
+  - src/fourgraph/partial_graph.py
+  - src/fourgraph/reasoner.py
+  - src/fourgraph/conformance_audit.py
+  - schemas/graph_contract_v1.schema.json
