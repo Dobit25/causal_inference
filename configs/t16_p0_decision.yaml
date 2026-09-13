@@ -1,0 +1,65 @@
+schema_version: fourgraph.t16_p0_decision.v1
+task: T16
+phase: released_causalds_p0
+decision: REFINE
+
+parents:
+  t15_analysis_audit:
+    path: data/manifests/t15_analysis_audit.json
+    sha256: E663857CDA7BB9E41E3ADCA05E96B95B3D7A6D2EB9D7BBBCA76CD6C937B57222
+  t15_report:
+    path: reports/t15_p0_holdout_analysis.md
+    sha256: 36222534080981A69760CBB8D6DFCD08B9971F1F7B4CCE5C008FB6D1510DE97F
+  t15_pairwise_results:
+    path: data/manifests/t15_pairwise_results.jsonl
+    sha256: 03208C925878A6AE7B14D3263B8B86A0EA1BB5E360331AC93AF1A1117E33EAF5
+  t15_scene_summaries:
+    path: data/manifests/t15_scene_summaries.jsonl
+    sha256: 43769842FAD02C02B7E98A6D3B3017DE23FB4AC8A240FD0B547047DF559D7021
+
+supported_claims:
+  - Semantic orientation substantially improves direction recovery over deterministic CPDAG projection on the successful H1 graphs.
+  - Semantic orientation substantially improves official downstream adjustment/control accuracy over deterministic projection.
+  - Standalone LLM and H1 Hybrid downstream accuracy are not distinguishable at the registered scene-level analysis resolution.
+  - Conservative CPDAG scoring measures graph-conditioned reasoning under uncertainty and must not be interpreted as ground-truth graph accuracy.
+  - Correct graph structure does not guarantee perfect downstream answers because residual reasoner error remains under G_ORACLE.
+
+unsupported_claims:
+  - H1 Hybrid is the best graph construction method.
+  - H1 Hybrid outperforms the standalone LLM graph downstream.
+  - Preserving CPDAG uncertainty always outperforms producing a DAG.
+  - Released CausalDS P0 results generalize to homogeneous SCMs, larger graphs, latent confounding, or real deployments.
+  - The two H1 failures may be selectively repaired or rerun as part of the P0 estimand.
+
+decision_rationale:
+  go_rejected_because:
+    - H1 has two terminal graph failures among 25 holdout scenes.
+    - H1 does not significantly outperform G_LLM downstream.
+    - The old DirectLiNGAM-only P1 would not directly test CPDAG semantic orientation and abstention.
+  stop_rejected_because:
+    - H1 strongly outperforms deterministic projection in direction and official downstream accuracy.
+    - The observed global-consistency failures identify a concrete method-development target.
+  refine_selected_because:
+    - Fresh homogeneous SCMs are required for stronger external validity and controlled assumptions.
+    - P1 should evaluate global constraint-aware semantic orientation and evidence-aware abstention.
+
+next_phase:
+  authorized_action: T17_P1_HYBRID_PROTOCOL_DESIGN
+  p1_generation_authorized: false
+  h2_live_calls_authorized: false
+  p1_holdout_access_authorized: false
+  required_design_elements:
+    - fresh homogeneous SCM substrate
+    - CPDAG-producing SCD primary input
+    - DirectLiNGAM sensitivity comparator
+    - full partial and ambiguous semantic-evidence variants
+    - global consistent-extension constraints
+    - preregistered abstention rule
+    - paired scene-level accuracy validity coverage and uncertainty analysis
+
+evidence_boundary:
+  api_calls: 0
+  t14_or_t15_artifacts_modified: false
+  p1_started: false
+  post_holdout_method_selection: false
+

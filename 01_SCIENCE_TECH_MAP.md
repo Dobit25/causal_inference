@@ -92,3 +92,7 @@ T11 completes the development structural layer with 40 type-aware records and an
 The released P0 may establish feasibility and an exploratory signal. General claims require fresh P1. A null or adverse result remains valid when the design, exclusions, and analysis are frozen before holdout evaluation.
 
 T13 has converted that principle into an executable pre-registration. It freezes the exact nested holdout membership, five graph conditions, primary task panel, evidence boundaries, model/method versions, two downstream scorers, structural metrics and scene-level paired/BH analysis before T14 opens any holdout content. The supplementary cohort remains explicitly exploratory and cannot alter the primary estimand.
+
+T14 materialized the sealed holdout records without changing those choices. T15 has now completed the pre-registered offline comparison while retaining all construction/reasoner failures. Semantic orientation greatly outperforms deterministic projection on direction and official downstream answers, but does not significantly outperform the standalone LLM graph on downstream accuracy. Conservative CPDAG correctness remains high only under the graph-conditioned uncertainty-aware scorer; it is not evidence that the CPDAG matches Oracle truth.
+
+T16 therefore selects `REFINE`: preserve the controlled fresh-SCM goal, but redesign P1 around a global constraint-aware Hybrid and abstention instead of treating DirectLiNGAM as the sole primary SCD. This is a prospective design decision; no P1 data or results exist yet.

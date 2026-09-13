@@ -91,15 +91,15 @@ Complete: froze the exact 25-scene graph holdout (20 primary + 5 supplementary),
 
 ### T14 — Released P0
 
-Run development, freeze all settings, then run the graph-cohort 25-scene holdout once. Primary downstream results use its nested 20-scene panel; the nested 5-scene supplement remains exploratory and separate.
+Complete: opened the graph-cohort 25-scene holdout as one logical resumable run after the T13 seal. Built 25 LLM, 25 raw SCD, 25 projected SCD and 23 Hybrid graphs; two Hybrid conditions terminated without fallback. Loaded 25 Oracle DAGs grading-only in memory and emitted 125 graph schedule rows without persisting Oracle edges. Completed all 500 primary downstream rows from 245 canonical identities; supplementary reasoner rows remained zero. Offline graph/reasoner/audit replay passes. T15 statistics have not started.
 
 ### T15 — Clustered analysis
 
-Compute scene-macro summaries, paired scene-clustered bootstrap, BH correction, projection sensitivity, and applicable A–D outcomes.
+Complete: computed scene-macro summaries, 5,000 paired scene-clustered bootstrap replicates, all compatible pairwise contrasts, BH correction, exact McNemar sensitivity, projection sensitivity and applicable A–D outcomes. The analysis replays byte-for-byte with zero API calls and leaves T14 unchanged.
 
 ### T16 — P0 findings
 
-Publish `reports/p0_findings.md` with GO/REFINE/STOP based on feasibility and research quality.
+Complete: published `reports/p0_findings.md`, froze supported/unsupported claims, retained null/adverse findings and selected `REFINE`. T17 protocol design is authorized, but P1 generation, H2 live calls and P1 holdout access remain blocked.
 
 ### T17 — Fresh P1 generation
 

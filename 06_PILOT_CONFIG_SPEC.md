@@ -83,3 +83,7 @@ Before any holdout run, freeze:
 Any change after holdout begins requires a new experiment name/version and a complete audit trail.
 
 T13 has now frozen these choices in `configs/t13_holdout_freeze.yaml` and `data/manifests/t13_holdout_execution.json`. Expected T14 counts are 100 persisted non-Oracle graphs, 25 in-memory Oracle graphs, 125 graph-metric records and 500 primary downstream records. Supplementary has 77 frozen exploratory task rows but zero records under the fixed five-task reasoner. T13 performed no inference or holdout-content access.
+
+T14 reached terminal state for every scheduled unit. T15 has now consumed those sealed records using the T13 statistical contract and writes only aggregate/scene-level result artifacts. `scripts/analyze_t15.py --check` verifies byte-identical replay; it performs no API call and does not mutate T14.
+
+T16 pins `REFINE` in `configs/t16_p0_decision.yaml`. Only T17 protocol design is enabled; existing `configs/p1_fresh.yaml` remains an unexecuted prior design until a versioned Hybrid amendment explicitly supersedes it.

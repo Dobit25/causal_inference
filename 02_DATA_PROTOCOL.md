@@ -43,6 +43,8 @@ The release audit verifies a 33-scene graph cohort. The nested primary downstrea
 
 T13 freezes the holdout slice without opening scene contents: graph 25, primary 20 and supplementary 5 exact IDs. It derives a 100-row primary five-task manifest and a separate 77-row supplementary exploratory inventory from T04 metadata. Supplementary rows are not pooled with primary and are not scheduled through the fixed five-task reasoner.
 
+T14 opened those exact IDs. Raw holdout observations, prompts, responses, caches, graph artifacts, per-record metrics and scores remain under ignored `results/raw/t14_holdout/`; the tracked audit stores their hashes and counts without persisting Oracle edges. Only the 20 primary IDs appear in downstream score records.
+
 ## Frozen P0 task priority
 
 1. `identification__one_valid_adjustment_set`
@@ -99,3 +101,7 @@ Persist generator commit, resolved config, seeds, generated SCMs, story-generati
 - `data/raw/` and `data/generated/` are immutable/derived caches and stay outside Git.
 - Version manifests, cohort/task IDs, configs, aggregate results, and audit reports.
 - Preserve the NoisyCausal negative audit as historical provenance rather than overwriting it.
+
+T15 consumes only the sealed T14 metric/score rows. It creates no new benchmark observation, graph, or Oracle-edge artifact. The five supplementary holdout scenes contribute only to structural summaries; the 20 primary scenes remain the sole downstream estimand.
+
+T16 closes P0 without creating data. Its `REFINE` decision does not authorize fresh P1 generation; T17 must first register the new generator, evidence variants, split and access boundary.

@@ -78,6 +78,10 @@ The subsequently registered full development matrix is also complete: 175 record
 
 T13 is complete and has hash-frozen the exact 25-scene holdout execution: 20 primary scenes with five fixed tasks across five graph conditions, plus five supplementary scenes retained separately as exploratory inventory. It made no API calls and read no holdout content, gold answer, or Oracle edge. `t14_authorized: true` and `t14_started: false`; any post-freeze change requires a new experiment version.
 
+T14 is complete as one logical resumable holdout run. T15 has now analyzed the sealed records offline: 5,000 paired scene-cluster bootstrap replicates, all registered contrasts, exact McNemar sensitivity and BH correction. Hybrid substantially improves direction over deterministic projection (directed F1 0.918 versus 0.296 on available graphs), while official downstream accuracy ranks Oracle 0.930, LLM 0.820, Hybrid 0.710, projected SCD 0.110 and raw SCD 0.080. The raw CPDAG's 0.940 uncertainty-aware score measures correct conservative use of its uncertainty, not graph truth. No T14 artifact was changed or failure rerun.
+
+T16 closes released P0 with decision `REFINE`. The next permitted activity is T17 protocol design for a fresh homogeneous P1 centered on globally constrained semantic orientation and preregistered abstention; P1 generation and live calls remain unauthorized.
+
 ## Non-negotiable controls
 
 - Never pool observations from different scenes/SCMs.

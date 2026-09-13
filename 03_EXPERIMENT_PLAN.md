@@ -128,3 +128,7 @@ Clean P0/P1 covers A–D. E–G enter only in their declared later analyses. Rep
 Before holdout, freeze scene/task IDs, all graph builders, CPDAG semantics, DAG projection, reasoner model/version, prompts, graph encoding, parser, scorers, statistics, and exclusion rules. Any later change creates a new experiment version.
 
 T13 has completed this freeze. T14 is authorized for one execution of 25 graph scenes, with downstream inference restricted to the nested 20-scene primary panel (five tasks × five graph conditions = 500 records). The five supplementary scenes remain graph-evaluable and downstream-exploratory only. Authorization does not itself start T14.
+
+T14 executed this manifest without retuning. T15 then aggregated the sealed 125 graph and 500 downstream rows offline, using equal-weight scene macros, 5,000 paired cluster-bootstrap replicates, two-sided contrasts and BH correction. Outcomes A–D are now reported; T16 must interpret them without reopening P0 builders or the reasoner.
+
+T16 has interpreted A–D and selected `REFINE`. T17 must specify a versioned P1 Hybrid protocol with fresh homogeneous SCMs, CPDAG-producing SCD, a DirectLiNGAM sensitivity comparator, controlled semantic-evidence levels, global consistency and abstention before any new generation or live execution.

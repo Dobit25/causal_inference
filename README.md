@@ -206,7 +206,7 @@ Replay the completed five-condition full development matrix without making API c
 conda run -n cau python scripts/run_t12_v3_full_development.py data/raw/causalds/source-c74671d0/causalds-c74671d0a0924efc5bb021fc8966f856d5b80a4f --check
 ```
 
-The matrix produced 175 records from 105 unique canonical inputs, inheriting 35 calls and making 70 new calls. Oracle-answer accuracy was 34/35 Oracle, 33/35 LLM, 31/35 Hybrid, 6/35 projected SCD, and 4/35 raw SCD. Uncertainty-aware correctness was respectively 34/35, 34/35, 32/35, 33/35, and 35/35. All integrity gates passed; the reasoner is frozen and holdout-ready, while T13 and holdout remain unstarted.
+The development matrix produced 175 records from 105 unique canonical inputs, inheriting 35 calls and making 70 new calls. Oracle-answer accuracy was 34/35 Oracle, 33/35 LLM, 31/35 Hybrid, 6/35 projected SCD, and 4/35 raw SCD. Uncertainty-aware correctness was respectively 34/35, 34/35, 32/35, 33/35, and 35/35. All integrity gates passed and the reasoner was frozen before T13/T14.
 
 ## Provenance
 
@@ -234,4 +234,6 @@ The matrix produced 175 records from 105 unique canonical inputs, inheriting 35 
 
 Raw benchmark artifacts, generated scenes, and raw experiment outputs remain outside Git and are tracked through immutable manifests and hashes.
 
-T13 has frozen the P0 holdout execution without opening holdout data. The exact 25-scene graph panel, nested 20-scene primary/five-scene supplementary roles, five graph conditions, reasoner/builders, metrics and statistical plan are recorded in `data/manifests/t13_holdout_execution.json`; T14 is authorized but has not started.
+T13 froze the P0 holdout execution before access; T14 completed every scheduled unit with pre-registered failure handling. T15 has now completed the paired scene-clustered/BH analysis offline. See `reports/t15_p0_holdout_analysis.md` and replay it with `python scripts/analyze_t15.py --check`.
+
+T16 closes P0 with decision `REFINE`; the claim boundary and P1 redesign requirements are in `reports/p0_findings.md`. Replay the decision audit with `python scripts/finalize_t16_p0.py --check`.

@@ -118,3 +118,7 @@ A–G are co-equal exploratory research outcomes, evaluated only in applicable p
 ```
 
 T13 freezes the P0 holdout metric plan before any holdout content is opened: 125 structural records (25 scenes × 5 graph conditions) and 500 primary downstream records (20 × 5 tasks × 5 conditions). Primary comparisons are paired at scene level, uncertainty uses 5,000 scene-cluster bootstrap replicates, binary sensitivity uses McNemar, and co-equal phase outcomes use Benjamini–Hochberg correction. Supplementary results are reported separately and never enter primary accuracy.
+
+T14 populated the schedules while preserving failure status: 123/125 structural rows are available and all 500 downstream rows are terminal. T15 has now produced 225 scene summaries and 36 pairwise records: 10 skeleton, 6 DAG-direction and 20 downstream contrasts. Bootstrap/BH is primary; exact McNemar is a record-level sensitivity because it does not model scene clustering. Structural Hybrid failures remain unavailable, while downstream graph/reasoner failures remain incorrect as frozen in T13.
+
+T16 freezes the interpretation boundary: uncertainty-aware correctness is graph-conditioned reasoner conformance, not graph truth; raw CPDAG and DAG direction scores are not collapsed into one ranking. P1 must add validity, coverage, abstention and semantic-evidence interaction metrics prospectively.
