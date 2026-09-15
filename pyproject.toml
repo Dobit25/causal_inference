@@ -24,6 +24,9 @@ live = [
   "openai==3.6.0",
   "python-dotenv==1.2.3",
 ]
+p1 = [
+  "lingam==1.13.0",
+]
 
 [project.scripts]
 fourgraph = "fourgraph.cli:main"

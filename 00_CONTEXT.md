@@ -82,7 +82,7 @@ T13 is complete and has hash-frozen the exact 25-scene holdout execution: 20 pri
 
 T14 is complete as one logical resumable holdout run. T15 has now analyzed the sealed records offline: 5,000 paired scene-cluster bootstrap replicates, all registered contrasts, exact McNemar sensitivity and BH correction. Hybrid substantially improves direction over deterministic projection (directed F1 0.918 versus 0.296 on available graphs), while official downstream accuracy ranks Oracle 0.930, LLM 0.820, Hybrid 0.710, projected SCD 0.110 and raw SCD 0.080. The raw CPDAG's 0.940 uncertainty-aware score measures correct conservative use of its uncertainty, not graph truth. No T14 artifact was changed or failure rerun.
 
-T16 closes released P0 with decision `REFINE`. T17 froze the versioned fresh-P1 Hybrid protocol; T18 generated and froze 100 eligible SCMs, 500 task fixtures, the exact 20/80 split and observations. T19 froze 300 controlled semantic stories plus adapter-only alias maps. T20 then implemented H2-Forced/H2-Selective and passed fully synthetic offline conformance against an independent solver. T21 development-only execution is now authorized; P1 holdout access remains unauthorized.
+T16 closes released P0 with decision `REFINE`. T17 froze the fresh-P1 Hybrid protocol; T18–T20 froze the substrate, stories and conformant H2 implementation. T21 then ran only the 20 development scenes. H2 preserved graph validity, but none of the 20 frozen selective thresholds met the 0.95 orientation-precision gate; the best reached 0.90 at about 0.05 coverage. No threshold was selected. A versioned protocol amendment is required before T22, and P1 holdout remains sealed.
 
 ## Non-negotiable controls
 

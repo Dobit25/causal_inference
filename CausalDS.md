@@ -1,6 +1,6 @@
 # Master Plan — Released CausalDS P0 → Fresh Homogeneous Hybrid P1
 
-> Status: P0 closed with `REFINE`; P1 is frozen through T20, including the protocol, fresh-SCM substrate, controlled semantic stories, and offline-conformant H2 implementation. This document supersedes the former NoisyCausal-first execution plan while retaining its negative artifact audit as project history.
+> Status: P0 closed with `REFINE`; P1 development has reached the terminal T21 gate. No preregistered H2-Selective threshold achieved 95% orientation precision, so no threshold was selected and P1 holdout remains sealed pending a versioned protocol amendment.
 
 ## 1. Research objective
 
@@ -443,7 +443,7 @@ Development permits loader/parser debugging, P0 SCD choice, prompt syntax, and p
 - T18 fresh SCM generator, inventory, deterministic split, and task/query generation — complete. The frozen substrate contains 100 eligible linear non-Gaussian SCMs, 500 solver-agreed tasks, exact 20/80 IDs, `N=2000` for every scene, and nested `N=500/10000` for 20 scenes. No live LLM/SCD/Hybrid execution or holdout scoring occurred.
 - T19 semantic story variants and blinded manual audit — complete. Generated 300 deterministic public stories (`full`, `partial`, `ambiguous`), hash-pinned 100 adapter-only alias maps, passed text-level truth validation, and completed a 20-development-scene internal blinded QA panel. This QA is explicitly not independent external human validation. No model/method execution or holdout manual review occurred.
 - T20 H2 implementation and offline conformance — complete. Production and independent solvers agreed on 150/150 forced decisions and 3,000/3,000 selective decisions; all 30 malformed inputs were rejected and all graph-preservation invariants passed. No API, P1 scene, development result, or holdout result was accessed.
-- T21 development-only graph construction and threshold selection.
+- T21 development-only graph construction and threshold selection — execution complete, gate not passed. Captured 60 shared preference artifacts and 80 API attempts on 20 development scenes; materialized 160 non-Oracle graph rows and 180 structural metric rows. The best threshold candidate reached 0.90 orientation precision at 0.04975 coverage, below the frozen 0.95 gate. No threshold was selected; T22/T23 are unauthorized.
 - T22 P1 holdout execution freeze.
 - T23 one-time P1 holdout execution.
 - T24 P1 analysis, findings, and optional robustness/CLadder replication decision.

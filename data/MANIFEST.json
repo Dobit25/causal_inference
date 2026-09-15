@@ -1,5 +1,5 @@
 {
-  "manifest_version": 30,
+  "manifest_version": 31,
   "description": "Index of immutable source manifests and versioned derived manifests used by the four-graph project.",
   "active_primary_source": "causalds",
   "sources": [
@@ -339,6 +339,31 @@
       "name": "p1_t20_h2_conformance_audit",
       "role": "offline_production_reference_agreement_invariants_and_t21_authorization",
       "manifest": "data/manifests/t20_h2_conformance_audit.json"
+    },
+    {
+      "name": "p1_t21_development_semantic_preferences",
+      "role": "sixty_shared_full_partial_ambiguous_development_preference_artifacts",
+      "manifest": "data/manifests/t21_dev_semantic_preferences.jsonl"
+    },
+    {
+      "name": "p1_t21_development_graphs",
+      "role": "development_non_oracle_structural_graphs_with_terminal_H1_failures_retained",
+      "manifest": "data/manifests/t21_dev_graphs.jsonl"
+    },
+    {
+      "name": "p1_t21_development_structural_metrics",
+      "role": "development_only_graph_metrics_without_downstream_threshold_selection",
+      "manifest": "data/manifests/t21_dev_structural_metrics.jsonl"
+    },
+    {
+      "name": "p1_t21_threshold_grid",
+      "role": "all_twenty_preregistered_selective_candidates_with_no_eligible_threshold",
+      "manifest": "data/manifests/t21_threshold_grid.jsonl"
+    },
+    {
+      "name": "p1_t21_development_audit",
+      "role": "terminal_development_execution_no_threshold_and_protocol_amendment_gate",
+      "manifest": "data/manifests/t21_development_audit.json"
     }
   ]
 }

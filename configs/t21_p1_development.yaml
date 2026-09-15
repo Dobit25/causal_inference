@@ -1,0 +1,137 @@
+schema_version: fourgraph.p1_t21_development.v1
+experiment_id: causalds_fresh_hybrid_p1_v1
+task: T21
+status: development_execution_authorized
+
+scope:
+  split_manifest: data/manifests/t18_p1_frozen_split.json
+  role: development
+  expected_scenes: 20
+  expected_holdout_scenes: 80
+  forbid_holdout_access: true
+  generated_root: data/generated/p1_hybrid_v1
+
+execution:
+  scd_scenes: 20
+  direct_lingam_scenes: 20
+  semantic_preference_calls: 60
+  standalone_llm_calls: 20
+  maximum_new_api_calls: 80
+  resume_from_raw_cache: true
+  validation_retries: 2
+  failure_policy: retain_terminal_failure_without_fallback
+  automatic_holdout_continuation: false
+
+scd:
+  algorithm: BOSS
+  score: BasisFunctionBicScore
+  candidate_id: boss_basis_bic__p1__t3
+  penalty_discount: 1.0
+  truncation_limit: 3
+  standardized_observations: observations_standardized_n2000.npy
+  tetrad_jar: data/raw/t05/py-tetrad/pytetrad/resources/tetrad-current.jar
+  tetrad_jar_sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051
+
+direct_lingam:
+  package: lingam
+  version: 1.13.0
+  random_state: 17021
+  adjacency_zero_tolerance: 1.0e-12
+  role: structural_sensitivity_only
+
+semantic_backend:
+  provider: openai
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  endpoint: /v1/responses
+  sdk_version: 3.6.0
+  credential_env: OPENAI_API_KEY
+  reasoning_effort: none
+  temperature: 0
+  max_output_tokens: 6000
+  service_tier: default
+  store: false
+  structured_outputs: json_schema_strict
+  transport_max_retries: 2
+  timeout_seconds: 120
+  preference_prompt: prompts/p1_semantic_preferences_v1.md
+  preference_schema: schemas/p1_semantic_preferences_response_v1.schema.json
+  llm_graph_prompt: prompts/p1_llm_graph_v1.md
+  llm_graph_schema: schemas/p1_llm_graph_response_v1.schema.json
+  public_names_only: true
+  canonical_mapping_after_response_only: true
+  one_preference_call_per_scene_variant: true
+
+hybrid:
+  preference_variants: [full, partial, ambiguous]
+  reuse_one_preference_artifact_across_H1_H2: true
+  H1:
+    variant: full
+    independent_argmax: true
+    global_repair: false
+    invalid_output: terminal_graph_failure
+  H2_FORCED:
+    implementation: fourgraph.hybrid_h2.solve_h2_forced
+  H2_SELECTIVE:
+    implementation: fourgraph.hybrid_h2.solve_h2_selective
+
+threshold_selection:
+  oracle_scope: development_only
+  variants_equal_weight: [full, partial, ambiguous]
+  grid:
+    tau_margin: [0.0, 0.02, 0.05, 0.1, 0.2]
+    tau_conflict: [0.0, 0.05, 0.1, 0.2]
+  eligibility:
+    graph_validity: 1.0
+    orientation_precision_minimum: 0.95
+  optimize: maximum_orientation_coverage
+  tie_breakers: [minimum_confident_wrong_rate, lower_tau_margin, higher_tau_conflict]
+  forbidden_inputs: [holdout_graph_truth, holdout_tasks_or_answers, reasoner_downstream_ranking]
+  no_eligible_action: stop_pre_holdout_and_amend_protocol
+
+outputs:
+  raw_calls: results/raw/p1_t21/openai_calls.jsonl
+  runtime: results/raw/p1_t21/runtime.jsonl
+  semantic_preferences: data/manifests/t21_dev_semantic_preferences.jsonl
+  graphs: data/manifests/t21_dev_graphs.jsonl
+  structural_metrics: data/manifests/t21_dev_structural_metrics.jsonl
+  threshold_grid: data/manifests/t21_threshold_grid.jsonl
+  audit: data/manifests/t21_development_audit.json
+  report: reports/t21_p1_development.md
+
+budget:
+  rendered_prompt_forecast_required: true
+  user_authorized_on: 2026-09-15
+  user_authorized_maximum_new_calls: 80
+  usd_stop_not_automatically_observable: true
+
+evidence_boundary:
+  P1_development_access_authorized: true
+  P1_holdout_access_authorized: false
+  development_oracle_for_threshold_and_metrics: true
+  development_tasks_or_answers_allowed_for_threshold: false
+  reasoner_execution_authorized: false
+  P1_holdout_execution_authorized: false
+
+runtime:
+  python: 3.10.21
+  numpy: 1.26.4
+  jpype: 1.6.0
+  openai: 3.6.0
+  lingam: 1.13.0
+  scipy: 1.13.1
+  scikit_learn: 1.7.2
+
+freeze_anchors:
+  configs/p1_hybrid_v1.yaml: C9291167E5ADC4AAF8055222718299927F6287DC68B603DD3EE7C1C21DABE192
+  data/manifests/t17_p1_hybrid_protocol_freeze.json: 8B4FEF6FEBF869E0F421A016230A6390656086ACC70E1704427AAC83813EF365
+  data/manifests/t18_p1_generation_audit.json: C79E7DD54D87EA87701929D098164106CBC3FE03295D9FABA67332AFD8BC4C95
+  data/manifests/t18_p1_frozen_split.json: C7BF1C4272ED3D076E15CD9EDDF2F1A68BB4C6E0AF2C526AF0FACA1BB223AC1E
+  data/manifests/t19_p1_story_audit.json: 56E6FF6307C4242D7CB60F76850F343C8F1AA2FF074E4FEA8CD56AF9BBF195C0
+  data/manifests/t20_h2_conformance_audit.json: 4BA94941C2AE623CCAFEB11E424F5427CC3FED89AB60CBF6CA0A1841102E3BF3
+  prompts/p1_semantic_preferences_v1.md: C3A26CE83258F48E10FEB3D638442F0B2713F813E1576BA49BA5629FE8885C82
+  prompts/p1_llm_graph_v1.md: 82A2F1B3E40D103F8D26B09302BED9E018BCB98E464784F94FEA26993AAC14EE
+  schemas/p1_semantic_preferences_response_v1.schema.json: 0C4D748873339E297ACA2D0AD320D8D39C63E2A1BAB84A17F9C6C0F6A1AE8920
+  schemas/p1_llm_graph_response_v1.schema.json: 324512B35CA5BBFDF0C7E1F799CF43BF2EA14B87C374DAEB975182C5BA953009
+  src/fourgraph/hybrid_h2.py: 7989A7D802C7C396FF77A7B368C5FF681CD065F72F1779ADF877D36B39CE4354
+  src/fourgraph/scd_graph.py: EB311ADF02C3D21C5969BCEEFC4BD8A56CAB9E5E1CF22B37D7AB756E60D2A260
+  src/fourgraph/causalds_scd.py: AD373A3518F4B508A36F60237AFFA9DC20114228F5A0108EC66E7DDD5F5C4BF6

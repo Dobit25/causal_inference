@@ -117,9 +117,13 @@ Complete: generated 300 deterministic stories for 100 scenes with exact full/par
 
 Complete: implemented strict semantic-preference input validation, global H2-Forced optimization over consistent CPDAG extensions, and H2-Selective exact-parent abstention. Production and independent solvers agreed on 150/150 forced and 3,000/3,000 selective decisions; 30/30 invalid inputs were rejected. No API or P1 scene was accessed.
 
-### T21–T24 — P1 execution and analysis
+### T21 — Development graph construction and threshold gate
 
-T21 uses development only to construct graphs and select abstention thresholds; T22 freezes holdout execution; T23 opens holdout once; T24 performs scene-paired analysis and freezes findings. Nonlinear robustness and CLadder replication require a later versioned decision.
+Execution complete, gate not passed: 80 captured API attempts yielded 60 shared preference artifacts across 20 development scenes. H2-Forced remained valid on all scenes/variants, whereas H1 was valid on 8/20 full-story scenes. No selective candidate reached the frozen 0.95 orientation-precision minimum, so no threshold exists for P1 v1 and holdout remains sealed.
+
+### T21 amendment, then T22–T24
+
+The next action is to diagnose and prospectively version the semantic-preference/selection protocol using development evidence only. T22 may freeze holdout execution only after an amended development gate passes; T23 then opens holdout once and T24 performs scene-paired analysis. Nonlinear robustness and CLadder replication remain later decisions.
 
 ## Research integrity checklist
 

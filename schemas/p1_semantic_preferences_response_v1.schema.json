@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/p1_semantic_preferences_response_v1.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "preferences"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "fourgraph.p1_semantic_preferences_response.v1"},
+    "preferences": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["left", "right", "probability_left_causes_right", "evidence"],
+        "properties": {
+          "left": {"type": "string", "minLength": 1},
+          "right": {"type": "string", "minLength": 1},
+          "probability_left_causes_right": {"type": "number", "minimum": 0.001, "maximum": 0.999},
+          "evidence": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}
