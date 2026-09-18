@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Research presentation: từ đánh giá causal graph đến AI causal analysis có thể định lượng và giải thích nguồn bằng chứng.">
+  <title>From Graph Evaluation to Quantifiable Causal Analysis</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #5d6878;
+      --paper: #f5f2ea;
+      --surface: #fffdf8;
+      --line: #d8d5cc;
+      --stat: #176b87;
+      --stat-soft: #dceef3;
+      --semantic: #b65b35;
+      --semantic-soft: #f6e4da;
+      --combined: #514a85;
+      --combined-soft: #e8e5f3;
+      --success: #27705d;
+      --warning: #a5532e;
+      --max: 1320px;
+      --nav-h: 58px;
+    }
+
+    * { box-sizing: border-box; }
+    .wrap, .path, .source-block, .evo, .position-col, .exp-cell { min-width: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 16px); }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(23,32,51,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23,32,51,.025) 1px, transparent 1px),
+        var(--paper);
+      background-size: 32px 32px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 18px;
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    button, a { font: inherit; }
+    a { color: inherit; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, .display { letter-spacing: -.035em; }
+    h1 { font-size: clamp(3rem, 6vw, 6.2rem); line-height: .98; max-width: 1050px; }
+    h2 { font-size: clamp(2.2rem, 4vw, 4.2rem); line-height: 1.05; margin-bottom: 20px; }
+    h3 { font-size: 1.22rem; line-height: 1.25; }
+    p { max-width: 780px; }
+    strong { font-weight: 720; }
+
+    .topbar {
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: var(--nav-h);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      background: rgba(245,242,234,.94);
+      border-bottom: 1px solid rgba(23,32,51,.14);
+      backdrop-filter: blur(12px);
+    }
+    .topbar-inner { width: min(var(--max), calc(100% - 48px)); margin: auto; display: flex; gap: 22px; align-items: center; }
+    .brand { font-size: .78rem; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; white-space: nowrap; }
+    .progress-track { flex: 1; height: 3px; background: #d8d3c8; position: relative; }
+    .progress-bar { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--combined); transition: width .12s linear; }
+    .section-label { min-width: 150px; text-align: right; font-size: .76rem; color: var(--muted); white-space: nowrap; }
+
+    .dotnav { position: fixed; right: 18px; top: 50%; transform: translateY(-50%); z-index: 40; display: grid; gap: 8px; }
+    .dotnav a { width: 9px; height: 9px; border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); transition: .2s; }
+    .dotnav a.active { background: var(--combined); border-color: var(--combined); transform: scale(1.35); }
+
+    main { padding-top: var(--nav-h); }
+    section {
+      min-height: calc(100vh - var(--nav-h));
+      display: grid;
+      align-items: center;
+      padding: clamp(70px, 9vh, 116px) 40px;
+      border-bottom: 1px solid rgba(23,32,51,.12);
+      position: relative;
+    }
+    .wrap { width: min(var(--max), 100%); margin: auto; }
+    .eyebrow { font-size: .76rem; letter-spacing: .13em; text-transform: uppercase; font-weight: 800; color: var(--combined); margin-bottom: 18px; }
+    .lead { font-size: clamp(1.15rem, 1.7vw, 1.48rem); color: #3d4759; max-width: 920px; }
+    .caption { font-size: .76rem; line-height: 1.45; color: var(--muted); }
+    .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+    .tag { display: inline-flex; padding: 5px 10px; border: 1px solid currentColor; border-radius: 100px; font-size: .7rem; font-weight: 750; letter-spacing: .05em; text-transform: uppercase; }
+    .tag.stat { color: var(--stat); } .tag.semantic { color: var(--semantic); } .tag.combined { color: var(--combined); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 5vw, 76px); align-items: center; }
+    .rule { height: 1px; background: var(--line); margin: 26px 0; }
+
+    /* Hero */
+    .hero { background: var(--surface); overflow: hidden; }
+    .hero::after { content:""; position:absolute; width:420px; height:420px; right:-120px; bottom:-150px; border: 1px solid var(--combined); border-radius:50%; box-shadow: 0 0 0 48px var(--combined-soft), 0 0 0 49px var(--combined); opacity:.42; }
+    .hero .subtitle { font-size: clamp(1.2rem, 2vw, 1.7rem); color: var(--muted); max-width: 800px; }
+    .path-compare { margin-top: 54px; display: grid; grid-template-columns: 1fr 80px 1fr; align-items: stretch; max-width: 1080px; }
+    .path { padding: 24px 28px; border: 1px solid var(--line); background: white; }
+    .path.old { border-top: 5px solid #68758a; }
+    .path.new { border-top: 5px solid var(--combined); }
+    .path-kicker { color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing:.12em; font-weight:800; }
+    .path strong { display:block; font-size:1.25rem; line-height:1.35; margin-top:8px; }
+    .path-arrow { display:grid; place-items:center; font-size:2.4rem; color:var(--combined); }
+
+    /* Graph quartet */
+    .graph-quartet { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:42px; }
+    .graph-type { padding:24px 18px 18px; border-top:4px solid var(--ink); background:rgba(255,255,255,.72); min-height:208px; }
+    .graph-type:nth-child(1) { border-color: var(--semantic); }
+    .graph-type:nth-child(2) { border-color: var(--stat); }
+    .graph-type:nth-child(3) { border-color: var(--combined); }
+    .graph-type:nth-child(4) { border-color: var(--success); }
+    .mini-graph { width:100%; height:88px; margin:4px 0 8px; overflow:visible; }
+    .mini-graph circle { fill:var(--surface); stroke:currentColor; stroke-width:2; }
+    .mini-graph path, .mini-graph line { stroke:currentColor; stroke-width:2; fill:none; }
+    .graph-type p { font-size:.82rem; color:var(--muted); margin:0; }
+
+    /* learning */
+    .result-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:34px; }
+    .result { background:var(--surface); padding:28px; }
+    .result .number { font-size:clamp(2.1rem,4vw,3.6rem); line-height:1; font-weight:800; letter-spacing:-.05em; }
+    .result p { font-size:.84rem; color:var(--muted); margin:10px 0 0; }
+    .result small { display:block; font-size:.68rem; color:var(--muted); margin-top:12px; }
+    .warning-note { margin-top:26px; border-left:5px solid var(--warning); padding:14px 20px; background:#fff8f1; max-width:1000px; }
+
+    /* pivot */
+    .question { padding:32px; min-height:310px; display:flex; flex-direction:column; justify-content:space-between; }
+    .question.old { border:1px solid var(--line); background:#eeeae1; }
+    .question.new { background:var(--ink); color:white; }
+    .question blockquote { margin:16px 0 0; font-size:clamp(1.7rem,3vw,2.9rem); line-height:1.15; letter-spacing:-.035em; }
+    .question p { color:inherit; opacity:.72; font-size:.84rem; margin:24px 0 0; }
+
+    /* framework */
+    .framework { display:grid; grid-template-columns:1fr 80px 1fr 80px 1.05fr; align-items:center; margin-top:44px; }
+    .source-block { min-height:270px; padding:28px; background:white; border:1px solid var(--line); position:relative; }
+    .source-block.stat { border-top:7px solid var(--stat); }
+    .source-block.semantic { border-top:7px solid var(--semantic); }
+    .source-block.combined { border-top:7px solid var(--combined); background:var(--combined-soft); }
+    .source-block ul { padding-left:18px; color:var(--muted); font-size:.85rem; }
+    .source-block .big { font-size:1.5rem; font-weight:800; line-height:1.2; }
+    .join { text-align:center; font-size:2.2rem; color:var(--combined); }
+    .edge-example { margin-top:28px; border:1px solid var(--line); padding:18px 24px; display:flex; align-items:center; gap:22px; background:var(--surface); }
+    .edge-nodes { font-weight:800; font-size:1.25rem; white-space:nowrap; }
+    .evidence-bars { flex:1; display:grid; gap:8px; }
+    .bar-row { display:grid; grid-template-columns:145px 1fr 90px; gap:10px; align-items:center; font-size:.76rem; }
+    .bar { height:9px; background:#dedbd3; }
+    .bar span { display:block; height:100%; }
+    .bar.stat span { width:84%; background:var(--stat); }
+    .bar.semantic span { width:58%; background:var(--semantic); }
+    .bar.combined span { width:77%; background:var(--combined); }
+
+    /* compare table */
+    .evidence-table { width:100%; border-collapse:collapse; margin-top:34px; background:var(--surface); }
+    .evidence-table th, .evidence-table td { text-align:left; padding:18px 22px; border:1px solid var(--line); vertical-align:top; }
+    .evidence-table th { font-size:.74rem; letter-spacing:.08em; text-transform:uppercase; }
+    .evidence-table th:nth-child(2) { color:var(--stat); }
+    .evidence-table th:nth-child(3) { color:var(--semantic); }
+    .evidence-table td { font-size:.88rem; }
+    .principle { margin-top:24px; font-size:1.25rem; font-weight:700; max-width:1000px; }
+
+    /* matrix */
+    .matrix-layout { display:grid; grid-template-columns:70px minmax(0,1fr); grid-template-rows:minmax(0,1fr) 55px; max-width:960px; margin:32px auto 0; }
+    .axis-y { writing-mode:vertical-rl; transform:rotate(180deg); display:grid; place-items:center; color:var(--semantic); font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; font-weight:800; }
+    .axis-x { grid-column:2; display:grid; place-items:center; color:var(--stat); font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; font-weight:800; }
+    .matrix { display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--line); }
+    .quadrant { min-height:200px; padding:24px; border:1px solid var(--line); background:rgba(255,255,255,.8); }
+    .quadrant h3 { margin-bottom:8px; }
+    .quadrant p { color:var(--muted); font-size:.84rem; margin:0; }
+    .quadrant:nth-child(2) { background:linear-gradient(135deg,var(--stat-soft),var(--surface)); }
+    .quadrant:nth-child(3) { background:linear-gradient(135deg,var(--semantic-soft),var(--surface)); }
+    .quadrant:nth-child(4) { background:linear-gradient(135deg,var(--combined-soft),var(--surface)); }
+    .corner { font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; font-weight:800; color:var(--muted); }
+
+    /* value */
+    .science-flow { display:flex; align-items:stretch; margin:38px 0; overflow-x:auto; padding-bottom:4px; }
+    .flow-step { flex:1 0 145px; min-height:132px; border:1px solid var(--line); background:var(--surface); padding:18px 16px; display:flex; flex-direction:column; justify-content:space-between; }
+    .flow-step:nth-child(3) { border-top:5px solid var(--stat); }
+    .flow-step:nth-child(4) { border-top:5px solid var(--semantic); }
+    .flow-step:nth-child(5) { border-top:5px solid var(--combined); }
+    .flow-step b { font-size:.88rem; }
+    .flow-step span { color:var(--muted); font-size:.7rem; }
+    .flow-arrow { flex:0 0 28px; display:grid; place-items:center; color:var(--muted); }
+    .applications { display:grid; grid-template-columns:repeat(5,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .application { padding:20px 16px; border-right:1px solid var(--line); }
+    .application:last-child { border:0; }
+    .application b { display:block; font-size:.9rem; }
+    .application span { color:var(--muted); font-size:.72rem; }
+
+    /* experiment timeline */
+    .experiment-list { margin-top:35px; position:relative; }
+    .experiment-list::before { content:""; position:absolute; top:10px; bottom:10px; left:105px; width:1px; background:var(--line); }
+    .experiment { display:grid; grid-template-columns:82px 1fr; gap:46px; margin-bottom:34px; position:relative; }
+    .experiment::before { content:""; position:absolute; left:99px; top:9px; width:13px; height:13px; border-radius:50%; background:var(--paper); border:3px solid var(--combined); }
+    .exp-id { font-weight:800; color:var(--combined); }
+    .exp-body { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); padding-top:12px; gap:24px; }
+    .exp-cell b { display:block; font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+    .exp-cell span { font-size:.79rem; line-height:1.45; display:block; }
+
+    /* evolution */
+    .evolution { display:grid; grid-template-columns:1fr 72px 1fr 72px 1fr; align-items:center; margin-top:50px; }
+    .evo { min-height:280px; padding:28px; border:1px solid var(--line); background:var(--surface); }
+    .evo:nth-child(3) { border-color:var(--combined); box-shadow:inset 0 5px 0 var(--combined); }
+    .evo:last-child { background:var(--ink); color:white; }
+    .evo .step-no { font-size:3.5rem; line-height:1; font-weight:800; opacity:.16; }
+    .evo-arrow { text-align:center; font-size:2rem; }
+
+    /* current */
+    .position-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid var(--line); margin-top:34px; }
+    .position-col { padding:30px; background:var(--surface); border-right:1px solid var(--line); }
+    .position-col:last-child { border:0; }
+    .position-col h3 { padding-bottom:12px; border-bottom:4px solid var(--success); }
+    .position-col:nth-child(2) h3 { border-color:var(--warning); }
+    .position-col:nth-child(3) h3 { border-color:var(--combined); }
+    .position-col ul { padding-left:18px; margin-bottom:0; }
+    .position-col li { margin:10px 0; font-size:.83rem; color:var(--muted); }
+
+    /* closing */
+    .closing { background:var(--ink); color:white; text-align:center; }
+    .closing .wrap { display:grid; justify-items:center; }
+    .closing h2 { max-width:1100px; font-size:clamp(2.7rem,5vw,5.4rem); }
+    .closing p { color:#c6ccda; }
+    .formula { display:flex; gap:18px; align-items:center; justify-content:center; margin-top:36px; flex-wrap:wrap; }
+    .formula span { padding:12px 18px; border:1px solid #606a81; }
+    .formula .stat { color:#78cae2; }.formula .semantic { color:#f0a280; }.formula .combined { color:#c1b8f2; }
+
+    .reveal { opacity:0; transform:translateY(16px); transition:opacity .55s ease, transform .55s ease; }
+    .reveal.visible { opacity:1; transform:none; }
+    .hero .reveal { opacity:1; transform:none; }
+
+    @media (max-width: 1000px) {
+      body { font-size:16px; }
+      section { padding-inline:24px; min-height:auto; }
+      .dotnav { display:none; }
+      .graph-quartet, .applications { grid-template-columns:repeat(2,1fr); }
+      .framework { grid-template-columns:1fr; gap:16px; }
+      .join { transform:rotate(90deg); }
+      .exp-body { grid-template-columns:1fr 1fr; }
+      .evolution { grid-template-columns:1fr; gap:16px; }
+      .evo-arrow { transform:rotate(90deg); }
+    }
+    @media (max-width: 680px) {
+      .topbar-inner { width:calc(100% - 24px); }
+      .brand { font-size:.64rem; }
+      .section-label { display:none; }
+      .grid-2, .path-compare, .result-strip, .position-grid { grid-template-columns:1fr; }
+      .path-arrow { transform:rotate(90deg); height:58px; }
+      .graph-quartet, .applications { grid-template-columns:1fr; }
+      .application { border-right:0; border-bottom:1px solid var(--line); }
+      .edge-example { align-items:flex-start; flex-direction:column; }
+      .bar-row { grid-template-columns:105px 1fr; }
+      .bar-row em { display:none; }
+      .matrix-layout { grid-template-columns:38px 1fr; }
+      .matrix { grid-template-columns:1fr; }
+      .experiment-list::before, .experiment::before { display:none; }
+      .experiment { grid-template-columns:1fr; gap:8px; }
+      .exp-body { grid-template-columns:1fr; }
+      section, .wrap, .hero .subtitle, .path-compare, h1 { max-width:100%; }
+      .wrap { width:100%; }
+      h1 { width:calc(100vw - 48px); font-size:clamp(2.35rem, 11vw, 3rem); overflow-wrap:anywhere; word-break:break-word; }
+      .hero .subtitle { font-size:1.05rem; }
+      .path-compare { width:calc(100vw - 48px); min-width:0; }
+      .path { overflow:hidden; }
+      .path strong, .evo, .position-col { overflow-wrap:anywhere; word-break:break-word; }
+      .hero::after { opacity:.2; }
+    }
+    @media print {
+      .topbar, .dotnav { display:none; }
+      main { padding:0; }
+      section { min-height:100vh; page-break-after:always; }
+      .reveal { opacity:1; transform:none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior:auto; }
+      .reveal { transition:none; opacity:1; transform:none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar" aria-label="Tiến độ trình bày">
+    <div class="topbar-inner">
+      <div class="brand">Research Pivot · 2026</div>
+      <div class="progress-track" aria-hidden="true"><div class="progress-bar" id="progress"></div></div>
+      <div class="section-label" id="sectionLabel">01 · Mở đầu</div>
+    </div>
+  </header>
+
+  <nav class="dotnav" aria-label="Điều hướng phần trình bày" id="dotnav"></nav>
+
+  <main>
+    <section class="hero" id="hero" data-label="01 · Mở đầu">
+      <div class="wrap reveal">
+        <div class="eyebrow">Causal AI Research · Project Evolution</div>
+        <h1>From Graph Evaluation to Quantifiable Causal Analysis</h1>
+        <p class="subtitle">Từ việc so sánh graph nào giúp AI trả lời tốt hơn, đến việc phân tích <strong>vì sao một causal edge đáng tin</strong>—và bằng chứng đó đến từ đâu.</p>
+        <div class="path-compare" aria-label="So sánh hướng nghiên cứu cũ và mới">
+          <div class="path old">
+            <span class="path-kicker">Exploratory path</span>
+            <strong>Graph source → Reasoning performance</strong>
+          </div>
+          <div class="path-arrow" aria-hidden="true">→</div>
+          <div class="path new">
+            <span class="path-kicker">Current research path</span>
+            <strong>Evidence source → Causal confidence → Scientific action</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="start" data-label="02 · Điểm xuất phát">
+      <div class="wrap reveal">
+        <div class="eyebrow">Where we started</div>
+        <h2>Bốn nguồn graph, một câu hỏi so sánh</h2>
+        <p class="lead">Ban đầu, dự án kiểm tra cùng một AI reasoner dưới bốn loại biểu diễn causal graph: graph do LLM dựng, graph từ statistical causal discovery, graph kết hợp và graph Oracle.</p>
+        <div class="graph-quartet">
+          <article class="graph-type">
+            <h3>LLM Graph</h3>
+            <svg class="mini-graph" viewBox="0 0 220 90" aria-hidden="true"><defs><marker id="a1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="currentColor"/></marker></defs><circle cx="25" cy="45" r="12"/><circle cx="110" cy="20" r="12"/><circle cx="190" cy="58" r="12"/><path d="M39 41 L95 25" marker-end="url(#a1)"/><path d="M122 25 L176 51" marker-end="url(#a1)"/></svg>
+            <p>Direction trích từ story và kiến thức ngữ nghĩa.</p>
+          </article>
+          <article class="graph-type">
+            <h3>SCD Graph</h3>
+            <svg class="mini-graph" viewBox="0 0 220 90" aria-hidden="true"><circle cx="25" cy="45" r="12"/><circle cx="110" cy="20" r="12"/><circle cx="190" cy="58" r="12"/><line x1="39" y1="41" x2="95" y2="25"/><line x1="122" y1="25" x2="176" y2="51"/></svg>
+            <p>Adjacency và uncertainty suy ra từ observational data.</p>
+          </article>
+          <article class="graph-type">
+            <h3>Hybrid Graph</h3>
+            <svg class="mini-graph" viewBox="0 0 220 90" aria-hidden="true"><defs><marker id="a3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="currentColor"/></marker></defs><circle cx="25" cy="45" r="12"/><circle cx="110" cy="20" r="12"/><circle cx="190" cy="58" r="12"/><path d="M39 41 L95 25" marker-end="url(#a3)"/><line x1="122" y1="25" x2="176" y2="51"/></svg>
+            <p>SCD cung cấp structure; semantics bổ sung direction.</p>
+          </article>
+          <article class="graph-type">
+            <h3>Oracle Graph</h3>
+            <svg class="mini-graph" viewBox="0 0 220 90" aria-hidden="true"><defs><marker id="a4" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="currentColor"/></marker></defs><circle cx="25" cy="45" r="12"/><circle cx="110" cy="20" r="12"/><circle cx="190" cy="58" r="12"/><path d="M39 41 L95 25" marker-end="url(#a4)"/><path d="M122 25 L176 51" marker-end="url(#a4)"/></svg>
+            <p>Ground-truth graph, chỉ dùng cho grading và sanity checks.</p>
+          </article>
+        </div>
+        <p class="principle">Câu hỏi khi đó: <em>“Loại graph nào giúp AI suy luận nhân quả tốt hơn?”</em></p>
+      </div>
+    </section>
+
+    <section id="learned" data-label="03 · Điều đã học">
+      <div class="wrap reveal">
+        <div class="eyebrow">What we learned</div>
+        <h2>Graph quality quan trọng—nhưng chưa phải toàn bộ câu chuyện</h2>
+        <p class="lead">P0 xác nhận rằng nguồn graph làm thay đổi rõ chất lượng downstream. Đồng thời, kết quả cũng chỉ ra rằng một accuracy cuối cùng không nói cho ta <em>vì sao</em> từng edge được tin.</p>
+        <div class="result-strip">
+          <div class="result"><div class="number">0.949</div><strong>LLM directed F1</strong><p>Trên 25 P0 holdout graph scenes.</p><small>Kết quả thực nghiệm T15</small></div>
+          <div class="result"><div class="number">0.918</div><strong>Hybrid directed F1</strong><p>Trên 23 graph thành công; 2 failure được giữ nguyên.</p><small>Kết quả thực nghiệm T15</small></div>
+          <div class="result"><div class="number">0.296</div><strong>Projected SCD directed F1</strong><p>Skeleton khá tốt nhưng ép direction tùy ý làm giảm chất lượng.</p><small>Kết quả thực nghiệm T15</small></div>
+        </div>
+        <div class="warning-note"><strong>Phát hiện then chốt:</strong> ngay cả Oracle graph vẫn sai 7/100 official downstream tasks. Graph đúng không tự động làm reasoner đúng; và downstream score không phân tách statistical evidence khỏi semantic knowledge.</div>
+        <p class="caption">Nguồn: <span class="mono">reports/t15_p0_holdout_analysis.md</span>. Các số liệu chỉ áp dụng cho released heterogeneous CausalDS P0, không phải tuyên bố khái quát cho mọi domain.</p>
+      </div>
+    </section>
+
+    <section id="pivot" data-label="04 · Research pivot">
+      <div class="wrap reveal">
+        <div class="eyebrow">Research pivot</div>
+        <h2>Đổi đơn vị phân tích: từ graph sang bằng chứng của từng edge</h2>
+        <div class="grid-2">
+          <article class="question old">
+            <span class="tag">Câu hỏi exploratory</span>
+            <blockquote>“Graph nào giúp AI suy luận tốt hơn?”</blockquote>
+            <p>Đo hiệu năng theo nguồn graph; hữu ích để phát hiện bottleneck và xây measurement protocol.</p>
+          </article>
+          <article class="question new">
+            <span class="tag combined">Câu hỏi hiện tại</span>
+            <blockquote>“Vì sao AI tin rằng X gây ra Y, và có thể lượng hóa mức độ tin cậy đó không?”</blockquote>
+            <p>Phân tích nguồn gốc, mức độ và xung đột của causal evidence trước khi đưa ra kết luận.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="framework" data-label="05 · Framework hiện tại">
+      <div class="wrap reveal">
+        <div class="eyebrow">Current framework</div>
+        <h2>Một edge, hai nguồn bằng chứng—không xóa dấu vết nguồn gốc</h2>
+        <div class="framework">
+          <article class="source-block stat">
+            <span class="tag stat">Statistical</span>
+            <p class="big">Observational evidence</p>
+            <ul><li>Association và conditional independence</li><li>Stability qua sample / phương pháp</li><li>Uncertainty do Markov equivalence</li></ul>
+            <strong>Dữ liệu hỗ trợ edge này đến đâu?</strong>
+          </article>
+          <div class="join">+</div>
+          <article class="source-block semantic">
+            <span class="tag semantic">Semantic</span>
+            <p class="big">Domain evidence</p>
+            <ul><li>Ý nghĩa biến và temporal order</li><li>Cơ chế khoa học khả dĩ</li><li>Tri thức miền được mô hình hóa</li></ul>
+            <strong>Edge này hợp lý về cơ chế đến đâu?</strong>
+          </article>
+          <div class="join">→</div>
+          <article class="source-block combined">
+            <span class="tag combined">Causal analysis</span>
+            <p class="big">Evidence-aware conclusion</p>
+            <ul><li>Giữ riêng từng nguồn</li><li>Ghi nhận đồng thuận hoặc xung đột</li><li>Cho phép abstain khi chưa đủ bằng chứng</li></ul>
+            <strong>Ta biết gì, dựa vào đâu, và còn thiếu gì?</strong>
+          </article>
+        </div>
+        <div class="edge-example" aria-label="Ví dụ minh họa score bằng chứng">
+          <div class="edge-nodes">X → Y</div>
+          <div class="evidence-bars">
+            <div class="bar-row"><span>Statistical support</span><div class="bar stat"><span></span></div><em>Cao</em></div>
+            <div class="bar-row"><span>Semantic support</span><div class="bar semantic"><span></span></div><em>Trung bình</em></div>
+            <div class="bar-row"><span>Combined confidence</span><div class="bar combined"><span></span></div><em>Cao</em></div>
+          </div>
+          <div class="caption"><strong>Minh họa khái niệm</strong><br>Không phải kết quả thực nghiệm.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="evidence" data-label="06 · Hai nguồn bằng chứng">
+      <div class="wrap reveal">
+        <div class="eyebrow">Statistical vs semantic evidence</div>
+        <h2>Hai nguồn trả lời hai câu hỏi khác nhau</h2>
+        <table class="evidence-table">
+          <thead><tr><th>Góc nhìn</th><th>Statistical Evidence</th><th>Semantic Evidence</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Nguồn</strong></td><td>Observational samples và distributional constraints</td><td>Ý nghĩa biến, domain knowledge, mô tả cơ chế</td></tr>
+            <tr><td><strong>Thế mạnh</strong></td><td>Bám vào dữ liệu thực tế, có thể kiểm định và bootstrap</td><td>Gợi ý direction, temporal order và mechanistic plausibility</td></tr>
+            <tr><td><strong>Giới hạn</strong></td><td>Confounding, sample noise, equivalence class, assumptions</td><td>Hallucination, bias tri thức, plausibility không đồng nghĩa causality</td></tr>
+            <tr><td><strong>Câu hỏi</strong></td><td>“Observations có tương thích với edge này không?”</td><td>“Có cơ chế miền hợp lý cho edge này không?”</td></tr>
+            <tr><td><strong>Ví dụ</strong></td><td>Association bền vững sau conditional tests</td><td><span class="mono">Smoking → Lung Cancer</span> có cơ chế sinh học đã biết</td></tr>
+          </tbody>
+        </table>
+        <p class="principle">Nguyên tắc: semantic plausibility không thay thế statistical evidence; statistical association cũng không tự chứng minh cơ chế nhân quả.</p>
+      </div>
+    </section>
+
+    <section id="matrix" data-label="07 · Evidence matrix">
+      <div class="wrap reveal">
+        <div class="eyebrow">Evidence matrix</div>
+        <h2>Giá trị nằm ở cách xử lý đồng thuận và xung đột</h2>
+        <div class="matrix-layout">
+          <div class="axis-y">Semantic support · thấp → cao</div>
+          <div class="matrix">
+            <article class="quadrant"><span class="corner">Thấp · Thấp</span><h3>Abstain / cần thêm dữ liệu</h3><p>Không có đủ nền tảng để ưu tiên causal claim.</p></article>
+            <article class="quadrant"><span class="corner">Stat cao · Sem thấp</span><h3>Data-led anomaly</h3><p>Quan hệ thống kê mạnh nhưng cơ chế chưa rõ: kiểm tra confounding, measurement và tìm giải thích mới.</p></article>
+            <article class="quadrant"><span class="corner">Stat thấp · Sem cao</span><h3>Plausible hypothesis</h3><p>Cơ chế hợp lý nhưng observations chưa hỗ trợ: chưa nên khẳng định, có thể ưu tiên thu thập dữ liệu.</p></article>
+            <article class="quadrant"><span class="corner">Cao · Cao</span><h3>Priority candidate</h3><p>Hai nguồn đồng thuận: ứng viên mạnh để thiết kế intervention hoặc controlled experiment.</p></article>
+          </div>
+          <div></div><div class="axis-x">Statistical support · thấp → cao</div>
+        </div>
+        <p class="caption">Ma trận là framework quyết định dự kiến, chưa phải causal score đã được hiệu chuẩn. Mỗi trục phải được định nghĩa và kiểm định độc lập.</p>
+      </div>
+    </section>
+
+    <section id="science" data-label="08 · Giá trị khoa học">
+      <div class="wrap reveal">
+        <div class="eyebrow">Why it matters for science</div>
+        <h2>Thu hẹp không gian giả thuyết trước khi trả chi phí thí nghiệm</h2>
+        <p class="lead">Framework không thay thế randomized experiment. Nó giúp researcher nhìn thấy nguồn bằng chứng, ưu tiên giả thuyết đáng kiểm tra và nhận diện nơi cần thêm dữ liệu.</p>
+        <div class="science-flow" aria-label="Quy trình AI hỗ trợ khoa học thực nghiệm">
+          <div class="flow-step"><b>Observation</b><span>Dữ liệu thực địa</span></div><div class="flow-arrow">→</div>
+          <div class="flow-step"><b>Candidate relationships</b><span>Không gian giả thuyết</span></div><div class="flow-arrow">→</div>
+          <div class="flow-step"><b>Statistical analysis</b><span>Data support</span></div><div class="flow-arrow">→</div>
+          <div class="flow-step"><b>Semantic analysis</b><span>Domain support</span></div><div class="flow-arrow">→</div>
+          <div class="flow-step"><b>Causal evidence</b><span>Agreement / conflict</span></div><div class="flow-arrow">→</div>
+          <div class="flow-step"><b>Research hypothesis</b><span>Ưu tiên có giải thích</span></div><div class="flow-arrow">→</div>
+          <div class="flow-step"><b>Controlled experiment</b><span>Xác nhận thực nghiệm</span></div>
+        </div>
+        <div class="applications">
+          <div class="application"><b>Kinh tế học</b><span>Ưu tiên policy mechanism cần kiểm định</span></div>
+          <div class="application"><b>Khoa học xã hội</b><span>Tách association khỏi diễn giải cơ chế</span></div>
+          <div class="application"><b>Sinh học</b><span>Xếp hạng pathway cho wet-lab validation</span></div>
+          <div class="application"><b>Hành vi</b><span>So sánh dữ liệu với theory-driven links</span></div>
+          <div class="application"><b>Môi trường</b><span>Triangulate heterogeneous evidence</span></div>
+        </div>
+        <p class="principle">Định vị: <strong>AI-assisted causal analysis &amp; hypothesis prioritization tool</strong>—một lớp hỗ trợ quyết định, không phải máy “chứng minh causality”.</p>
+      </div>
+    </section>
+
+    <section id="experiments" data-label="09 · Experiment timeline">
+      <div class="wrap reveal">
+        <div class="eyebrow">Experiment → insight → research decision</div>
+        <h2>Thực nghiệm đã dẫn đường cho pivot như thế nào?</h2>
+        <div class="experiment-list">
+          <article class="experiment"><div class="exp-id">P0 · T11</div><div class="exp-body"><div class="exp-cell"><b>Purpose</b><span>So graph structure trên development.</span></div><div class="exp-cell"><b>Method</b><span>8 scenes; LLM, raw/projected SCD, Hybrid, Oracle.</span></div><div class="exp-cell"><b>Result</b><span>LLM directed F1 0.975; Hybrid định hướng đúng 23/24 edge đánh giá được.</span></div><div class="exp-cell"><b>Insight</b><span>Semantics có thể bổ sung direction mà statistical graph còn bỏ ngỏ.</span></div></div></article>
+          <article class="experiment"><div class="exp-id">P0 · T15</div><div class="exp-body"><div class="exp-cell"><b>Purpose</b><span>Kiểm tra graph và reasoning trên holdout đã freeze.</span></div><div class="exp-cell"><b>Method</b><span>25 graph scenes; 20 downstream scenes; paired cluster bootstrap.</span></div><div class="exp-cell"><b>Result</b><span>LLM/HYBRID directed F1 0.949/0.918; Oracle downstream 0.930.</span></div><div class="exp-cell"><b>Insight</b><span>Graph source ảnh hưởng kết quả, nhưng graph đúng vẫn chưa đủ cho reasoning hoàn hảo.</span></div></div></article>
+          <article class="experiment"><div class="exp-id">P1 · T21</div><div class="exp-body"><div class="exp-cell"><b>Purpose</b><span>Chỉ orient edge khi semantic confidence đủ an toàn.</span></div><div class="exp-cell"><b>Method</b><span>Fresh SCMs, BOSS CPDAG, Edge-Selective; 20 validation scenes.</span></div><div class="exp-cell"><b>Result</b><span>Best 83/97 = 85.57% precision, thấp hơn gate 95%; holdout không mở.</span></div><div class="exp-cell"><b>Insight</b><span>“Confidence” cần được phân rã và hiệu chuẩn; semantic score đơn lẻ chưa phải causal confidence.</span></div></div></article>
+        </div>
+        <p class="caption">Các con số trên lấy từ artifact T11, T15 và T21 v3-D trong repository. Development diagnostics không được diễn giải như confirmatory evidence.</p>
+      </div>
+    </section>
+
+    <section id="evolution" data-label="10 · Research evolution">
+      <div class="wrap reveal">
+        <div class="eyebrow">Research evolution</div>
+        <h2>Hướng cũ là nền móng đo lường cho câu hỏi mới</h2>
+        <div class="evolution">
+          <article class="evo"><div class="step-no">01</div><h3>Graph Evaluation</h3><p>Chuẩn hóa LLM / SCD / Hybrid / Oracle; xây canonical graph contract, leakage boundary và scorers.</p></article>
+          <div class="evo-arrow">→</div>
+          <article class="evo"><div class="step-no">02</div><h3>Causal Evidence Analysis</h3><p>Phân rã từng edge theo statistical và semantic support; báo uncertainty và xung đột.</p></article>
+          <div class="evo-arrow">→</div>
+          <article class="evo"><div class="step-no">03</div><h3>AI-assisted Scientific Discovery</h3><p>Ưu tiên hypothesis, đề xuất dữ liệu cần bổ sung và chuyển causal claim sang kiểm định thực nghiệm.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="position" data-label="11 · Vị trí hiện tại">
+      <div class="wrap reveal">
+        <div class="eyebrow">Current position</div>
+        <h2>Biết rõ điều đã chứng minh—và điều chưa được phép khẳng định</h2>
+        <div class="position-grid">
+          <article class="position-col"><h3>What we know</h3><ul><li>Graph representation và source ảnh hưởng downstream.</li><li>Semantic information có thể cải thiện orientation so với arbitrary projection.</li><li>Forced completeness che giấu uncertainty và có thể định hướng false adjacency.</li></ul></article>
+          <article class="position-col"><h3>What is uncertain</h3><ul><li>Cách hiệu chuẩn statistical và semantic evidence trên cùng thang đo.</li><li>Mức độ khái quát qua domain, data regime và model family.</li><li>Cách kết hợp hai nguồn mà không double-count hoặc tạo false confidence.</li></ul></article>
+          <article class="position-col"><h3>What we test next</h3><ul><li>Định nghĩa evidence outputs có provenance và calibration.</li><li>Kiểm tra agreement/conflict bằng synthetic ground truth trước.</li><li>Đánh giá hypothesis prioritization, abstention và robustness đa domain.</li></ul></article>
+        </div>
+        <div class="warning-note"><strong>Scientific guardrail:</strong> T21 v3-D không đạt precision gate 95%, nên không threshold nào được chọn và 80-scene final holdout vẫn được giữ kín. Pivot không được dùng để “cứu” một kết quả; nó dùng failure analysis để đặt câu hỏi tốt hơn.</div>
+      </div>
+    </section>
+
+    <section class="closing" id="closing" data-label="12 · Kết luận">
+      <div class="wrap reveal">
+        <div class="eyebrow" style="color:#c1b8f2">Closing proposition</div>
+        <h2>Mục tiêu không chỉ là dự đoán X gây ra Y, mà còn lượng hóa vì sao chúng ta tin X gây ra Y.</h2>
+        <p class="lead">Một AI causal analyst đáng tin phải cho thấy bằng chứng đến từ observations hay domain knowledge, hai nguồn có đồng thuận không, và khi nào hệ thống nên nói “chưa đủ bằng chứng”.</p>
+        <div class="formula" aria-label="Công thức khái niệm">
+          <span class="stat">Statistical Evidence</span><b>+</b><span class="semantic">Semantic Evidence</span><b>→</b><span class="combined">Explainable Causal Confidence</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const sections = [...document.querySelectorAll('main > section')];
+      const progress = document.getElementById('progress');
+      const label = document.getElementById('sectionLabel');
+      const nav = document.getElementById('dotnav');
+
+      sections.forEach((section, index) => {
+        const link = document.createElement('a');
+        link.href = `#${section.id}`;
+        link.title = section.dataset.label;
+        link.setAttribute('aria-label', `Đến ${section.dataset.label}`);
+        if (index === 0) link.classList.add('active');
+        nav.appendChild(link);
+      });
+      const dots = [...nav.children];
+
+      const updateProgress = () => {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = scrollable > 0 ? window.scrollY / scrollable : 0;
+        progress.style.width = `${Math.min(100, Math.max(0, ratio * 100))}%`;
+      };
+
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const index = sections.indexOf(entry.target);
+          label.textContent = entry.target.dataset.label;
+          dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+          entry.target.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+        });
+      }, { threshold: .42 });
+
+      sections.forEach(section => observer.observe(section));
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      window.addEventListener('resize', updateProgress);
+      updateProgress();
+
+      document.addEventListener('keydown', event => {
+        if (!['ArrowDown', 'ArrowRight', 'PageDown', 'ArrowUp', 'ArrowLeft', 'PageUp'].includes(event.key)) return;
+        const current = dots.findIndex(dot => dot.classList.contains('active'));
+        const forward = ['ArrowDown', 'ArrowRight', 'PageDown'].includes(event.key);
+        const next = Math.min(sections.length - 1, Math.max(0, current + (forward ? 1 : -1)));
+        if (next !== current) {
+          event.preventDefault();
+          sections[next].scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

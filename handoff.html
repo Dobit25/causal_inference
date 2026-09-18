@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tài liệu handoff dự án nghiên cứu AI hỗ trợ causal analysis.">
+  <title>Research Handoff — AI Causal Analysis</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #5d6878;
+      --paper: #f3f1eb;
+      --surface: #fffefa;
+      --line: #d8d4ca;
+      --stat: #176b87;
+      --semantic: #b65b35;
+      --hybrid: #514a85;
+      --good: #2f715d;
+      --stop: #a54835;
+      --soft-blue: #e4f0f3;
+      --soft-orange: #f6e7de;
+      --soft-purple: #ece9f5;
+      --max: 1080px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.62;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2 { letter-spacing: -.035em; }
+    h1 { font-size: clamp(2.7rem, 6vw, 5.2rem); line-height: 1; max-width: 850px; }
+    h2 { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.08; margin-bottom: 22px; }
+    h3 { font-size: 1.16rem; line-height: 1.3; }
+    p { max-width: 800px; }
+    a { color: var(--hybrid); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    code, .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(243,241,235,.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+    .topbar-inner {
+      width: min(var(--max), calc(100% - 40px));
+      height: 54px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .brand { font-size: .72rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+    .progress { flex: 1; height: 3px; background: #d7d3c9; }
+    .progress span { display: block; width: 0; height: 100%; background: var(--hybrid); }
+    .print-button { border: 1px solid var(--ink); background: transparent; padding: 6px 12px; cursor: pointer; font-size: .72rem; font-weight: 750; }
+
+    main { width: min(var(--max), calc(100% - 40px)); margin: 42px auto 80px; }
+    .page {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: clamp(36px, 6vw, 72px);
+      margin-bottom: 28px;
+      box-shadow: 0 10px 30px rgba(23,32,51,.05);
+    }
+    .eyebrow { color: var(--hybrid); font-size: .72rem; letter-spacing: .13em; text-transform: uppercase; font-weight: 850; margin-bottom: 14px; }
+    .lead { font-size: 1.2rem; color: #424c5d; max-width: 850px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px 22px; color: var(--muted); font-size: .76rem; margin-top: 30px; }
+    .status { display: inline-flex; align-items: center; gap: 8px; padding: 7px 11px; border: 1px solid var(--stop); color: var(--stop); font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+    .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--stop); }
+    .rule { height: 1px; background: var(--line); margin: 34px 0; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+
+    .summary-box { margin-top: 36px; border-left: 6px solid var(--hybrid); padding: 22px 26px; background: var(--soft-purple); }
+    .summary-box p:last-child { margin-bottom: 0; }
+    .question { border-top: 5px solid var(--line); padding: 22px 0; }
+    .question.old { border-color: #7a8494; }
+    .question.new { border-color: var(--hybrid); }
+    .question small { color: var(--muted); text-transform: uppercase; font-weight: 800; letter-spacing: .1em; }
+    .question strong { display: block; font-size: 1.35rem; line-height: 1.35; margin-top: 10px; }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(7, auto);
+      align-items: center;
+      gap: 9px;
+      margin: 32px 0;
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+    .flow-step { border: 1px solid var(--line); padding: 12px 14px; min-width: 108px; text-align: center; font-size: .75rem; font-weight: 760; background: white; }
+    .flow-step.stat { border-top: 5px solid var(--stat); }
+    .flow-step.semantic { border-top: 5px solid var(--semantic); }
+    .flow-step.hybrid { border-top: 5px solid var(--hybrid); }
+    .arrow { color: var(--muted); text-align: center; }
+
+    .phase { border: 1px solid var(--line); background: white; padding: 20px; }
+    .phase .id { color: var(--hybrid); font-size: .7rem; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+    .phase h3 { margin: 8px 0; }
+    .phase p { color: var(--muted); font-size: .8rem; margin: 0; }
+
+    table { border-collapse: collapse; width: 100%; margin: 24px 0; background: white; }
+    th, td { border: 1px solid var(--line); padding: 13px 15px; text-align: left; vertical-align: top; }
+    th { font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    td { font-size: .84rem; }
+    td.num { font-weight: 800; font-variant-numeric: tabular-nums; }
+    .pass { color: var(--good); font-weight: 750; }
+    .fail { color: var(--stop); font-weight: 750; }
+
+    .finding { padding: 20px; border-top: 5px solid var(--stat); background: var(--soft-blue); }
+    .finding:nth-child(2) { border-color: var(--semantic); background: var(--soft-orange); }
+    .finding:nth-child(3) { border-color: var(--hybrid); background: var(--soft-purple); }
+    .finding p { font-size: .82rem; color: var(--muted); margin-bottom: 0; }
+
+    .rejection {
+      border: 2px solid var(--stop);
+      padding: 28px;
+      background: #fff9f5;
+      margin: 28px 0;
+    }
+    .rejection h3 { color: var(--stop); }
+    .reason-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 28px; list-style: none; padding: 0; margin: 20px 0 0; }
+    .reason-list li { position: relative; padding-left: 24px; font-size: .86rem; }
+    .reason-list li::before { content: "×"; color: var(--stop); font-weight: 900; position: absolute; left: 0; }
+
+    .decision-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    .decision-list li { display: grid; grid-template-columns: 36px 1fr; gap: 12px; padding: 15px 0; border-bottom: 1px solid var(--line); }
+    .decision-list .icon { color: var(--stop); font-weight: 900; font-size: 1.15rem; }
+    .decision-list b { display: block; }
+    .decision-list span { color: var(--muted); font-size: .8rem; }
+
+    .metric-line { display: grid; grid-template-columns: 150px 1fr 86px; gap: 12px; align-items: center; margin: 12px 0; font-size: .78rem; }
+    .bar { height: 10px; background: #e2ded5; }
+    .bar span { display: block; height: 100%; }
+    .bar.valid span { width: 100%; background: var(--good); }
+    .bar.precision span { width: 85.57%; background: var(--stop); }
+    .bar.coverage span { width: 45.54%; background: var(--hybrid); }
+
+    .artifact-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; padding: 0; list-style: none; }
+    .artifact-list li { border: 1px solid var(--line); padding: 12px 14px; font-size: .76rem; overflow-wrap: anywhere; }
+    .artifact-list b { display: block; color: var(--muted); font-size: .65rem; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+
+    .roadmap { counter-reset: step; padding: 0; list-style: none; }
+    .roadmap li { counter-increment: step; display: grid; grid-template-columns: 48px 1fr; gap: 15px; margin: 18px 0; }
+    .roadmap li::before { content: counter(step, decimal-leading-zero); width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid var(--hybrid); color: var(--hybrid); font-weight: 850; }
+    .roadmap b { display: block; }
+    .roadmap span { color: var(--muted); font-size: .82rem; }
+    .guardrail { padding: 20px 24px; background: var(--ink); color: white; margin-top: 28px; }
+    .guardrail p { margin: 0; color: #d8ddea; }
+
+    .footer { color: var(--muted); font-size: .72rem; text-align: center; margin-top: 32px; }
+
+    @media (max-width: 760px) {
+      body { font-size: 15px; }
+      main { width: min(100% - 20px, var(--max)); margin-top: 14px; }
+      .page { padding: 28px 22px; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .reason-list, .artifact-list { grid-template-columns: 1fr; }
+      .metric-line { grid-template-columns: 112px 1fr 68px; }
+      .print-button { display: none; }
+      .topbar-inner { width: calc(100% - 20px); }
+    }
+
+    @media print {
+      @page { size: A4; margin: 14mm; }
+      body { background: white; font-size: 10.5pt; color: #111827; }
+      .topbar { display: none; }
+      main { width: 100%; margin: 0; }
+      .page {
+        border: 0;
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        break-after: page;
+        min-height: 0;
+      }
+      .page:last-child { break-after: auto; }
+      h1 { font-size: 35pt; }
+      h2 { font-size: 24pt; }
+      a { color: inherit; text-decoration: none; }
+      .flow, table, .rejection, .finding, .phase, .guardrail { break-inside: avoid; }
+      .footer { margin-top: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">Research Handoff · Causal AI</div>
+      <div class="progress" aria-hidden="true"><span id="progress"></span></div>
+      <button class="print-button" type="button" onclick="window.print()">In / Xuất PDF</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page" id="context">
+      <div class="eyebrow">Tài liệu bàn giao nghiên cứu · 18/09/2026</div>
+      <h1>AI-assisted Causal Analysis</h1>
+      <p class="lead">Tài liệu này tóm tắt dự án đã xây dựng gì, kết quả nào có giá trị, vì sao bằng chứng hiện tại chưa đủ để chấp nhận claim an toàn, và ranh giới mà người tiếp quản không được vượt qua.</p>
+      <div class="meta">
+        <span class="status">Dừng trước final holdout</span>
+        <span><strong>Nhánh:</strong> P1 Hybrid Edge-Selective</span>
+        <span><strong>Mốc gần nhất:</strong> T21 v3-D</span>
+      </div>
+
+      <div class="summary-box">
+        <h3>Executive summary</h3>
+        <p>Dự án bắt đầu bằng việc so sánh graph do LLM, statistical causal discovery, Hybrid và Oracle cung cấp cho một fixed reasoner. P0 cho thấy semantic orientation có giá trị, nhưng cũng cho thấy graph accuracy và reasoning accuracy không phải cùng một đại lượng.</p>
+        <p>P1 vì thế chuyển sang một Hybrid có khả năng <strong>abstain</strong>: chỉ định hướng cạnh khi semantic evidence và global graph evidence đủ mạnh. Implementation đã hoàn tất, nhưng validation chỉ đạt <strong>83/97 = 85,57%</strong> precision, thấp hơn gate 95%. Không threshold nào được chọn và 80 final-holdout scenes vẫn được giữ kín.</p>
+      </div>
+
+      <div class="rule"></div>
+      <h2>Dự án muốn giải quyết gì?</h2>
+      <div class="grid-2">
+        <article class="question old">
+          <small>Hướng exploratory ban đầu</small>
+          <strong>Graph nào giúp AI suy luận nhân quả tốt hơn?</strong>
+          <p>So sánh <span class="mono">G_LLM</span>, <span class="mono">G_SCD</span>, <span class="mono">G_HYBRID</span> và <span class="mono">G_ORACLE</span> dưới cùng reasoner và scorer.</p>
+        </article>
+        <article class="question new">
+          <small>Hướng phát triển hiện tại</small>
+          <strong>Làm sao kết hợp statistical và semantic evidence mà vẫn giữ uncertainty?</strong>
+          <p>Không ép mọi CPDAG thành DAG; hệ thống phải biết khi nào đủ bằng chứng để orient và khi nào cần giữ cạnh undirected.</p>
+        </article>
+      </div>
+
+      <div class="flow" aria-label="Quá trình phát triển nghiên cứu">
+        <div class="flow-step">Graph sources</div><div class="arrow">→</div>
+        <div class="flow-step">Reasoning evaluation</div><div class="arrow">→</div>
+        <div class="flow-step stat">Statistical structure</div><div class="arrow">+</div>
+        <div class="flow-step semantic">Semantic orientation</div><div class="arrow">→</div>
+        <div class="flow-step hybrid">Selective Hybrid</div>
+      </div>
+      <div class="footer">Trang 1 · Context và research question</div>
+    </section>
+
+    <section class="page" id="built">
+      <div class="eyebrow">What was built</div>
+      <h2>Những thành phần đã hoàn thành</h2>
+      <div class="grid-3">
+        <article class="phase"><span class="id">P0 · CausalDS</span><h3>Four-graph evaluation</h3><p>Canonical graph contract, Oracle leakage boundary, LLM/SCD/Hybrid builders, reasoner, graph metrics và một lần mở holdout đã đăng ký trước.</p></article>
+        <article class="phase"><span class="id">P1 · Fresh SCM</span><h3>Controlled substrate</h3><p>100 linear non-Gaussian SCMs, observational samples, Oracle DAG/CPDAG, năm tasks và ba semantic story variants.</p></article>
+        <article class="phase"><span class="id">T20–T21</span><h3>Hybrid methods</h3><p>H2-Forced, scene-selective, Edge-Selective, exact credible extensions, global compatibility, Meek closure và provenance cho từng direction.</p></article>
+      </div>
+
+      <div class="rule"></div>
+      <h2>Key experiments và kết quả chính</h2>
+      <table>
+        <thead><tr><th>Experiment</th><th>Purpose</th><th>Kết quả thật</th><th>Insight / quyết định</th></tr></thead>
+        <tbody>
+          <tr><td><strong>P0 · T11</strong></td><td>So graph structure trên 8 development scenes.</td><td>LLM directed F1 0,975; Hybrid đúng 23/24 unresolved edges có thể đánh giá.</td><td>Semantic information có thể hỗ trợ direction tốt hơn deterministic projection.</td></tr>
+          <tr><td><strong>P0 · T15</strong></td><td>Đánh giá holdout đã freeze.</td><td>Directed F1: LLM 0,949; Hybrid 0,918; projected SCD 0,296. Oracle downstream accuracy 0,930.</td><td>Graph quality ảnh hưởng downstream, nhưng graph đúng không tự bảo đảm reasoner đúng.</td></tr>
+          <tr><td><strong>P1 · T21 v1/v2</strong></td><td>Kiểm tra forced và scene-selective Hybrid.</td><td>Không candidate nào đạt precision gate 0,95.</td><td>Không tiếp tục prompt tuning tùy ý; chuyển sang selective orientation ở cấp cạnh.</td></tr>
+          <tr><td><strong>P1 · T21 v3-D</strong></td><td>Validation Edge-Selective trên 20 SCMs mới.</td><td>83/97 đúng = 85,57%; coverage 45,54%; graph validity 100%.</td><td>Implementation hợp lệ nhưng bằng chứng không đạt safety gate; dừng trước holdout.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="grid-3">
+        <article class="finding"><h3>Semantic orientation có giá trị</h3><p>Full story đạt 48/51 direction đúng trên validation diagnostic. Semantics có thể bổ sung direction mà CPDAG chưa xác định.</p></article>
+        <article class="finding"><h3>BOSS vẫn là bottleneck</h3><p>Trong 97 cạnh BOSS đã định hướng: 59 đúng, 13 đảo chiều và 25 là false adjacency.</p></article>
+        <article class="finding"><h3>Abstention là cần thiết</h3><p>Full/partial/ambiguous coverage lần lượt là 71,83%, 56,34% và 8,45%; evidence yếu phải dẫn đến ít direction hơn.</p></article>
+      </div>
+
+      <div class="rule"></div>
+      <h3>T21 v3-D — gate đã đăng ký</h3>
+      <div class="metric-line"><span>Graph validity</span><div class="bar valid"><span></span></div><strong>100%</strong></div>
+      <div class="metric-line"><span>Orientation precision</span><div class="bar precision"><span></span></div><strong class="fail">85,57%</strong></div>
+      <div class="metric-line"><span>Coverage</span><div class="bar coverage"><span></span></div><strong>45,54%</strong></div>
+      <p class="lead">Gate yêu cầu đồng thời validity 100%, precision ≥95%, answered edges ≥20 và coverage ≥20%. Chỉ precision thất bại, nhưng đây là điều kiện bắt buộc nên toàn gate thất bại.</p>
+      <div class="footer">Trang 2 · What was built và key experiments</div>
+    </section>
+
+    <section class="page" id="rejected">
+      <div class="eyebrow">Why current evidence was rejected</div>
+      <h2>Vì sao chưa chấp nhận đây là “proof”?</h2>
+      <p class="lead">“Bác bỏ proof” ở đây nghĩa là không xem kết quả hiện tại như bằng chứng đủ mạnh cho claim: <em>Hybrid có thể công bố causal directions với độ an toàn ít nhất 95%</em>.</p>
+
+      <div class="rejection">
+        <h3>Kết luận khoa học hiện tại: chưa đủ bằng chứng</h3>
+        <ul class="reason-list">
+          <li>Point estimate chỉ đạt 85,57%, thấp hơn gate 95%.</li>
+          <li>Confidence 0–1 là do LLM tự báo, chưa phải calibrated probability.</li>
+          <li>BOSS đã khóa một số false adjacencies và compelled directions sai.</li>
+          <li>Validation chỉ gồm 20 independent scenes.</li>
+          <li>213 edge–story records có clustering, không phải 213 mẫu độc lập.</li>
+          <li>Không một trong 20 threshold candidates đạt toàn bộ gate.</li>
+          <li>95% hiện là operational target, chưa có high-probability risk guarantee.</li>
+          <li>Mở holdout sau thất bại sẽ phá vỡ protocol đăng ký trước.</li>
+        </ul>
+      </div>
+
+      <h3>Điều này không có nghĩa gì?</h3>
+      <p>Nó không chứng minh semantic orientation vô ích, cũng không chứng minh mọi Hybrid approach sẽ thất bại. Nó chỉ chứng minh rằng với <strong>BOSS + GPT-5.4 Nano + prompt v2 + Edge-Selective protocol hiện tại</strong>, dữ liệu validation chưa hỗ trợ claim an toàn 95%.</p>
+
+      <div class="rule"></div>
+      <h2>Frozen decisions — những điều không tiếp tục</h2>
+      <ul class="decision-list">
+        <li><div class="icon">×</div><div><b>Không dùng deterministic DAG projection làm phương pháp chính.</b><span>Nó tạo direction tùy ý và có directed F1 thấp trong P0.</span></div></li>
+        <li><div class="icon">×</div><div><b>Không dùng H2-Forced làm phương pháp cuối.</b><span>Buộc mọi edge thành directed che giấu uncertainty và làm các edge 0,5 trông như kết luận.</span></div></li>
+        <li><div class="icon">×</div><div><b>Không tiếp tục sửa prompt trên cùng validation cohort.</b><span>Làm vậy sẽ biến validation thành development và tạo nguy cơ overfit.</span></div></li>
+        <li><div class="icon">×</div><div><b>Không hạ gate sau khi đã nhìn kết quả.</b><span>Việc thay tiêu chí để candidate vượt qua sẽ làm mất ý nghĩa confirmatory của gate.</span></div></li>
+        <li><div class="icon">×</div><div><b>Không mở 80 final-holdout scenes.</b><span>Threshold chưa được chọn hợp lệ; holdout access vẫn chưa được cấp quyền.</span></div></li>
+      </ul>
+
+      <div class="guardrail"><p><strong>Ranh giới bắt buộc:</strong> kết quả âm phải được giữ nguyên. Không rerun, chọn subset, đổi metric hoặc thay threshold để làm đẹp kết quả T21 v3-D.</p></div>
+      <div class="footer">Trang 3 · Why evidence was rejected và frozen decisions</div>
+    </section>
+
+    <section class="page" id="next">
+      <div class="eyebrow">Current state & recommended next steps</div>
+      <h2>Trạng thái bàn giao</h2>
+      <table>
+        <tbody>
+          <tr><th>P0</th><td class="pass">Hoàn tất và đã phân tích holdout.</td></tr>
+          <tr><th>P1 generator/story</th><td class="pass">Hoàn tất, deterministic và hash-frozen.</td></tr>
+          <tr><th>H2 Edge-Selective</th><td class="pass">Implementation và offline conformance hoàn tất.</td></tr>
+          <tr><th>Validation gate</th><td class="fail">Thất bại: 85,57% &lt; 95%.</td></tr>
+          <tr><th>Threshold chính thức</th><td class="fail">Không được chọn.</td></tr>
+          <tr><th>80-scene final holdout</th><td><strong>Chưa mở; không được phép mở.</strong></td></tr>
+          <tr><th>Bước được phép</th><td><strong>T21 v3-E: terminal stop/freeze decision.</strong></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Repository/artifact locations</h3>
+      <ul class="artifact-list">
+        <li><b>Project status</b><a href="CausalDS.md">CausalDS.md</a></li>
+        <li><b>Linear timeline</b><a href="timeline.md">timeline.md</a></li>
+        <li><b>P0 holdout analysis</b><a href="reports/t15_p0_holdout_analysis.md">reports/t15_p0_holdout_analysis.md</a></li>
+        <li><b>Edge-Selective protocol</b><a href="reports/t21_v3a_edge_selective_protocol.md">reports/t21_v3a_edge_selective_protocol.md</a></li>
+        <li><b>Validation generation</b><a href="reports/t21_v3c_validation_generation.md">reports/t21_v3c_validation_generation.md</a></li>
+        <li><b>Validation result</b><a href="reports/t21_v3d_validation.md">reports/t21_v3d_validation.md</a></li>
+        <li><b>Canonical audit</b><a href="data/manifests/t21_v3d_validation_audit.json">data/manifests/t21_v3d_validation_audit.json</a></li>
+        <li><b>Threshold grid</b><a href="data/manifests/t21_v3d_validation_threshold_grid.jsonl">data/manifests/t21_v3d_validation_threshold_grid.jsonl</a></li>
+      </ul>
+
+      <div class="rule"></div>
+      <h2>Recommended next steps</h2>
+      <ol class="roadmap">
+        <li><div><b>Đóng T21 v3-E</b><span>Ghi nhận terminal validation failure, freeze artifacts và checkpoint toàn bộ T21 v2/v3 mà không thay kết quả.</span></div></li>
+        <li><div><b>Chuyển đơn vị nghiên cứu từ “graph hoàn chỉnh” sang “evidence cho từng edge”</b><span>Tách statistical support, semantic support, conflict, provenance và abstention.</span></div></li>
+        <li><div><b>Thay point-estimate gate bằng risk-control gate</b><span>Dùng Learn-then-Test hoặc phương pháp tương đương: kiểm soát error ≤5% với confidence 95%, có multiple-candidate correction.</span></div></li>
+        <li><div><b>Thiết kế cohort kế nhiệm trước khi sinh dữ liệu</b><span>Tăng số independent validation scenes, dùng scene-clustered inference và đặt gate riêng cho full/partial/ambiguous.</span></div></li>
+        <li><div><b>Đánh giá giá trị thực tế</b><span>Đo khả năng ưu tiên hypothesis, nhận diện evidence conflict và đề xuất thí nghiệm tiếp theo—không chỉ graph accuracy.</span></div></li>
+      </ol>
+
+      <div class="summary-box">
+        <h3>Thông điệp bàn giao</h3>
+        <p>Dự án không dừng vì “Hybrid không hoạt động”. Dự án dừng đúng protocol vì phương pháp hiện tại chưa đủ bằng chứng để tuyên bố an toàn. Giá trị của giai đoạn vừa qua là đã xác định rõ ba bottleneck—SCD skeleton, semantic calibration và statistical validation—and tạo nền tảng cho một AI causal analyst biết giới hạn của bằng chứng.</p>
+      </div>
+
+      <div class="footer">Trang 4 · Current state, artifacts và next steps</div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const bar = document.getElementById('progress');
+      const update = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = `${max > 0 ? Math.min(100, window.scrollY / max * 100) : 0}%`;
+      };
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+  </script>
+</body>
+</html>
