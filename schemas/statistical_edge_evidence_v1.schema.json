@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/statistical_edge_evidence_v1.schema.json",
+  "title": "Bootstrap-BOSS statistical edge evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scene_id", "edge", "bootstrap", "rates", "thresholds", "status", "provenance"],
+  "properties": {
+    "schema_version": {"const": "fourgraph.statistical_edge_evidence.v1"},
+    "scene_id": {"type": "string", "minLength": 1},
+    "edge": {"$ref": "#/$defs/edge"},
+    "bootstrap": {
+      "type": "object", "additionalProperties": false,
+      "required": ["runs", "sample_size", "sampling", "standardize_each_resample"],
+      "properties": {
+        "runs": {"const": 200}, "sample_size": {"const": 2000},
+        "sampling": {"const": "rows_with_replacement"},
+        "standardize_each_resample": {"const": true}
+      }
+    },
+    "rates": {
+      "type": "object", "additionalProperties": false,
+      "required": ["absent", "undirected", "A_to_B", "B_to_A", "adjacency_stability"],
+      "properties": {
+        "absent": {"$ref": "#/$defs/rate"}, "undirected": {"$ref": "#/$defs/rate"},
+        "A_to_B": {"$ref": "#/$defs/rate"}, "B_to_A": {"$ref": "#/$defs/rate"},
+        "adjacency_stability": {"$ref": "#/$defs/rate"}
+      }
+    },
+    "thresholds": {
+      "type": "object", "additionalProperties": false,
+      "required": ["adjacency", "direction"],
+      "properties": {"adjacency": {"$ref": "#/$defs/rate"}, "direction": {"$ref": "#/$defs/rate"}}
+    },
+    "status": {"enum": ["strong_adjacency", "weak_adjacency", "statistical_direction_A_to_B", "statistical_direction_B_to_A", "direction_uncertain", "absent", "unavailable"]},
+    "provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["method", "config_sha256", "observations_sha256", "seed_manifest_sha256"],
+      "properties": {
+        "method": {"const": "bootstrap_boss"},
+        "config_sha256": {"$ref": "#/$defs/hash"}, "observations_sha256": {"$ref": "#/$defs/hash"},
+        "seed_manifest_sha256": {"$ref": "#/$defs/hash"}
+      }
+    }
+  },
+  "$defs": {
+    "edge": {"type": "array", "prefixItems": [{"type": "string"}, {"type": "string"}], "items": false, "minItems": 2, "maxItems": 2},
+    "rate": {"type": "number", "minimum": 0, "maximum": 1},
+    "hash": {"type": "string", "pattern": "^[A-F0-9]{64}$"}
+  }
+}
+

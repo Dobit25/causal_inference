@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/semantic_edge_evidence_v1.schema.json",
+  "title": "Six-prompt semantic edge evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scene_id", "story_variant", "edge", "votes", "agreement_class", "evidence_validation", "empirical_reliability", "provenance"],
+  "properties": {
+    "schema_version": {"const": "fourgraph.semantic_edge_evidence.v1"},
+    "scene_id": {"type": "string", "minLength": 1},
+    "story_variant": {"enum": ["full", "partial", "ambiguous"]},
+    "edge": {"$ref": "#/$defs/edge"},
+    "votes": {
+      "type": "object", "additionalProperties": false,
+      "required": ["A_to_B", "B_to_A", "undetermined", "total"],
+      "properties": {
+        "A_to_B": {"type": "integer", "minimum": 0, "maximum": 6},
+        "B_to_A": {"type": "integer", "minimum": 0, "maximum": 6},
+        "undetermined": {"type": "integer", "minimum": 0, "maximum": 6},
+        "total": {"const": 6}
+      }
+    },
+    "agreement_class": {"enum": ["very_high", "high", "medium", "uncertain", "conflict"]},
+    "evidence_validation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["all_directed_quotes_exact", "aliases_match", "cause_effect_match", "association_guard_passed"],
+      "properties": {
+        "all_directed_quotes_exact": {"type": "boolean"}, "aliases_match": {"type": "boolean"},
+        "cause_effect_match": {"type": "boolean"}, "association_guard_passed": {"type": "boolean"}
+      }
+    },
+    "empirical_reliability": {
+      "type": ["object", "null"],
+      "required": ["correct", "total", "point_estimate", "lower_confidence_bound", "calibration_manifest_sha256"],
+      "properties": {
+        "correct": {"type": "integer", "minimum": 0}, "total": {"type": "integer", "minimum": 1},
+        "point_estimate": {"$ref": "#/$defs/rate"}, "lower_confidence_bound": {"$ref": "#/$defs/rate"},
+        "calibration_manifest_sha256": {"$ref": "#/$defs/hash"}
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["model_snapshot", "prompt_bundle_sha256", "story_sha256", "requested_pairs_sha256", "response_schema_sha256"],
+      "properties": {
+        "model_snapshot": {"const": "gpt-5.4-nano-2026-03-17"},
+        "prompt_bundle_sha256": {"$ref": "#/$defs/hash"}, "story_sha256": {"$ref": "#/$defs/hash"},
+        "requested_pairs_sha256": {"$ref": "#/$defs/hash"}, "response_schema_sha256": {"$ref": "#/$defs/hash"}
+      }
+    }
+  },
+  "$defs": {
+    "edge": {"type": "array", "prefixItems": [{"type": "string"}, {"type": "string"}], "items": false, "minItems": 2, "maxItems": 2},
+    "rate": {"type": "number", "minimum": 0, "maximum": 1},
+    "hash": {"type": "string", "pattern": "^[A-F0-9]{64}$"}
+  }
+}
+

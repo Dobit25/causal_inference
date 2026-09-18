@@ -135,7 +135,9 @@ T21 Amendment v3-D complete, gate failed: 20 BOSS validation graphs and 60 froze
 
 T21 Amendment v3-E complete: closed P1-v2 as a retained negative result, froze 70 versioned v2/v3 artifacts by hash, prohibited post-validation gate changes and confirmed the final holdout remains sealed. T22 is not authorized. Only design of a separately frozen P1-v3 Evidence-Selective Hybrid is allowed; Bootstrap-BOSS execution, semantic API calls and new cohort generation remain blocked until that protocol exists.
 
-The next action is to freeze the P1-v3 Evidence-Selective Hybrid protocol. Its starting choices are GPT-5.4 Nano, whole-graph semantic calls and Bootstrap-BOSS primary, with SCD ensemble deferred to a later robustness study. The existing P1-v2 validation and final holdout may not be reused for tuning. T22/T23 remain unauthorized.
+P1-v3 Evidence-Selective protocol freeze complete: registered Bootstrap-BOSS as the sole primary statistical method with 200 size-N resamples, deferred the SCD ensemble, froze the five adjacency and three direction thresholds, six balanced whole-graph GPT-5.4 Nano prompts, deterministic evidence validation, empirical-reliability classes, statistical veto, partial-graph/ledger contracts and Learn-then-Test risk control. The next action is implementation and synthetic conformance only; study-scene Bootstrap execution, cohort generation, API calls and final holdout remain forbidden.
+
+The next action is to implement Bootstrap-BOSS aggregation, edge-evidence contracts and independent synthetic conformance completely offline. The existing P1-v2 development/validation cohorts may not be reused for tuning, and the 80-scene final holdout remains sealed. T22/T23 remain unauthorized.
 
 ## Research integrity checklist
 

@@ -1017,3 +1017,13 @@ V3-E chấp nhận kết quả `83/97 = 0,8557` như một negative validation r
 Bước đóng này không gọi API và không đọc downstream answers hay final-holdout method results. Nó băm và khóa 70 artifact T21 v2/v3, chạy replay byte-for-byte và tiếp tục niêm phong nguyên 80 final-holdout scenes.
 
 P1-v2 kết thúc tại đây. Hành động kế tiếp duy nhất là thiết kế protocol P1-v3 Evidence-Selective Hybrid độc lập: giữ GPT-5.4 Nano, gọi semantic model theo whole graph, dùng Bootstrap-BOSS làm statistical method chính và hoãn SCD ensemble sang robustness study. Chưa được chạy Bootstrap, sinh cohort hay gọi model cho đến khi protocol mới được đóng băng.
+
+## 33. Đóng băng protocol P1-v3 Evidence-Selective Hybrid
+
+Protocol mới thay một BOSS graph nhị phân bằng evidence ledger ở cấp cạnh. Mỗi scene dự kiến được resample 200 lần; từng resample vẫn có N=2000 dòng lấy có hoàn lại, được chuẩn hóa riêng rồi chạy BOSS. Với mỗi cặp node, hệ thống giữ bốn tần suất absent, undirected, A→B và B→A. Bootstrap frequency chỉ là độ ổn định khi resample, không phải xác suất nhân quả.
+
+Semantic layer giữ GPT-5.4 Nano nhưng thay một lời gọi confidence bằng sáu cách hỏi cố định, cân bằng thứ tự hai biến 3–3 và batch toàn graph. Code gom phiếu thành Very High, High, Medium, Uncertain hoặc Conflict. Chỉ Very High/High đã chứng minh empirical reliability trên calibration độc lập mới được xem xét định hướng; Medium trở xuống giữ unresolved.
+
+Hybrid áp dụng statistical veto trước semantic evidence, kiểm tra global consistency và ghi riêng direction do thống kê, semantic selection hay Meek closure. Lưới 5 adjacency thresholds × 3 direction thresholds được khóa trước. Learn-then-Test hoặc risk control tương đương phải chứng minh error không quá 5% với failure probability 5% và coverage hữu ích ít nhất 20% trước khi mở holdout.
+
+Bước freeze chỉ tạo config, prompt bundle, bốn schema, report và hash manifest. Không Bootstrap run nào được thực hiện, không scene mới được sinh, không API được gọi và 80 holdout scenes vẫn đóng. Bước tiếp theo duy nhất là implement Bootstrap-BOSS aggregator cùng production/reference synthetic conformance hoàn toàn offline.

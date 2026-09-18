@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/evidence_selective_graph_v1.schema.json",
+  "title": "Evidence-Selective partial causal graph",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scene_id", "condition", "thresholds", "graph", "edge_ledger", "validity", "provenance"],
+  "properties": {
+    "schema_version": {"const": "fourgraph.evidence_selective_graph.v1"},
+    "scene_id": {"type": "string", "minLength": 1},
+    "condition": {"const": "G_HYBRID_EVIDENCE_SELECTIVE"},
+    "thresholds": {
+      "type": "object", "additionalProperties": false, "required": ["adjacency_stability", "direction_stability"],
+      "properties": {"adjacency_stability": {"$ref": "#/$defs/rate"}, "direction_stability": {"$ref": "#/$defs/rate"}}
+    },
+    "graph": {
+      "type": "object", "additionalProperties": false, "required": ["nodes", "directed", "undirected"],
+      "properties": {
+        "nodes": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "directed": {"$ref": "#/$defs/edges"}, "undirected": {"$ref": "#/$defs/edges"}
+      }
+    },
+    "edge_ledger": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["edge", "statistical_evidence_sha256", "semantic_evidence_sha256", "decision", "direction", "source", "statistical_veto_passed"],
+        "properties": {
+          "edge": {"$ref": "#/$defs/edge"},
+          "statistical_evidence_sha256": {"$ref": "#/$defs/hash"},
+          "semantic_evidence_sha256": {"type": ["string", "null"], "pattern": "^[A-F0-9]{64}$"},
+          "decision": {"enum": ["directed", "undirected", "excluded", "unavailable"]},
+          "direction": {"type": ["string", "null"], "enum": ["A_to_B", "B_to_A", null]},
+          "source": {"enum": ["statistical_stable", "statistical_semantic_agreement", "semantic_selected", "closure_propagated", "conflict_abstained", "unresolved", "statistical_veto", "method_failure"]},
+          "statistical_veto_passed": {"type": "boolean"}
+        }
+      }
+    },
+    "validity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["acyclic_extensions", "consistent_extension_exists", "node_universe_preserved", "ledger_complete"],
+      "properties": {
+        "acyclic_extensions": {"const": true}, "consistent_extension_exists": {"const": true},
+        "node_universe_preserved": {"const": true}, "ledger_complete": {"const": true}
+      }
+    },
+    "provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["protocol_sha256", "statistical_manifest_sha256", "semantic_manifest_sha256", "closure_version"],
+      "properties": {
+        "protocol_sha256": {"$ref": "#/$defs/hash"}, "statistical_manifest_sha256": {"$ref": "#/$defs/hash"},
+        "semantic_manifest_sha256": {"$ref": "#/$defs/hash"}, "closure_version": {"type": "string", "minLength": 1}
+      }
+    }
+  },
+  "$defs": {
+    "edge": {"type": "array", "prefixItems": [{"type": "string"}, {"type": "string"}], "items": false, "minItems": 2, "maxItems": 2},
+    "edges": {"type": "array", "items": {"$ref": "#/$defs/edge"}, "uniqueItems": true},
+    "rate": {"type": "number", "minimum": 0, "maximum": 1},
+    "hash": {"type": "string", "pattern": "^[A-F0-9]{64}$"}
+  }
+}

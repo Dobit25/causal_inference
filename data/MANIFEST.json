@@ -409,6 +409,11 @@
       "name": "p1_t21_v3e_terminal_audit",
       "role": "terminal_negative_result_hash_freeze_and_final_holdout_seal",
       "manifest": "data/manifests/t21_v3e_terminal_audit.json"
+    },
+    {
+      "name": "p1_v3_evidence_selective_protocol_freeze",
+      "role": "pre_implementation_bootstrap_boss_semantic_reliability_and_risk_control_protocol",
+      "manifest": "data/manifests/p1_evidence_selective_protocol_freeze.json"
     }
   ]
 }

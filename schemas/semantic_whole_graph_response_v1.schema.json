@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/semantic_whole_graph_response_v1.schema.json",
+  "title": "Whole-graph semantic direction response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "judgments"],
+  "properties": {
+    "schema_version": {"const": "fourgraph.semantic_whole_graph_response.v1"},
+    "judgments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["pair_id", "judgment", "cause", "effect", "evidence_quote"],
+        "properties": {
+          "pair_id": {"type": "string", "minLength": 1},
+          "judgment": {"enum": ["directed", "undetermined"]},
+          "cause": {"type": ["string", "null"]},
+          "effect": {"type": ["string", "null"]},
+          "evidence_quote": {"type": ["string", "null"]}
+        }
+      }
+    }
+  }
+}

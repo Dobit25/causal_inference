@@ -1,0 +1,292 @@
+schema_version: fourgraph.p1_evidence_selective_protocol.v1
+
+experiment:
+  id: causalds_fresh_p1_v3_evidence_selective
+  name: P1-v3 Evidence-Selective Hybrid
+  status: protocol_frozen_pre_implementation
+  parent_terminal_audit: data/manifests/t21_v3e_terminal_audit.json
+
+research_question: >
+  Can Bootstrap-BOSS edge stability and a preregistered statistical veto limit
+  semantic orientation to statistically supported adjacencies, while six-prompt
+  empirical semantic reliability and global graph constraints produce a useful
+  partial causal graph with controlled selective direction error?
+
+claim_boundary:
+  primary_claim: >
+    Edge-level Bootstrap-BOSS stability plus empirically validated semantic
+    agreement can support auditable selective orientation with controlled risk
+    and explicit abstention.
+  allowed:
+    - bootstrap_stability_as_resampling_frequency
+    - semantic_agreement_as_empirical_reliability_group
+    - selective_direction_error_and_coverage
+    - source_attributed_partial_graph
+  forbidden:
+    - bootstrap_frequency_is_causal_probability
+    - llm_vote_fraction_is_causal_probability
+    - synthetic_results_generalize_automatically_to_real_domains
+    - evidence_selective_output_is_always_a_complete_dag
+    - ensemble_superiority_not_tested_in_primary_protocol
+
+statistical_method:
+  primary: bootstrap_boss
+  ensemble:
+    status: deferred
+    role: future_robustness_extension
+    algorithms: [BOSS, PC, DirectLiNGAM]
+    used_by_primary_parent_graph: false
+    used_for_threshold_selection: false
+  observations:
+    primary_n: 2000
+    bootstrap_sample_n: 2000
+    sampling: rows_with_replacement
+    repetitions: 200
+    standardize_each_resample: true
+  boss:
+    algorithm: BOSS
+    score: BasisFunctionBicScore
+    penalty_discount: 1.0
+    truncation_limit: 3
+  deterministic_seeding:
+    bootstrap_seed_derivation: sha256_protocol_scene_repetition_to_uint64
+    boss_seed_derivation: sha256_protocol_scene_repetition_boss_to_uint64
+    parallel_order_must_not_change_results: true
+  edge_states: [absent, undirected, A_to_B, B_to_A]
+  rates:
+    denominator: all_200_bootstrap_runs
+    adjacency_stability: one_minus_absent_rate
+    direction_rates_are_unconditional: true
+    conditional_direction_rates: diagnostic_only
+    four_state_rates_must_sum_to_one: true
+  threshold_grid:
+    adjacency_stability: [0.60, 0.70, 0.80, 0.90, 0.95]
+    direction_stability: [0.80, 0.90, 0.95]
+    candidate_count_before_semantic_reliability: 15
+  parent_graph_construction:
+    node_universe: frozen_scene_variables
+    include_adjacency_when: adjacency_stability_gte_tau_adjacency
+    orient_A_to_B_when: A_to_B_rate_gte_tau_direction
+    orient_B_to_A_when: B_to_A_rate_gte_tau_direction
+    otherwise_direction: undirected
+    unstable_compelled_direction: downgrade_to_undirected
+    reverse_direction_on_downgrade: false
+    add_edge_below_adjacency_threshold: false
+    invalid_pdag_action: candidate_invalid_no_repair
+    require_consistent_dag_extension: true
+
+statistical_veto:
+  strong_adjacency_direction_uncertain: semantic_orientation_allowed
+  weak_adjacency: exclude_edge_and_forbid_semantic_orientation
+  absent: exclude_edge_and_forbid_semantic_orientation
+  strong_statistical_direction: request_semantic_audit_but_do_not_allow_override
+  statistical_semantic_agreement: retain_statistical_direction
+  statistical_semantic_conflict: downgrade_to_undirected_and_flag_human_review
+  method_failure: unavailable_no_fallback
+  oracle_allowed_at_runtime: false
+
+semantic_method:
+  provider: openai
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  endpoint: /v1/responses
+  call_granularity: whole_graph
+  story_variants: [full, partial, ambiguous]
+  prompt_bundle: prompts/p1_semantic_empirical_reliability_v1.md
+  response_schema: schemas/semantic_whole_graph_response_v1.schema.json
+  prompt_variants: [P1, P2, P3, P4, P5, P6]
+  balanced_pair_order:
+    A_first: [P1, P3, P5]
+    B_first: [P2, P4, P6]
+  calls_per_scene_story: 6
+  decoding:
+    reasoning_effort: none
+    temperature: 0
+    service_tier: default
+    store: false
+    structured_outputs: true
+  response_fields: [judgment, cause, effect, evidence_quote]
+  deterministic_normalization: [A_TO_B, B_TO_A, UNDETERMINED]
+  evidence_validation:
+    quote_required_for_directed: true
+    quote_must_be_exact_story_substring: true
+    quote_must_reference_requested_aliases: true
+    cause_effect_must_match_direction: true
+    association_only_cannot_be_directed: true
+    invalid_response: reject_then_registered_retry
+  agreement_classes:
+    very_high: six_same_direction_zero_reverse
+    high: five_same_direction_one_undetermined_zero_reverse
+    medium: four_same_direction_two_undetermined_zero_reverse
+    uncertain: at_most_three_same_direction_zero_reverse
+    conflict: at_least_one_vote_in_each_direction
+  automatic_orientation_eligibility: [very_high, high]
+  medium_action: unresolved_human_review
+  uncertain_action: abstain
+  conflict_action: abstain_and_record_conflict
+  self_reported_probability_used_as_confidence: false
+
+empirical_reliability:
+  unit: edge_within_scene
+  independent_split_unit: scene
+  estimated_separately_by: [story_variant, agreement_class]
+  numerator: oracle_correct_direct_directions
+  denominator: all_published_directions_in_group_including_false_adjacencies
+  false_adjacency_direction: incorrect
+  calibration_and_validation_cohorts_must_be_disjoint: true
+  reliability_lower_bound_required_for_automatic_orientation: 0.95
+  reporting:
+    - correct_and_total
+    - point_reliability
+    - scene_clustered_confidence_interval
+    - abstention_rate
+    - false_adjacency_orientation_rate
+
+hybrid_decision:
+  method_id: G_HYBRID_EVIDENCE_SELECTIVE
+  output: globally_valid_partial_graph_with_edge_ledger
+  direct_semantic_orientation_requires:
+    - statistical_veto_pass
+    - agreement_class_empirically_safe
+    - no_reverse_vote
+    - exact_evidence_quote_valid
+    - global_graph_compatibility
+  global_consistency:
+    no_directed_cycle: true
+    no_skeleton_change_after_statistical_parent_construction: true
+    no_unsupported_collider: true
+    at_least_one_consistent_dag_extension: true
+    incompatible_semantic_candidate_action: abstain
+  closure:
+    method: deterministic_meek_R1_R2_R3_R4_fixed_point
+    source_label: closure_propagated
+    evaluated_separately: true
+    included_in_end_to_end_error: true
+  direction_sources:
+    - statistical_stable
+    - statistical_semantic_agreement
+    - semantic_selected
+    - closure_propagated
+    - conflict_abstained
+    - unresolved
+
+risk_control:
+  method: learn_then_test_or_equivalent_familywise_risk_control
+  target_selective_error_alpha: 0.05
+  failure_probability_delta: 0.05
+  minimum_useful_coverage: 0.20
+  candidate_family:
+    statistical_threshold_pairs: 15
+    frozen_before_calibration: true
+    multiple_testing_control_required: true
+  selection_objective: maximum_coverage_among_candidates_certified_safe
+  tie_breakers:
+    - lower_error_upper_confidence_bound
+    - fewer_false_adjacency_orientations
+    - higher_adjacency_stability_threshold
+    - higher_direction_stability_threshold
+  gates:
+    graph_validity: 1.0
+    selective_error_upper_confidence_bound_lte: 0.05
+    coverage_lower_confidence_bound_gte: 0.20
+    minimum_answered_edges: determined_by_prospective_power_simulation
+    no_systematic_false_adjacency_failure: true
+    no_systematic_ambiguous_story_failure: true
+    closure_risk_reported_and_controlled: true
+  no_safe_candidate_action: stop_without_retuning_or_holdout_access
+
+cohort_protocol:
+  old_method_development_20: historical_diagnostic_only
+  old_validation_p1v_20: historical_negative_result_only
+  existing_final_holdout_80:
+    status: sealed
+    exact_ids_unchanged: true
+    eligible_only_for_one_time_final_evaluation_after_all_gates: true
+  successor_roles:
+    - method_development
+    - semantic_calibration
+    - threshold_validation
+  sample_size:
+    method: prospective_power_simulation_before_generation
+    simulation_seed: 31001
+    inputs: [alpha, delta, minimum_coverage, candidate_family, scene_clustering]
+    choose_scene_count_from_budget_only: false
+    exact_counts_frozen_now: false
+  split_at_scene_level: true
+  no_scene_reuse_across_successor_roles: true
+
+comparators:
+  primary:
+    - full_data_BOSS
+    - bootstrap_BOSS_parent
+    - bootstrap_BOSS_plus_semantic_evidence_selective
+    - matched_evidence_LLM_standalone
+  diagnostic_only:
+    - oracle_skeleton_upper_bound
+  deferred:
+    - SCD_ensemble
+    - SCD_ensemble_plus_LLM
+
+metrics:
+  statistical:
+    - skeleton_precision_recall_f1
+    - false_positive_false_negative_adjacencies
+    - adjacency_stability_distribution
+    - direction_stability_distribution
+    - stable_direction_precision
+    - runtime_and_method_failure_rate
+  semantic:
+    - reliability_by_agreement_class_and_story_variant
+    - evidence_quote_validation_rate
+    - conflict_and_abstention_rate
+    - false_adjacency_orientation_rate
+  hybrid:
+    - direct_semantic_precision
+    - closure_precision
+    - end_to_end_selective_error
+    - coverage_and_risk_coverage_curve
+    - graph_validity
+    - source_attribution
+    - whole_graph_skeleton_and_direction_metrics
+  downstream_after_method_freeze_only:
+    - official_adjustment_control_accuracy
+    - uncertainty_aware_correctness
+    - uniquely_identified_query_rate
+    - undetermined_rate
+    - failure_rate
+
+artifacts:
+  statistical_schema: schemas/statistical_edge_evidence_v1.schema.json
+  semantic_schema: schemas/semantic_edge_evidence_v1.schema.json
+  semantic_response_schema: schemas/semantic_whole_graph_response_v1.schema.json
+  graph_schema: schemas/evidence_selective_graph_v1.schema.json
+  protocol_report: reports/p1_evidence_selective_protocol.md
+  freeze_manifest: data/manifests/p1_evidence_selective_protocol_freeze.json
+
+reproducibility:
+  canonical_json: sorted_keys_compact_utf8_lf
+  raw_api_logs: ignored_outside_git
+  cache_identity:
+    - model_snapshot
+    - prompt_variant_hash
+    - story_hash
+    - requested_pairs_hash
+    - response_schema_hash
+    - decoding_config_hash
+  runner_requirements: [resume, check, call_limit, registered_retry]
+  oracle_loader: grading_process_only
+  downstream_answers_for_threshold_selection: forbidden
+  any_post_freeze_change: new_protocol_version_and_new_calibration_validation_cohorts
+
+freeze_boundary:
+  protocol_frozen: true
+  bootstrap_implementation_exists: false
+  bootstrap_runs_executed: 0
+  scenes_generated: 0
+  semantic_api_calls: 0
+  final_holdout_accessed: false
+  next_authorized_action: P1_V3_BOOTSTRAP_BOSS_OFFLINE_IMPLEMENTATION_AND_CONFORMANCE
+  next_action_forbids:
+    - running_200_bootstraps_on_study_scenes
+    - generating_successor_cohorts
+    - semantic_api_calls
+    - final_holdout_access
