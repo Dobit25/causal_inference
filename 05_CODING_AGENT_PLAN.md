@@ -123,7 +123,19 @@ Execution complete, gate not passed: 80 captured API attempts yielded 60 shared 
 
 ### T21 amendment, then T22–T24
 
-The next action is to diagnose and prospectively version the semantic-preference/selection protocol using development evidence only. T22 may freeze holdout execution only after an amended development gate passes; T23 then opens holdout once and T24 performs scene-paired analysis. Nonlinear robustness and CLadder replication remain later decisions.
+T21 Amendment v2 complete, gate not passed. Prompt v2 passed a sealed 120-case semantic-preference suite at 100% for forward, reverse and ambiguous classes. The development rerun preserved the model, BOSS substrate, H1/H2 implementation and threshold grid, but no candidate met 0.95 orientation precision. The additional standalone partial/ambiguous graphs and Oracle-skeleton diagnostic were not used to select a threshold. Further prompt tuning and T22 are not authorized; the next scientific action is to revise the P1 claim/design as a new protocol version or close P1 with the negative development finding.
+
+T21 Amendment v3-A complete: froze the P1-v2 Edge-Selective successor without implementation or execution. Only BOSS-undirected edges are mutable; exact credible-extension consensus and Meek closure must produce a provenance-labeled partial graph. The 20 existing development scenes are engineering-only, a new 20-scene validation cohort will select among 20 frozen threshold candidates, and the existing 80 holdout scenes remain sealed. Only T21 v3-B offline implementation and synthetic conformance are authorized next.
+
+T21 Amendment v3-B complete: implemented the versioned partial-graph/decision contracts, exact credible-extension Edge-Selective production solver, independent topological-order/brute-subset reference, deterministic Meek R1–R4 closure and a 180-case synthetic suite. All 3,600 threshold decisions agreed and all 40 invalid fixtures failed closed. No P1 scene or API was accessed. T21 v3-C may now generate and freeze exactly 20 new validation SCMs offline; semantic calls and holdout access remain unauthorized.
+
+T21 Amendment v3-C complete: generated and froze the prospective threshold-validation cohort with exact IDs `P1V000–P1V019`, seed 21301, N=2000 observations, 5 tasks/scene and 3 deterministic story variants/scene. All registered allocations and 100/100 independent target agreements passed; raw and versioned artifacts replay byte-for-byte. No model or causal method ran and existing development/holdout artifacts remained untouched. T21 v3-D may run the frozen semantic model on this cohort and evaluate exactly 20 threshold candidates; final holdout access remains unauthorized.
+
+T21 Amendment v3-D complete, gate failed: 20 BOSS validation graphs and 60 frozen GPT-5.4 Nano preference artifacts were produced with no retry. Exactly 20 preregistered Edge-Selective candidates were evaluated. Graph validity was 100%, but the maximum observed precision was 0.8557 at 97 answered edges and 0.4554 coverage; therefore no candidate met the 0.95 safety gate and no threshold was selected. T21 v3-E must record the fail-closed terminal decision; T22/final holdout execution is not authorized.
+
+T21 Amendment v3-E complete: closed P1-v2 as a retained negative result, froze 70 versioned v2/v3 artifacts by hash, prohibited post-validation gate changes and confirmed the final holdout remains sealed. T22 is not authorized. Only design of a separately frozen P1-v3 Evidence-Selective Hybrid is allowed; Bootstrap-BOSS execution, semantic API calls and new cohort generation remain blocked until that protocol exists.
+
+The next action is to freeze the P1-v3 Evidence-Selective Hybrid protocol. Its starting choices are GPT-5.4 Nano, whole-graph semantic calls and Bootstrap-BOSS primary, with SCD ensemble deferred to a later robustness study. The existing P1-v2 validation and final holdout may not be reused for tuning. T22/T23 remain unauthorized.
 
 ## Research integrity checklist
 

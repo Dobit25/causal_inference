@@ -459,3 +459,54 @@
 - Threshold gate: Evaluated all 20 frozen `(tau_margin, tau_conflict)` pairs using development graph truth only. The best precision was 0.90 at 0.04975 coverage (9/10 evaluable orientations), below the preregistered 0.95 requirement. No threshold was selected and no H2-Selective final artifacts were created.
 - Boundary: No P1 holdout SCM/story/result, downstream task answer, downstream ranking or reasoner output was accessed. The correct terminal action is a versioned protocol amendment on development; T22 and T23 remain unauthorized.
 - Artifacts: `configs/t21_p1_development.yaml`, two T21 prompts/schemas, `src/fourgraph/p1_t21.py`, `src/fourgraph/t21_openai_backend.py`, `scripts/run_p1_t21.py`, five `data/manifests/t21_*` outputs, `reports/t21_p1_development.md`, and `tests/test_p1_t21.py`.
+
+## 2026-09-16 — T21 Amendment v2 development-only diagnosis
+
+- Conformance: Generated 120 synthetic cases with no P1 content: 40 forward, 40 reverse and 40 association-only. Independent generation truth and a separate text parser agreed on 120/120 expected classes. The 12-case smoke and full suite both achieved 100% parse, first-attempt schema and class accuracy with frozen GPT-5.4 Nano and prompt v2.
+- Development rerun: Reused the unchanged 20 T21-v1 full-story graph responses and retained exactly 60 prompt-v2 preference responses on the same 20 development scenes. H2-Forced orientation precision was 0.7761 full, 0.5970 partial and 0.4627 ambiguous. The best unchanged-grid selective candidate reached only 0.7368 precision at 0.0945 coverage; no threshold was selected.
+- Fair-evidence comparators: Captured 40 logical standalone graph calls for partial/ambiguous stories in 42 API attempts. Mean directed F1 was 0.7039 partial and 0.4706 ambiguous, compared with frozen full 0.8115. Comparators were excluded from threshold selection.
+- Oracle-skeleton diagnostic: Applied the same all-pair semantic signal to BOSS and Oracle CPDAG parents. Precision improved from 0.8060 to 0.9028 for full and 0.7164 to 0.8472 for partial, but neither reached 0.95. Both SCD skeleton quality and semantic orientation remain bottlenecks.
+- Incidents: A terminal timeout left a child process alive and caused 18 extra successful duplicate responses before termination (78 successful prompt-v2 preference responses were billed for 60 logical responses retained). The ignored original log was preserved; a deterministic first-seen projection excluded all duplicates from science. One 429 rejection created no model response. Comparator requests were paced at 3.2 seconds/request; two validation retries were retained.
+- Boundary/verdict: P1 holdout, downstream tasks/answers and reasoner were not accessed. Conformance passed, but the scientific threshold gate failed. Further prompt tuning, T22 and holdout execution are unauthorized under P1 v1.
+
+## 2026-09-16 — T21 Amendment v3-A Edge-Selective protocol freeze
+
+- Scope: Froze a versioned P1-v2 successor after the terminal T21-v2 gate failure. `G_HYBRID_H2_EDGE_SELECTIVE` may orient only undirected BOSS edges and cannot add/delete adjacencies or reverse compelled directions.
+- Algorithm: Registered exact enumeration of parent-consistent DAG extensions, summed log Bernoulli semantic scores, fixed-temperature softmax weights, weighted direction stability, exact globally compatible candidate-subset selection and deterministic Meek R1–R4 closure. Every output mark must be labeled compelled, semantic-selected, closure-propagated or unresolved.
+- Gate: Froze 20 threshold candidates from the 5×4 semantic-confidence/global-stability grid. Eligibility requires graph validity 1.0, end-to-end selective precision at least 0.95, at least 20 answered edges and coverage at least 0.20. False BOSS adjacencies count as errors; parent-compelled edges are excluded from semantic precision; downstream results cannot select thresholds.
+- Cohorts: Existing 20 development scenes are method-engineering only. Registered, but did not generate, 20 new validation SCMs under seed 21301. Existing 80 holdout IDs remain unchanged and unopened.
+- Boundary: API calls 0; validation scenes generated 0; Edge-Selective implementation 0; existing development reanalysis 0; holdout scene artifacts/results accessed 0. Only T21 v3-B offline implementation and synthetic conformance are authorized.
+- Artifacts: `configs/p1_edge_selective_v2.yaml`, `schemas/p1_edge_selective_protocol_v2.schema.json`, `reports/t21_v3a_edge_selective_protocol.md`, `scripts/freeze_t21_v3a_edge_selective_protocol.py`, `data/manifests/t21_v3a_edge_selective_protocol_freeze.json`, and `tests/test_t21_v3a_edge_selective_protocol.py`.
+
+## 2026-09-16 — T21 Amendment v3-B Edge-Selective offline implementation
+
+- Implementation: Added versioned decision and maximally oriented partial-graph contracts, an exact credible-extension production solver, an independent topological-order/brute-subset reference solver, exact globally compatible subset selection, deterministic Meek R1–R4 fixed-point closure, strict output validation and per-edge provenance.
+- Conformance: Generated 180 synthetic CPDAG/preference cases (3–7 nodes, six balanced preference regimes) and evaluated all 20 frozen threshold candidates. Production and reference agreed on 3,600/3,600 decisions; all outputs were graph-valid and all 180 inputs remained unchanged. The suite observed 3,284 semantic-selected, 579 closure-propagated and 6,897 unresolved marks. Six explicitly off-grid algorithmic probes also forced mutually incompatible high-confidence local directions and confirmed that both solvers choose the same maximum globally compatible subset; these probes cannot select a study threshold.
+- Negative fixtures: 40/40 malformed thresholds, preferences or output artifacts were rejected with the registered fail-closed error code.
+- Reproducibility: `scripts/build_t21_v3b_edge_selective_conformance.py --check` regenerated the valid suite, invalid suite, audit and report byte-for-byte.
+- Boundary: API calls 0; validation scenes generated 0; P1 development/holdout scenes accessed 0; no SCD, LLM or reasoner execution; no study threshold selected. Only T21 v3-C offline generation and freeze of the new 20-scene validation cohort is authorized next.
+
+## 2026-09-16 — T21 Amendment v3-C validation cohort generation
+
+- Cohort: Generated exactly 20 prospective validation-only SCMs from seed 21301 using the frozen T18 linear non-Gaussian family. IDs are `P1V000–P1V019`, mapped one-to-one to `scene_110000–scene_110019`; they do not overlap the existing P1S development/holdout namespace.
+- Balance: Node counts are 5/6/7 = 7/7/6; five assigned motifs = 4 each; noise families laplace/logistic/student-t = 7/7/6; four query strata = 5 each. Every Oracle CPDAG has at least two unresolved edges.
+- Data/tasks: Generated raw and standardized N=2000 observations for every scene. Each scene has the frozen five graph-sensitive tasks; production and independent solvers agreed 100/100. Public task manifests contain queries and target commitments, not gold answers.
+- Stories: Deterministically generated 60 full/partial/ambiguous stimuli with the T19 templates and seed 21301. Automated truth checks passed; public manifests contain only hashes/counts, while story text, alias mappings and truth remain under the ignored generated tree.
+- Reproducibility: 180 raw files and six versioned output/report artifacts are hash-frozen; `scripts/build_t21_v3c_validation.py --check` reproduced them byte-for-byte.
+- Boundary: API calls 0; semantic model/SCD/H1/H2/reasoner execution 0; threshold selection false; existing development/holdout raw artifacts accessed 0. T21 v3-D is authorized next, but the final 80-scene holdout remains sealed.
+
+## 2026-09-16 — T21 Amendment v3-D validation gate
+
+- Preflight: Froze the validation config and runner before live execution. Offline preflight ran BOSS on 20/20 P1V scenes, rendered 60 prompts, found zero cached responses and confirmed zero existing-development/final-holdout access.
+- Live semantic execution: GPT-5.4 Nano returned 60/60 structured semantic-preference responses in 60 attempts with zero validation retry. Captured usage was 46,210 input tokens, 11,726 output tokens and zero reasoning/cached-input tokens. Raw provider logs remain under ignored `results/raw/p1_t21_v3d_validation/`.
+- Gate: Evaluated exactly 20 frozen `(tau_semantic, tau_global)` candidates over 60 scene-variant units. Graph validity was 1.0 for every candidate. No candidate met all requirements: precision ≥0.95, answered edges ≥20 and coverage ≥0.20.
+- Best precision-first result: 83/97 correct orientations = 0.8556701031 precision at 97/213 = 0.455399061 coverage; 13 false BOSS adjacencies were oriented. Direct semantic directions were 70/79 correct and closure-propagated directions 13/18 correct.
+- Verdict: No threshold selected; selected-graph manifest is intentionally empty. Validation tasks/answers, existing development results and final holdout artifacts were not accessed. Only T21 v3-E terminal decision is authorized; T22 and final holdout execution remain forbidden.
+- Replay incident: The first `--check` exposed that `new_api_calls_last_resume` was run-local (60 live versus 0 from cache), although all scientific manifests matched. Audit schema v2 removed that non-canonical field, preserved the original preflight/live runner hash, recorded a replay-only memoization amendment with `scientific_inputs_prompts_responses_scoring_changed: false`, and then passed byte-for-byte replay without any new API call.
+
+## 2026-09-19 — T21 Amendment v3-E terminal closure
+
+- Decision: Closed P1-v2 with `STOP_P1_V2_BEFORE_FINAL_HOLDOUT`. The preregistered validation result remains 83/97 correct (`0.8556701031`) at `0.455399061` coverage versus the required `0.95` precision; no threshold was selected.
+- Integrity: Hash-pinned 70 versioned T21 v2/v3 artifacts without changing them. The selected-graph manifest remains empty and the closure reproduces byte-for-byte with `scripts/finalize_t21_v3e.py --check`.
+- Boundary: Made zero API calls, accessed no downstream answers or final-holdout method results, and did not authorize T22. The existing 80-scene holdout remains sealed; the failed gate will not be lowered and the same validation cohort will not be retuned.
+- Successor: Authorized design only for P1-v3 Evidence-Selective Hybrid. Frozen starting choices are GPT-5.4 Nano, whole-graph semantic calls and Bootstrap-BOSS primary; the SCD ensemble is deferred. No Bootstrap run, new cohort generation or semantic call is yet authorized.

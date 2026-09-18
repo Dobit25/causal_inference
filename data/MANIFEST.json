@@ -364,6 +364,51 @@
       "name": "p1_t21_development_audit",
       "role": "terminal_development_execution_no_threshold_and_protocol_amendment_gate",
       "manifest": "data/manifests/t21_development_audit.json"
+    },
+    {
+      "name": "p1_t21_v2_semantic_conformance",
+      "role": "one_hundred_twenty_balanced_forward_reverse_ambiguous_prompt_v2_cases",
+      "manifest": "data/manifests/t21_v2_semantic_conformance.jsonl"
+    },
+    {
+      "name": "p1_t21_v2_semantic_conformance_audit",
+      "role": "offline_expected_target_and_live_model_conformance_gate",
+      "manifest": "data/manifests/t21_v2_semantic_conformance_live_audit.json"
+    },
+    {
+      "name": "p1_t21_v2_development_audit",
+      "role": "prompt_v2_development_rerun_with_unchanged_threshold_gate",
+      "manifest": "data/manifests/t21_v2_development_audit.json"
+    },
+    {
+      "name": "p1_t21_v2_comparator_audit",
+      "role": "fair_evidence_standalone_llm_and_oracle_skeleton_non_primary_diagnostics",
+      "manifest": "data/manifests/t21_v2_comparator_audit.json"
+    },
+    {
+      "name": "p1_t21_v3a_edge_selective_protocol_freeze",
+      "role": "offline_hash_pinned_p1_v2_edge_selective_design_and_v3b_authorization",
+      "manifest": "data/manifests/t21_v3a_edge_selective_protocol_freeze.json"
+    },
+    {
+      "name": "p1_t21_v3b_edge_selective_conformance",
+      "role": "offline_production_reference_partial_graph_and_meek_closure_conformance",
+      "manifest": "data/manifests/t21_v3b_edge_selective_audit.json"
+    },
+    {
+      "name": "p1_t21_v3c_validation_generation",
+      "role": "offline_frozen_twenty_scene_threshold_validation_cohort",
+      "manifest": "data/manifests/t21_v3c_validation_generation_audit.json"
+    },
+    {
+      "name": "p1_t21_v3d_validation_gate",
+      "role": "frozen_model_boss_edge_selective_twenty_candidate_validation_gate",
+      "manifest": "data/manifests/t21_v3d_validation_audit.json"
+    },
+    {
+      "name": "p1_t21_v3e_terminal_audit",
+      "role": "terminal_negative_result_hash_freeze_and_final_holdout_seal",
+      "manifest": "data/manifests/t21_v3e_terminal_audit.json"
     }
   ]
 }

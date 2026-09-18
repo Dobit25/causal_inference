@@ -969,3 +969,51 @@ T18 hiện thực hóa đúng protocol T17 bằng seed `1701`: 100 linear non-Ga
 Generator tạo đúng năm task cho mỗi scene. Production solver và một independent solver khớp 500/500 expected targets. Inventory cân bằng bốn query strata, split deterministic khóa 20 development / 80 holdout với maximum rounded marginal deviation bằng 1, thấp hơn gate 2. Hai namespace được ánh xạ một-một: `P1S000…P1S099` cho study và `scene_100000…scene_100099` cho graph contract.
 
 Toàn bộ 480 raw files cùng manifests/config/seeds được hash; `--check` tái sinh byte-for-byte. Raw SCMs, gold task records và arrays nằm ngoài Git. T18 gọi 0 API, không chạy SCD/LLM/Hybrid/H2 và không chấm holdout. Audit chỉ cấp quyền T19 tạo ba semantic story variants; mọi live method execution vẫn bị khóa.
+
+## 27. T21 Amendment v2 — tách lỗi elicitation, model và skeleton
+
+Amendment v2 trước hết tạo 120 case synthetic không chứa P1 để kiểm tra ba nghĩa: story ủng hộ trái→phải, phải→trái, hoặc không xác định chiều. Prompt v2 và GPT-5.4 Nano đạt 120/120, nên lỗi development không thể giải thích đơn giản bằng việc model đảo nghĩa xác suất trái/phải.
+
+Trên cùng 20 development scenes, hệ thống chỉ thay prompt preference sang v2, giữ nguyên BOSS, model, H1/H2, threshold grid và gate 0,95. Full H2-Forced đạt orientation precision `0,776`; best H2-Selective chỉ đạt `0,737` ở coverage `0,0945`, nên gate tiếp tục thất bại. Standalone LLM giảm theo lượng bằng chứng: directed F1 full `0,812`, partial `0,704`, ambiguous `0,471`.
+
+Diagnostic thay BOSS CPDAG bằng Oracle CPDAG làm precision tăng từ `0,806` lên `0,903` với full evidence và từ `0,716` lên `0,847` với partial evidence. Kết quả cho thấy BOSS skeleton là một bottleneck, nhưng semantic orientation cũng chưa đủ chính xác ngay cả khi parent CPDAG đúng. Comparator và diagnostic không tham gia chọn threshold. Holdout vẫn đóng; T22 không được cấp quyền và không được tiếp tục prompt tuning thích nghi trong protocol này.
+
+## 28. T21 Amendment v3-A — đóng băng P1-v2 Edge-Selective
+
+Sau thất bại của scene-level H2-Selective, v3-A đóng băng phương án chỉ định hướng từng cạnh BOSS chưa rõ chiều khi cả semantic confidence và weighted global stability cùng đủ cao. Mọi candidate direction phải được chọn bằng tối ưu toàn cục exact, cùng tồn tại trong ít nhất một consistent DAG extension và qua Meek closure; cạnh không đủ bằng chứng được giữ undirected.
+
+Gate mới vẫn nghiêm ngặt: graph validity 100%, end-to-end precision ít nhất 95%, tối thiểu 20 cạnh được trả lời và coverage tối thiểu 20%. False adjacency của BOSS nếu bị định hướng được tính là sai. Hai mươi development scenes cũ chỉ phục vụ engineering; một cohort validation mới 20 scenes sẽ được sinh ở stage sau, trong khi 80 holdout scenes cũ giữ nguyên và chưa được mở.
+
+V3-A chỉ tạo protocol/schema/report/audit và chạy kiểm tra offline: 0 API call, 0 validation scene, chưa implement Edge-Selective và không đọc artifact của holdout. Bước duy nhất được cấp quyền tiếp theo là T21 v3-B xây implementation, independent solver và synthetic conformance suite hoàn toàn offline.
+
+## 29. T21 Amendment v3-B — triển khai Edge-Selective và kiểm định offline
+
+V3-B hiện thực hóa protocol bằng hai solver độc lập: production duyệt orientation của các cạnh chưa rõ chiều, còn reference duyệt thứ tự topo và brute-force mọi subset candidate. Hai bên cùng tạo partial graph hợp lệ sau Meek R1–R4 nhưng không dùng chung logic lựa chọn, giúp phát hiện lỗi triển khai chéo.
+
+Suite synthetic gồm 180 CPDAG với 3–7 node và sáu chế độ semantic evidence cân bằng. Trên lưới 20 threshold đã đóng băng, 3.600/3.600 quyết định production/reference khớp; 40/40 artifact lỗi bị từ chối. Sáu stress probe ngoài grid còn buộc ba local directions tạo cycle để kiểm tra solver loại đúng cạnh xung đột; probe chỉ kiểm định thuật toán, không chọn threshold. Output giữ nguyên node/skeleton/compelled directions, ghi riêng semantic-selected, closure-propagated và unresolved.
+
+Toàn bộ bước này offline: không gọi API, không sinh 20 validation scenes, không đọc development/80 holdout và chưa chọn threshold. V3-B chỉ cấp quyền cho T21 v3-C sinh và đóng băng cohort validation mới; live semantic calls vẫn chưa được phép.
+
+## 30. T21 Amendment v3-C — sinh và đóng băng validation cohort
+
+V3-C tạo một cohort hoàn toàn mới gồm 20 SCM linear non-Gaussian, không tái sử dụng 20 development hoặc 80 holdout scenes. Namespace mới là `P1V000–P1V019` và `scene_110000–scene_110019`; master seed 21301 cùng toàn bộ component seeds, SCMs, observations và mapping đều được hash-freeze.
+
+Cohort cân bằng đúng protocol: node 5/6/7 là 7/7/6; năm motif có bốn scene mỗi loại; ba noise families là 7/7/6; bốn query strata có năm scene mỗi loại. Mỗi scene có N=2000 observations, năm task và ba story variants full/partial/ambiguous. Hai solver độc lập khớp 100/100 task targets; story truth audit đạt 60/60.
+
+V3-C không gọi model, không chạy BOSS/SCD/H1/H2/reasoner, không chọn threshold và không đọc raw artifact của development/holdout cũ. Gold truth và story text nằm ngoài Git; manifests chỉ giữ exact IDs, queries và hashes. Bước tiếp theo được cấp quyền là T21 v3-D gọi semantic model trên cohort validation và đánh giá đúng 20 threshold candidates; 80 final holdout scenes tiếp tục đóng.
+
+## 31. T21 Amendment v3-D — validation gate cho Edge-Selective
+
+V3-D chạy BOSS trên đúng 20 P1V validation scenes, sau đó dùng GPT-5.4 Nano/prompt v2 đã đóng băng để tạo 60 semantic-preference artifacts cho ba story variants. Tất cả 60 responses hợp lệ ngay lần đầu; không gọi model trên development hoặc final holdout.
+
+Runner đánh giá đúng 20 cặp semantic-confidence/global-stability thresholds. Mọi output partial graph đều hợp lệ, nhưng candidate tốt nhất theo precision chỉ đúng 83/97 directions, tương đương 0,8557 precision và 0,4554 coverage. Trong 14 direction sai có 13 direction nằm trên false adjacency của BOSS. Kết quả thấp hơn gate 0,95 dù số cạnh trả lời và coverage đều đủ.
+
+Vì vậy V3-D không chọn threshold và không tạo G_HYBRID_H2_EDGE_SELECTIVE chính thức cho holdout. Đây là negative validation result theo đúng fail-closed protocol, không được hạ gate hay tiếp tục tune trên cùng cohort. T21 v3-E chỉ được phép ghi quyết định terminal; 80 final holdout scenes vẫn chưa mở.
+
+## 32. T21 Amendment v3-E — đóng P1-v2 trước final holdout
+
+V3-E chấp nhận kết quả `83/97 = 0,8557` như một negative validation result thay vì hạ gate `0,95` hoặc tiếp tục tối ưu trên cùng 20 scenes. Không threshold nào được chọn, selected-graph manifest vẫn rỗng và T22 không được cấp quyền.
+
+Bước đóng này không gọi API và không đọc downstream answers hay final-holdout method results. Nó băm và khóa 70 artifact T21 v2/v3, chạy replay byte-for-byte và tiếp tục niêm phong nguyên 80 final-holdout scenes.
+
+P1-v2 kết thúc tại đây. Hành động kế tiếp duy nhất là thiết kế protocol P1-v3 Evidence-Selective Hybrid độc lập: giữ GPT-5.4 Nano, gọi semantic model theo whole graph, dùng Bootstrap-BOSS làm statistical method chính và hoãn SCD ensemble sang robustness study. Chưa được chạy Bootstrap, sinh cohort hay gọi model cho đến khi protocol mới được đóng băng.

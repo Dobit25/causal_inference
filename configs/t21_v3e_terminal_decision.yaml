@@ -1,0 +1,41 @@
+schema_version: fourgraph.t21_v3e_terminal_decision.v1
+task: T21_AMENDMENT_V3E
+decision: STOP_P1_V2_BEFORE_FINAL_HOLDOUT
+
+terminal_evidence:
+  validation_audit: data/manifests/t21_v3d_validation_audit.json
+  required_graph_validity: 1.00
+  required_orientation_precision: 0.95
+  required_answered_edges: 20
+  required_orientation_coverage: 0.20
+  observed_best_orientation_precision: 0.8556701031
+  observed_best_answered_edges: 97
+  observed_best_orientation_coverage: 0.455399061
+  observed_best_correct_edges: 83
+  observed_best_false_adjacency_orientations: 13
+
+terminal_policy:
+  select_threshold: false
+  lower_gate_after_observing_validation: false
+  retune_on_same_validation_cohort: false
+  open_existing_final_holdout: false
+  authorize_t22: false
+
+successor_boundary:
+  authorized_action: P1_V3_EVIDENCE_SELECTIVE_PROTOCOL_DESIGN_ONLY
+  bootstrap_boss_execution_authorized: false
+  semantic_api_calls_authorized: false
+  new_cohort_generation_authorized: false
+  final_holdout_access_authorized: false
+  frozen_user_decisions:
+    semantic_model: gpt-5.4-nano-2026-03-17
+    semantic_call_granularity: whole_graph
+    primary_statistical_method: bootstrap_boss
+    scd_ensemble_role: deferred_robustness_extension
+
+evidence_boundary:
+  api_calls: 0
+  final_holdout_accessed: false
+  downstream_tasks_or_answers_accessed: false
+  t21_v2_or_v3_artifacts_modified: false
+
