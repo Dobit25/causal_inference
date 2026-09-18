@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/bootstrap_boss_aggregate_v1.schema.json",
+  "title": "Bootstrap-BOSS four-state aggregate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scene_id", "nodes", "bootstrap_runs", "edge_evidence", "aggregate_sha256"],
+  "properties": {
+    "schema_version": {"const": "fourgraph.bootstrap_boss_aggregate.v1"},
+    "scene_id": {"type": "string", "minLength": 1},
+    "nodes": {"type": "array", "items": {"type": "string"}, "uniqueItems": true, "minItems": 1},
+    "bootstrap_runs": {"const": 200},
+    "edge_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["edge", "counts", "rates", "conditional_direction_rates_diagnostic"],
+        "properties": {
+          "edge": {"$ref": "#/$defs/edge"},
+          "counts": {"$ref": "#/$defs/counts"},
+          "rates": {"$ref": "#/$defs/rates"},
+          "conditional_direction_rates_diagnostic": {
+            "type": "object", "additionalProperties": false,
+            "required": ["A_to_B", "B_to_A", "undirected"],
+            "properties": {
+              "A_to_B": {"$ref": "#/$defs/nullable_rate"},
+              "B_to_A": {"$ref": "#/$defs/nullable_rate"},
+              "undirected": {"$ref": "#/$defs/nullable_rate"}
+            }
+          }
+        }
+      }
+    },
+    "aggregate_sha256": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "edge": {"type": "array", "prefixItems": [{"type": "string"}, {"type": "string"}], "items": false, "minItems": 2, "maxItems": 2},
+    "count": {"type": "integer", "minimum": 0, "maximum": 200},
+    "counts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["absent", "undirected", "A_to_B", "B_to_A"],
+      "properties": {"absent": {"$ref": "#/$defs/count"}, "undirected": {"$ref": "#/$defs/count"}, "A_to_B": {"$ref": "#/$defs/count"}, "B_to_A": {"$ref": "#/$defs/count"}}
+    },
+    "rate": {"type": "number", "minimum": 0, "maximum": 1},
+    "nullable_rate": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "rates": {
+      "type": "object", "additionalProperties": false,
+      "required": ["absent", "undirected", "A_to_B", "B_to_A", "adjacency_stability"],
+      "properties": {"absent": {"$ref": "#/$defs/rate"}, "undirected": {"$ref": "#/$defs/rate"}, "A_to_B": {"$ref": "#/$defs/rate"}, "B_to_A": {"$ref": "#/$defs/rate"}, "adjacency_stability": {"$ref": "#/$defs/rate"}}
+    },
+    "hash": {"type": "string", "pattern": "^[A-F0-9]{64}$"}
+  }
+}
+

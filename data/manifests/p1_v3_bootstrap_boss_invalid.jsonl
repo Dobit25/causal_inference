@@ -1,0 +1,30 @@
+{"error":"expected exactly 200 Bootstrap-BOSS runs","fixture_id":"BBINVALID000","fixture_type":"missing_run","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"run indices must be unique and contiguous 0..199","fixture_id":"BBINVALID001","fixture_type":"duplicate_index","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"bootstrap graph changed node universe","fixture_id":"BBINVALID002","fixture_type":"node_mismatch","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"bootstrap graph is not a valid completed PDAG","fixture_id":"BBINVALID003","fixture_type":"non_cpdag","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"aggregate hash mismatch","fixture_id":"BBINVALID004","fixture_type":"corrupt_hash","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"four state counts must sum to 200","fixture_id":"BBINVALID005","fixture_type":"corrupt_count","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"expected exactly 200 Bootstrap-BOSS runs","fixture_id":"BBINVALID006","fixture_type":"missing_run","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"run indices must be unique and contiguous 0..199","fixture_id":"BBINVALID007","fixture_type":"duplicate_index","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"bootstrap graph changed node universe","fixture_id":"BBINVALID008","fixture_type":"node_mismatch","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"bootstrap graph is not a valid completed PDAG","fixture_id":"BBINVALID009","fixture_type":"non_cpdag","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"aggregate hash mismatch","fixture_id":"BBINVALID010","fixture_type":"corrupt_hash","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"four state counts must sum to 200","fixture_id":"BBINVALID011","fixture_type":"corrupt_count","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"expected exactly 200 Bootstrap-BOSS runs","fixture_id":"BBINVALID012","fixture_type":"missing_run","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"run indices must be unique and contiguous 0..199","fixture_id":"BBINVALID013","fixture_type":"duplicate_index","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"bootstrap graph changed node universe","fixture_id":"BBINVALID014","fixture_type":"node_mismatch","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"bootstrap graph is not a valid completed PDAG","fixture_id":"BBINVALID015","fixture_type":"non_cpdag","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"aggregate hash mismatch","fixture_id":"BBINVALID016","fixture_type":"corrupt_hash","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"four state counts must sum to 200","fixture_id":"BBINVALID017","fixture_type":"corrupt_count","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"expected exactly 200 Bootstrap-BOSS runs","fixture_id":"BBINVALID018","fixture_type":"missing_run","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"run indices must be unique and contiguous 0..199","fixture_id":"BBINVALID019","fixture_type":"duplicate_index","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"bootstrap graph changed node universe","fixture_id":"BBINVALID020","fixture_type":"node_mismatch","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"bootstrap graph is not a valid completed PDAG","fixture_id":"BBINVALID021","fixture_type":"non_cpdag","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"aggregate hash mismatch","fixture_id":"BBINVALID022","fixture_type":"corrupt_hash","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"four state counts must sum to 200","fixture_id":"BBINVALID023","fixture_type":"corrupt_count","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"expected exactly 200 Bootstrap-BOSS runs","fixture_id":"BBINVALID024","fixture_type":"missing_run","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"run indices must be unique and contiguous 0..199","fixture_id":"BBINVALID025","fixture_type":"duplicate_index","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"bootstrap graph changed node universe","fixture_id":"BBINVALID026","fixture_type":"node_mismatch","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"bootstrap graph is not a valid completed PDAG","fixture_id":"BBINVALID027","fixture_type":"non_cpdag","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"aggregate hash mismatch","fixture_id":"BBINVALID028","fixture_type":"corrupt_hash","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}
+{"error":"four state counts must sum to 200","fixture_id":"BBINVALID029","fixture_type":"corrupt_count","rejected":true,"schema_version":"fourgraph.bootstrap_boss_invalid_fixture.v1"}

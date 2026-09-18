@@ -137,7 +137,9 @@ T21 Amendment v3-E complete: closed P1-v2 as a retained negative result, froze 7
 
 P1-v3 Evidence-Selective protocol freeze complete: registered Bootstrap-BOSS as the sole primary statistical method with 200 size-N resamples, deferred the SCD ensemble, froze the five adjacency and three direction thresholds, six balanced whole-graph GPT-5.4 Nano prompts, deterministic evidence validation, empirical-reliability classes, statistical veto, partial-graph/ledger contracts and Learn-then-Test risk control. The next action is implementation and synthetic conformance only; study-scene Bootstrap execution, cohort generation, API calls and final holdout remain forbidden.
 
-The next action is to implement Bootstrap-BOSS aggregation, edge-evidence contracts and independent synthetic conformance completely offline. The existing P1-v2 development/validation cohorts may not be reused for tuning, and the 80-scene final holdout remains sealed. T22/T23 remain unauthorized.
+P1-v3 Bootstrap-BOSS offline conformance complete: the production aggregator and an independent reference counted four edge states identically on 60/60 synthetic cases and created identical valid parents on 900/900 registered threshold decisions. Deterministic bootstrap indices, independent standardization, completed-PDAG inputs, run/node ordering, immutability and 30 fail-closed fixtures are covered. No study method execution occurred. Next is offline semantic vote/reliability and statistical-veto conformance; power analysis, cohorts and API remain blocked.
+
+The next action is to implement the six-vote semantic agreement classifier, evidence-quote validator, empirical-reliability records and statistical-veto decision table completely offline. The existing P1-v2 development/validation cohorts may not be reused for tuning, and the 80-scene final holdout remains sealed. T22/T23 remain unauthorized.
 
 ## Research integrity checklist
 

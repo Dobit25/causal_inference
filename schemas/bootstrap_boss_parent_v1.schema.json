@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/bootstrap_boss_parent_v1.schema.json",
+  "title": "Thresholded Bootstrap-BOSS stability parent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "scene_id", "aggregate_sha256", "thresholds", "parent_graph", "parent_graph_sha256", "consistent_extension_sha256", "edge_evidence", "valid", "artifact_sha256"],
+  "properties": {
+    "schema_version": {"const": "fourgraph.bootstrap_boss_parent.v1"},
+    "scene_id": {"type": "string", "minLength": 1},
+    "aggregate_sha256": {"$ref": "#/$defs/hash"},
+    "thresholds": {
+      "type": "object", "additionalProperties": false, "required": ["adjacency", "direction"],
+      "properties": {"adjacency": {"$ref": "#/$defs/rate"}, "direction": {"$ref": "#/$defs/rate"}}
+    },
+    "parent_graph": {
+      "type": "object", "additionalProperties": false, "required": ["nodes", "directed", "undirected"],
+      "properties": {
+        "nodes": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "directed": {"$ref": "#/$defs/edges"}, "undirected": {"$ref": "#/$defs/edges"}
+      }
+    },
+    "parent_graph_sha256": {"$ref": "#/$defs/hash"},
+    "consistent_extension_sha256": {"$ref": "#/$defs/hash"},
+    "edge_evidence": {"type": "array", "items": {"$ref": "statistical_edge_evidence_v1.schema.json"}},
+    "valid": {"const": true},
+    "artifact_sha256": {"$ref": "#/$defs/hash"}
+  },
+  "$defs": {
+    "edge": {"type": "array", "prefixItems": [{"type": "string"}, {"type": "string"}], "items": false, "minItems": 2, "maxItems": 2},
+    "edges": {"type": "array", "items": {"$ref": "#/$defs/edge"}, "uniqueItems": true},
+    "rate": {"type": "number", "minimum": 0, "maximum": 1},
+    "hash": {"type": "string", "pattern": "^[A-F0-9]{64}$"}
+  }
+}

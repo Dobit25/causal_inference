@@ -1027,3 +1027,11 @@ Semantic layer giữ GPT-5.4 Nano nhưng thay một lời gọi confidence bằn
 Hybrid áp dụng statistical veto trước semantic evidence, kiểm tra global consistency và ghi riêng direction do thống kê, semantic selection hay Meek closure. Lưới 5 adjacency thresholds × 3 direction thresholds được khóa trước. Learn-then-Test hoặc risk control tương đương phải chứng minh error không quá 5% với failure probability 5% và coverage hữu ích ít nhất 20% trước khi mở holdout.
 
 Bước freeze chỉ tạo config, prompt bundle, bốn schema, report và hash manifest. Không Bootstrap run nào được thực hiện, không scene mới được sinh, không API được gọi và 80 holdout scenes vẫn đóng. Bước tiếp theo duy nhất là implement Bootstrap-BOSS aggregator cùng production/reference synthetic conformance hoàn toàn offline.
+
+## 34. Bootstrap-BOSS aggregator và synthetic conformance
+
+Implementation mới có thể tạo deterministic bootstrap indices, lấy đúng N dòng có hoàn lại, chuẩn hóa từng resample và nhận 200 CPDAG do một runner BOSS tương lai cung cấp. Aggregator không tự chạy Tetrad/BOSS. Với mọi cặp node, nó đếm bốn trạng thái absent, undirected, A→B và B→A trên toàn bộ 200 runs; sau đó 15 threshold pairs tạo các statistical parent graphs hoặc fail closed nếu graph không có consistent extension.
+
+Suite offline gồm 60 trường hợp tổng hợp × 200 graph states, phủ stable/unstable adjacency, stable direction hai chiều, direction conflict và thường absent trên graph 3–7 nodes. Production và reference khớp 60/60 aggregate và 900/900 parent decisions. Thứ tự runs, thứ tự node đầu vào và input immutability đều đạt 60/60; 30/30 malformed fixtures bị từ chối.
+
+Bước này không đọc observational study data và không thực sự chạy một BOSS search nào. Nó cũng không sinh cohort, không gọi LLM và không mở holdout. Tiếp theo chỉ được xây semantic vote/reliability cùng statistical-veto decision table và kiểm định synthetic hoàn toàn offline.

@@ -414,6 +414,11 @@
       "name": "p1_v3_evidence_selective_protocol_freeze",
       "role": "pre_implementation_bootstrap_boss_semantic_reliability_and_risk_control_protocol",
       "manifest": "data/manifests/p1_evidence_selective_protocol_freeze.json"
+    },
+    {
+      "name": "p1_v3_bootstrap_boss_conformance",
+      "role": "offline_production_reference_four_state_aggregation_and_stability_parent_conformance",
+      "manifest": "data/manifests/p1_v3_bootstrap_boss_conformance_audit.json"
     }
   ]
 }

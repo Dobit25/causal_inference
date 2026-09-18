@@ -1,0 +1,64 @@
+schema_version: fourgraph.p1_v3_bootstrap_boss_conformance.v1
+task: P1_V3_BOOTSTRAP_BOSS_OFFLINE_IMPLEMENTATION_AND_CONFORMANCE
+status: offline_execution_authorized
+
+protocol:
+  config: configs/p1_evidence_selective_v1.yaml
+  config_sha256: C119D3CB0035B41A7AC3EC27D56D4C1FBC8242724F653931D8F10BC5716E9442
+  freeze_manifest: data/manifests/p1_evidence_selective_protocol_freeze.json
+  freeze_manifest_sha256: EE3541AFAE15F45EC022910864B3553A792A9B67EE2C560E029A1E08F211636F
+
+suite:
+  seed: 31002
+  cases: 60
+  cases_per_regime: 10
+  node_counts: [3, 4, 5, 6, 7]
+  bootstrap_runs_per_case: 200
+  regimes:
+    - stable_undirected
+    - unstable_adjacency
+    - stable_A_to_B
+    - stable_B_to_A
+    - direction_conflict
+    - usually_absent
+  threshold_grid:
+    adjacency_stability: [0.60, 0.70, 0.80, 0.90, 0.95]
+    direction_stability: [0.80, 0.90, 0.95]
+  expected_parent_decisions: 900
+  invalid_fixtures: 30
+
+conformance_gates:
+  production_reference_count_agreement: 60
+  production_reference_parent_agreement: 900
+  four_state_sum: 1.0
+  deterministic_seed_replay: true
+  run_order_invariance: true
+  input_immutability: true
+  invalid_fixture_rejection: 30
+
+outputs:
+  valid: data/manifests/p1_v3_bootstrap_boss_conformance.jsonl
+  invalid: data/manifests/p1_v3_bootstrap_boss_invalid.jsonl
+  audit: data/manifests/p1_v3_bootstrap_boss_conformance_audit.json
+  report: reports/p1_v3_bootstrap_boss_conformance.md
+
+contracts:
+  aggregate: schemas/bootstrap_boss_aggregate_v1.schema.json
+  thresholded_parent: schemas/bootstrap_boss_parent_v1.schema.json
+  edge_evidence: schemas/statistical_edge_evidence_v1.schema.json
+
+evidence_boundary:
+  synthetic_edge_state_fixtures_only: true
+  tetrad_or_boss_execution: false
+  study_observations_loaded: false
+  old_development_or_validation_accessed: false
+  successor_scenes_generated: false
+  semantic_api_calls: 0
+  final_holdout_accessed: false
+
+authorization_after_pass:
+  next_action: P1_V3_SEMANTIC_RELIABILITY_AND_STATISTICAL_VETO_OFFLINE_CONFORMANCE
+  study_scene_bootstrap_execution: false
+  successor_cohort_generation: false
+  semantic_api_calls: false
+  final_holdout_access: false
