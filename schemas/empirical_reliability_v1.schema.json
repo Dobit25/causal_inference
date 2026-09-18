@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/empirical_reliability_v1.schema.json",
+  "title": "Semantic empirical-reliability group record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "story_variant", "agreement_class", "correct", "total", "independent_scenes", "point_estimate", "diagnostic_wilson_lower_95", "false_adjacencies_count_as_errors", "certification_status", "calibration_manifest_sha256"],
+  "properties": {
+    "schema_version": {"const": "fourgraph.empirical_reliability.v1"},
+    "story_variant": {"enum": ["full", "partial", "ambiguous"]},
+    "agreement_class": {"enum": ["very_high", "high", "medium"]},
+    "correct": {"type": "integer", "minimum": 0},
+    "total": {"type": "integer", "minimum": 1},
+    "independent_scenes": {"type": "integer", "minimum": 1},
+    "point_estimate": {"$ref": "#/$defs/rate"},
+    "diagnostic_wilson_lower_95": {"$ref": "#/$defs/rate"},
+    "false_adjacencies_count_as_errors": {"const": true},
+    "certification_status": {"enum": ["pending_risk_control", "certified_safe", "not_certified"]},
+    "calibration_manifest_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"}
+  },
+  "$defs": {"rate": {"type": "number", "minimum": 0, "maximum": 1}}
+}
+

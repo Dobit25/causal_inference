@@ -1,0 +1,48 @@
+{"error":"response root fields do not match contract","fixture_id":"SEMINVALID000","fixture_type":"extra_root","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response must contain every requested pair exactly once","fixture_id":"SEMINVALID001","fixture_type":"missing_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response must contain every requested pair exactly once","fixture_id":"SEMINVALID002","fixture_type":"duplicate_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"unknown or duplicate response pair_id","fixture_id":"SEMINVALID003","fixture_type":"unknown_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"cause/effect do not match requested aliases","fixture_id":"SEMINVALID004","fixture_type":"wrong_alias","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"directed evidence quote must be an exact story substring","fixture_id":"SEMINVALID005","fixture_type":"quote_not_exact","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"association-only or malformed quote cannot support direction","fixture_id":"SEMINVALID006","fixture_type":"association_quote","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"cause/effect conflict with evidence quote","fixture_id":"SEMINVALID007","fixture_type":"quote_direction_mismatch","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response root fields do not match contract","fixture_id":"SEMINVALID008","fixture_type":"extra_root","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response must contain every requested pair exactly once","fixture_id":"SEMINVALID009","fixture_type":"missing_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response must contain every requested pair exactly once","fixture_id":"SEMINVALID010","fixture_type":"duplicate_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"unknown or duplicate response pair_id","fixture_id":"SEMINVALID011","fixture_type":"unknown_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"cause/effect do not match requested aliases","fixture_id":"SEMINVALID012","fixture_type":"wrong_alias","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"directed evidence quote must be an exact story substring","fixture_id":"SEMINVALID013","fixture_type":"quote_not_exact","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"association-only or malformed quote cannot support direction","fixture_id":"SEMINVALID014","fixture_type":"association_quote","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"cause/effect conflict with evidence quote","fixture_id":"SEMINVALID015","fixture_type":"quote_direction_mismatch","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response root fields do not match contract","fixture_id":"SEMINVALID016","fixture_type":"extra_root","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response must contain every requested pair exactly once","fixture_id":"SEMINVALID017","fixture_type":"missing_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response must contain every requested pair exactly once","fixture_id":"SEMINVALID018","fixture_type":"duplicate_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"unknown or duplicate response pair_id","fixture_id":"SEMINVALID019","fixture_type":"unknown_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"cause/effect do not match requested aliases","fixture_id":"SEMINVALID020","fixture_type":"wrong_alias","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"directed evidence quote must be an exact story substring","fixture_id":"SEMINVALID021","fixture_type":"quote_not_exact","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"association-only or malformed quote cannot support direction","fixture_id":"SEMINVALID022","fixture_type":"association_quote","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"cause/effect conflict with evidence quote","fixture_id":"SEMINVALID023","fixture_type":"quote_direction_mismatch","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response root fields do not match contract","fixture_id":"SEMINVALID024","fixture_type":"extra_root","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response must contain every requested pair exactly once","fixture_id":"SEMINVALID025","fixture_type":"missing_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response must contain every requested pair exactly once","fixture_id":"SEMINVALID026","fixture_type":"duplicate_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"unknown or duplicate response pair_id","fixture_id":"SEMINVALID027","fixture_type":"unknown_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"cause/effect do not match requested aliases","fixture_id":"SEMINVALID028","fixture_type":"wrong_alias","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"directed evidence quote must be an exact story substring","fixture_id":"SEMINVALID029","fixture_type":"quote_not_exact","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"association-only or malformed quote cannot support direction","fixture_id":"SEMINVALID030","fixture_type":"association_quote","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"cause/effect conflict with evidence quote","fixture_id":"SEMINVALID031","fixture_type":"quote_direction_mismatch","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response root fields do not match contract","fixture_id":"SEMINVALID032","fixture_type":"extra_root","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response must contain every requested pair exactly once","fixture_id":"SEMINVALID033","fixture_type":"missing_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response must contain every requested pair exactly once","fixture_id":"SEMINVALID034","fixture_type":"duplicate_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"unknown or duplicate response pair_id","fixture_id":"SEMINVALID035","fixture_type":"unknown_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"cause/effect do not match requested aliases","fixture_id":"SEMINVALID036","fixture_type":"wrong_alias","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"directed evidence quote must be an exact story substring","fixture_id":"SEMINVALID037","fixture_type":"quote_not_exact","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"association-only or malformed quote cannot support direction","fixture_id":"SEMINVALID038","fixture_type":"association_quote","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"cause/effect conflict with evidence quote","fixture_id":"SEMINVALID039","fixture_type":"quote_direction_mismatch","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response root fields do not match contract","fixture_id":"SEMINVALID040","fixture_type":"extra_root","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response must contain every requested pair exactly once","fixture_id":"SEMINVALID041","fixture_type":"missing_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"response must contain every requested pair exactly once","fixture_id":"SEMINVALID042","fixture_type":"duplicate_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"unknown or duplicate response pair_id","fixture_id":"SEMINVALID043","fixture_type":"unknown_pair","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"cause/effect do not match requested aliases","fixture_id":"SEMINVALID044","fixture_type":"wrong_alias","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"directed evidence quote must be an exact story substring","fixture_id":"SEMINVALID045","fixture_type":"quote_not_exact","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"association-only or malformed quote cannot support direction","fixture_id":"SEMINVALID046","fixture_type":"association_quote","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}
+{"error":"cause/effect conflict with evidence quote","fixture_id":"SEMINVALID047","fixture_type":"quote_direction_mismatch","rejected":true,"schema_version":"fourgraph.semantic_invalid_fixture.v1"}

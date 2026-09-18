@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/statistical_veto_decision_v1.schema.json",
+  "title": "Evidence-Selective statistical-veto edge decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "edge", "statistical_status", "semantic_agreement_class", "semantic_reliability_certified", "decision", "direction", "source", "statistical_veto_passed", "reason", "decision_sha256"],
+  "properties": {
+    "schema_version": {"const": "fourgraph.statistical_veto_decision.v1"},
+    "edge": {"type": "array", "prefixItems": [{"type": "string"}, {"type": "string"}], "items": false, "minItems": 2, "maxItems": 2},
+    "statistical_status": {"enum": ["weak_adjacency", "absent", "unavailable", "direction_uncertain", "statistical_direction_A_to_B", "statistical_direction_B_to_A"]},
+    "semantic_agreement_class": {"type": ["string", "null"], "enum": ["very_high", "high", "medium", "uncertain", "conflict", null]},
+    "semantic_reliability_certified": {"type": "boolean"},
+    "decision": {"enum": ["directed", "undirected", "excluded", "unavailable"]},
+    "direction": {"type": ["string", "null"], "enum": ["A_TO_B", "B_TO_A", null]},
+    "source": {"enum": ["statistical_stable", "statistical_semantic_agreement", "semantic_selected", "conflict_abstained", "unresolved", "statistical_veto", "method_failure"]},
+    "statistical_veto_passed": {"type": "boolean"},
+    "reason": {"type": "string", "minLength": 1},
+    "decision_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"}
+  }
+}

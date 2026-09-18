@@ -1,0 +1,77 @@
+schema_version: fourgraph.p1_v3_semantic_veto_conformance.v1
+task: P1_V3_SEMANTIC_RELIABILITY_AND_STATISTICAL_VETO_OFFLINE_CONFORMANCE
+status: offline_execution_authorized
+
+parent:
+  audit: data/manifests/p1_v3_bootstrap_boss_conformance_audit.json
+  audit_sha256: 2E9B54AC6F46A0DF9844374B900D3CFD445E14B844F49F8677481218E368042B
+
+protocol:
+  config: configs/p1_evidence_selective_v1.yaml
+  config_sha256: C119D3CB0035B41A7AC3EC27D56D4C1FBC8242724F653931D8F10BC5716E9442
+  prompt_bundle: prompts/p1_semantic_empirical_reliability_v1.md
+  prompt_bundle_sha256: 7813D04646F4F0CAE5874AC89120D3BAB15E3118C25417DD05940C32B9E8F403
+  response_schema: schemas/semantic_whole_graph_response_v1.schema.json
+  response_schema_sha256: DCE511340DF467740D8DEBE9C7847A110B0E5C3642BDED1F544098AB88E84228
+
+suite:
+  seed: 31003
+  semantic_cases: 90
+  requested_pairs_per_case: 2
+  story_variants: [full, partial, ambiguous]
+  vote_patterns:
+    - very_high_A_to_B
+    - very_high_B_to_A
+    - high_A_to_B
+    - high_B_to_A
+    - medium_A_to_B
+    - medium_B_to_A
+    - uncertain_A_to_B
+    - uncertain_all
+    - conflict_5_to_1
+    - conflict_3_to_3
+  expected_semantic_edge_records: 180
+  reliability_outcomes: 270
+  expected_reliability_groups: 9
+  veto_decisions: 36
+  invalid_responses: 48
+
+conformance_gates:
+  production_reference_vote_agreement: 180
+  valid_directional_evidence_quotes: 810
+  valid_undetermined_null_evidence_records: 270
+  reliability_count_agreement: 9
+  production_reference_veto_agreement: 36
+  invalid_response_rejection: 48
+  pending_reliability_never_certifies_itself: true
+
+contracts:
+  raw_response: schemas/semantic_whole_graph_response_v1.schema.json
+  semantic_evidence: schemas/semantic_edge_evidence_v1.schema.json
+  reliability: schemas/empirical_reliability_v1.schema.json
+  veto_decision: schemas/statistical_veto_decision_v1.schema.json
+
+outputs:
+  semantic: data/manifests/p1_v3_semantic_agreement_conformance.jsonl
+  reliability: data/manifests/p1_v3_empirical_reliability_conformance.jsonl
+  veto: data/manifests/p1_v3_statistical_veto_conformance.jsonl
+  invalid: data/manifests/p1_v3_semantic_invalid.jsonl
+  audit: data/manifests/p1_v3_semantic_veto_conformance_audit.json
+  report: reports/p1_v3_semantic_veto_conformance.md
+
+evidence_boundary:
+  synthetic_stories_and_responses_only: true
+  model_or_api_calls: 0
+  bootstrap_or_boss_runs: 0
+  study_observations_loaded: false
+  historical_cohorts_accessed: false
+  successor_scenes_generated: false
+  oracle_loader_used: false
+  final_holdout_accessed: false
+
+authorization_after_pass:
+  next_action: P1_V3_PROSPECTIVE_POWER_AND_COHORT_DESIGN
+  study_scene_bootstrap_execution: false
+  successor_cohort_generation: false
+  semantic_api_calls: false
+  final_holdout_access: false

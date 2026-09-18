@@ -141,6 +141,8 @@ P1-v3 Bootstrap-BOSS offline conformance complete: the production aggregator and
 
 The next action is to implement the six-vote semantic agreement classifier, evidence-quote validator, empirical-reliability records and statistical-veto decision table completely offline. The existing P1-v2 development/validation cohorts may not be reused for tuning, and the 80-scene final holdout remains sealed. T22/T23 remain unauthorized.
 
+The offline semantic-reliability/statistical-veto implementation is complete. Before any study execution, the next authorized task is prospective power analysis and disjoint successor-cohort design. It must determine calibration/validation sample sizes and freeze split rules; it does not authorize 200-run Bootstrap-BOSS, scene generation, semantic API calls or final-holdout access.
+
 ## Research integrity checklist
 
 - [x] reasoner never sees causal story or observational table

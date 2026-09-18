@@ -1035,3 +1035,11 @@ Implementation mới có thể tạo deterministic bootstrap indices, lấy đú
 Suite offline gồm 60 trường hợp tổng hợp × 200 graph states, phủ stable/unstable adjacency, stable direction hai chiều, direction conflict và thường absent trên graph 3–7 nodes. Production và reference khớp 60/60 aggregate và 900/900 parent decisions. Thứ tự runs, thứ tự node đầu vào và input immutability đều đạt 60/60; 30/30 malformed fixtures bị từ chối.
 
 Bước này không đọc observational study data và không thực sự chạy một BOSS search nào. Nó cũng không sinh cohort, không gọi LLM và không mở holdout. Tiếp theo chỉ được xây semantic vote/reliability cùng statistical-veto decision table và kiểm định synthetic hoàn toàn offline.
+
+## 35. Six-vote semantic reliability và statistical veto
+
+Lớp semantic offline mới nhận sáu response whole-graph đã được chuẩn hóa. Với từng cạnh, code gom phiếu thành Very High, High, Medium, Uncertain hoặc Conflict; direction chỉ hợp lệ khi `evidence_quote` trích nguyên văn một câu causal trực tiếp trong story. Association-only, sai alias, thiếu/trùng pair và quote không khớp direction đều bị từ chối.
+
+Suite tổng hợp có 90 cases, tương ứng 180 edge records và 1.080 judgments qua sáu prompt. Production và reference classifier khớp 180/180; validator chấp nhận 810 directional quotes cùng 270 abstentions có evidence null, và từ chối 48/48 malformed fixtures. Chín empirical-reliability groups giữ trạng thái `pending_risk_control`; chúng không thể tự biến point estimate thành chứng nhận an toàn. Statistical-veto production/reference khớp 36/36 quyết định và không cho semantic evidence hồi sinh adjacency yếu hoặc không tồn tại.
+
+Toàn bộ bước này dùng story/response tổng hợp: không gọi GPT, không chạy BOSS, không đọc study observations, không sinh cohort và không mở holdout. Bước tiếp theo chỉ là thiết kế prospective power và các cohort calibration/validation tách biệt; việc thực thi nghiên cứu vẫn chưa được cấp quyền.

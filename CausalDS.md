@@ -470,3 +470,9 @@ Oracle never flows into LLM, SCD, or hybrid. The reasoner never receives the cau
 ## 17. Governing principle
 
 The project does not seek a predetermined ranking such as `Hybrid > LLM > SCD`. It seeks a reproducible answer about how graph provenance, identifiable uncertainty, and structural error propagate into downstream causal adjustment/control reasoning.
+
+## 18. P1-v3 semantic reliability and statistical veto
+
+The successor Evidence-Selective protocol now has an offline-conformant semantic layer. Six fixed, variable-order-balanced whole-graph responses are normalized per edge into `very_high`, `high`, `medium`, `uncertain`, or `conflict`. A directed vote is valid only when its evidence quote is an exact directional sentence in the supplied story; association-only text, alias errors, missing pairs and contradictory cause/effect fields fail closed.
+
+Agreement is not treated as a probability. Empirical-reliability records must later be estimated on a new independent calibration cohort and certified by the registered risk-control procedure. Until then every group remains `pending_risk_control`, so it cannot auto-orient an edge. The statistical-veto table excludes weak or absent Bootstrap-BOSS adjacencies, preserves stable statistical directions unless certified semantic evidence agrees, and abstains on certified conflicts. This layer passed synthetic production/reference conformance without any model call, BOSS run or study-data access.

@@ -419,6 +419,11 @@
       "name": "p1_v3_bootstrap_boss_conformance",
       "role": "offline_production_reference_four_state_aggregation_and_stability_parent_conformance",
       "manifest": "data/manifests/p1_v3_bootstrap_boss_conformance_audit.json"
+    },
+    {
+      "name": "p1_v3_semantic_veto_conformance",
+      "role": "offline_six_vote_evidence_validation_empirical_reliability_and_statistical_veto_conformance",
+      "manifest": "data/manifests/p1_v3_semantic_veto_conformance_audit.json"
     }
   ]
 }
