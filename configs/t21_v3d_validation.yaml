@@ -1,0 +1,122 @@
+schema_version: fourgraph.t21_v3d_validation.v1
+experiment_id: causalds_fresh_hybrid_p1_edge_selective_v2
+task: T21_AMENDMENT_V3D
+status: validation_execution_authorized
+
+scope:
+  preflight_freeze: data/manifests/t21_v3d_preflight_freeze.json
+  cohort: data/manifests/t21_v3c_validation_cohort.json
+  inventory: data/manifests/t21_v3c_validation_inventory.jsonl
+  generated_root: data/generated/p1_hybrid_v2/t21_v3c
+  expected_scenes: 20
+  exact_study_id_prefix: P1V
+  forbid_existing_p1s_access: true
+  forbid_final_holdout_access: true
+
+execution:
+  boss_scenes: 20
+  semantic_preference_calls: 60
+  maximum_new_api_attempts: 80
+  validation_retries: 2
+  resume_from_raw_cache: true
+  minimum_seconds_between_requests: 3.2
+  failure_policy: retain_terminal_failure_without_fallback
+  automatic_holdout_continuation: false
+
+scd:
+  algorithm: BOSS
+  score: BasisFunctionBicScore
+  candidate_id: boss_basis_bic__p1__t3
+  penalty_discount: 1.0
+  truncation_limit: 3
+  standardized_observations: observations_standardized_n2000.npy
+  tetrad_jar: data/raw/t05/py-tetrad/pytetrad/resources/tetrad-current.jar
+  tetrad_jar_sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051
+
+semantic_backend:
+  provider: openai
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  endpoint: /v1/responses
+  sdk_version: 3.6.0
+  credential_env: OPENAI_API_KEY
+  reasoning_effort: none
+  temperature: 0
+  max_output_tokens: 6000
+  service_tier: default
+  store: false
+  structured_outputs: json_schema_strict
+  transport_max_retries: 2
+  timeout_seconds: 120
+  preference_prompt: prompts/p1_semantic_preferences_v2.md
+  preference_schema: schemas/p1_semantic_preferences_response_v1.schema.json
+  variants: [full, partial, ambiguous]
+  public_names_only: true
+  canonical_mapping_after_response_only: true
+
+edge_selective:
+  implementation: fourgraph.edge_selective.solve_edge_selective
+  threshold_grid:
+    semantic_confidence: [0.80, 0.90, 0.95, 0.99, 0.999]
+    global_stability: [0.80, 0.90, 0.95, 1.00]
+  candidates: 20
+  variants_equal_role: [full, partial, ambiguous]
+  graph_validity_required: 1.0
+  orientation_precision_minimum: 0.95
+  minimum_answered_edges: 20
+  minimum_orientation_coverage: 0.20
+  optimize: maximum_orientation_coverage
+  tie_breakers:
+    - higher_orientation_precision
+    - fewer_oriented_false_adjacencies
+    - higher_global_stability_threshold
+    - higher_semantic_confidence_threshold
+  false_adjacency_orientation: count_as_error
+  parent_compelled_edges_in_semantic_precision: false
+  downstream_tasks_or_answers_allowed_for_selection: false
+  no_eligible_action: stop_p1_v2_without_holdout_access
+
+outputs:
+  raw_calls: results/raw/p1_t21_v3d_validation/openai_calls.jsonl
+  runtime: results/raw/p1_t21_v3d_validation/runtime.jsonl
+  semantic_preferences: data/manifests/t21_v3d_validation_semantic_preferences.jsonl
+  boss_graphs: data/manifests/t21_v3d_validation_boss_graphs.jsonl
+  threshold_grid: data/manifests/t21_v3d_validation_threshold_grid.jsonl
+  selected_graphs: data/manifests/t21_v3d_validation_selected_graphs.jsonl
+  audit: data/manifests/t21_v3d_validation_audit.json
+  report: reports/t21_v3d_validation.md
+
+budget:
+  expected_logical_calls: 60
+  user_authorized_on: 2026-09-16
+  usd_stop_not_automatically_observable: true
+
+evidence_boundary:
+  validation_scm_observations_stories_access_authorized: true
+  validation_oracle_for_orientation_metrics_authorized: true
+  validation_tasks_or_answers_access_authorized: false
+  existing_development_access_authorized: false
+  final_holdout_access_authorized: false
+  reasoner_execution_authorized: false
+
+runtime:
+  python: 3.10.21
+  numpy: 1.26.4
+  jpype: 1.6.0
+  openai: 3.6.0
+
+freeze_anchors:
+  configs/p1_edge_selective_v2.yaml: E11BAA9FA04840008BBF079F24FAE7A67E02A1F36368D3E1AB5321AE9A87DA49
+  data/manifests/t21_v3a_edge_selective_protocol_freeze.json: C1A506402A0D6A0D666AFAA3E217EA9FB81D06AA57388B0BD6DE3C96CCED6C36
+  data/manifests/t21_v3b_edge_selective_audit.json: 7279DC4CA4AAE11B788F8E28849769031175F3F7D57EAC53137B4D3704D3E76D
+  configs/t21_v3c_validation_generation.yaml: E8720835C47A921809495D55E7C1E3C32BF1FCBF54AAFF655274119AC7AA76DF
+  data/manifests/t21_v3c_validation_generation_audit.json: A814B3FB301A6E0AC358A1A2E2BA7FF1CCB7D65F15614630205F0D89B607FE16
+  data/manifests/t21_v3c_validation_cohort.json: 06571926AF0C66ED5A45640D0B65184C0773C081591D368F3C80A9F269C1EEF8
+  data/manifests/t21_v3c_validation_inventory.jsonl: B07B982C09AAAB88F03E7B14D114BA05D8B748AF09648BABBBA5B6CF0419730C
+  data/manifests/t21_v3c_validation_stories.jsonl: 980BA567E72D678ABEFEB32D4EE07946C568E1094EFE4892DB88311EBDBA0CA2
+  data/manifests/t21_v3c_validation_aliases.jsonl: 597B205A5846588E2B2AB1AC1992A01C42FF9E801CD70060EBF557D7627A0D59
+  prompts/p1_semantic_preferences_v2.md: A4D0C3B0910AE513560DF9D705E8DF4102A141421DE97C423F7074926FEF0FBE
+  schemas/p1_semantic_preferences_response_v1.schema.json: 0C4D748873339E297ACA2D0AD320D8D39C63E2A1BAB84A17F9C6C0F6A1AE8920
+  src/fourgraph/edge_selective.py: 026ACCE880D5EBBD26043306ADF973F455BF40634BBD30E83F6019C6F3937F29
+  src/fourgraph/p1_t21.py: CCBCAF4E5D43E3B9F8C898A9801A4B16F12EA6F7EDA019ADB8EAD570B43E3901
+  src/fourgraph/scd_graph.py: EB311ADF02C3D21C5969BCEEFC4BD8A56CAB9E5E1CF22B37D7AB756E60D2A260
+  src/fourgraph/causalds_scd.py: AD373A3518F4B508A36F60237AFFA9DC20114228F5A0108EC66E7DDD5F5C4BF6

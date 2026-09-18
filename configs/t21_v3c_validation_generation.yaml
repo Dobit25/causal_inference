@@ -1,0 +1,120 @@
+schema_version: fourgraph.t21_v3c_validation_generation.v1
+task: T21_AMENDMENT_V3C
+experiment_id: causalds_fresh_hybrid_p1_edge_selective_v2
+parent_protocol: configs/p1_edge_selective_v2.yaml
+parent_v3a_freeze: data/manifests/t21_v3a_edge_selective_protocol_freeze.json
+parent_v3b_audit: data/manifests/t21_v3b_edge_selective_audit.json
+
+identifiers:
+  count: 20
+  study_id_prefix: P1V
+  study_index_range: [0, 19]
+  graph_contract_numeric_offset: 110000
+  existing_p1_study_namespace_forbidden: P1S
+  existing_p1_scene_numeric_range_forbidden: [100000, 100099]
+
+randomness:
+  master_seed: 21301
+  derivation: sha256_utf8_master_seed_colon_study_id_colon_component_first_8_bytes_big_endian
+  generator: numpy.random.Generator
+  bit_generator: PCG64DXSM
+  numpy_version: 1.26.4
+
+graph_generation:
+  node_count_allocation: {5: 7, 6: 7, 7: 6}
+  edge_count_range_by_nodes:
+    5: [4, 7]
+    6: [5, 8]
+    7: [6, 9]
+  primary_motif_allocation: {chain: 4, fork: 4, collider: 4, mediator: 4, diamond: 4}
+  acceptance:
+    weakly_connected: true
+    assigned_primary_motif_present: true
+    oracle_cpdag_minimum_unresolved_edges: 2
+    assigned_query_stratum_available: true
+  maximum_attempts_per_scene: 10000
+
+scm:
+  family: linear_non_gaussian_acyclic
+  edge_weight_absolute_range: [0.5, 2.0]
+  intercept: 0.0
+  exogenous_variance: 1.0
+  noise_family_allocation: {laplace: 7, logistic: 7, student_t_df5: 6}
+  latent_nodes: 0
+  observed_variable_type: continuous
+
+observations:
+  sample_size: 2000
+  raw_dtype: little_endian_float64
+  standardization: per_sample_size_columnwise_mean_zero_population_sd_one
+  standardization_ddof: 0
+
+tasks:
+  tasks_per_scene: 5
+  query_stratum_allocation:
+    valid_empty: 5
+    one_minimal_nonempty: 5
+    multiple_minimal: 5
+    no_valid_adjustment_set: 5
+  required_solver_agreement: 100_of_100
+  public_manifest_contains_gold_answers: false
+
+semantic_stories:
+  variants: [full, partial, ambiguous]
+  same_alias_map_and_clause_order_across_variants: true
+  aliases:
+    assignment: seeded_per_scene_permutation_independent_of_graph
+    lexicon: [Amber index, Beryl index, Cobalt index, Dahlia index, Ember index, Fallow index, Grove index]
+  directional_template: "Within this process, changes in {source} directly influence {target}."
+  symmetric_template: "{left} and {right} are directly connected in the process, but this description does not establish which one influences the other."
+  full_directional_fraction: 1.0
+  partial_directional_fraction: 0.5
+  ambiguous_directional_fraction: 0.0
+  automated_truth_audit_required: true
+  manual_review_required_at_v3c: false
+
+artifacts:
+  raw_root: data/generated/p1_hybrid_v2/t21_v3c
+  inventory: data/manifests/t21_v3c_validation_inventory.jsonl
+  cohort_freeze: data/manifests/t21_v3c_validation_cohort.json
+  task_manifest: data/manifests/t21_v3c_validation_tasks.jsonl
+  story_manifest: data/manifests/t21_v3c_validation_stories.jsonl
+  alias_manifest: data/manifests/t21_v3c_validation_aliases.jsonl
+  audit: data/manifests/t21_v3c_validation_generation_audit.json
+  report: reports/t21_v3c_validation_generation.md
+  canonical_json: sorted_keys_compact_utf8_lf
+
+gates:
+  scenes: 20
+  observations_per_scene: 2000
+  tasks: 100
+  production_reference_task_agreements: 100
+  stories: 60
+  alias_maps: 20
+  oracle_cpdag_minimum_unresolved_edges_per_scene: 2
+  standardized_mean_absolute_max: 1.0e-12
+  standardized_sd_absolute_error_max: 1.0e-12
+  deterministic_replay: byte_for_byte
+
+execution_boundary:
+  api_calls: 0
+  provider_sdk_imports: false
+  semantic_model_execution: false
+  SCD_execution: false
+  H1_H2_execution: false
+  reasoner_execution: false
+  threshold_selection: false
+  existing_development_scene_artifacts_accessed: 0
+  existing_holdout_scene_artifacts_accessed: 0
+  next_action_if_pass: T21_V3D_VALIDATION_SEMANTIC_CALLS_AND_TWENTY_CANDIDATE_GATE
+
+dependencies:
+  - configs/p1_edge_selective_v2.yaml
+  - data/manifests/t21_v3a_edge_selective_protocol_freeze.json
+  - data/manifests/t21_v3b_edge_selective_audit.json
+  - configs/t18_p1_generation.yaml
+  - configs/t19_p1_semantic_stories.yaml
+  - src/fourgraph/p1_generation.py
+  - src/fourgraph/p1_stories.py
+  - src/fourgraph/reasoner.py
+  - src/fourgraph/conformance_audit.py

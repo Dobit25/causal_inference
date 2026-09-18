@@ -1,0 +1,52 @@
+schema_version: fourgraph.t21_v3b_edge_selective_conformance_config.v1
+task: T21_AMENDMENT_V3B
+parent_protocol: configs/p1_edge_selective_v2.yaml
+parent_freeze: data/manifests/t21_v3a_edge_selective_protocol_freeze.json
+master_seed: 21302
+
+suite:
+  valid_cases: 180
+  invalid_cases: 40
+  node_counts: [3, 4, 5, 6, 7]
+  cases_per_node_count: 36
+  preference_regimes:
+    strong_consistent: 30
+    weak_consistent: 30
+    uniform_ambiguous: 30
+    sparse_high_confidence: 30
+    mixed_conflict: 30
+    incompatible_high_confidence: 30
+  threshold_grid:
+    semantic_confidence: [0.80, 0.90, 0.95, 0.99, 0.999]
+    global_stability: [0.80, 0.90, 0.95, 1.00]
+  expected_decisions: 3600
+  off_grid_joint_selection_probes: 6
+
+implementation:
+  production: src/fourgraph/edge_selective.py
+  reference: src/fourgraph/edge_selective_reference.py
+  partial_graph_contract: schemas/edge_selective_partial_graph_v1.schema.json
+  decision_contract: schemas/edge_selective_decision_v1.schema.json
+  closure: meek_R1_R2_R3_R4_deterministic_fixed_point
+  exact_extension_enumeration: true
+  exact_compatible_subset_selection: true
+
+gates:
+  production_reference_decisions: 3600
+  production_reference_joint_selection_probes: 6
+  production_reference_agreement_rate: 1.0
+  invalid_cases_rejected: 40
+  graph_validity_rate: 1.0
+  input_mutation_count: 0
+  required_direction_sources: [compelled, semantic_selected, closure_propagated, unresolved]
+  deterministic_replay: byte_for_byte
+
+execution_boundary:
+  api_calls: 0
+  provider_imports: false
+  validation_scenes_generated: 0
+  p1_development_scenes_accessed: 0
+  p1_holdout_scenes_accessed: 0
+  threshold_selected_on_study_data: false
+  llm_scd_reasoner_executed: false
+  next_action_if_pass: T21_V3C_GENERATE_AND_FREEZE_NEW_20_VALIDATION_SCENES

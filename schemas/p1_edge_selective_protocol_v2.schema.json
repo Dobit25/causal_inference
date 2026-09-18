@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/p1_edge_selective_protocol_v2.schema.json",
+  "title": "FourGraph P1 Edge-Selective Protocol v2",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "experiment",
+    "research_question",
+    "claim_boundary",
+    "parent_graph",
+    "semantic_signal",
+    "credible_extension_consensus",
+    "partial_graph_output",
+    "threshold_selection",
+    "metric_contract",
+    "cohorts",
+    "comparators",
+    "stage_plan",
+    "access_and_freeze",
+    "dependencies"
+  ],
+  "properties": {
+    "schema_version": {"const": "fourgraph.p1_edge_selective_protocol.v2"},
+    "experiment": {
+      "type": "object",
+      "required": ["id", "task", "phase", "status", "parent_experiment", "parent_terminal_result"]
+    },
+    "research_question": {"type": "string", "minLength": 100},
+    "claim_boundary": {"type": "object", "required": ["primary", "method_name", "allowed_claims", "forbidden_claims"]},
+    "parent_graph": {"type": "object", "required": ["source", "algorithm", "graph_type", "mutable_edge_class", "preserve_skeleton", "preserve_compelled_directions"]},
+    "semantic_signal": {"type": "object", "required": ["model_snapshot", "prompt", "response_schema", "story_variants", "semantic_confidence_formula", "live_calls_authorized_at_v3a"]},
+    "credible_extension_consensus": {"type": "object", "required": ["extension_universe", "enumeration", "dag_score", "normalization", "global_stability", "candidate_rule", "joint_selection"]},
+    "partial_graph_output": {"type": "object", "required": ["representation", "closure", "invariants", "direction_sources", "provenance_required_per_edge"]},
+    "threshold_selection": {"type": "object", "required": ["candidates", "grid", "selection_data", "gate", "optimize", "tie_breakers", "no_eligible_action"]},
+    "metric_contract": {"type": "object", "required": ["answered_direction_definition", "primary_precision", "coverage", "structural_metrics", "calibration_diagnostics", "downstream_metrics_after_gate_only", "independent_unit"]},
+    "cohorts": {"type": "object", "required": ["method_development", "threshold_validation", "final_holdout"]},
+    "comparators": {"type": "object", "required": ["ids", "roles"]},
+    "stage_plan": {"type": "object", "required": ["T21_V3A", "T21_V3B", "T21_V3C", "T21_V3D", "T21_V3E", "T22"]},
+    "access_and_freeze": {"type": "object", "required": ["v3a_api_calls", "v3a_validation_scenes_generated", "v3a_edge_selective_implemented", "v3a_holdout_scene_artifacts_accessed", "P1_holdout_execution_authorized", "next_authorized_action", "amendment_policy"]},
+    "dependencies": {"type": "array", "minItems": 20, "items": {"type": "string"}, "uniqueItems": true}
+  },
+  "additionalProperties": false
+}

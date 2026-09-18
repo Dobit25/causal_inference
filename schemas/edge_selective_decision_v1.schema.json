@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/edge_selective_decision_v1.schema.json",
+  "title": "H2 Edge-Selective decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "method", "parent_graph_sha256", "preference_artifact_sha256",
+    "tau_semantic", "tau_global", "consistent_extension_count", "extension_scores",
+    "extension_weights", "candidate_directions", "selected_directions",
+    "compatible_extensions_after_selection", "closure_trace", "output_graph_schema_version",
+    "output_graph", "output_graph_sha256", "edge_provenance", "direction_counts", "tie_breaking"
+  ],
+  "properties": {
+    "schema_version": {"const": "fourgraph.edge_selective_decision.v1"},
+    "method": {"const": "H2_EDGE_SELECTIVE"},
+    "parent_graph_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "preference_artifact_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "tau_semantic": {"type": "number", "minimum": 0.5, "maximum": 1},
+    "tau_global": {"type": "number", "minimum": 0.5, "maximum": 1},
+    "consistent_extension_count": {"type": "integer", "minimum": 1},
+    "extension_scores": {"type": "array", "items": {"type": "number"}, "minItems": 1},
+    "extension_weights": {"type": "array", "items": {"type": "number", "minimum": 0, "maximum": 1}, "minItems": 1},
+    "candidate_directions": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
+    "selected_directions": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
+    "compatible_extensions_after_selection": {"type": "integer", "minimum": 1},
+    "closure_trace": {"type": "array", "items": {"$ref": "#/$defs/trace"}},
+    "output_graph_schema_version": {"const": "fourgraph.edge_selective_partial_graph.v1"},
+    "output_graph": {"$ref": "edge_selective_partial_graph_v1.schema.json"},
+    "output_graph_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "edge_provenance": {"type": "array", "items": {"$ref": "#/$defs/provenance"}},
+    "direction_counts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["compelled", "semantic_selected", "closure_propagated", "unresolved"],
+      "properties": {
+        "compelled": {"type": "integer", "minimum": 0},
+        "semantic_selected": {"type": "integer", "minimum": 0},
+        "closure_propagated": {"type": "integer", "minimum": 0},
+        "unresolved": {"type": "integer", "minimum": 0}
+      }
+    },
+    "tie_breaking": {"const": "sum_stability_then_count_then_sum_semantic_then_lexicographic"}
+  },
+  "$defs": {
+    "candidate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["left", "right", "source", "target", "semantic_confidence", "global_stability"],
+      "properties": {
+        "left": {"type": "string"}, "right": {"type": "string"},
+        "source": {"type": "string"}, "target": {"type": "string"},
+        "semantic_confidence": {"type": "number", "minimum": 0.5, "maximum": 1},
+        "global_stability": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "trace": {
+      "type": "object", "additionalProperties": false,
+      "required": ["step", "source", "target", "rule"],
+      "properties": {
+        "step": {"type": "integer", "minimum": 0}, "source": {"type": "string"},
+        "target": {"type": "string"}, "rule": {"enum": ["semantic_selected", "R1", "R2", "R3", "R4"]}
+      }
+    },
+    "provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["left", "right", "mark", "source", "target", "direction_source", "semantic_confidence", "global_stability", "closure_rule"],
+      "properties": {
+        "left": {"type": "string"}, "right": {"type": "string"},
+        "mark": {"enum": ["directed", "undirected"]},
+        "source": {"type": ["string", "null"]}, "target": {"type": ["string", "null"]},
+        "direction_source": {"enum": ["compelled", "semantic_selected", "closure_propagated", "unresolved"]},
+        "semantic_confidence": {"type": ["number", "null"]},
+        "global_stability": {"type": ["number", "null"]},
+        "closure_rule": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

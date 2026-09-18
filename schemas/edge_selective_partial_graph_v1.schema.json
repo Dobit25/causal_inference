@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/edge_selective_partial_graph_v1.schema.json",
+  "title": "Edge-Selective maximally oriented partial graph",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["nodes", "directed", "undirected"],
+  "properties": {
+    "nodes": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "directed": {"$ref": "#/$defs/edges"},
+    "undirected": {"$ref": "#/$defs/edges"}
+  },
+  "$defs": {
+    "edge": {
+      "type": "array",
+      "prefixItems": [{"type": "string"}, {"type": "string"}],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "edges": {"type": "array", "items": {"$ref": "#/$defs/edge"}, "uniqueItems": true}
+  }
+}
