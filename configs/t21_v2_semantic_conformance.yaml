@@ -1,0 +1,72 @@
+schema_version: fourgraph.p1_t21_v2_semantic_conformance.v1
+experiment_id: causalds_fresh_hybrid_p1_v1_t21_amendment_v2
+task: T21_AMENDMENT_V2_CONFORMANCE
+parent_audit: data/manifests/t21_development_audit.json
+
+suite:
+  seed: 21022
+  cases: 120
+  allocation: {forward: 40, reverse: 40, ambiguous: 40}
+  public_alias_lexicon:
+    - Amber index
+    - Beryl index
+    - Cobalt index
+    - Dahlia index
+    - Ember index
+    - Fallow index
+    - Grove index
+    - Harbor index
+  forbid_P1_content: true
+  production_independent_expected_agreement: 120_of_120
+  smoke_cases: 12
+  smoke_allocation: {forward: 4, reverse: 4, ambiguous: 4}
+
+classification:
+  forward: {minimum_probability: 0.95}
+  reverse: {maximum_probability: 0.05}
+  ambiguous: {minimum_probability: 0.45, maximum_probability: 0.55}
+
+gates:
+  parse_success: 1.0
+  first_attempt_schema_success: 1.0
+  forward_accuracy: 0.95
+  reverse_accuracy: 0.95
+  ambiguous_accuracy: 0.95
+  overall_accuracy: 0.95
+
+model:
+  provider: openai
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  endpoint: /v1/responses
+  sdk_version: 3.6.0
+  credential_env: OPENAI_API_KEY
+  reasoning_effort: none
+  temperature: 0
+  max_output_tokens: 2000
+  service_tier: default
+  store: false
+  transport_max_retries: 2
+  validation_retries: 2
+  timeout_seconds: 120
+
+prompt:
+  path: prompts/p1_semantic_preferences_v2.md
+  response_schema: schemas/p1_semantic_preferences_response_v1.schema.json
+
+outputs:
+  suite: data/manifests/t21_v2_semantic_conformance.jsonl
+  suite_audit: data/manifests/t21_v2_semantic_conformance_suite_audit.json
+  smoke_manifest: data/manifests/t21_v2_semantic_smoke_manifest.json
+  raw_calls: results/raw/p1_t21_v2_conformance/openai_calls.jsonl
+  smoke_scores: data/manifests/t21_v2_semantic_smoke_scores.jsonl
+  smoke_audit: data/manifests/t21_v2_semantic_smoke_audit.json
+  full_scores: data/manifests/t21_v2_semantic_conformance_scores.jsonl
+  full_audit: data/manifests/t21_v2_semantic_conformance_live_audit.json
+
+evidence_boundary:
+  P1_SCM_story_development_or_holdout_access_authorized: false
+  holdout_access_authorized: false
+  development_access_authorized: false
+  downstream_reasoner_authorized: false
+  full_live_run_requires_smoke_pass: true
+  development_rerun_requires_full_conformance_pass: true

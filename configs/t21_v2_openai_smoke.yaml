@@ -1,0 +1,30 @@
+schema_version: fourgraph.p1_t21_v2_live_candidate.v1
+stage: smoke_12
+parent_config: configs/t21_v2_semantic_conformance.yaml
+live_execution: {allowed: true, maximum_logical_calls: 12}
+model_snapshot: gpt-5.4-nano-2026-03-17
+reasoning_effort: none
+temperature: 0
+max_output_tokens: 2000
+service_tier: default
+store: false
+validation_retries: 2
+gates:
+  parse_success: 1.0
+  first_attempt_schema_success: 1.0
+  forward_accuracy: 0.95
+  reverse_accuracy: 0.95
+  ambiguous_accuracy: 0.95
+  overall_accuracy: 0.95
+pins:
+  configs/t21_v2_semantic_conformance.yaml: 05D9AC3D0370CCBE7803E739EECD7F49C847ED66898619EB60C4D6F1249239A8
+  prompts/p1_semantic_preferences_v2.md: A4D0C3B0910AE513560DF9D705E8DF4102A141421DE97C423F7074926FEF0FBE
+  schemas/p1_semantic_preferences_response_v1.schema.json: 0C4D748873339E297ACA2D0AD320D8D39C63E2A1BAB84A17F9C6C0F6A1AE8920
+  data/manifests/t21_v2_semantic_conformance.jsonl: 1258B4836058662BDD345A9BB6FA231C840C9586068792DD9B18C7B039C2C0EE
+  data/manifests/t21_v2_semantic_conformance_suite_audit.json: 9EA52402FB8E9AD494210F8219CC3909EA7B7E23D8972D54C9039DDF53305036
+  data/manifests/t21_v2_semantic_smoke_manifest.json: DEF6D0D5209168ED161D2E2037C4D2E4AB2953713B4DAC5EE73725F5F6FCC558
+boundary:
+  P1_access: false
+  holdout_access: false
+  full_120_authorized: false
+  development_rerun_authorized: false

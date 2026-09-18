@@ -1,0 +1,60 @@
+schema_version: fourgraph.p1_t21_amendment_v2_comparators.v1
+task: T21
+status: development_comparator_execution_authorized
+scope:
+  split_manifest: data/manifests/t18_p1_frozen_split.json
+  generated_root: data/generated/p1_hybrid_v1
+  expected_development_scenes: 20
+  forbid_holdout_access: true
+execution:
+  standalone_variants: [partial, ambiguous]
+  expected_logical_calls: 40
+  maximum_new_api_calls: 44
+  validation_retries: 2
+  automatic_holdout_continuation: false
+semantic_backend:
+  provider: openai
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  sdk_version: 3.6.0
+  credential_env: OPENAI_API_KEY
+  reasoning_effort: none
+  temperature: 0
+  max_output_tokens: 6000
+  service_tier: default
+  store: false
+  transport_max_retries: 2
+  timeout_seconds: 120
+  minimum_seconds_between_requests: 3.2
+  llm_graph_prompt: prompts/p1_llm_graph_v1.md
+  llm_graph_schema: schemas/p1_llm_graph_response_v1.schema.json
+diagnostic:
+  role: development_only_non_primary
+  semantic_signal: all_pair_standalone_graph_response_derived
+  probability_when_oriented_forward: 0.999
+  probability_when_oriented_reverse: 0.001
+  probability_when_no_direct_edge: 0.5
+  parents: [boss_cpdag, oracle_cpdag]
+  forbidden_uses: [threshold_selection, method_selection, holdout]
+outputs:
+  raw_calls: results/raw/p1_t21_v2_comparators/openai_calls.jsonl
+  graphs: data/manifests/t21_v2_dev_llm_comparator_graphs.jsonl
+  metrics: data/manifests/t21_v2_dev_llm_comparator_metrics.jsonl
+  oracle_skeleton_diagnostic: data/manifests/t21_v2_oracle_skeleton_diagnostic.jsonl
+  audit: data/manifests/t21_v2_comparator_audit.json
+  report: reports/t21_v2_amendment.md
+evidence_boundary:
+  P1_development_access_authorized: true
+  P1_holdout_access_authorized: false
+  downstream_tasks_or_answers_allowed: false
+  comparator_results_allowed_for_threshold_selection: false
+  reasoner_execution_authorized: false
+freeze_anchors:
+  configs/t21_v2_p1_development.yaml: E5532CAD20E7C20EF7AAC377647E5B4B1AC008F08EF5C180E7D135915D4F40C9
+  data/manifests/t21_v2_development_audit.json: 336CB39C0E7F2503E3764EE3196D97516FCD6485E4F45EB5DD024627970086DA
+  data/manifests/t21_v2_dev_semantic_preferences.jsonl: 19BE22B47C4CE1A1C3D950AF142809042089BC77140618B29EDDD09A39F90FBC
+  data/manifests/t21_v2_dev_graphs.jsonl: 9DCEB2BBD25263A750A1AEE4E755D521E8C433DBD1471D63E034BD7FC751F9B8
+  prompts/p1_llm_graph_v1.md: 82A2F1B3E40D103F8D26B09302BED9E018BCB98E464784F94FEA26993AAC14EE
+  schemas/p1_llm_graph_response_v1.schema.json: 324512B35CA5BBFDF0C7E1F799CF43BF2EA14B87C374DAEB975182C5BA953009
+  data/manifests/t18_p1_frozen_split.json: C7BF1C4272ED3D076E15CD9EDDF2F1A68BB4C6E0AF2C526AF0FACA1BB223AC1E
+  data/manifests/t19_p1_story_audit.json: 56E6FF6307C4242D7CB60F76850F343C8F1AA2FF074E4FEA8CD56AF9BBF195C0
+  src/fourgraph/hybrid_h2.py: 7989A7D802C7C396FF77A7B368C5FF681CD065F72F1779ADF877D36B39CE4354
