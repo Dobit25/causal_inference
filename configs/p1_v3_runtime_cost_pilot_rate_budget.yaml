@@ -1,0 +1,35 @@
+schema_version: fourgraph.p1_v3_runtime_cost_pilot_rate_budget.v1
+captured_offline_at_utc: '2026-09-19T04:13:27.0278898Z'
+
+rate_card:
+  currency: USD
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  kind: conservative_offline_accounting_ceiling
+  official_current_nano_rate_verified: false
+  network_lookup_performed: false
+  rates_usd_per_million_tokens:
+    uncached_input: 0.75
+    cached_input: 0.075
+    output_including_reasoning: 4.50
+  provenance:
+    description: existing_hash_pinned_project_accounting_schedule_used_as_a_conservative_ceiling_not_as_a_claim_about_current_nano_pricing
+    source: configs/t12_v3_openai_mini_full_development.yaml
+    source_sha256: B687B9AA3D46B7F013B57DC23052B52987F129661580BD44C324F74045B2AF47
+  execution_requirement:
+    official_current_rate_card_must_be_verified_before_live_execution: true
+    verified_rate_must_not_exceed_ceiling_without_new_user_approval: true
+
+budget:
+  pilot_hard_cap_usd: 1.50
+  dedicated_pilot_budget_approved_usd: 1.50
+  full_study_budget_status: not_yet_approved
+  platform_remaining_balance_verified_offline: false
+  stop_before_call_if_worst_case_next_attempt_exceeds_remaining_pilot_cap: true
+  no_automatic_budget_expansion: true
+
+authorization:
+  accounting_inputs_hash_pinnable: true
+  live_execution_ready: false
+  blockers:
+    - official_current_nano_rate_card_not_verified_offline
+    - platform_remaining_balance_not_verified_offline

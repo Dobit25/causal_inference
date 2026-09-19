@@ -1,0 +1,53 @@
+{
+  "schema_version": "fourgraph.p1_v3_runtime_cost_pilot_environment.v1",
+  "captured_at_utc": "2026-09-19T04:13:27.0278898Z",
+  "capture_mode": "offline_read_only",
+  "machine": {
+    "os": "Microsoft Windows 11 Home Single Language",
+    "os_version": "10.0.26200",
+    "architecture": "64-bit",
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13450HX",
+    "physical_cores": 10,
+    "logical_processors": 16,
+    "total_visible_memory_bytes": 16944848896,
+    "workspace_drive": "D",
+    "workspace_drive_used_bytes_at_capture": 270464147456,
+    "workspace_drive_free_bytes_at_capture": 51657347072
+  },
+  "python": {
+    "implementation": "CPython",
+    "version": "3.10.21",
+    "conda_environment": "cau",
+    "executable": "D:/Coding/Anaconda/envs/cau/python.exe",
+    "prefix": "D:/Coding/Anaconda/envs/cau",
+    "packages": {
+      "jpype1": "1.6.0",
+      "numpy": "1.26.4",
+      "openai": "3.6.0",
+      "pandas": "2.3.3",
+      "python-dotenv": "1.2.3",
+      "pyyaml": "6.0.3",
+      "scikit-learn": "1.7.2",
+      "scipy": "1.13.1"
+    }
+  },
+  "java": {
+    "java_on_path": false,
+    "java_home_present": false,
+    "jvm_path": "D:/Coding/Anaconda/envs/cau/Library/lib/jvm/bin/server/jvm.dll",
+    "version": "21.0.10",
+    "vendor": "Azul Systems, Inc.",
+    "vm": "OpenJDK 64-Bit Server VM",
+    "runner_must_use_pinned_jvm_path": true
+  },
+  "tetrad": {
+    "jar": "data/raw/t05/py-tetrad/pytetrad/resources/tetrad-current.jar",
+    "implementation_version": "7.6.11-SNAPSHOT",
+    "sha256": "5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051"
+  },
+  "credentials": {
+    "openai_api_key_present": true,
+    "gemini_api_key_present": true,
+    "secret_values_captured": false
+  }
+}

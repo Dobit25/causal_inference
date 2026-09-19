@@ -1,0 +1,112 @@
+schema_version: fourgraph.p1_v3_runtime_cost_pilot_preflight.v1
+task: P1_V3_RUNTIME_COST_PILOT_PREFLIGHT_FREEZE
+status: preflight_frozen_live_execution_forbidden
+
+parent:
+  audit: data/manifests/p1_v3_runtime_cost_pilot_design_audit.json
+  audit_sha256: 6E38026F1E692135FB1F5ADB2845375D6463724006DBF2240D0726B2E8AB8444
+  required_next_action: P1_V3_RUNTIME_COST_PILOT_PREFLIGHT_FREEZE
+  design: configs/p1_v3_runtime_cost_pilot_design.yaml
+  design_sha256: D2A974004E76C4ED4660291D1F616915C597A3C727237EADB840F5EAC1FBEC61
+
+pilot_identity:
+  namespace: SYNPILOT
+  role: SYNPILOT
+  master_seed: 61001
+  scene_count: 9
+  scene_number_start: 980000
+  node_count: {5: 3, 6: 3, 7: 3}
+  primary_motif: {chain: 2, fork: 2, collider: 2, mediator: 2, diamond: 1}
+  noise_family: {laplace: 3, logistic: 3, student_t_df5: 3}
+  query_stratum: {valid_empty: 3, one_minimal_nonempty: 3, multiple_minimal: 2, no_valid_adjustment_set: 1}
+  edge_count_range: {5: [4, 7], 6: [5, 8], 7: [6, 9]}
+  minimum_oracle_cpdag_unresolved_edges: 2
+  maximum_attempts_per_scene: 10000
+  observations_materialized: false
+  story_text_materialized: false
+  excluded_from_all_scientific_cohorts: true
+
+runner:
+  entrypoint: scripts/run_p1_v3_runtime_cost_pilot.py
+  entrypoint_sha256: AB4EC11738FBE4B0E3D958FB3350AF8C056553BD00858EE539698EECDA6A50EF
+  planning_library: src/fourgraph/runtime_cost_pilot.py
+  planning_library_sha256: 9285340BAC4BC555AA7378527F321E8ADA5C2D4F63406904E530655135AD7380
+  bootstrap_contract: src/fourgraph/bootstrap_boss.py
+  bootstrap_contract_sha256: F71EB1B6BDED1BCCC1095A256A3DDCE4B9EE67DBB413E6733605F85E5366222A
+  tetrad_backend: src/fourgraph/causalds_scd.py
+  tetrad_backend_sha256: AD373A3518F4B508A36F60237AFFA9DC20114228F5A0108EC66E7DDD5F5C4BF6
+  openai_backend: src/fourgraph/t21_openai_backend.py
+  openai_backend_sha256: 53E2C1F719CE5F92A8F114BF8AABD0D223E6C470AACF63863CC062B89EAC6533
+  prompt: prompts/p1_semantic_empirical_reliability_v1.md
+  prompt_sha256: 7813D04646F4F0CAE5874AC89120D3BAB15E3118C25417DD05940C32B9E8F403
+  response_schema: schemas/semantic_whole_graph_response_v1.schema.json
+  response_schema_sha256: DCE511340DF467740D8DEBE9C7847A110B0E5C3642BDED1F544098AB88E84228
+  raw_root: results/raw/p1_v3_runtime_cost_pilot
+  resume_required: true
+  check_required: true
+  execution_adapter_status: blocked_until_post_preflight_authorization_checkpoint
+
+environment:
+  snapshot: configs/p1_v3_runtime_cost_pilot_environment.json
+  snapshot_sha256: ACE05D0C046F1D4ADF6F00005ECA8A98D3F06E4B9E94C62431BD192D816DB697
+  pinned_jvm_path_required: true
+  minimum_free_disk_bytes: 10737418240
+  captured_free_disk_bytes: 51657347072
+  memory_gate_bytes: 8589934592
+  captured_total_memory_bytes: 16944848896
+  openai_api_key_presence_required: true
+  secret_values_forbidden: true
+
+rate_budget:
+  record: configs/p1_v3_runtime_cost_pilot_rate_budget.yaml
+  record_sha256: 923666CA0F534DE87234A1A9F5EB450CEF71E73143522FFD6CDEF82F521E8151
+  accounting_ceiling_pinned: true
+  pilot_budget_usd: 1.50
+  official_current_rate_verified: false
+  remaining_platform_balance_verified: false
+
+schedule:
+  generator_scenes: 9
+  generator_replays: 9
+  boss_warmups: 3
+  boss_measured_fits: 270
+  semantic_scene_ids_selected_by: two_per_node_count_lowest_sha256_rank
+  semantic_scenes: 6
+  story_variants: [full, partial, ambiguous]
+  prompt_variants: 6
+  semantic_logical_calls: 108
+  maximum_api_attempts: 120
+  pacing_rpm_cap: 18
+
+preflight_gates:
+  exact_ids_and_blueprints_replay: true
+  dependency_hashes_match: true
+  environment_captured: true
+  machine_capacity_passes: true
+  api_key_present_boolean: true
+  secret_values_absent: true
+  conservative_rate_ceiling_pinned: true
+  dedicated_pilot_budget_pinned: true
+  official_rate_and_balance_live_verification_passes: false
+  execution_ready: false
+
+evidence_boundary:
+  exact_pilot_identities_materialized: 9
+  pilot_blueprints_materialized: 9
+  pilot_observation_rows_generated: 0
+  pilot_stories_generated: 0
+  bootstrap_or_boss_runs: 0
+  semantic_api_calls: 0
+  pricing_network_lookup: false
+  successor_scenes_generated: 0
+  historical_cohorts_accessed: false
+  final_holdout_accessed: false
+
+authorization_after_freeze:
+  next_action: P1_V3_RUNTIME_COST_PILOT_EXECUTION_AUTHORIZATION_CHECKPOINT
+  offline_authorization_checkpoint_only: true
+  pilot_execution: false
+  successor_cohort_generation: false
+  study_scene_bootstrap_execution: false
+  semantic_api_calls: false
+  final_holdout_access: false

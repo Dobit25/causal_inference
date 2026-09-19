@@ -1069,3 +1069,9 @@ Pilot được thiết kế như một phép đo kỹ thuật độc lập, khô
 Các gate đã được khóa trước: sinh/replay deterministic, tối thiểu 268/270 BOSS fits thành công với failure rate không quá 1%, runtime single-worker có dự phòng không quá 168 giờ, API parse/schema/snapshot đạt yêu cầu, chi phí pilot không quá USD 1,50 và full projection không vượt ngân sách/dung lượng được phê duyệt. Giá API hiện hành chưa được tra cứu vì bước này hoàn toàn offline; nó phải được hash-pin cùng environment, runner và exact synthetic IDs ở preflight kế tiếp.
 
 Thiết kế đã tái sinh byte-for-byte và test 6/6. Chưa có pilot scene, observation, BOSS fit hoặc API response nào được tạo. Bước tiếp theo duy nhất được phép là đóng băng preflight hoàn toàn offline; vẫn chưa được chạy pilot hay materialize 840 scenes.
+
+## 39. Đóng băng preflight runtime/cost pilot
+
+Preflight đã khóa chính xác 9 pilot identities/blueprints và chọn 6 scene cho semantic timing sample. Nó cũng khóa source hashes của runner, Bootstrap-BOSS, Tetrad/OpenAI adapter, prompt/schema; chụp cấu hình máy, conda Python, JVM, Tetrad jar, dung lượng đĩa và chỉ boolean về sự tồn tại của API key. Không observation hay story nào được sinh.
+
+Bảng giá cũ trong repo được giữ như conservative accounting ceiling, không được gọi là giá Nano hiện hành; ngân sách pilot được khóa ở USD 1,50. Do bước này offline, official rate card và platform balance vẫn chưa được xác minh. Vì vậy preflight hoàn tất về reproducibility nhưng cố ý chưa `execution_ready`; bước tiếp theo phải là một checkpoint cấp quyền riêng, không phải tự động chạy pilot.

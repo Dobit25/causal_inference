@@ -558,3 +558,11 @@
 - Gates: Required deterministic generation, at least 268/270 successful measured BOSS fits and at most 1% failure, projected single-worker runtime at most 168 hours, 108/108 API cases, 100% final schema success, at least 95% first-attempt schema success, at most 5% retry, exact snapshot and registered cost/storage limits.
 - Cost integrity: Set a USD 1.50 pilot cap but did not invent or fetch current pricing offline. A later preflight must hash-pin the official rate card, remaining approved budget and machine/software environment.
 - Boundary: Materialized pilot scenes 0; observation rows 0; BOSS/bootstrap runs 0; semantic API calls 0; successor scenes 0; historical/final-holdout access false. Only offline preflight freeze is authorized next.
+
+## 2026-09-19 — P1-v3 runtime/cost pilot offline preflight
+
+- Identity: Froze nine exact synthetic pilot IDs and blueprint hashes with 45/45 task-solver agreements; selected six semantic timing IDs deterministically. Generated zero observations and stories.
+- Runtime: Pinned runner/planning/backend/prompt/schema hashes and captured CPython 3.10.21, OpenAI SDK 3.6.0, JPype 1.6.0, JVM 21.0.10, Tetrad jar hash, 10-core/16-thread CPU, RAM and disk snapshot. Java PATH/JAVA_HOME are absent, so the exact conda JVM DLL is required.
+- Credentials: Captured only `OPENAI_API_KEY_present: true`; no secret value entered any artifact.
+- Cost: Pinned the existing higher project rate schedule solely as a conservative offline accounting ceiling and USD 1.50 as the dedicated pilot budget. Did not claim it is current Nano pricing; official price and remaining platform balance remain live-execution blockers.
+- Boundary: BOSS/bootstrap runs 0, API calls 0, observation rows 0, stories 0, successor scenes 0, holdout access false. Preflight is frozen but `execution_ready: false`; only a separate authorization checkpoint is allowed next.

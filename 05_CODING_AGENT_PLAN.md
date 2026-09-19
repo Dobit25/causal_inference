@@ -149,6 +149,8 @@ Successor generator/split conformance is complete using synthetic namespaces onl
 
 Runtime/cost-pilot design is complete and frozen offline. It preregisters a 9-scene synthetic panel, 270 measured Bootstrap-BOSS fits, 108 semantic calls, resource projections, feasibility gates and strict scientific-use boundaries. No pilot artifact was materialized and no execution occurred. The next authorized action is only an offline preflight freeze that must pin exact synthetic IDs, runners, environment, official rate card, approved budget and disk capacity; pilot execution still requires explicit user authorization.
 
+Runtime/cost-pilot preflight is complete and frozen offline. Exact synthetic identities/blueprints, runner dependencies, environment, machine capacity, conservative cost ceiling and USD 1.50 pilot budget are pinned. Official current Nano pricing and remaining platform balance remain unverified offline, so `execution_ready` is false. Only a separate execution-authorization checkpoint may resolve those blockers; no pilot workload is currently authorized.
+
 ## Research integrity checklist
 
 - [x] reasoner never sees causal story or observational table

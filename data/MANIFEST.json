@@ -439,6 +439,11 @@
       "name": "p1_v3_runtime_cost_pilot_design",
       "role": "offline_frozen_engineering_feasibility_pilot_schedule_projection_and_gates",
       "manifest": "data/manifests/p1_v3_runtime_cost_pilot_design_audit.json"
+    },
+    {
+      "name": "p1_v3_runtime_cost_pilot_preflight",
+      "role": "offline_exact_pilot_identity_runner_environment_rate_budget_and_execution_blocker_freeze",
+      "manifest": "data/manifests/p1_v3_runtime_cost_pilot_preflight_audit.json"
     }
   ]
 }

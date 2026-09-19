@@ -1,4 +1,5 @@
 configs/*.yaml text eol=lf
+configs/*.json text eol=lf
 data/manifests/*.json text eol=lf
 data/manifests/*.jsonl text eol=lf
 data/MANIFEST.json text eol=lf
