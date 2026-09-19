@@ -153,6 +153,8 @@ Runtime/cost-pilot preflight is complete and frozen offline. Exact synthetic ide
 
 Execution-authorization checkpoint complete with `DENY_PENDING_BALANCE_VERIFICATION`. Official GPT-5.4 Nano Standard pricing and the budget-guarded semantic adapter are pinned. The project key cannot read the Admin-only organization-cost endpoint, so balance remains unknown and no pilot execution is authorized. Only a balance-attestation amendment is allowed next.
 
+Balance-attestation amendment complete: USD 5.52 spend / USD 15.00 limit leaves USD 9.48 headroom, passing the technical budget gate against the USD 1.50 pilot cap. Because the platform hard limit is off, the internal controller and freshness recheck are mandatory. Execution remains unauthorized until a separate final GO/NO-GO instruction.
+
 ## Research integrity checklist
 
 - [x] reasoner never sees causal story or observational table

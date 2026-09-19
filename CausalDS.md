@@ -508,3 +508,9 @@ The repository had no verified current rate card for GPT-5.4 Nano. Instead of mi
 The official OpenAI pricing page now verifies GPT-5.4 Nano Standard rates of USD 0.20/M input, 0.02/M cached input and 1.25/M output, and the official model page confirms snapshot `gpt-5.4-nano-2026-03-17`. A separate adapter enforces worst-case pre-call reservation, exact post-call accounting and the USD 1.50 hard cap.
 
 Balance could not be verified with the project-scoped key: the official organization costs endpoint requires `OPENAI_ADMIN_KEY` and returned HTTP 403 without invoking a model. Since all gates are mandatory, the frozen decision is `DENY_PENDING_BALANCE_VERIFICATION`. A current Platform Usage/Limits attestation or out-of-repo Admin key check is required before a later amendment may authorize execution.
+
+## 24. P1-v3 balance attestation amendment
+
+The user read the `causal_builder` project UI and attested USD 5.52 spend against a USD 15.00 limit, yielding USD 9.48 exact headroom. This exceeds the frozen USD 1.50 pilot cap by 6.32 times, so the technical budget gate passes. No prepaid credits apply and the displayed reset maps to 2026-09-30.
+
+The platform hard limit is disabled. The frozen internal cost controller is therefore mandatory, concurrent project activity remains a risk, and the attestation expires for execution purposes after 24 hours or at reset. This amendment records readiness only; a separate explicit GO/NO-GO command is still required and no live action occurred.

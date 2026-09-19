@@ -1,0 +1,65 @@
+schema_version: fourgraph.p1_v3_runtime_cost_pilot_balance_attestation.v1
+task: P1_V3_RUNTIME_COST_PILOT_BALANCE_ATTESTATION_AMENDMENT
+status: balance_attested_technical_budget_gate_passed_execution_not_authorized
+
+parent:
+  checkpoint_audit: data/manifests/p1_v3_runtime_cost_pilot_execution_checkpoint_audit.json
+  checkpoint_audit_sha256: 923298B23B8790882E9B3E066CEAF5D8CAF84732D1A9DD529B1FEBB7B166F710
+  required_next_action: P1_V3_RUNTIME_COST_PILOT_BALANCE_ATTESTATION_AMENDMENT
+
+attestation:
+  source: user_read_from_openai_platform_project_limits_ui
+  attested_at_utc: '2026-09-19T09:33:58.7930983Z'
+  project_name: causal_builder
+  current_project_spend_usd: 5.52
+  project_spend_limit_usd: 15.00
+  calculated_headroom_usd: 9.48
+  hard_limit_enforced: false
+  reset_statement: resets_in_11_days_on_2026_09_19
+  derived_reset_date: '2026-09-30'
+  prepaid_credits_used: false
+  remaining_prepaid_credits_usd: null
+  credit_expiration: null
+  api_key_or_project_id_captured: false
+  platform_screenshot_committed: false
+
+budget_gate:
+  official_rate_card: configs/p1_v3_runtime_cost_pilot_official_rate_card.json
+  official_rate_card_sha256: E6D966C02AAA8D920FE37F6BEF919644F70A64B97DF43C252F4534CD01078AE9
+  pilot_hard_cap_usd: 1.50
+  headroom_to_cap_ratio: 6.32
+  minimum_required_headroom_usd: 1.50
+  arithmetic_pass: true
+  balance_attestation_pass: true
+  platform_hard_limit_warning: true
+  internal_budget_controller_required: true
+  concurrent_project_spend_risk: true
+  recheck_required_if_execution_after_reset_or_attestation_older_than_24h: true
+
+readiness:
+  official_rate_verified: true
+  user_balance_attested: true
+  live_adapter_frozen: true
+  budget_controller_frozen: true
+  technical_budget_gate_passed: true
+  execution_authorized: false
+  reason_execution_not_authorized: explicit_pilot_execution_order_not_yet_given
+
+evidence_boundary:
+  model_api_calls: 0
+  input_tokens: 0
+  output_tokens: 0
+  pilot_observation_rows_generated: 0
+  bootstrap_or_boss_runs: 0
+  semantic_api_calls: 0
+  successor_scenes_generated: 0
+  final_holdout_accessed: false
+
+authorization_after_freeze:
+  next_action: P1_V3_RUNTIME_COST_PILOT_FINAL_GO_NO_GO
+  technical_readiness: true
+  explicit_user_execution_order_required: true
+  pilot_execution: false
+  successor_cohort_generation: false
+  semantic_api_calls: false
+  final_holdout_access: false

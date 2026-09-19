@@ -573,3 +573,10 @@
 - Balance: The official organization-cost endpoint requires an Admin key. The available project key received HTTP 403 on one read-only attempt; no model request or tokens were generated. Current spend/balance therefore remains unverified.
 - Adapter: Added a separately hash-pinned semantic adapter with worst-case reservation, required usage telemetry, exact cost accounting and fail-closed USD 1.50 cap. Its guarded entrypoint checks authorization before any workload.
 - Decision: Frozen `DENY_PENDING_BALANCE_VERIFICATION`; only a balance-attestation amendment is permitted. Observations/BOSS/semantic calls/successor generation/holdout access remain zero.
+
+## 2026-09-19 — P1-v3 balance-attestation amendment
+
+- User attestation: Recorded USD 5.52 current spend, USD 15.00 project limit, hard limit off, no prepaid credits and expected reset 2026-09-30. No account identifier, API key or screenshot was stored.
+- Arithmetic: Exact headroom is USD 9.48, which is 6.32× the frozen USD 1.50 pilot cap; technical budget gate passed.
+- Safety: Platform hard-limit absence and concurrent-spend risk are explicit. Frozen internal controller remains mandatory; re-attestation is required after 24 hours or reset.
+- Boundary: This is readiness evidence, not an execution order. Model/API calls, tokens, observations, BOSS runs, successor generation and holdout access remain zero.

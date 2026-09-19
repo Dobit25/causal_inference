@@ -1081,3 +1081,9 @@ Bảng giá cũ trong repo được giữ như conservative accounting ceiling, 
 Official Nano rate đã được xác minh: USD 0,20/M input, 0,02/M cached input và 1,25/M output ở Standard tier. Live semantic adapter riêng cũng được khóa hash với cost reservation trước call và hard cap USD 1,50.
 
 Tuy nhiên số dư không thể đọc bằng project key vì official costs endpoint yêu cầu Admin key; lần kiểm tra read-only trả HTTP 403 và dùng 0 token. Do đó checkpoint đóng băng quyết định DENY, không phải PASS. Chỉ sau một balance-attestation amendment từ Platform Usage/Limits hoặc Admin-key check mới được cân nhắc cấp quyền chạy pilot.
+
+## 41. Balance-attestation amendment
+
+Người dùng xác nhận project đã dùng USD 5,52 trên limit USD 15,00, còn headroom USD 9,48. Headroom gấp 6,32 lần hard cap nội bộ USD 1,50 nên technical budget gate đạt. Không có prepaid credits và reset dự kiến ngày 30/09/2026.
+
+Platform hard limit đang tắt, nên cost controller nội bộ là bắt buộc và số spend phải được kiểm tra lại nếu quá 24 giờ hoặc qua reset. Amendment này chưa phải lệnh chạy; pilot vẫn chờ final GO/NO-GO riêng.

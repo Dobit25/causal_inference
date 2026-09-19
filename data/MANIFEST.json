@@ -449,6 +449,11 @@
       "name": "p1_v3_runtime_cost_pilot_execution_checkpoint",
       "role": "official_rate_live_adapter_and_fail_closed_balance_authorization_decision",
       "manifest": "data/manifests/p1_v3_runtime_cost_pilot_execution_checkpoint_audit.json"
+    },
+    {
+      "name": "p1_v3_runtime_cost_pilot_balance_attestation",
+      "role": "user_attested_project_spend_limit_headroom_and_non_executing_budget_readiness",
+      "manifest": "data/manifests/p1_v3_runtime_cost_pilot_balance_attestation_audit.json"
     }
   ]
 }
