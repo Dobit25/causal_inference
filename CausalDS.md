@@ -514,3 +514,9 @@ Balance could not be verified with the project-scoped key: the official organiza
 The user read the `causal_builder` project UI and attested USD 5.52 spend against a USD 15.00 limit, yielding USD 9.48 exact headroom. This exceeds the frozen USD 1.50 pilot cap by 6.32 times, so the technical budget gate passes. No prepaid credits apply and the displayed reset maps to 2026-09-30.
 
 The platform hard limit is disabled. The frozen internal cost controller is therefore mandatory, concurrent project activity remains a risk, and the attestation expires for execution purposes after 24 hours or at reset. This amendment records readiness only; a separate explicit GO/NO-GO command is still required and no live action occurred.
+
+## 25. P1-v3 final pilot GO/NO-GO
+
+All blocking pre-execution gates passed at freeze time, so the decision is `GO_READY`. The eligible scope is exactly nine synthetic pilot scenes, nine deterministic generator replays, three excluded BOSS warm-ups, 270 measured fits and 108 semantic calls with at most 120 attempts and USD 1.50 API cost.
+
+GO means the pilot may receive a separate explicit run order; it is not that order. Live authorization remains false, execution is not started and all observed workload counts remain zero. Spend must be refreshed after the 24-hour attestation window or the project reset, and no part of this decision permits generation of the 840 successor scenes.

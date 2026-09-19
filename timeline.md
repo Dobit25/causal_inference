@@ -1087,3 +1087,9 @@ Tuy nhiên số dư không thể đọc bằng project key vì official costs en
 Người dùng xác nhận project đã dùng USD 5,52 trên limit USD 15,00, còn headroom USD 9,48. Headroom gấp 6,32 lần hard cap nội bộ USD 1,50 nên technical budget gate đạt. Không có prepaid credits và reset dự kiến ngày 30/09/2026.
 
 Platform hard limit đang tắt, nên cost controller nội bộ là bắt buộc và số spend phải được kiểm tra lại nếu quá 24 giờ hoặc qua reset. Amendment này chưa phải lệnh chạy; pilot vẫn chờ final GO/NO-GO riêng.
+
+## 42. Final GO/NO-GO cho runtime/cost pilot
+
+Mọi blocking gate đạt tại thời điểm freeze nên quyết định là `GO_READY`. Phạm vi đủ điều kiện vẫn chỉ là 9 synthetic scenes, 270 measured BOSS fits và 108 semantic calls với cap USD 1,50; tuyệt đối không bao gồm 840 study scenes.
+
+GO ở đây chỉ có nghĩa pilot có thể nhận một lệnh chạy riêng. Checkpoint không khởi chạy workload và live authorization vẫn false. Nếu lệnh chạy tới sau 24 giờ hoặc sau reset, spend phải được xác nhận lại trước khi cấp quyền thực thi.

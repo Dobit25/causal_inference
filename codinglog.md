@@ -580,3 +580,10 @@
 - Arithmetic: Exact headroom is USD 9.48, which is 6.32× the frozen USD 1.50 pilot cap; technical budget gate passed.
 - Safety: Platform hard-limit absence and concurrent-spend risk are explicit. Frozen internal controller remains mandatory; re-attestation is required after 24 hours or reset.
 - Boundary: This is readiness evidence, not an execution order. Model/API calls, tokens, observations, BOSS runs, successor generation and holdout access remain zero.
+
+## 2026-09-19 — P1-v3 final runtime/cost pilot GO/NO-GO
+
+- Decision: Froze `GO_READY` because every blocking identity, dependency, environment, rate, budget-controller, attested-headroom and holdout-seal gate passed at decision time.
+- Scope: Exactly 9 synthetic IDs, 9 generator replays, 3 excluded BOSS warm-ups, 270 measured fits, 108 semantic calls, at most 120 attempts and USD 1.50 API spend. The 840-scene study is explicitly excluded.
+- Safety: Platform hard limit remains off; internal reservation/accounting and runtime spend freshness are mandatory. Attestation expires after 24 hours or project reset.
+- Boundary: GO is eligibility, not execution. Live authorization stays false; model/API calls, tokens, observations, BOSS runs, successor scenes and holdout access remain zero.

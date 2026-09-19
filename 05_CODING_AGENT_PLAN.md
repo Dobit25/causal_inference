@@ -155,6 +155,8 @@ Execution-authorization checkpoint complete with `DENY_PENDING_BALANCE_VERIFICAT
 
 Balance-attestation amendment complete: USD 5.52 spend / USD 15.00 limit leaves USD 9.48 headroom, passing the technical budget gate against the USD 1.50 pilot cap. Because the platform hard limit is off, the internal controller and freshness recheck are mandatory. Execution remains unauthorized until a separate final GO/NO-GO instruction.
 
+Final pilot GO/NO-GO complete with `GO_READY`. All blocking gates passed and the exact synthetic pilot is execution-eligible, but this checkpoint neither authorizes nor starts the workload. A separate explicit run order is required; attested spend must still be fresh at runtime and the 840-scene study remains forbidden.
+
 ## Research integrity checklist
 
 - [x] reasoner never sees causal story or observational table
