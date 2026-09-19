@@ -533,3 +533,12 @@
 - Reliability and veto: Nine synthetic reliability groups reproduced their registered correct/total counts, counted false adjacencies as errors and remained `pending_risk_control`. Production/reference veto decisions agreed 36/36; weak/absent statistical edges were never semantically revived, and diagnostic reliability never self-certified.
 - Reproducibility: `scripts/build_p1_v3_semantic_veto_conformance.py --check` reproduces all manifests, audit and report byte-for-byte.
 - Boundary: API/model calls 0; BOSS/Bootstrap runs 0; study observations and historical cohorts accessed 0; successor scenes generated 0; Oracle/final holdout access 0. Only prospective power and cohort design is authorized next; study execution remains forbidden.
+
+## 2026-09-19 — P1-v3 prospective power and independent-cohort design
+
+- Inference unit: Froze the scene as the independent unit. Every semantic group/candidate produces a bounded within-scene error fraction, so multiple directions from one SCM cannot create pseudo-replication.
+- Risk allocation: Split total `δ=0.05` into `0.025` for six semantic calibration groups and `0.025` for fifteen statistical-threshold candidates. Registered one-sided Hoeffding–Bentkus tests with Bonferroni correction, target error `0.05` and coverage `0.20`.
+- Power: At 280 contributing calibration scenes, prospective power is `0.8486` for a true 1% error method. At 340 contributing validation scenes it is `0.8716`. Coverage power at true coverage 0.30 is above 0.80. These are planning assumptions, not observed results.
+- Cohorts: Planned 40 method-development, 400 semantic-calibration and 400 one-time threshold-validation scenes, with separate namespaces/seeds and exact stratification margins. Calibration cannot select thresholds; validation cannot redefine semantic reliability.
+- Feasibility envelope: Full later execution would require 168,000 Bootstrap-BOSS fits and 15,120 whole-graph semantic calls, so a runtime/cost pilot is mandatory before authorization.
+- Boundary: Generated no scene, observation or exact scene-ID manifest; ran no BOSS/bootstrap; made no API call; accessed no historical cohort or final holdout. Only offline generator/split implementation and synthetic conformance is authorized next.

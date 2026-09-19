@@ -424,6 +424,11 @@
       "name": "p1_v3_semantic_veto_conformance",
       "role": "offline_six_vote_evidence_validation_empirical_reliability_and_statistical_veto_conformance",
       "manifest": "data/manifests/p1_v3_semantic_veto_conformance_audit.json"
+    },
+    {
+      "name": "p1_v3_power_cohort_design",
+      "role": "prospective_scene_clustered_power_and_disjoint_successor_cohort_design",
+      "manifest": "data/manifests/p1_v3_power_cohort_design_audit.json"
     }
   ]
 }

@@ -143,6 +143,8 @@ The next action is to implement the six-vote semantic agreement classifier, evid
 
 The offline semantic-reliability/statistical-veto implementation is complete. Before any study execution, the next authorized task is prospective power analysis and disjoint successor-cohort design. It must determine calibration/validation sample sizes and freeze split rules; it does not authorize 200-run Bootstrap-BOSS, scene generation, semantic API calls or final-holdout access.
 
+Prospective power/cohort design is complete: 40 method-development, 400 semantic-calibration and 400 threshold-validation scenes are planned as disjoint roles. The next authorized task is offline implementation and synthetic conformance of the successor generator/split allocator only. It must not materialize the 840 study scenes, run Bootstrap-BOSS, call the semantic model or access the final holdout.
+
 ## Research integrity checklist
 
 - [x] reasoner never sees causal story or observational table

@@ -1,0 +1,186 @@
+schema_version: fourgraph.p1_v3_power_cohort_design.v1
+task: P1_V3_PROSPECTIVE_POWER_AND_COHORT_DESIGN
+status: offline_design_only
+
+parent:
+  audit: data/manifests/p1_v3_semantic_veto_conformance_audit.json
+  audit_sha256: D079C38CFBD72017B2523F2342A1D1A890367CCDC59FADDBC062F95E44EB027F
+  required_next_action: P1_V3_PROSPECTIVE_POWER_AND_COHORT_DESIGN
+
+protocol:
+  path: configs/p1_evidence_selective_v1.yaml
+  sha256: C119D3CB0035B41A7AC3EC27D56D4C1FBC8242724F653931D8F10BC5716E9442
+
+estimands:
+  independent_unit: scene
+  edge_unit: published_direction_nested_within_scene
+  primary_risk: end_to_end_selective_direction_error
+  risk_numerator: incorrect_semantic_selected_plus_incorrect_closure_propagated
+  risk_denominator: all_semantic_selected_plus_closure_propagated
+  false_adjacency_orientation: incorrect
+  primary_coverage: answered_unresolved_edges_over_statistically_supported_unresolved_edges
+  reporting_weights:
+    primary: mean_within_scene_error_fraction
+    sensitivity: pooled_edge_ratio_with_scene_clustered_interval
+  compelled_or_statistically_stable_directions_in_semantic_risk: false
+
+familywise_risk:
+  target_error_alpha: 0.05
+  total_failure_probability_delta: 0.05
+  allocation:
+    semantic_calibration: 0.025
+    threshold_validation: 0.025
+  semantic_groups: 6
+  threshold_candidates: 15
+  correction: bonferroni_hoeffding_bentkus_on_independent_bounded_scene_losses
+  cluster_handling:
+    risk_loss_per_scene: incorrect_directions_divided_by_published_directions
+    coverage_loss_per_scene: answered_edges_divided_by_eligible_edges
+    scenes_without_group_direction: excluded_from_that_semantic_group_test
+    scenes_without_candidate_direction: fail_minimum_contributing_scene_gate
+    within_scene_edges_never_treated_as_independent: true
+  assumptions_are_design_inputs_not_results: true
+
+power_design:
+  seed: 31001
+  monte_carlo_repetitions: 50000
+  target_power: 0.80
+  design_alternative_error: 0.01
+  sensitivity_error_rates: [0.005, 0.01, 0.02, 0.03, 0.05]
+  candidate_scene_counts: [160, 200, 240, 280, 320, 360, 400]
+  group_or_candidate_scene_prevalence: [0.60, 0.70, 0.80, 0.90]
+  availability_design_prevalence:
+    calibration: 0.80
+    validation: 0.90
+  directions_per_contributing_scene:
+    values: [1, 2, 3]
+    probabilities: [0.20, 0.50, 0.30]
+  calibration:
+    minimum_independent_contributing_scenes_per_group: 280
+    minimum_published_directions_per_group: 560
+    certification_power_at_design_alternative_minimum: 0.80
+    groups_below_minimum: not_certified
+  validation:
+    minimum_independent_contributing_scenes_per_candidate: 340
+    minimum_answered_edges_per_candidate: 680
+    certification_power_at_design_alternative_minimum: 0.80
+    coverage_lower_bound: 0.20
+    candidates_below_minimum: fail_gate
+
+cohorts:
+  method_development:
+    scene_count: 40
+    role: engineering_and_method_debug_only
+    namespace: P1V3D
+    scene_number_start: 120000
+    master_seed: 41001
+    may_change_implementation: true
+    may_certify_semantic_groups: false
+    may_select_threshold: false
+    change_after_completion_requires_new_downstream_cohorts: true
+  semantic_calibration:
+    scene_count: 400
+    role: certify_variant_by_agreement_reliability_only
+    namespace: P1V3C
+    scene_number_start: 121000
+    master_seed: 42001
+    may_change_implementation: false
+    may_certify_semantic_groups: true
+    may_select_threshold: false
+    oracle_role: grading_only_after_semantic_response_freeze
+  threshold_validation:
+    scene_count: 400
+    role: one_time_familywise_candidate_certification_and_selection
+    namespace: P1V3T
+    scene_number_start: 122000
+    master_seed: 43001
+    may_change_implementation: false
+    may_certify_semantic_groups: false
+    may_select_threshold: true
+    access_once_after_calibration_freeze: true
+    oracle_role: grading_only_after_all_non_oracle_outputs_freeze
+  existing_final_holdout:
+    scene_count: 80
+    role: one_time_final_performance_evaluation_only
+    status: sealed_unchanged
+    used_for_power_or_selection: false
+  total_new_scenes_planned: 840
+  disjointness:
+    split_unit: scene
+    exact_namespace_disjointness_required: true
+    scm_seed_disjointness_required: true
+    no_story_template_instance_reuse: true
+    old_development_and_p1v_validation: historical_diagnostics_only
+
+stratification:
+  variables:
+    node_count: [5, 6, 7]
+    primary_motif: [chain, fork, collider, mediator, diamond]
+    noise_family: [laplace, logistic, student_t_df5]
+    query_stratum: [valid_empty, one_minimal_nonempty, multiple_minimal, no_valid_adjustment_set]
+  method_development_targets:
+    node_count: {5: 14, 6: 13, 7: 13}
+    primary_motif_each: 8
+    noise_family: {laplace: 14, logistic: 13, student_t_df5: 13}
+    query_stratum_each: 10
+  calibration_targets:
+    node_count: {5: 134, 6: 133, 7: 133}
+    primary_motif_each: 80
+    noise_family: {laplace: 134, logistic: 133, student_t_df5: 133}
+    query_stratum_each: 100
+  validation_targets:
+    node_count: {5: 134, 6: 133, 7: 133}
+    primary_motif_each: 80
+    noise_family: {laplace: 134, logistic: 133, student_t_df5: 133}
+    query_stratum_each: 100
+  deterministic_assignment: minimize_max_marginal_imbalance_then_lexicographic
+  exact_marginal_targets_required: true
+
+stage_boundaries:
+  development:
+    can_inspect_oracle: true
+    can_debug_pipeline: true
+    cannot_claim_performance: true
+  calibration:
+    freeze_before_access:
+      - semantic_model_prompt_and_schemas
+      - statistical_method_and_threshold_grid
+      - evidence_validator
+      - reliability_scorer
+    output: certified_or_not_certified_status_for_each_of_six_groups
+    cannot_select_statistical_threshold: true
+  validation:
+    freeze_before_access:
+      - certified_semantic_groups
+      - all_hybrid_code_and_contracts
+      - all_15_candidates
+      - familywise_test_and_tie_breakers
+    selection: maximum_coverage_among_familywise_safe_candidates
+    no_safe_candidate: stop_without_final_holdout
+  final_holdout:
+    remains_unauthorized_by_this_design: true
+
+prospective_resource_envelope:
+  bootstrap_boss_runs_if_all_new_cohorts_later_authorized: 168000
+  semantic_whole_graph_calls_if_all_new_cohorts_later_authorized: 15120
+  calculation:
+    bootstrap: 840_scenes_times_200
+    semantic: 840_scenes_times_3_story_variants_times_6_prompts
+  runtime_and_cost_pilot_required_before_execution_authorization: true
+
+evidence_boundary:
+  power_simulation_only: true
+  successor_scene_records_created: 0
+  successor_observations_created: 0
+  bootstrap_or_boss_runs: 0
+  semantic_api_calls: 0
+  historical_cohorts_accessed: false
+  final_holdout_accessed: false
+
+authorization_after_pass:
+  next_action: P1_V3_SUCCESSOR_GENERATOR_AND_SPLIT_CONFORMANCE_OFFLINE
+  generator_implementation_and_synthetic_conformance: true
+  successor_cohort_generation: false
+  study_scene_bootstrap_execution: false
+  semantic_api_calls: false
+  final_holdout_access: false

@@ -1043,3 +1043,13 @@ Lớp semantic offline mới nhận sáu response whole-graph đã được chu�
 Suite tổng hợp có 90 cases, tương ứng 180 edge records và 1.080 judgments qua sáu prompt. Production và reference classifier khớp 180/180; validator chấp nhận 810 directional quotes cùng 270 abstentions có evidence null, và từ chối 48/48 malformed fixtures. Chín empirical-reliability groups giữ trạng thái `pending_risk_control`; chúng không thể tự biến point estimate thành chứng nhận an toàn. Statistical-veto production/reference khớp 36/36 quyết định và không cho semantic evidence hồi sinh adjacency yếu hoặc không tồn tại.
 
 Toàn bộ bước này dùng story/response tổng hợp: không gọi GPT, không chạy BOSS, không đọc study observations, không sinh cohort và không mở holdout. Bước tiếp theo chỉ là thiết kế prospective power và các cohort calibration/validation tách biệt; việc thực thi nghiên cứu vẫn chưa được cấp quyền.
+
+## 36. Prospective power và thiết kế cohort độc lập
+
+Power design coi mỗi scene/SCM là một đơn vị độc lập. Những edge nằm trong cùng scene được gộp thành một error fraction giới hạn từ 0 đến 1, sau đó kiểm định bằng Hoeffding–Bentkus và Bonferroni. Nhờ vậy, nhiều cạnh từ cùng một graph không bị đếm giả như nhiều mẫu độc lập.
+
+Failure budget `δ=0,05` được chia đôi: `0,025` cho sáu nhóm semantic reliability và `0,025` cho 15 threshold candidates. Với giả định phương pháp thật sự chỉ sai 1%, minimum 280 calibration scenes đem lại power khoảng 0,849; minimum 340 validation scenes đem lại power khoảng 0,872. Đây chỉ là giả định planning, không phải accuracy đã quan sát.
+
+Thiết kế khóa ba cohort mới: 40 method-development scenes, 400 semantic-calibration scenes và 400 threshold-validation scenes. Calibration chỉ chứng nhận nhóm Full/Partial/Ambiguous × Very High/High; validation chỉ được mở một lần để chứng nhận/chọn trong 15 candidates đã khóa. Ba cohort có namespace, seed và vai trò tách biệt; 80 final holdout cũ vẫn đóng.
+
+Bước này chưa tạo 840 scene hay exact IDs. Nó cũng không chạy 168.000 Bootstrap-BOSS fits dự kiến, không thực hiện 15.120 semantic calls dự kiến và không đọc cohort/holdout cũ. Tiếp theo chỉ được implement generator/split allocator và synthetic conformance offline.
