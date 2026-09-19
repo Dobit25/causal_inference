@@ -1,0 +1,24 @@
+{
+  "schema_version": "fourgraph.p1_v3_openai_rate_card.v1",
+  "captured_at_utc": "2026-09-19T05:41:03.3838178Z",
+  "source": {
+    "publisher": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/pricing",
+    "retrieval": "official_developer_docs_and_direct_read_only_fetch",
+    "direct_fetch_bytes": 584916,
+    "direct_fetch_sha256": "3185F9A57F0DFDDEB1D239888AC158975C30F31B4894D38E2414D859F53A8290"
+  },
+  "model": "gpt-5.4-nano",
+  "snapshot": "gpt-5.4-nano-2026-03-17",
+  "processing_tier": "standard",
+  "currency": "USD",
+  "unit": "per_1m_tokens",
+  "short_context": {
+    "input": 0.20,
+    "cached_input": 0.02,
+    "output_including_reasoning": 1.25
+  },
+  "regional_processing_uplift_applied": false,
+  "endpoint_surcharge": 0,
+  "verified_from_official_source": true
+}

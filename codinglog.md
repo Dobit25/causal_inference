@@ -566,3 +566,10 @@
 - Credentials: Captured only `OPENAI_API_KEY_present: true`; no secret value entered any artifact.
 - Cost: Pinned the existing higher project rate schedule solely as a conservative offline accounting ceiling and USD 1.50 as the dedicated pilot budget. Did not claim it is current Nano pricing; official price and remaining platform balance remain live-execution blockers.
 - Boundary: BOSS/bootstrap runs 0, API calls 0, observation rows 0, stories 0, successor scenes 0, holdout access false. Preflight is frozen but `execution_ready: false`; only a separate authorization checkpoint is allowed next.
+
+## 2026-09-19 — P1-v3 execution-authorization checkpoint
+
+- Official rate: Verified GPT-5.4 Nano Standard pricing from OpenAI at USD 0.20/M input, 0.02/M cached input and 1.25/M output; confirmed snapshot `gpt-5.4-nano-2026-03-17`.
+- Balance: The official organization-cost endpoint requires an Admin key. The available project key received HTTP 403 on one read-only attempt; no model request or tokens were generated. Current spend/balance therefore remains unverified.
+- Adapter: Added a separately hash-pinned semantic adapter with worst-case reservation, required usage telemetry, exact cost accounting and fail-closed USD 1.50 cap. Its guarded entrypoint checks authorization before any workload.
+- Decision: Frozen `DENY_PENDING_BALANCE_VERIFICATION`; only a balance-attestation amendment is permitted. Observations/BOSS/semantic calls/successor generation/holdout access remain zero.

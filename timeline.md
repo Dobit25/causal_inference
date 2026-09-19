@@ -1075,3 +1075,9 @@ Thiết kế đã tái sinh byte-for-byte và test 6/6. Chưa có pilot scene, o
 Preflight đã khóa chính xác 9 pilot identities/blueprints và chọn 6 scene cho semantic timing sample. Nó cũng khóa source hashes của runner, Bootstrap-BOSS, Tetrad/OpenAI adapter, prompt/schema; chụp cấu hình máy, conda Python, JVM, Tetrad jar, dung lượng đĩa và chỉ boolean về sự tồn tại của API key. Không observation hay story nào được sinh.
 
 Bảng giá cũ trong repo được giữ như conservative accounting ceiling, không được gọi là giá Nano hiện hành; ngân sách pilot được khóa ở USD 1,50. Do bước này offline, official rate card và platform balance vẫn chưa được xác minh. Vì vậy preflight hoàn tất về reproducibility nhưng cố ý chưa `execution_ready`; bước tiếp theo phải là một checkpoint cấp quyền riêng, không phải tự động chạy pilot.
+
+## 40. Checkpoint cấp quyền thực thi pilot
+
+Official Nano rate đã được xác minh: USD 0,20/M input, 0,02/M cached input và 1,25/M output ở Standard tier. Live semantic adapter riêng cũng được khóa hash với cost reservation trước call và hard cap USD 1,50.
+
+Tuy nhiên số dư không thể đọc bằng project key vì official costs endpoint yêu cầu Admin key; lần kiểm tra read-only trả HTTP 403 và dùng 0 token. Do đó checkpoint đóng băng quyết định DENY, không phải PASS. Chỉ sau một balance-attestation amendment từ Platform Usage/Limits hoặc Admin-key check mới được cân nhắc cấp quyền chạy pilot.

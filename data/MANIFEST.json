@@ -444,6 +444,11 @@
       "name": "p1_v3_runtime_cost_pilot_preflight",
       "role": "offline_exact_pilot_identity_runner_environment_rate_budget_and_execution_blocker_freeze",
       "manifest": "data/manifests/p1_v3_runtime_cost_pilot_preflight_audit.json"
+    },
+    {
+      "name": "p1_v3_runtime_cost_pilot_execution_checkpoint",
+      "role": "official_rate_live_adapter_and_fail_closed_balance_authorization_decision",
+      "manifest": "data/manifests/p1_v3_runtime_cost_pilot_execution_checkpoint_audit.json"
     }
   ]
 }

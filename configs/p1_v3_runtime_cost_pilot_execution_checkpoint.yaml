@@ -1,0 +1,85 @@
+schema_version: fourgraph.p1_v3_runtime_cost_pilot_execution_checkpoint.v1
+task: P1_V3_RUNTIME_COST_PILOT_EXECUTION_AUTHORIZATION_CHECKPOINT
+status: frozen_deny_pending_balance_verification
+
+parent:
+  preflight_audit: data/manifests/p1_v3_runtime_cost_pilot_preflight_audit.json
+  preflight_audit_sha256: 020016E88DC2A1DB1DB6E53EE1D89C28019CCA7E03BF2DE5E595C9148E9E5C41
+  required_next_action: P1_V3_RUNTIME_COST_PILOT_EXECUTION_AUTHORIZATION_CHECKPOINT
+
+official_rate_card:
+  record: configs/p1_v3_runtime_cost_pilot_official_rate_card.json
+  record_sha256: E6D966C02AAA8D920FE37F6BEF919644F70A64B97DF43C252F4534CD01078AE9
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  service_tier: default
+  standard_rates_usd_per_million_tokens:
+    uncached_input: 0.20
+    cached_input: 0.02
+    output_including_reasoning: 1.25
+  verified: true
+
+platform_balance_check:
+  checked_at_utc: '2026-09-19T05:41:03.3838178Z'
+  official_endpoint: /v1/organization/costs
+  endpoint_requires: OPENAI_ADMIN_KEY
+  openai_admin_key_present: false
+  project_api_key_present: true
+  project_key_read_only_attempt_http_status: 403
+  model_request_made: false
+  token_usage: 0
+  current_project_spend_usd: null
+  current_platform_balance_usd: null
+  monthly_project_spend_limit_usd: null
+  balance_verified: false
+  resolution: user_must_supply_current_platform_usage_and_hard_limit_attestation_or_provide_admin_key_outside_repo
+
+live_adapter:
+  library: src/fourgraph/runtime_cost_pilot_live.py
+  library_sha256: 6CE0E37F8709454D8EE792F29BFB67B74386E5FC55EFF2ED45291E9A42279293
+  guarded_entrypoint: scripts/execute_p1_v3_runtime_cost_pilot.py
+  guarded_entrypoint_sha256: 21DF8A1B8DFE1FF1C60D1F5093A1347731C819A0D71A48AA766B73D85AA7408F
+  capabilities:
+    - worst_case_pre_call_budget_reservation
+    - provider_usage_telemetry_required
+    - exact_post_call_cost_accounting
+    - fail_closed_on_cost_cap
+    - fail_closed_on_missing_authorization
+  imported_or_executed_during_checkpoint: false
+
+decision:
+  authorization: DENY_PENDING_BALANCE_VERIFICATION
+  official_rate_gate: pass
+  platform_balance_gate: fail_unverifiable_with_project_key
+  adapter_hash_gate: pass
+  pilot_budget_cap_usd: 1.50
+  all_gates_required: true
+
+evidence_boundary:
+  official_docs_reads: 3
+  organization_cost_endpoint_read_attempts: 1
+  model_api_calls: 0
+  input_tokens: 0
+  output_tokens: 0
+  pilot_observation_rows_generated: 0
+  bootstrap_or_boss_runs: 0
+  semantic_api_calls: 0
+  successor_scenes_generated: 0
+  final_holdout_accessed: false
+
+authorization:
+  schema_version: fourgraph.p1_v3_runtime_cost_pilot_live_authorization.v1
+  preflight_audit_sha256: 020016E88DC2A1DB1DB6E53EE1D89C28019CCA7E03BF2DE5E595C9148E9E5C41
+  explicit_user_authorization: false
+  pilot_execution: false
+  successor_cohort_generation: false
+  study_scene_bootstrap_execution: false
+  semantic_api_calls: false
+  final_holdout_access: false
+
+authorization_after_freeze:
+  next_action: P1_V3_RUNTIME_COST_PILOT_BALANCE_ATTESTATION_AMENDMENT
+  balance_attestation_only: true
+  pilot_execution: false
+  successor_cohort_generation: false
+  semantic_api_calls: false
+  final_holdout_access: false

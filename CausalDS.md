@@ -502,3 +502,9 @@ All feasibility gates are preregistered, including deterministic replay, at leas
 The offline preflight freezes `SYNPILOT000–SYNPILOT008`, deterministic blueprint hashes and the six IDs that would supply 108 semantic timing calls. It records the exact conda/Python package set, Windows/CPU/RAM/disk snapshot, Azul JVM DLL, Tetrad jar and all runner/prompt/schema hashes. It records only whether credentials exist, never their values. No observation table or story was produced.
 
 The repository had no verified current rate card for GPT-5.4 Nano. Instead of mislabeling an older Mini price as Nano pricing, preflight pins it only as a conservative offline accounting ceiling and pins USD 1.50 as the dedicated pilot budget. Current official Nano rates and remaining platform balance must be verified at a separate authorization checkpoint. Consequently the preflight is reproducible but deliberately reports `execution_ready: false` and grants no live permission.
+
+## 23. P1-v3 execution-authorization checkpoint
+
+The official OpenAI pricing page now verifies GPT-5.4 Nano Standard rates of USD 0.20/M input, 0.02/M cached input and 1.25/M output, and the official model page confirms snapshot `gpt-5.4-nano-2026-03-17`. A separate adapter enforces worst-case pre-call reservation, exact post-call accounting and the USD 1.50 hard cap.
+
+Balance could not be verified with the project-scoped key: the official organization costs endpoint requires `OPENAI_ADMIN_KEY` and returned HTTP 403 without invoking a model. Since all gates are mandatory, the frozen decision is `DENY_PENDING_BALANCE_VERIFICATION`. A current Platform Usage/Limits attestation or out-of-repo Admin key check is required before a later amendment may authorize execution.
