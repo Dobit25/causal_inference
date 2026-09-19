@@ -484,3 +484,9 @@ The successor study uses the scene as the independent inferential unit. For each
 The frozen plan contains 40 development scenes, 400 semantic-calibration scenes and 400 threshold-validation scenes. Development is engineering-only. Calibration can certify the six `story variant × Very High/High` groups but cannot choose a statistical threshold. Validation receives the already frozen reliability decisions and may select maximum coverage among the fifteen candidates only once. The three roles use separate namespaces and seeds; old P1 cohorts are diagnostics only and the existing 80-scene final holdout remains sealed.
 
 At least 280 calibration scenes must contribute to a semantic group and at least 340 validation scenes must contribute to a threshold candidate. At these minima, prospective power is respectively 0.849 and 0.872 under a true 1% error design alternative. These numbers are planning assumptions, not performance results. The design created no scene, observation or exact scene-ID manifest and authorized no live method execution.
+
+## 20. P1-v3 successor generator and allocator conformance
+
+The successor generator now implements deterministic exact-marginal allocation and the frozen linear non-Gaussian SCM blueprint family, but the implementation hard-rejects the reserved `P1V3D`, `P1V3C` and `P1V3T` namespaces. A later hash-frozen execution layer is required before real IDs can exist.
+
+Offline conformance used 24 synthetic blueprints across three `SYN*` roles. Production allocation matched an independent reference, every graph/query was reproducible, and the two task solvers agreed on all 120 task targets. No observational array or semantic story was generated. The 40/400/400 real design was checked only for count/range/namespace/seed consistency and remains unmaterialized.

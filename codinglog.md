@@ -542,3 +542,11 @@
 - Cohorts: Planned 40 method-development, 400 semantic-calibration and 400 one-time threshold-validation scenes, with separate namespaces/seeds and exact stratification margins. Calibration cannot select thresholds; validation cannot redefine semantic reliability.
 - Feasibility envelope: Full later execution would require 168,000 Bootstrap-BOSS fits and 15,120 whole-graph semantic calls, so a runtime/cost pilot is mandatory before authorization.
 - Boundary: Generated no scene, observation or exact scene-ID manifest; ran no BOSS/bootstrap; made no API call; accessed no historical cohort or final holdout. Only offline generator/split implementation and synthetic conformance is authorized next.
+
+## 2026-09-19 — P1-v3 successor generator/split offline conformance
+
+- Implementation: Added a deterministic exact-marginal allocator, synthetic-only linear non-Gaussian SCM blueprint generator, reserved-namespace guard and independent SHA-256 allocation reference. The frozen real role arithmetic/ranges/seeds are validated without materializing IDs.
+- Synthetic suite: Generated 24 in-memory/versioned blueprint summaries across `SYNDEV`, `SYNCAL` and `SYNVAL`. Exact node/motif/noise/query margins passed 12/12 checks; generation replay matched 24/24 and seed perturbation changed 3/3 role fixtures.
+- Semantics: Every synthetic DAG met connectivity, motif, CPDAG-uncertainty and query-stratum constraints. Production/reference task solvers agreed 120/120 targets. No observation arrays or semantic stories were generated.
+- Failure handling: 30/30 malformed count, namespace, range-overlap and seed fixtures failed closed. Reserved `P1V3D/C/T` namespaces cannot be used by this offline module.
+- Boundary: Real successor IDs/scenes 0; observation rows 0; Bootstrap/BOSS runs 0; API calls 0; historical/final-holdout access 0. Only offline runtime/cost-pilot design is authorized next.

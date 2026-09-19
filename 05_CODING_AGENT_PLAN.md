@@ -145,6 +145,8 @@ The offline semantic-reliability/statistical-veto implementation is complete. Be
 
 Prospective power/cohort design is complete: 40 method-development, 400 semantic-calibration and 400 threshold-validation scenes are planned as disjoint roles. The next authorized task is offline implementation and synthetic conformance of the successor generator/split allocator only. It must not materialize the 840 study scenes, run Bootstrap-BOSS, call the semantic model or access the final holdout.
 
+Successor generator/split conformance is complete using synthetic namespaces only. The next authorized task is to design and freeze a runtime/cost pilot offline. The pilot itself, real cohort generation, Bootstrap-BOSS execution, semantic API calls and final-holdout access remain unauthorized.
+
 ## Research integrity checklist
 
 - [x] reasoner never sees causal story or observational table

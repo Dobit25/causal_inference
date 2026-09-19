@@ -429,6 +429,11 @@
       "name": "p1_v3_power_cohort_design",
       "role": "prospective_scene_clustered_power_and_disjoint_successor_cohort_design",
       "manifest": "data/manifests/p1_v3_power_cohort_design_audit.json"
+    },
+    {
+      "name": "p1_v3_successor_generator_conformance",
+      "role": "offline_synthetic_successor_generator_and_exact_marginal_allocator_conformance",
+      "manifest": "data/manifests/p1_v3_successor_generator_conformance_audit.json"
     }
   ]
 }

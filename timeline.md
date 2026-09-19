@@ -1053,3 +1053,11 @@ Failure budget `δ=0,05` được chia đôi: `0,025` cho sáu nhóm semantic re
 Thiết kế khóa ba cohort mới: 40 method-development scenes, 400 semantic-calibration scenes và 400 threshold-validation scenes. Calibration chỉ chứng nhận nhóm Full/Partial/Ambiguous × Very High/High; validation chỉ được mở một lần để chứng nhận/chọn trong 15 candidates đã khóa. Ba cohort có namespace, seed và vai trò tách biệt; 80 final holdout cũ vẫn đóng.
 
 Bước này chưa tạo 840 scene hay exact IDs. Nó cũng không chạy 168.000 Bootstrap-BOSS fits dự kiến, không thực hiện 15.120 semantic calls dự kiến và không đọc cohort/holdout cũ. Tiếp theo chỉ được implement generator/split allocator và synthetic conformance offline.
+
+## 37. Successor generator và split allocator synthetic conformance
+
+Generator/allocator mới có thể phân bổ chính xác node count, motif, noise family và query stratum bằng seed cố định, sau đó tạo blueprint SCM linear non-Gaussian thỏa connectivity, motif, CPDAG uncertainty và task-query constraints. Tuy nhiên code offline hard-block ba namespace thật `P1V3D`, `P1V3C`, `P1V3T`; vì vậy nó chưa thể vô tình sinh cohort nghiên cứu.
+
+Conformance chỉ dùng 24 synthetic fixtures thuộc `SYNDEV`, `SYNCAL`, `SYNVAL`. Allocation production/reference khớp; 12/12 marginal checks, 24/24 deterministic replays, 3/3 seed perturbations và 120/120 task-solver agreements đều đạt. Ba mươi malformed fixtures bị từ chối.
+
+Không observation row, story hay exact study ID nào được tạo; không BOSS/bootstrap/API chạy và holdout vẫn đóng. Bước kế tiếp duy nhất là thiết kế runtime/cost pilot offline trước khi cân nhắc cấp quyền thực thi pilot.

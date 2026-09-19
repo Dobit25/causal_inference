@@ -1,0 +1,30 @@
+{"error":"reserved real namespace requires later authorization","fixture_id":"SUCCINVALID000","fixture_type":"reserved_namespace","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"offline allocator accepts synthetic namespaces only","fixture_id":"SUCCINVALID001","fixture_type":"non_synthetic_role","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"scene_count must be a positive integer","fixture_id":"SUCCINVALID002","fixture_type":"zero_count","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"marginal fields do not match contract","fixture_id":"SUCCINVALID003","fixture_type":"missing_marginal","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"node_count counts do not cover role","fixture_id":"SUCCINVALID004","fixture_type":"node_count_total","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"primary_motif counts do not cover role","fixture_id":"SUCCINVALID005","fixture_type":"motif_total","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"query_stratum counts must be non-negative integers","fixture_id":"SUCCINVALID006","fixture_type":"negative_count","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"real scene ranges overlap","fixture_id":"SUCCINVALID007","fixture_type":"real_range_overlap","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"real namespaces are missing or duplicated","fixture_id":"SUCCINVALID008","fixture_type":"real_namespace_duplicate","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"real master seeds must be distinct integers","fixture_id":"SUCCINVALID009","fixture_type":"real_seed_duplicate","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"reserved real namespace requires later authorization","fixture_id":"SUCCINVALID010","fixture_type":"reserved_namespace","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"offline allocator accepts synthetic namespaces only","fixture_id":"SUCCINVALID011","fixture_type":"non_synthetic_role","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"scene_count must be a positive integer","fixture_id":"SUCCINVALID012","fixture_type":"zero_count","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"marginal fields do not match contract","fixture_id":"SUCCINVALID013","fixture_type":"missing_marginal","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"node_count counts do not cover role","fixture_id":"SUCCINVALID014","fixture_type":"node_count_total","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"primary_motif counts do not cover role","fixture_id":"SUCCINVALID015","fixture_type":"motif_total","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"query_stratum counts must be non-negative integers","fixture_id":"SUCCINVALID016","fixture_type":"negative_count","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"real scene ranges overlap","fixture_id":"SUCCINVALID017","fixture_type":"real_range_overlap","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"real namespaces are missing or duplicated","fixture_id":"SUCCINVALID018","fixture_type":"real_namespace_duplicate","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"real master seeds must be distinct integers","fixture_id":"SUCCINVALID019","fixture_type":"real_seed_duplicate","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"reserved real namespace requires later authorization","fixture_id":"SUCCINVALID020","fixture_type":"reserved_namespace","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"offline allocator accepts synthetic namespaces only","fixture_id":"SUCCINVALID021","fixture_type":"non_synthetic_role","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"scene_count must be a positive integer","fixture_id":"SUCCINVALID022","fixture_type":"zero_count","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"marginal fields do not match contract","fixture_id":"SUCCINVALID023","fixture_type":"missing_marginal","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"node_count counts do not cover role","fixture_id":"SUCCINVALID024","fixture_type":"node_count_total","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"primary_motif counts do not cover role","fixture_id":"SUCCINVALID025","fixture_type":"motif_total","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"query_stratum counts must be non-negative integers","fixture_id":"SUCCINVALID026","fixture_type":"negative_count","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"real scene ranges overlap","fixture_id":"SUCCINVALID027","fixture_type":"real_range_overlap","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"real namespaces are missing or duplicated","fixture_id":"SUCCINVALID028","fixture_type":"real_namespace_duplicate","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
+{"error":"real master seeds must be distinct integers","fixture_id":"SUCCINVALID029","fixture_type":"real_seed_duplicate","rejected":true,"schema_version":"fourgraph.p1_v3_successor_invalid_fixture.v1"}
