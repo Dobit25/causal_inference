@@ -1,0 +1,183 @@
+schema_version: fourgraph.p1_v3_runtime_cost_pilot_design.v1
+task: P1_V3_RUNTIME_COST_PILOT_DESIGN_OFFLINE
+status: design_frozen_execution_forbidden
+
+parent:
+  audit: data/manifests/p1_v3_successor_generator_conformance_audit.json
+  audit_sha256: AF0E879CE4C04CDF06880320CC8592F76F6632FA0747E853682C61A2564D02E1
+  required_next_action: P1_V3_RUNTIME_COST_PILOT_DESIGN_OFFLINE
+  successor_conformance_config: configs/p1_v3_successor_generator_conformance.yaml
+  successor_conformance_config_sha256: DF533077B65395B5A51D7E835048657798B079F7BEEF6CCC3E97B2F05037D01F
+  evidence_selective_protocol: configs/p1_evidence_selective_v1.yaml
+  evidence_selective_protocol_sha256: C119D3CB0035B41A7AC3EC27D56D4C1FBC8242724F653931D8F10BC5716E9442
+
+purpose:
+  primary: estimate_engineering_runtime_token_storage_and_cost_feasibility
+  scientific_hypothesis_test: false
+  method_threshold_selection: false
+  accuracy_or_oracle_scoring: false
+  outputs_may_only_support: [feasible, infeasible, redesign_required]
+
+synthetic_panel:
+  namespace: SYNPILOT
+  master_seed: 61001
+  scene_count: 9
+  scene_ids_materialized_now: false
+  node_count: {5: 3, 6: 3, 7: 3}
+  primary_motif: {chain: 2, fork: 2, collider: 2, mediator: 2, diamond: 1}
+  noise_family: {laplace: 3, logistic: 3, student_t_df5: 3}
+  query_stratum: {valid_empty: 3, one_minimal_nonempty: 3, multiple_minimal: 2, no_valid_adjustment_set: 1}
+  observations_per_scene_if_later_executed: 2000
+  story_variants: [full, partial, ambiguous]
+  reserved_study_namespaces_forbidden: [P1V3D, P1V3C, P1V3T]
+
+pilot_schedule:
+  generator:
+    scenes: 9
+    deterministic_replays: 9
+    observation_n: 2000
+    metrics: [wall_seconds, cpu_seconds, peak_rss_bytes, artifact_bytes, replay_hash_match]
+  bootstrap_boss:
+    warmup_fits: 3
+    warmup_allocation: one_per_node_count
+    warmup_excluded_from_runtime_distribution: true
+    measured_scenes: 9
+    repetitions_per_scene: 30
+    measured_fits: 270
+    study_repetitions_remain: 200
+    purpose: runtime_and_failure_estimation_only
+    scientific_stability_estimation_allowed: false
+    execution_mode: single_worker_primary
+    optional_two_worker_diagnostic: false
+    metrics:
+      - fit_wall_seconds
+      - scene_total_wall_seconds
+      - cold_start_seconds
+      - failure_type
+      - peak_python_rss_bytes
+      - peak_java_rss_bytes
+      - cpdag_node_and_edge_counts
+  semantic_api:
+    model_snapshot: gpt-5.4-nano-2026-03-17
+    endpoint: /v1/responses
+    reasoning_effort: none
+    temperature: 0
+    service_tier: default
+    store: false
+    structured_outputs: true
+    max_output_tokens: 2000
+    sampled_scenes: 6
+    sampling: two_scenes_per_node_count_lowest_sha256_rank
+    story_variants: 3
+    prompt_variants: 6
+    planned_logical_calls: 108
+    maximum_total_attempts: 120
+    maximum_validation_retries_per_call: 2
+    pacing_rpm_cap: 18
+    metrics:
+      - request_id
+      - returned_model_snapshot
+      - input_tokens
+      - cached_input_tokens
+      - output_tokens
+      - reasoning_tokens
+      - latency_ms
+      - retry_and_failure_type
+      - response_bytes
+      - schema_and_quote_validation
+
+cost_accounting:
+  currency: USD
+  pricing_not_frozen_in_offline_design: true
+  execution_requires_rate_card:
+    source: official_provider_project_billing_page_or_official_pricing
+    captured_at_utc: required
+    model_snapshot: required
+    input_usd_per_million_tokens: required
+    cached_input_usd_per_million_tokens: required
+    output_usd_per_million_tokens: required
+    rate_card_sha256: required
+  formula: noncached_input_times_input_rate_plus_cached_input_times_cached_rate_plus_output_times_output_rate
+  pilot_hard_cost_cap_usd: 1.50
+  full_projection_safety_multiplier: 1.25
+  approved_remaining_project_budget_usd: required_at_preflight_not_stored_as_secret
+  projected_cost_with_reserve_must_not_exceed_approved_remaining_budget: true
+
+full_study_projection:
+  successor_scenes: 840
+  bootstrap_boss_fits: 168000
+  semantic_logical_calls: 15120
+  projection_statistics:
+    central: scene_stratified_median
+    conservative: scene_stratified_p95
+    uncertainty: leave_one_scene_out_range
+  runtime_formula:
+    generator: per_scene_distribution_times_840
+    bootstrap_boss_single_worker: per_fit_and_per_scene_distributions_times_168000
+    semantic: per_call_and_per_scene_variant_distributions_times_15120
+  cost_formula: observed_tokens_per_call_times_15120_times_rate_card
+  storage_formula: observed_artifact_bytes_per_scene_times_840
+  reserve_multiplier_applies_to: [api_cost, runtime, storage]
+
+feasibility_gates:
+  generator:
+    successful_scenes: 9
+    replay_hash_matches: 9
+  bootstrap_boss:
+    minimum_successful_measured_fits: 268
+    maximum_failure_rate: 0.01
+    all_failures_classified: true
+    projected_single_worker_hours_with_reserve_max: 168
+  semantic_api:
+    completed_logical_calls: 108
+    final_schema_success_rate: 1.0
+    first_attempt_schema_success_rate_min: 0.95
+    retry_rate_max: 0.05
+    exact_model_snapshot_rate: 1.0
+    pilot_cost_lte_hard_cap: true
+  projection:
+    projected_api_cost_with_reserve_within_approved_budget: true
+    projected_storage_with_reserve_within_80_percent_free_disk: true
+    no_unclassified_terminal_failure: true
+  gate_policy: all_must_pass
+  failure_action: stop_before_real_cohort_generation_and_register_redesign
+
+preflight_requirements:
+  exact_synthetic_ids_and_hashes_frozen: true
+  runner_and_environment_hashes_frozen: true
+  java_python_package_versions_captured: true
+  machine_cpu_memory_disk_captured: true
+  rate_card_and_remaining_budget_captured: true
+  api_key_presence_boolean_only: true
+  secrets_never_logged: true
+  raw_logs_ignored: true
+  resume_cache_check_supported: true
+  explicit_user_authorization_required_after_preflight: true
+
+result_boundary:
+  pilot_results_are_engineering_measurements: true
+  pilot_results_cannot_change_scientific_thresholds: true
+  pilot_scenes_cannot_enter_development_calibration_validation_or_holdout: true
+  pilot_responses_cannot_certify_semantic_reliability: true
+  pilot_boss_outputs_cannot_estimate_edge_stability: true
+  feasibility_pass_does_not_authorize_study_execution: true
+
+evidence_boundary:
+  pilot_executed: false
+  synthetic_pilot_scenes_materialized: 0
+  observation_rows_generated: 0
+  bootstrap_or_boss_runs: 0
+  semantic_api_calls: 0
+  pricing_network_lookup: false
+  real_successor_scenes_generated: 0
+  historical_cohorts_accessed: false
+  final_holdout_accessed: false
+
+authorization_after_pass:
+  next_action: P1_V3_RUNTIME_COST_PILOT_PREFLIGHT_FREEZE
+  preflight_freeze_offline: true
+  pilot_execution: false
+  successor_cohort_generation: false
+  study_scene_bootstrap_execution: false
+  semantic_api_calls: false
+  final_holdout_access: false

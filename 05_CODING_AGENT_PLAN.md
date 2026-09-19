@@ -147,6 +147,8 @@ Prospective power/cohort design is complete: 40 method-development, 400 semantic
 
 Successor generator/split conformance is complete using synthetic namespaces only. The next authorized task is to design and freeze a runtime/cost pilot offline. The pilot itself, real cohort generation, Bootstrap-BOSS execution, semantic API calls and final-holdout access remain unauthorized.
 
+Runtime/cost-pilot design is complete and frozen offline. It preregisters a 9-scene synthetic panel, 270 measured Bootstrap-BOSS fits, 108 semantic calls, resource projections, feasibility gates and strict scientific-use boundaries. No pilot artifact was materialized and no execution occurred. The next authorized action is only an offline preflight freeze that must pin exact synthetic IDs, runners, environment, official rate card, approved budget and disk capacity; pilot execution still requires explicit user authorization.
+
 ## Research integrity checklist
 
 - [x] reasoner never sees causal story or observational table

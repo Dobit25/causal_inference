@@ -434,6 +434,11 @@
       "name": "p1_v3_successor_generator_conformance",
       "role": "offline_synthetic_successor_generator_and_exact_marginal_allocator_conformance",
       "manifest": "data/manifests/p1_v3_successor_generator_conformance_audit.json"
+    },
+    {
+      "name": "p1_v3_runtime_cost_pilot_design",
+      "role": "offline_frozen_engineering_feasibility_pilot_schedule_projection_and_gates",
+      "manifest": "data/manifests/p1_v3_runtime_cost_pilot_design_audit.json"
     }
   ]
 }

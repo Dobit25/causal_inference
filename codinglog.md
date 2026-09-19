@@ -550,3 +550,11 @@
 - Semantics: Every synthetic DAG met connectivity, motif, CPDAG-uncertainty and query-stratum constraints. Production/reference task solvers agreed 120/120 targets. No observation arrays or semantic stories were generated.
 - Failure handling: 30/30 malformed count, namespace, range-overlap and seed fixtures failed closed. Reserved `P1V3D/C/T` namespaces cannot be used by this offline module.
 - Boundary: Real successor IDs/scenes 0; observation rows 0; Bootstrap/BOSS runs 0; API calls 0; historical/final-holdout access 0. Only offline runtime/cost-pilot design is authorized next.
+
+## 2026-09-19 — P1-v3 runtime/cost pilot offline design
+
+- Scope: Froze an engineering-only synthetic pilot with 9 planned scenes, 9 deterministic replays, 3 excluded BOSS warm-ups, 270 measured Bootstrap-BOSS fits and 108 whole-graph GPT-5.4 Nano calls. No workload was executed.
+- Projection: Registered extrapolation to 840 successor scenes, 168,000 BOSS fits and 15,120 semantic calls using scene-stratified median, p95 and leave-one-scene-out ranges with a 1.25 reserve multiplier.
+- Gates: Required deterministic generation, at least 268/270 successful measured BOSS fits and at most 1% failure, projected single-worker runtime at most 168 hours, 108/108 API cases, 100% final schema success, at least 95% first-attempt schema success, at most 5% retry, exact snapshot and registered cost/storage limits.
+- Cost integrity: Set a USD 1.50 pilot cap but did not invent or fetch current pricing offline. A later preflight must hash-pin the official rate card, remaining approved budget and machine/software environment.
+- Boundary: Materialized pilot scenes 0; observation rows 0; BOSS/bootstrap runs 0; semantic API calls 0; successor scenes 0; historical/final-holdout access false. Only offline preflight freeze is authorized next.

@@ -1061,3 +1061,11 @@ Generator/allocator mới có thể phân bổ chính xác node count, motif, no
 Conformance chỉ dùng 24 synthetic fixtures thuộc `SYNDEV`, `SYNCAL`, `SYNVAL`. Allocation production/reference khớp; 12/12 marginal checks, 24/24 deterministic replays, 3/3 seed perturbations và 120/120 task-solver agreements đều đạt. Ba mươi malformed fixtures bị từ chối.
 
 Không observation row, story hay exact study ID nào được tạo; không BOSS/bootstrap/API chạy và holdout vẫn đóng. Bước kế tiếp duy nhất là thiết kế runtime/cost pilot offline trước khi cân nhắc cấp quyền thực thi pilot.
+
+## 38. Thiết kế runtime/cost pilot P1-v3
+
+Pilot được thiết kế như một phép đo kỹ thuật độc lập, không phải thí nghiệm khoa học. Khi được cấp quyền trong tương lai, nó sẽ dùng 9 scene synthetic riêng, đo 270 lượt Bootstrap-BOSS sau 3 warm-up và 108 API calls đại diện; từ đó ngoại suy runtime, token, chi phí và storage cho 840 scene mà không dùng kết quả để sửa threshold hay claim.
+
+Các gate đã được khóa trước: sinh/replay deterministic, tối thiểu 268/270 BOSS fits thành công với failure rate không quá 1%, runtime single-worker có dự phòng không quá 168 giờ, API parse/schema/snapshot đạt yêu cầu, chi phí pilot không quá USD 1,50 và full projection không vượt ngân sách/dung lượng được phê duyệt. Giá API hiện hành chưa được tra cứu vì bước này hoàn toàn offline; nó phải được hash-pin cùng environment, runner và exact synthetic IDs ở preflight kế tiếp.
+
+Thiết kế đã tái sinh byte-for-byte và test 6/6. Chưa có pilot scene, observation, BOSS fit hoặc API response nào được tạo. Bước tiếp theo duy nhất được phép là đóng băng preflight hoàn toàn offline; vẫn chưa được chạy pilot hay materialize 840 scenes.
