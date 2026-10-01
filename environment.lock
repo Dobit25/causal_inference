@@ -1,0 +1,16 @@
+# P1-v3 Statistical Ensemble Phase A-B environment lock
+# This file records requirements and does not claim that pending dependencies
+# are installed on the current machine.
+
+python==3.10.20
+java==21.0.10
+tetrad_version==7.6.11-SNAPSHOT
+tetrad_jar_sha256==5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051
+py_tetrad_commit==092a8cf13a9b31809d4256fd9aa3c98c52b88002
+r_required==true
+bnlearn==5.3-20260901
+bnlearn_ci_test==zf
+bnlearn_alpha==0.01
+bnlearn_max_sx==NULL
+bnlearn_undirected==TRUE
+environment_verification==PENDING

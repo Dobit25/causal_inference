@@ -1,0 +1,128 @@
+schema_version: fourgraph.p1_v3_statistical_ensemble_algorithm_manifest.v1
+task: P1_V3_STATISTICAL_ENSEMBLE_PHASE_A_B
+status: offline_manifest_pending_environment_verification
+
+baseline_inheritance:
+  config: configs/t05_scd_frozen.yaml
+  jar_sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051
+  tetrad_version: 7.6.11-SNAPSHOT
+  py_tetrad_commit: 092a8cf13a9b31809d4256fd9aa3c98c52b88002
+  bossa_score_family: BasisFunctionBicScore
+  bossa_penalty_discount: 1.0
+  bossa_truncation_limit: 3
+  bossa_num_starts: 1
+  bossa_use_data_order: true
+  bossa_use_bes: false
+  seed_policy: existing_scene_replication_sha256_policy
+
+methods:
+  single_boss:
+    role: primary_baseline
+    implementation: tetrad_current_frozen_jar
+    algorithm: BOSS
+    output: CPDAG
+    score: BasisFunctionBicScore
+    penalty_discount: 1.0
+    truncation_limit: 3
+    num_starts: 1
+    use_data_order: true
+    use_bes: false
+    seed_policy: inherited_existing_frozen_policy
+  bootstrap_boss:
+    role: primary_statistical_condition
+    implementation: single_boss_repeated_on_sha256_bootstrap_resamples
+    repetitions: 200
+    sample_size: 2000
+    resampling: rows_with_replacement
+    standardize_each_resample: true
+    candidates:
+      - id: C1
+        adjacency_stability: 0.60
+        direction_stability: 0.80
+      - id: C2
+        adjacency_stability: 0.60
+        direction_stability: 0.90
+      - id: C3
+        adjacency_stability: 0.80
+        direction_stability: 0.80
+      - id: C4
+        adjacency_stability: 0.80
+        direction_stability: 0.90
+      - id: C5
+        adjacency_stability: 0.95
+        direction_stability: 0.80
+      - id: C6
+        adjacency_stability: 0.95
+        direction_stability: 0.90
+    vote_weight: one_method_level_vote
+  pc:
+    role: primary_heterogeneous_condition
+    implementation: tetrad_current_frozen_jar
+    algorithm: PC
+    output: CPDAG
+    ci_test: Fisher-Z
+    alpha: 0.01
+    depth: -1
+    stable_fas: true
+    background_knowledge: none
+    num_threads: 1
+  mmpc:
+    role: primary_heterogeneous_condition
+    implementation: bnlearn::mmpc
+    package_version_required: 5.3-20260901
+    adapter: python_to_r_canonical_scene_adapter
+    output: undirected_skeleton
+    ci_test: zf
+    alpha: 0.01
+    max_sx: null
+    undirected: true
+    whitelist: none
+    blacklist: none
+    symmetry_rule: direct_symmetric_output_only
+    asymmetric_behavior: fail_closed
+    environment_status: pending_verification
+  fges:
+    role: primary_heterogeneous_condition
+    implementation: tetrad_current_frozen_jar
+    algorithm: FGES
+    output: CPDAG
+    score: SemBicScore
+    penalty_discount: 1.0
+    max_degree: -1
+    symmetric_first_step: false
+    faithfulness_assumed: false
+    num_threads: 1
+    comparison_scope: algorithm_plus_score_sensitivity
+    score_family_difference_from_boss: explicitly_registered
+  gfci:
+    role: sensitivity_only
+    implementation: tetrad_current_frozen_jar
+    algorithm: GFCI
+    output: PAG
+    score: SemBicScore
+    penalty_discount: 1.0
+    ci_test: Fisher-Z
+    alpha: 0.01
+    depth: -1
+    max_degree: -1
+    faithfulness_assumed: false
+    num_threads: 1
+    endpoint_semantics: discarded
+    pag_to_skeleton_rule: any_edge_between_valid_observed_nodes_is_one_adjacency
+
+environment:
+  python_required: 3.10.20
+  java_required: 21.0.10
+  tetrad_jar: data/raw/t05/py-tetrad/pytetrad/resources/tetrad-current.jar
+  r_required: true
+  rscript_observed_in_current_path: false
+  bnlearn_required: 5.3-20260901
+  verification_policy: fail_closed_before_live_execution
+
+execution_boundary:
+  study_scenes_materialized: false
+  observations_loaded: false
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_accessed: false
+  holdout_accessed: false

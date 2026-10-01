@@ -1,0 +1,5 @@
+{"case_id":"FIX_PAG_ALL_ENDPOINTS","result":[["X000","X001"],["X001","X002"],["X003","X004"]],"status":"PASS"}
+{"case_id":"FIX_MMPC_SYMMETRIC","result":[["X000","X001"],["X001","X002"]],"status":"PASS"}
+{"case_id":"FIX_PRIMARY_3_OF_5","result":[["X000","X001"],["X002","X003"]],"status":"PASS"}
+{"case_id":"FIX_SHARED_POOL_6_CANDIDATES","result":[["X000","X001"],["X001","X002"],["X002","X003"]],"status":"PASS"}
+{"case_id":"TOKEN_PREFLIGHT_MAX_7_NODES","result":{"estimated_input_tokens_chars_div_4":1167,"estimated_output_tokens_chars_div_4":360,"max_nodes":7,"max_pairs":21,"overflow_action":"STOP_AND_REPORT_AMENDMENT_NEEDED","provider_tokenizer_verified":false,"validated_context_envelope_status":"pending_verification"},"status":"PENDING_PROVIDER_VERIFICATION"}

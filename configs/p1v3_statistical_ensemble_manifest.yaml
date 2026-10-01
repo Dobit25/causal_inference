@@ -1,0 +1,89 @@
+schema_version: fourgraph.p1_v3_statistical_ensemble_protocol.v1
+task: P1_V3_STATISTICAL_ENSEMBLE_PHASE_A_B
+status: offline_implementation_and_conformance_only
+
+research_question: >-
+  Does a more robust statistical skeleton, characterized by Single-BOSS,
+  Bootstrap-BOSS, heterogeneous methods and a 3-of-5 ensemble, reduce unsafe
+  semantic orientations while preserving uncertainty?
+
+cohort:
+  method_development:
+    scene_count: 30
+    scene_ids: P1V3SD000-P1V3SD029
+    rows_per_scene: 2000
+    scm_family: linear_non_gaussian
+    materialized: false
+  calibration_and_validation:
+    status: inherited_but_not_accessed_in_phase_a_b
+  final_holdout:
+    status: sealed
+    accessed: false
+
+statistical_conditions:
+  primary_methods: [single_boss, bootstrap_boss, pc, mmpc, fges]
+  sensitivity_methods: [gfci]
+  primary_ensemble:
+    members: [single_boss, bootstrap_boss, pc, mmpc, fges]
+    rule: majority_at_least_3_of_5
+    bootstrap_repetitions_are_one_method_vote: true
+  bootstrap_candidates: [C1, C2, C3, C4, C5, C6]
+  bootstrap_candidate_selection_before_semantics: forbidden
+  candidate_reporting: all_six_separately
+
+canonicalization:
+  node_universe: scene_observed_X000_to_X006_subset
+  node_order: lexicographic
+  directed_edge: [source, target]
+  undirected_edge: sorted_pair
+  self_loops: reject
+  unknown_nodes: reject
+  duplicate_conflicting_adjacency: reject
+  invalid_parent_behavior: fail_closed_no_repair
+
+gfci_normalization:
+  input: PAG
+  output: undirected_skeleton_only
+  rule: any_edge_between_valid_observed_nodes_counts_as_one_adjacency
+  endpoint_marks_to_direction: forbidden
+  self_loops: reject
+  unknown_nodes: reject
+
+semantic_shared_pool:
+  source_conditions: [single_boss, C1, C2, C3, C4, C5, C6, primary_ensemble]
+  construction: union_of_eligible_undirected_edges_once_per_scene
+  maximum_pairs_per_scene: 21
+  raw_response_reuse: required
+  condition_specific_filtering: required
+  condition_specific_closure: required
+  global_closure_reuse: forbidden
+  automatic_prompt_chunking: forbidden
+  overflow_action: stop_and_report_amendment_needed
+  prompt: prompts/p1_semantic_empirical_reliability_v3.md
+  schema: schemas/semantic_whole_graph_response_v3.schema.json
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  calls_per_scene_estimate: 18
+  development_calls_estimate: 540
+  token_envelope_status: pending_offline_render_preflight
+
+phase_a_b_deliverables:
+  protocol_amendment: reports/p1v3_statistical_ensemble_protocol_amendment.md
+  algorithm_manifest: configs/p1v3_algorithm_manifest.yaml
+  protocol_manifest: configs/p1v3_statistical_ensemble_manifest.yaml
+  normalization_spec: reports/p1v3_statistical_ensemble_normalization_spec.md
+  ensemble_spec: reports/p1v3_statistical_ensemble_ensemble_spec.md
+  semantic_reuse_spec: reports/p1v3_statistical_ensemble_semantic_reuse_spec.md
+  environment_lock: environment.lock
+  fixture_manifest: data/manifests/p1v3_statistical_ensemble_fixture.jsonl
+  audit: data/manifests/p1v3_statistical_ensemble_phase_ab_audit.json
+  report: reports/p1v3_statistical_ensemble_phase_ab.md
+
+authorization:
+  offline_fixture_implementation: true
+  offline_token_render_preflight: true
+  study_scene_materialization: false
+  boss_execution: false
+  bootstrap_execution: false
+  semantic_api_calls: false
+  oracle_access: false
+  holdout_access: false

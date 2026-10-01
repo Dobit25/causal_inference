@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fourgraph.local/schemas/p1v3_statistical_ensemble_manifest.schema.json",
+  "title": "P1-v3 statistical ensemble Phase A-B manifest",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schema_version", "task", "status", "cohort", "statistical_conditions", "semantic_shared_pool", "authorization"],
+  "properties": {
+    "schema_version": {"const": "fourgraph.p1_v3_statistical_ensemble_protocol.v1"},
+    "task": {"const": "P1_V3_STATISTICAL_ENSEMBLE_PHASE_A_B"},
+    "status": {"const": "offline_implementation_and_conformance_only"},
+    "cohort": {"type": "object"},
+    "statistical_conditions": {"type": "object"},
+    "semantic_shared_pool": {"type": "object"},
+    "authorization": {"type": "object"}
+  }
+}
