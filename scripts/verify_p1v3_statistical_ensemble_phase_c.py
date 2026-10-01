@@ -72,6 +72,38 @@ def fixture_smoke() -> dict[str, Any]:
     return result
 
 
+def tetrad_class_probe(java_available: bool, jar_path: Path) -> dict[str, Any]:
+    """Load frozen Tetrad classes without running a graph search."""
+
+    if not java_available or not jar_path.is_file():
+        return {"passed": False, "reason": "Java or JAR unavailable"}
+    probe = (
+        "import jpype\n"
+        "from jpype import JClass\n"
+        f"jar = r'''{str(jar_path)}'''\n"
+        "jpype.startJVM(classpath=[jar])\n"
+        "names = [\n"
+        " 'edu.cmu.tetrad.algcomparison.algorithm.oracle.cpdag.Boss',\n"
+        " 'edu.cmu.tetrad.algcomparison.algorithm.oracle.cpdag.Pc',\n"
+        " 'edu.cmu.tetrad.algcomparison.algorithm.oracle.cpdag.Fges',\n"
+        " 'edu.cmu.tetrad.algcomparison.algorithm.oracle.pag.Gfci'\n"
+        "]\n"
+        "for name in names: JClass(name)\n"
+        "print('TETRAD_CLASSES_OK')\n"
+        "jpype.shutdownJVM()\n"
+    )
+    try:
+        proc = subprocess.run([sys.executable, "-c", probe], capture_output=True, text=True, timeout=30)
+    except Exception as exc:  # pragma: no cover
+        return {"passed": False, "reason": str(exc)}
+    return {
+        "passed": proc.returncode == 0 and "TETRAD_CLASSES_OK" in proc.stdout,
+        "returncode": proc.returncode,
+        "stdout": proc.stdout.strip(),
+        "stderr": proc.stderr.strip(),
+    }
+
+
 def execute() -> dict[str, Any]:
     config = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
     phase_ab = json.loads(PHASE_AB_AUDIT.read_text(encoding="utf-8"))
@@ -109,6 +141,8 @@ def execute() -> dict[str, Any]:
     # Tetrad cannot be considered executable if Java is absent, even when its
     # immutable jar hash is correct.
     tetrad_info = {"jar": jar_info, "runtime_available": bool(java_info.get("available") and jar_info["hash_match"])}
+    tetrad_info["class_probe"] = tetrad_class_probe(tetrad_info["runtime_available"], JAR)
+    tetrad_info["runtime_available"] = tetrad_info["runtime_available"] and tetrad_info["class_probe"]["passed"]
     token_info = dict(phase_ab["token_preflight"])
     token_info["provider_tokenizer_verified"] = False
     token_info["passed"] = False
@@ -200,4 +234,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
