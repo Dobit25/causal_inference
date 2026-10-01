@@ -1,0 +1,21 @@
+schema_version: fourgraph.p1_v3_statistical_ensemble_phase_c_verification.v1
+task: P1_V3_STATISTICAL_ENSEMBLE_PHASE_C_VERIFICATION
+status: fail_closed_until_all_checks_pass
+
+requirements:
+  python: 3.10.20
+  java: 21.0.10
+  tetrad_jar_sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051
+  rscript: required
+  bnlearn: 5.3-20260901
+  provider_tokenizer_context_envelope: required
+
+checks:
+  environment: [r_bnlearn, python, java_tetrad, token_preflight, fixture_smoke]
+
+authorization:
+  study_scene_materialization: false
+  statistical_fits: false
+  semantic_api_calls: false
+  oracle_access: false
+  holdout_access: false
