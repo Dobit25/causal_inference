@@ -85,7 +85,7 @@ def load_method_parameters(cfg: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return {
         "BOSS": {"penalty_discount": manifest["single_boss"]["penalty_discount"], "truncation_limit": manifest["single_boss"]["truncation_limit"]},
         "PC": {"alpha": manifest["pc"]["alpha"], "depth": manifest["pc"]["depth"], "stable_fas": manifest["pc"]["stable_fas"]},
-        "MMPC": {"alpha": manifest["mmpc"]["alpha"], "max_sx": manifest["mmpc"]["max_sx"]},
+        "MMPC": {"test": manifest["mmpc"]["ci_test"], "alpha": manifest["mmpc"]["alpha"], "max_sx": manifest["mmpc"]["max_sx"], "undirected": manifest["mmpc"]["undirected"]},
         "FGES": {"penalty_discount": manifest["fges"]["penalty_discount"], "max_degree": manifest["fges"]["max_degree"], "symmetric_first_step": manifest["fges"]["symmetric_first_step"], "faithfulness_assumed": manifest["fges"]["faithfulness_assumed"]},
         "GFCI": {"penalty_discount": manifest["gfci"]["penalty_discount"], "alpha": manifest["gfci"]["alpha"], "depth": manifest["gfci"]["depth"], "max_degree": manifest["gfci"]["max_degree"], "faithfulness_assumed": manifest["gfci"]["faithfulness_assumed"]},
     }

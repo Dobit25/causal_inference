@@ -53,11 +53,16 @@ class MMPCAdapter:
             data_path = Path(tmp) / "data.tsv"
             out_path = Path(tmp) / "result.txt"
             np.savetxt(data_path, matrix, delimiter="\t")
+            alpha = float(parameters["alpha"])
+            max_sx = parameters.get("max_sx")
+            max_sx_r = "NULL" if max_sx is None else str(int(max_sx))
+            undirected = "TRUE" if bool(parameters.get("undirected", True)) else "FALSE"
+            test = str(parameters.get("test", "zf"))
             r_code = "\n".join([
                 "args <- commandArgs(trailingOnly=TRUE)",
                 "d <- as.data.frame(read.table(args[[1]], header=FALSE, sep='\\t', check.names=FALSE))",
                 "names(d) <- paste0('X', sprintf('%03d', seq_len(ncol(d))-1))",
-                "fit <- bnlearn::mmpc(d, test='zf', alpha=0.01, max.sx=NULL, undirected=TRUE)",
+                f"fit <- bnlearn::mmpc(d, test={test!r}, alpha={alpha!r}, max.sx={max_sx_r}, undirected={undirected})",
                 "a <- bnlearn::amat(fit)",
                 "edges <- character(0)",
                 "for (i in seq_len(nrow(a))) for (j in seq_len(ncol(a))) if (i < j && a[i,j] != 0) edges <- c(edges, paste0(colnames(a)[i], '|', colnames(a)[j]))",
@@ -74,4 +79,3 @@ class MMPCAdapter:
             if observed_nodes != nodes:
                 raise MMPCAdapterError("mmpc changed node universe")
             return graph_record(nodes, [], edges, graph_type="skeleton"), time.perf_counter() - started
-
