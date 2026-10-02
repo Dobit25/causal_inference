@@ -1,0 +1,27 @@
+schema_version: fourgraph.p1v3_phase_e_shared_semantic_authorization_v2.v1
+task: PHASE_E_SHARED_SEMANTIC_EXECUTION_AUTHORIZATION_CHECKPOINT_V2
+phase_d_audit: data/manifests/p1v3_statistical_execution_audit.json
+statistical_manifest: configs/p1v3_statistical_ensemble_manifest.yaml
+public_semantic_manifest: data/manifests/p1v3_public_semantic_inputs_manifest.json
+story_generation_config: configs/p1v3_public_story_generation_amendment.yaml
+t19_story_config: configs/t19_p1_semantic_stories.yaml
+story_generator: src/fourgraph/p1_stories.py
+provider_preflight: data/manifests/p1v3_phase_e_provider_preflight.json
+semantic:
+  prompt: prompts/p1_semantic_empirical_reliability_v3.md
+  schema: schemas/semantic_whole_graph_response_v3.schema.json
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  truncation: disabled
+  automatic_prompt_chunking: forbidden
+  source_conditions: [single_boss, C1, C2, C3, C4, C5, C6, primary_ensemble]
+  maximum_pairs_per_scene: 21
+  story_variants: [full, partial]
+  ambiguous_count: 0
+  shared_raw_response_reuse: required
+  condition_specific_closure: required
+authorization:
+  checkpoint_pass_required: true
+  phase_e_live_authorized: false
+  oracle_access: false
+  holdout_access: false
+  downstream_reasoner: false
