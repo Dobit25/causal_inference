@@ -67,9 +67,16 @@ def test_environment_failure_is_fail_closed():
 
 
 def test_dry_run_plan_and_audit_have_zero_live_work(tmp_path, monkeypatch):
-    plan_path = ROOT / CFG["runtime"]["plan_output"]
-    write_plan(CFG, build_jobs(CFG))
-    audit = audit_plan(CFG)
+    cfg = copy.deepcopy(CFG)
+    cfg["runtime"]["plan_output"] = str(tmp_path / "plan.json")
+    cfg["runtime"]["audit_output"] = str(tmp_path / "audit.json")
+    cfg["runtime"]["raw_root"] = str(tmp_path / "raw")
+    cfg["runtime"]["normalized_root"] = str(tmp_path / "normalized")
+    cfg["runtime"]["error_root"] = str(tmp_path / "errors")
+    cfg["runtime"]["scene_root"] = str(tmp_path / "scenes")
+    plan_path = Path(cfg["runtime"]["plan_output"])
+    write_plan(cfg, build_jobs(cfg))
+    audit = audit_plan(cfg)
     assert audit["planned_fits"] == 6150
     assert audit["complete_fit_pairs"] == 0
     assert audit["execution_boundary"]["statistical_fits"] == 0

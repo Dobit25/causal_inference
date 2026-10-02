@@ -81,7 +81,9 @@ class TetradAdapter:
             params.set(self.backend.Params.MAX_DEGREE, jpype.JInt(int(parameters["max_degree"])))
             params.set(self.backend.Params.ALPHA, jpype.JDouble(float(parameters["alpha"])))
             params.set(self.backend.Params.FAITHFULNESS_ASSUMED, jpype.JBoolean(bool(parameters["faithfulness_assumed"])))
-            searcher = self.Gfci(self.SemBicScore(), self.FisherZ())
+            # The pinned Tetrad API constructor is (IndependenceWrapper,
+            # ScoreWrapper), i.e. Fisher-Z first and Sem-BIC second.
+            searcher = self.Gfci(self.FisherZ(), self.SemBicScore())
             graph_type = "pag"
         else:
             raise TetradAdapterError(f"unsupported Tetrad algorithm: {algorithm}")
@@ -109,4 +111,3 @@ class TetradAdapter:
             else:
                 raise TetradAdapterError(f"invalid CPDAG endpoint marks: {mark_left}-{mark_right}")
         return graph_record(nodes, directed, undirected, graph_type=graph_type)
-
