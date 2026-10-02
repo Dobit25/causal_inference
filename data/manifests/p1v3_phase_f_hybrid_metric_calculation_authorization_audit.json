@@ -1,0 +1,42 @@
+{
+  "schema_version": "fourgraph.p1v3_phase_f_hybrid_metric_calculation_authorization_audit.v1",
+  "checkpoint": "PHASE_F_HYBRID_METRIC_CALCULATION_AUTHORIZATION_CHECKPOINT",
+  "status": "PASS_AUTHORIZED_OFFLINE_METRICS",
+  "hash_pins": {
+    "replay_audit": {
+      "path": "data/manifests/p1v3_phase_e_incident_resolution_amendment_audit.json",
+      "sha256": "AAA8FEEAC1AA5BA846338D9B5AD502623513EA9CC0986C7A8C31AFC6D63EEB40"
+    },
+    "replay_outputs": {
+      "path": "data/manifests/p1v3_phase_e_incident_resolution_replay.jsonl",
+      "sha256": "8303E74BD2F9DCD447539CFD7ED06DF94DBEF30DFCCD0D63EA3322E6AE2BCDFD"
+    },
+    "amendment_config": {
+      "path": "configs/p1v3_phase_e_incident_resolution_amendment.yaml",
+      "sha256": "F93925E6E10321A16B8A249743D276F555DD710BBEF7129589729AC9FA70193F"
+    }
+  },
+  "verified": {
+    "replay_records": 480,
+    "replay_byte_for_byte": true,
+    "implementation_defects": 0,
+    "protocol_ambiguities": 0,
+    "outside_parent_directions_dropped": 531,
+    "global_conflicts_fail_closed": 15,
+    "invalid_parent_graphs_fail_closed": 108,
+    "provider_incident_missing_response": true,
+    "oracle_access": 0,
+    "holdout_access": 0,
+    "semantic_api_calls": 0
+  },
+  "authorization": {
+    "metric_calculation": true,
+    "api": false,
+    "statistical_discovery": false,
+    "calibration": false,
+    "downstream_reasoner": false,
+    "significance_testing": false,
+    "holdout": false
+  },
+  "next_action": "COMPUTE_OFFLINE_METRICS_AND_STOP"
+}

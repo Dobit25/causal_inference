@@ -1,0 +1,32 @@
+{"basis": "observed_endpoint", "condition": "C1", "coverage": 0.0, "point": "abstain_all", "risk": 0.0}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C1", "coverage": 0.63611111, "point": "observed_output", "risk": 0.15283843}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C1", "coverage": 0.67222222, "point": "observed_output", "risk": 0.1322314, "variant": "full"}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C1", "coverage": 0.6, "point": "observed_output", "risk": 0.17592593, "variant": "partial"}
+{"basis": "observed_endpoint", "condition": "C2", "coverage": 0.0, "point": "abstain_all", "risk": 0.0}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C2", "coverage": 0.64361702, "point": "observed_output", "risk": 0.16528926}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C2", "coverage": 0.68617021, "point": "observed_output", "risk": 0.14728682, "variant": "full"}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C2", "coverage": 0.60106383, "point": "observed_output", "risk": 0.18584071, "variant": "partial"}
+{"basis": "observed_endpoint", "condition": "C3", "coverage": 0.0, "point": "abstain_all", "risk": 0.0}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C3", "coverage": 0.6863354, "point": "observed_output", "risk": 0.08597285}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C3", "coverage": 0.76397516, "point": "observed_output", "risk": 0.06504065, "variant": "full"}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C3", "coverage": 0.60869565, "point": "observed_output", "risk": 0.1122449, "variant": "partial"}
+{"basis": "observed_endpoint", "condition": "C4", "coverage": 0.0, "point": "abstain_all", "risk": 0.0}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C4", "coverage": 0.69526627, "point": "observed_output", "risk": 0.10212766}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C4", "coverage": 0.77514793, "point": "observed_output", "risk": 0.08396947, "variant": "full"}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C4", "coverage": 0.61538462, "point": "observed_output", "risk": 0.125, "variant": "partial"}
+{"basis": "observed_endpoint", "condition": "C5", "coverage": 0.0, "point": "abstain_all", "risk": 0.0}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C5", "coverage": 0.66013072, "point": "observed_output", "risk": 0.02475248}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C5", "coverage": 0.76470588, "point": "observed_output", "risk": 0.01709402, "variant": "full"}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C5", "coverage": 0.55555556, "point": "observed_output", "risk": 0.03529412, "variant": "partial"}
+{"basis": "observed_endpoint", "condition": "C6", "coverage": 0.0, "point": "abstain_all", "risk": 0.0}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C6", "coverage": 0.66666667, "point": "observed_output", "risk": 0.02830189}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C6", "coverage": 0.77358491, "point": "observed_output", "risk": 0.02439024, "variant": "full"}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "C6", "coverage": 0.55974843, "point": "observed_output", "risk": 0.03370787, "variant": "partial"}
+{"basis": "observed_endpoint", "condition": "primary_ensemble", "coverage": 0.0, "point": "abstain_all", "risk": 0.0}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "primary_ensemble", "coverage": 0.79761905, "point": "observed_output", "risk": 0.01791045}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "primary_ensemble", "coverage": 0.86190476, "point": "observed_output", "risk": 0.01104972, "variant": "full"}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "primary_ensemble", "coverage": 0.73333333, "point": "observed_output", "risk": 0.02597403, "variant": "partial"}
+{"basis": "observed_endpoint", "condition": "single_boss", "coverage": 0.0, "point": "abstain_all", "risk": 0.0}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "single_boss", "coverage": 0.65808824, "point": "observed_output", "risk": 0.10614525}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "single_boss", "coverage": 0.68382353, "point": "observed_output", "risk": 0.06451613, "variant": "full"}
+{"basis": "frozen_replay_no_threshold_tuning", "condition": "single_boss", "coverage": 0.63235294, "point": "observed_output", "risk": 0.15116279, "variant": "partial"}

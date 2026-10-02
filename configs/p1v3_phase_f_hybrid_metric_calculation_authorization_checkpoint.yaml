@@ -1,0 +1,51 @@
+schema_version: fourgraph.p1v3_phase_f_hybrid_metric_calculation_authorization_checkpoint.v1
+checkpoint: PHASE_F_HYBRID_METRIC_CALCULATION_AUTHORIZATION_CHECKPOINT
+status: AUTHORIZED_OFFLINE_METRIC_CALCULATION_ONLY
+
+frozen_inputs:
+  replay_audit:
+    path: data/manifests/p1v3_phase_e_incident_resolution_amendment_audit.json
+    sha256: AAA8FEEAC1AA5BA846338D9B5AD502623513EA9CC0986C7A8C31AFC6D63EEB40
+  replay_outputs:
+    path: data/manifests/p1v3_phase_e_incident_resolution_replay.jsonl
+    sha256: 8303E74BD2F9DCD447539CFD7ED06DF94DBEF30DFCCD0D63EA3322E6AE2BCDFD
+  amendment_config:
+    path: configs/p1v3_phase_e_incident_resolution_amendment.yaml
+    sha256: F93925E6E10321A16B8A249743D276F555DD710BBEF7129589729AC9FA70193F
+
+verified_replay:
+  records: 480
+  byte_for_byte_replay: true
+  implementation_defects_after: 0
+  protocol_ambiguities_after: 0
+  outside_parent_directions_dropped: 531
+  global_conflicts: 15
+  global_conflict_status: FAIL_CLOSED_GLOBAL_CONFLICT
+  invalid_parent_graphs: 108
+  invalid_parent_status: FAIL_CLOSED
+  provider_incident: P1V3SD028/full/P1 missing semantic response; retained; no retry
+  oracle_access: 0
+  holdout_access: 0
+  api_calls: 0
+
+metric_scope:
+  conditions: [single_boss, C1, C2, C3, C4, C5, C6, primary_ensemble]
+  variants: [full, partial]
+  oracle_scope: development_only_reconstruction_from_frozen_generator
+  primary_units: published_semantic_directions
+  closure_directions: counted_separately_and_end_to_end
+  compelled_parent_directions: excluded_from_semantic_precision
+  false_adjacency_orientation: counts_as_error
+  no_calibration: true
+  no_threshold_tuning: true
+  no_downstream_reasoner: true
+  no_significance_testing: true
+  no_replay_edits: true
+
+authorization:
+  metric_calculation_authorized: true
+  api_calls_authorized: false
+  statistical_discovery_authorized: false
+  calibration_authorized: false
+  holdout_authorized: false
+  next_action: OFFLINE_METRIC_CALCULATION_THEN_STOP

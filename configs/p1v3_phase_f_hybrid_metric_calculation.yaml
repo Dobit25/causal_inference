@@ -1,0 +1,33 @@
+schema_version: fourgraph.p1v3_phase_f_hybrid_metric_calculation.v1
+task: PHASE_F_HYBRID_METRIC_CALCULATION
+status: offline_only
+source_replay: data/manifests/p1v3_phase_e_incident_resolution_replay.jsonl
+source_replay_sha256: 8303E74BD2F9DCD447539CFD7ED06DF94DBEF30DFCCD0D63EA3322E6AE2BCDFD
+conditions: [single_boss, C1, C2, C3, C4, C5, C6, primary_ensemble]
+variants: [full, partial]
+
+definitions:
+  parent_candidate_denominator: undirected_edges_in_condition_parent_graph
+  published_direction: output_directed_edge_minus_parent_compelled_direction
+  semantic_selected: selected_after_filter_that_is_published
+  closure_propagated: published_direction_not_semantic_selected
+  orientation_precision: correct_published_directions_over_all_published_directions
+  coverage: published_directions_over_parent_undirected_candidates
+  abstention_rate: unresolved_parent_undirected_candidates_over_parent_undirected_candidates
+  false_adjacency_orientation_error: published_direction_pair_absent_from_oracle_skeleton
+  risk: one_minus_orientation_precision
+  curve_policy: observed_endpoints_only_no_posthoc_threshold_or_calibration
+
+oracle:
+  scope: development_only
+  source: deterministic_reconstruction_from_frozen_successor_generator_and_exact_identities
+  holdout_access: false
+
+constraints:
+  api_calls: 0
+  statistical_discovery: 0
+  calibration: false
+  threshold_tuning: false
+  downstream_reasoner: false
+  significance_testing: false
+  replay_outputs_modified: false
