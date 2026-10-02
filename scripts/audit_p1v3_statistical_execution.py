@@ -8,8 +8,11 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
+sys.path.insert(0, str(ROOT / "src"))
 
 from adapters.common import canonical_json, sha256_file
+from adapters.common import graph_record
+from fourgraph.partial_graph import PartialGraph, consistent_extension
 from run_p1v3_statistical_ensemble import build_jobs, load_cfg
 
 
@@ -34,13 +37,29 @@ def audit_plan(cfg: dict[str, Any]) -> dict[str, Any]:
     if unknown:
         raise RuntimeError("unknown execution artifact identity")
     mismatched = raw ^ normalized
+    jobs_by_id = {job["run_id"]: job for job in jobs}
+    graph_validity_failures: list[str] = []
+    config_hash_failures: list[str] = []
     for run_id in sorted(raw & normalized):
+        raw_record = json.loads((raw_root / f"{run_id}.json").read_text(encoding="utf-8"))
         record = json.loads((normalized_root / f"{run_id}.json").read_text(encoding="utf-8"))
         if record.get("run_id") != run_id:
             raise RuntimeError(f"normalized record identity mismatch: {run_id}")
         raw_bytes = (raw_root / f"{run_id}.json").read_bytes()
         if record.get("raw_output_sha256") != sha256_file(raw_root / f"{run_id}.json"):
             raise RuntimeError(f"raw hash mismatch: {run_id}")
+        expected_job = jobs_by_id[run_id]
+        if raw_record.get("job") != expected_job or record.get("config_hash") not in (None, expected_job["config_hash"]):
+            config_hash_failures.append(run_id)
+        graph = record.get("graph")
+        try:
+            checked = graph_record(graph["nodes"], graph["directed"], graph["undirected"], graph_type=graph["graph_type"])
+            if checked != graph:
+                raise ValueError("graph is not canonical")
+            if graph["graph_type"] == "cpdag":
+                consistent_extension(PartialGraph.build(tuple(graph["nodes"]), graph["directed"], graph["undirected"]))
+        except Exception:
+            graph_validity_failures.append(run_id)
     complete = len(raw & normalized)
     superseded_errors = len(errors & (raw & normalized))
     final_failed_ids = errors - (raw & normalized)
@@ -48,7 +67,7 @@ def audit_plan(cfg: dict[str, Any]) -> dict[str, Any]:
     recorded = len((raw & normalized) | final_failed_ids)
     missing_expected = len(planned_ids - (raw & normalized))
     scene_count = len(list((ROOT / cfg["runtime"]["scene_root"]).glob("P1V3SD*/observations.npy"))) if (ROOT / cfg["runtime"]["scene_root"]).exists() else 0
-    if mismatched:
+    if mismatched or config_hash_failures or graph_validity_failures:
         status = "FAIL_INCOMPLETE_ARTIFACT_PAIRS"
     elif complete == 0 and scene_count == 0:
         status = "PASS_DRY_RUN_AUDIT"
@@ -69,6 +88,9 @@ def audit_plan(cfg: dict[str, Any]) -> dict[str, Any]:
         "missing_or_incomplete": len(mismatched),
         "missing_expected_jobs": missing_expected,
         "unknown_artifacts": len(unknown),
+        "config_hash_failures": len(config_hash_failures),
+        "graph_validity_failures": len(graph_validity_failures),
+        "algorithm_counts": {name: sum(json.loads((normalized_root / f"{run_id}.json").read_text(encoding="utf-8")).get("algorithm") == name for run_id in raw & normalized) for name in ("BOSS", "Bootstrap-BOSS", "PC", "MMPC", "FGES", "GFCI")},
         "concurrency": cfg["runtime"]["concurrency"],
         "execution_boundary": {
             "oracle_accessed": False,
