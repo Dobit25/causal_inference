@@ -1,0 +1,31 @@
+schema_version: fourgraph.p1v3_phase_e_incident_resolution_amendment.v1
+task: P1_V3_PHASE_E_INCIDENT_RESOLUTION_AMENDMENT
+parent_incident_review: data/manifests/p1v3_phase_e_incident_review.json
+parent_incident_review_sha256: 31F35B7E8A7A83B7EA5AF9C6A617E6A8DE2479BCA92BA427FEFF50DC528FA432
+scope: offline_replay_only
+frozen_responses: results/raw/p1v3_phase_e_shared_semantic_v3/shared_responses.jsonl
+frozen_response_count: 360
+changes:
+  condition_specific_filtering:
+    enabled: true
+    rule: retain_only_semantic_directions_whose_pair_is_in_condition_parent_undirected_skeleton
+    outside_parent_direction: drop_and_log_as_unresolved
+  pre_closure_validation:
+    enabled: true
+    rule: validate_parent_cpdag_and_consistent_extension_before_closure
+    invalid_parent_action: FAIL_CLOSED_UNCHANGED_PARENT
+  global_conflict_rule:
+    enabled: true
+    rule: if_selected_directions_cycle_or_have_no_consistent_extension_publish_none_from_that_closure_step
+    conflicting_edges_action: keep_unresolved_and_log_all
+    orientation_repair: forbidden
+conditions:
+  source_conditions: [single_boss, C1, C2, C3, C4, C5, C6, primary_ensemble]
+  story_variants: [full, partial]
+  condition_specific_closure: true
+boundaries:
+  api_calls: 0
+  oracle_access: false
+  holdout_access: false
+  metric_calculation: false
+  threshold_tuning: false
