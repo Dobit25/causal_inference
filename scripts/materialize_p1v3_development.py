@@ -53,7 +53,13 @@ def build_blueprint(identity: dict[str, Any], generator: dict[str, Any]) -> Scen
     master_seed = int(identity["master_seed"])
     node_count = int(identity["node_count"])
     nodes = tuple(f"X{i:03d}" for i in range(node_count))
-    lower, upper = map(int, generator["edge_count_range"][str(node_count)].values()) if isinstance(generator["edge_count_range"][str(node_count)], dict) else map(int, generator["edge_count_range"][str(node_count)])
+    ranges = generator["edge_count_range"]
+    raw_range = ranges.get(node_count, ranges.get(str(node_count)))
+    if raw_range is None:
+        raise MaterializationError(f"missing edge-count range for {node_count} nodes")
+    if isinstance(raw_range, dict):
+        raw_range = list(raw_range.values())
+    lower, upper = map(int, raw_range)
     rng = np.random.Generator(np.random.PCG64DXSM(seed64(master_seed, study_id, "graph_candidates")))
     accepted = None
     for attempt in range(1, int(generator.get("maximum_attempts_per_scene", 500)) + 1):
