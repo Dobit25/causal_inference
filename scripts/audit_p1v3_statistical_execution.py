@@ -26,9 +26,11 @@ def audit_plan(cfg: dict[str, Any]) -> dict[str, Any]:
         raise RuntimeError("plan identity drift")
     raw_root = ROOT / cfg["runtime"]["raw_root"]
     normalized_root = ROOT / cfg["runtime"]["normalized_root"]
+    error_root = ROOT / cfg["runtime"]["error_root"]
     raw = {path.stem for path in raw_root.glob("*.json")} if raw_root.exists() else set()
     normalized = {path.stem for path in normalized_root.glob("*.json")} if normalized_root.exists() else set()
-    unknown = (raw | normalized) - planned_ids
+    errors = {path.stem for path in error_root.glob("*.json")} if error_root.exists() else set()
+    unknown = (raw | normalized | errors) - planned_ids
     if unknown:
         raise RuntimeError("unknown execution artifact identity")
     mismatched = raw ^ normalized
@@ -40,13 +42,15 @@ def audit_plan(cfg: dict[str, Any]) -> dict[str, Any]:
         if record.get("raw_output_sha256") != sha256_file(raw_root / f"{run_id}.json"):
             raise RuntimeError(f"raw hash mismatch: {run_id}")
     complete = len(raw & normalized)
+    failed = len(errors)
+    recorded = len((raw & normalized) | errors)
     missing_expected = len(planned_ids - (raw & normalized))
     scene_count = len(list((ROOT / cfg["runtime"]["scene_root"]).glob("P1V3SD*/observations.npy"))) if (ROOT / cfg["runtime"]["scene_root"]).exists() else 0
     if mismatched:
         status = "FAIL_INCOMPLETE_ARTIFACT_PAIRS"
     elif complete == 0 and scene_count == 0:
         status = "PASS_DRY_RUN_AUDIT"
-    elif complete == len(planned_ids):
+    elif recorded == len(planned_ids) and not ((raw & normalized) & errors):
         status = "PASS_EXECUTION_AUDIT"
     else:
         status = "FAIL_MISSING_EXPECTED_ARTIFACTS"
@@ -55,6 +59,9 @@ def audit_plan(cfg: dict[str, Any]) -> dict[str, Any]:
         "status": status,
         "planned_fits": 6150,
         "complete_fit_pairs": complete,
+        "failed_jobs": failed,
+        "recorded_jobs": recorded,
+        "retry_count": cfg["runtime"]["retry_count"],
         "missing_or_incomplete": len(mismatched),
         "missing_expected_jobs": missing_expected,
         "unknown_artifacts": len(unknown),

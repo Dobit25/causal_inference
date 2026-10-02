@@ -163,7 +163,9 @@ def execute(cfg: dict[str, Any], jobs: list[dict[str, Any]]) -> None:
             normalized_path.write_bytes(canonical_json(normalized))
         except Exception as exc:
             error_path.write_bytes(canonical_json({"schema_version": "fourgraph.p1v3_fit_error.v1", "run_id": job["run_id"], "error_type": type(exc).__name__, "error": str(exc), "runtime_seconds": time.perf_counter() - started}))
-            raise
+            # A failed fit is a recorded job, not a silently skipped job. Keep
+            # the run moving so the final audit can report the full failure set.
+            continue
 
 
 def main() -> int:
