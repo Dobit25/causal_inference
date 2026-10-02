@@ -16,7 +16,6 @@ from fourgraph.p1_generation import (
     npy_bytes,
     sample_observations,
     scene_scm_record,
-    seed64,
 )
 from fourgraph.partial_graph import PartialGraph, dag_to_cpdag_exact
 
@@ -30,6 +29,14 @@ class MaterializationError(RuntimeError):
 
 def _sha(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest().upper()
+
+
+def seed64(master_seed: int, study_id: str, component: str) -> int:
+    """Exact seed policy from the frozen successor identity-plan generator."""
+    return int.from_bytes(
+        hashlib.sha256(f"{master_seed}|{study_id}|{component}".encode()).digest()[:8],
+        "big",
+    )
 
 
 def _line(value: Any) -> bytes:
