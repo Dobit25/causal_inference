@@ -1,0 +1,20 @@
+schema_version: fourgraph.p1v3_phase_e_shared_semantic_authorization_checkpoint.v1
+task: PHASE_E_SHARED_SEMANTIC_EXECUTION_AUTHORIZATION_CHECKPOINT
+phase_d_audit: data/manifests/p1v3_statistical_execution_audit.json
+protocol_manifest: configs/p1v3_statistical_ensemble_manifest.yaml
+algorithm_manifest: configs/p1v3_algorithm_manifest.yaml
+semantic:
+  source_conditions: [single_boss, C1, C2, C3, C4, C5, C6, primary_ensemble]
+  maximum_pairs_per_scene: 21
+  prompt: prompts/p1_semantic_empirical_reliability_v3.md
+  schema: schemas/semantic_whole_graph_response_v3.schema.json
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  truncation: disabled
+  automatic_prompt_chunking: forbidden
+  raw_response_reuse: required
+  provider_preflight: prepared_not_executed
+authorization:
+  phase_e_live: false
+  semantic_api_calls: false
+  oracle_access: false
+  holdout_access: false
