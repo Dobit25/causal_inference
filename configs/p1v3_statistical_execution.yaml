@@ -1,0 +1,35 @@
+schema_version: fourgraph.p1v3_statistical_execution_runtime.v1
+task: P1_V3_STATISTICAL_ENSEMBLE_PHASE_D_EXECUTION_PLUMBING
+protocol_manifest: configs/p1v3_statistical_ensemble_manifest.yaml
+algorithm_manifest: configs/p1v3_algorithm_manifest.yaml
+identity_manifest: data/manifests/p1_v3_successor_sequential_exact_identities.jsonl
+materialization_generator: configs/p1_v3_successor_method_development_preflight.yaml
+
+runtime:
+  output_root: results/p1v3_statistical_ensemble
+  scene_root: results/p1v3_statistical_ensemble/scenes
+  raw_root: results/p1v3_statistical_ensemble/raw
+  normalized_root: results/p1v3_statistical_ensemble/normalized
+  error_root: results/p1v3_statistical_ensemble/errors
+  plan_output: data/manifests/p1v3_statistical_execution_plan.json
+  audit_output: data/manifests/p1v3_statistical_execution_audit.json
+  concurrency: 1
+  retry_count: 0
+  resume: true
+  duplicate_policy: fail_closed
+  oracle_access: false
+  holdout_access: false
+
+environment:
+  python: 3.10.20
+  java: 21.0.10
+  r: 4.4.3
+  rscript: Rscript
+  r_library: D:/Coding/R44/library
+  bnlearn: 5.3-20260901
+  tetrad_jar: data/raw/t05/py-tetrad/pytetrad/resources/tetrad-current.jar
+  tetrad_jar_sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051
+
+authorization:
+  execute: false
+  reason: readiness-only; live Phase D requires a separate authorization checkpoint
