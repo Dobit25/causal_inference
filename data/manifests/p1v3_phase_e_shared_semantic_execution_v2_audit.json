@@ -1,0 +1,17 @@
+{
+  "schema_version": "fourgraph.p1v3_phase_e_shared_semantic_execution_v2_audit.v1",
+  "task": "PHASE_E_SHARED_SEMANTIC_EXECUTION",
+  "status": "STOPPED_MISSING_FROZEN_PRIMARY_ENSEMBLE_RULE",
+  "checkpoint": "de087f79",
+  "planned_semantic_calls": 0,
+  "actual_semantic_calls": 0,
+  "provider_attempts": 0,
+  "raw_response_hashes": [],
+  "condition_outputs": [],
+  "oracle_accessed": false,
+  "holdout_accessed": false,
+  "downstream_reasoner_calls": 0,
+  "reason": "The frozen protocol retains six Bootstrap-BOSS candidates but does not define one deterministic method-level Bootstrap-BOSS skeleton for the singular primary_ensemble 3/5 vote. Selecting a candidate or inventing a union rule would change the frozen protocol.",
+  "provider_preflight_already_passed": true,
+  "phase_e_live_execution_authorized_in_conversation": true
+}
