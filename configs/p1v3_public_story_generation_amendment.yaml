@@ -1,0 +1,42 @@
+schema_version: fourgraph.p1v3_public_story_generation_amendment.v1
+task: P1V3_PUBLIC_STORY_GENERATION_AMENDMENT
+status: frozen_pass
+parent_protocol:
+  story_generator_config: configs/t19_p1_semantic_stories.yaml
+  story_generator_implementation: src/fourgraph/p1_stories.py
+  source_generation_implementation: scripts/materialize_p1v3_development.py
+  registered_successor_protocol: configs/p1_v3_successor_method_development_preflight.yaml
+cohort:
+  exact_scene_ids: P1V3SD000-P1V3SD029
+  identity_manifest: data/manifests/p1_v3_successor_sequential_exact_identities.jsonl
+  role: method_development
+  generation_order: lexicographic_study_id
+variants:
+  enabled: [full, partial]
+  ambiguous: disabled_not_registered_for_successor_method_development
+rules:
+  full: all_true_edges_directional
+  partial: lowest_sha256_rank_half_true_edges_directional_remaining_symmetric
+  unlisted_pairs: no_direct_connection_statement
+  aliases: seeded_per_scene_permutation_master_seed_1701
+  canonical_ids_in_public_story: forbidden
+  machine_edge_notation: forbidden
+  public_artifact_fields: [schema_version, artifact_id, study_id, scene_id, evidence_variant, builder_input]
+  source_truth_use: SCM_truth_used_only_to_construct_public_story_as_registered_data_generation_protocol
+  public_model_view: story_only
+leakage_policy:
+  oracle_dag_metadata_in_public_artifact: forbidden
+  cpdag_metadata_in_public_artifact: forbidden
+  gold_answer_labels_in_public_artifact: forbidden
+  holdout_information: forbidden
+  statistical_output_metadata_in_public_artifact: forbidden
+outputs:
+  story_root: data/generated/p1v3_public_stories
+  input_manifest: data/manifests/p1v3_public_semantic_inputs_manifest.json
+  audit: data/manifests/p1v3_public_story_generation_audit.json
+  report: reports/p1v3_public_story_generation_amendment.md
+execution_boundary:
+  api_calls: 0
+  holdout_stories: 0
+  holdout_access: 0
+  semantic_api_calls: 0
