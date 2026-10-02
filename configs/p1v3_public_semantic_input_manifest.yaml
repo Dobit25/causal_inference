@@ -1,0 +1,31 @@
+schema_version: fourgraph.p1v3_public_semantic_input_manifest.v1
+task: P1V3_PUBLIC_SEMANTIC_INPUT_IDENTIFICATION
+status: BLOCKED_MISSING_REGISTERED_ARTIFACTS
+scope:
+  exact_scene_ids: P1V3SD000-P1V3SD029
+  required_variants: [full, partial]
+  ambiguous_variant: not_registered_for_method_development
+  canonical_ids_as_semantic_input: forbidden
+  story_synthesis: forbidden
+registered_sources_to_audit:
+  - data/manifests/p1_v3_successor_method_development_semantic.jsonl
+  - data/manifests/p1v3_phase_e_shared_semantic_inputs.jsonl
+  - data/manifests/p1_v3_mini_medium_independent_confirmation_semantic_inputs.jsonl
+  - data/manifests/t19_p1_story_manifest.jsonl
+  - data/generated/p1_hybrid_v1/t19
+statistical_mapping_source: data/manifests/p1_v3_successor_sequential_exact_identities.jsonl
+required_record_fields:
+  - scene_id
+  - study_id
+  - story_variant
+  - artifact_path
+  - content_sha256
+  - schema_version
+  - generator_provenance
+  - canonical_identity_metadata
+  - leakage_check
+execution_boundary:
+  api_calls: 0
+  story_generation: 0
+  oracle_access: 0
+  holdout_access: 0
