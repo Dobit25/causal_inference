@@ -160,6 +160,8 @@ def execute(cfg: dict[str, Any], jobs: list[dict[str, Any]]) -> None:
             raw = {"schema_version": "fourgraph.p1v3_raw_statistical_fit.v1", "run_id": job["run_id"], "job": job, "adapter_seconds": adapter_seconds, "graph": graph}
             raw_bytes = canonical_json(raw); raw_path.write_bytes(raw_bytes)
             normalized = {"schema_version": "fourgraph.p1v3_normalized_statistical_fit.v1", "run_id": job["run_id"], "scene_id": job["scene_id"], "algorithm": job["algorithm"], "candidate_id": job["candidate_id"], "seed": job["seed"], "input_sha256": metadata["observation_sha256"], "raw_output_sha256": sha256_bytes(raw_bytes), "runtime_seconds": time.perf_counter() - started, "graph": graph}
+            normalized["config_hash"] = job["config_hash"]
+            normalized["dependency_hashes"] = job["dependency_hashes"]
             normalized_path.write_bytes(canonical_json(normalized))
         except Exception as exc:
             error_path.write_bytes(canonical_json({"schema_version": "fourgraph.p1v3_fit_error.v1", "run_id": job["run_id"], "error_type": type(exc).__name__, "error": str(exc), "runtime_seconds": time.perf_counter() - started}))
