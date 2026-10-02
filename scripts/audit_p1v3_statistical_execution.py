@@ -42,15 +42,17 @@ def audit_plan(cfg: dict[str, Any]) -> dict[str, Any]:
         if record.get("raw_output_sha256") != sha256_file(raw_root / f"{run_id}.json"):
             raise RuntimeError(f"raw hash mismatch: {run_id}")
     complete = len(raw & normalized)
-    failed = len(errors)
-    recorded = len((raw & normalized) | errors)
+    superseded_errors = len(errors & (raw & normalized))
+    final_failed_ids = errors - (raw & normalized)
+    failed = len(final_failed_ids)
+    recorded = len((raw & normalized) | final_failed_ids)
     missing_expected = len(planned_ids - (raw & normalized))
     scene_count = len(list((ROOT / cfg["runtime"]["scene_root"]).glob("P1V3SD*/observations.npy"))) if (ROOT / cfg["runtime"]["scene_root"]).exists() else 0
     if mismatched:
         status = "FAIL_INCOMPLETE_ARTIFACT_PAIRS"
     elif complete == 0 and scene_count == 0:
         status = "PASS_DRY_RUN_AUDIT"
-    elif recorded == len(planned_ids) and not ((raw & normalized) & errors):
+    elif recorded == len(planned_ids):
         status = "PASS_EXECUTION_AUDIT"
     else:
         status = "FAIL_MISSING_EXPECTED_ARTIFACTS"
@@ -60,6 +62,8 @@ def audit_plan(cfg: dict[str, Any]) -> dict[str, Any]:
         "planned_fits": 6150,
         "complete_fit_pairs": complete,
         "failed_jobs": failed,
+        "historical_error_artifacts": len(errors),
+        "superseded_error_artifacts": superseded_errors,
         "recorded_jobs": recorded,
         "retry_count": cfg["runtime"]["retry_count"],
         "missing_or_incomplete": len(mismatched),

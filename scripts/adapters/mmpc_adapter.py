@@ -68,9 +68,11 @@ class MMPCAdapter:
                 "for (i in seq_len(nrow(a))) for (j in seq_len(ncol(a))) if (i < j && a[i,j] != 0) edges <- c(edges, paste0(colnames(a)[i], '|', colnames(a)[j]))",
                 "writeLines(c(paste(colnames(a), collapse='|'), edges), args[[2]])",
             ])
+            script_path = Path(tmp) / "run_mmpc.R"
+            script_path.write_text(r_code, encoding="utf-8")
             # R parses backslashes in Windows command arguments as escapes;
             # use canonical forward-slash paths for deterministic subprocess I/O.
-            proc = subprocess.run([self.rscript, "-e", r_code, data_path.as_posix(), out_path.as_posix()], env=self._env(), capture_output=True, text=True, timeout=300)
+            proc = subprocess.run([self.rscript, script_path.as_posix(), data_path.as_posix(), out_path.as_posix()], env=self._env(), capture_output=True, text=True, timeout=300)
             if proc.returncode != 0:
                 raise MMPCAdapterError(proc.stderr.strip() or "mmpc failed")
             lines = out_path.read_text(encoding="utf-8").splitlines()
