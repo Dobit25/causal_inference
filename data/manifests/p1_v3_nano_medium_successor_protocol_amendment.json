@@ -1,0 +1,34 @@
+{
+  "schema_version": "fourgraph.p1_v3_nano_medium_successor_protocol_amendment_manifest.v1",
+  "status": "PASS_OFFLINE_AMENDMENT_FREEZE",
+  "config": {
+    "path": "configs/p1_v3_nano_medium_successor_protocol_amendment.yaml",
+    "sha256": "67FD283FD824D87D1B2AFF8D7FCC6DA23BA784296AED2B068A54705244A1408F"
+  },
+  "decision": {
+    "primary_semantic_model": "gpt-5.4-nano-2026-03-17",
+    "reasoning_effort": "medium",
+    "mini_role": "historical_comparator_only",
+    "additional_model_matrix": false,
+    "primary_statistical_parent": "Ensemble-3of5",
+    "bootstrap_sensitivity_conditions": ["C1", "C2", "C3", "C4", "C5", "C6"]
+  },
+  "semantic_contract_unchanged": true,
+  "cohort_schedule": {
+    "calibration_looks": [120, 160, 200, 240, 280, 320, 360, 400, 440],
+    "validation_looks": [160, 200, 240, 280, 320, 360, 400, 440, 480],
+    "ambiguous_calibration_subset": 120,
+    "ambiguous_validation_subset": 120,
+    "nonedge_calibration_subset": 80,
+    "nonedge_validation_subset": 80
+  },
+  "execution_boundary": {
+    "new_scenes_materialized": 0,
+    "statistical_fits": 0,
+    "semantic_api_calls": 0,
+    "oracle_access": false,
+    "calibration_access": false,
+    "validation_access": false,
+    "holdout_access": false
+  }
+}

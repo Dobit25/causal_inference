@@ -1,0 +1,25 @@
+{
+  "schema_version": "fourgraph.p1_v3_nano_medium_successor_protocol_amendment_audit.v1",
+  "status": "PASS_OFFLINE_AMENDMENT_FREEZE",
+  "config_sha256": "67FD283FD824D87D1B2AFF8D7FCC6DA23BA784296AED2B068A54705244A1408F",
+  "manifest_sha256": "C5A4E4820832E00E41106E1072FBEF4719CED22A4BD92A5991A83160EFC79482",
+  "parent_protocol_sha256": "2FFCF4D24D504AA50DAC0CD05D1C81250492BCFC780DFB6EA08B0C9C2CB645B0",
+  "statistical_skeleton_review_sha256": "079B47FB303A3724D317A4729D41F6D07B54BEE58A02715E3D2AA39EA6E51622",
+  "checks": {
+    "nano_snapshot_locked": true,
+    "reasoning_effort_locked": true,
+    "prompt_schema_validators_unchanged": true,
+    "primary_parent_ensemble_locked": true,
+    "bootstrap_sensitivity_c1_c6_locked": true,
+    "full_partial_certification_locked": true,
+    "ambiguous_nonedge_diagnostics_locked": true,
+    "sequential_calibration_and_validation_looks_locked": true,
+    "mini_not_primary": true,
+    "no_live_execution": true,
+    "no_api_calls": true,
+    "no_new_scenes": true,
+    "no_holdout_access": true,
+    "deterministic_replay": true
+  },
+  "next_authorization": "P1_V3_NANO_MEDIUM_SEQUENTIAL_CALIBRATION_LIVE_AUTHORIZATION_CHECKPOINT"
+}

@@ -1,0 +1,122 @@
+schema_version: fourgraph.p1_v3_nano_medium_successor_protocol_amendment.v1
+task: P1_V3_NANO_MEDIUM_SUCCESSOR_PROTOCOL_REFREEZE
+status: offline_protocol_amendment_freeze_only
+purpose: >-
+  Select one fixed, cost-aware semantic model for the successor framework.
+  This amendment changes the semantic model from the predecessor Mini-medium
+  protocol to Nano-medium; it does not claim Nano is universally superior.
+parents:
+  predecessor_protocol:
+    path: configs/p1_v3_mini_medium_successor_sequential_protocol.yaml
+    sha256: 2FFCF4D24D504AA50DAC0CD05D1C81250492BCFC780DFB6EA08B0C9C2CB645B0
+  sequential_power_and_cohort:
+    path: configs/p1_v3_successor_sequential_power_cohort_amendment.yaml
+    sha256: 778F00A18AFA5C1A5FB405EFCD462AA5E2C1D709A2A2560CE335D75AEE6DF789
+  statistical_ensemble:
+    path: configs/p1v3_statistical_ensemble_manifest_v2.yaml
+    sha256: 581AA295BE087265F3E99BFD337AB1DB47309C58E7EB3AEFEC9DDF271D8A11D2
+  statistical_skeleton_review:
+    path: data/manifests/p1v3_statistical_skeleton_metric_audit.json
+    sha256: 079B47FB303A3724D317A4729D41F6D07B54BEE58A02715E3D2AA39EA6E51622
+  phase_f_hybrid_review:
+    path: data/manifests/p1v3_phase_f_hybrid_metric_audit.json
+    sha256: 4BA866598F5EEABECE7E4008B2F7AE97BCBF0C7BB24792855C38AD308BDC91E0
+semantic_model:
+  role: primary_successor_semantic_model
+  provider: openai
+  endpoint: /v1/responses
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  reasoning_effort: medium
+  temperature: omitted
+  max_output_tokens: 8192
+  service_tier: default
+  store: false
+  structured_outputs: true
+  predecessor_model: gpt-5.4-mini-2026-03-17
+  predecessor_role: historical_comparator_only
+  additional_model_matrix: forbidden
+semantic_contract:
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  prompt_sha256: 26D2B4EB42F316F9DFB2CCB38D93A7E506E83FA0A43CBEF371B6B12ECA82A276
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  schema_sha256: 9B448071DCAB8D81CF727B6FE481E98CD73BF810ED5FA16DC7830C24565EC591
+  production_validator: src/fourgraph/semantic_sentence_id_contract.py
+  production_validator_sha256: 6F2B3F84EBD5CBD95FAFFD11E9C78253BC39F0C3BD26BB4E9C52B679602F8BD9
+  reference_validator: src/fourgraph/semantic_sentence_id_contract_reference.py
+  reference_validator_sha256: 59C35B9507DE7A76A98848669C0AF0859F595D03FFC50284A6A6E243728727ED
+  prompt_variants: [P1, P2, P3, P4, P5, P6]
+  story_variants:
+    certification: [full, partial]
+    diagnostics: [ambiguous, nonedge]
+  six_vote_rules_unchanged: true
+  invalid_pair_action: abstain_pair_only
+statistical_framework:
+  primary_parent: ensemble_3_of_5
+  members: [Single-BOSS, Bootstrap-BOSS, PC, MMPC, FGES]
+  ensemble_rule: majority_at_least_3_of_5
+  bootstrap_method_level_rule: adjacency_stability_gte_0.80
+  bootstrap_sensitivity_conditions: [C1, C2, C3, C4, C5, C6]
+  shared_semantic_pool: true
+  condition_specific_closure: true
+  false_adjacency_orientation_counts_as_error: true
+  no_statistical_rerun_before_calibration: true
+certification_and_inference:
+  independent_unit: scene
+  confidence_sequence: mixture_e_process_targeted_confidence_sequence
+  optional_stopping_valid: true
+  familywise_failure_probability: 0.05
+  precision_lcb_target: 0.95
+  coverage_scene_mean_floor: 0.20
+  graph_validity_required: 1.0
+  certification_policies:
+    full_automatic: [VERY_HIGH, HIGH]
+    partial_automatic: [VERY_HIGH, HIGH]
+  high_guardrail:
+    precision_floor: 0.90
+    minimum_contributing_scenes: 60
+    failure_action: review_only_and_stop_before_validation
+  ambiguous:
+    role: abstention_diagnostic
+    calibration_subset: 120
+    validation_subset: 120
+    automatic_direction_failure_ceiling: 0.05
+  nonedge:
+    role: hallucination_diagnostic
+    calibration_subset: 80
+    validation_subset: 80
+cohorts:
+  method_development: 30
+  semantic_calibration:
+    looks: [120, 160, 200, 240, 280, 320, 360, 400, 440]
+    maximum: 440
+  threshold_validation:
+    looks: [160, 200, 240, 280, 320, 360, 400, 440, 480]
+    maximum: 480
+  final_holdout: 80
+stage_order:
+  - nano_protocol_amendment_freeze
+  - exact_identity_plan_and_generator_conformance
+  - fresh_spend_and_calibration_authorization
+  - sequential_semantic_calibration
+  - certified_policy_freeze
+  - sequential_threshold_validation
+  - paired_scene_clustered_analysis
+  - holdout_go_no_go
+claim_boundary:
+  supported_now: >-
+    Nano-medium is a registered, cost-aware primary semantic model for the
+    successor framework; Phase F evidence remains development-only.
+  not_supported_now:
+    - calibration_certification
+    - validation_performance
+    - holdout_performance
+    - real_world_generalization
+execution_boundary:
+  new_scenes_materialized: 0
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_access: false
+  calibration_access: false
+  validation_access: false
+  holdout_access: false
+  live_authorization: false
