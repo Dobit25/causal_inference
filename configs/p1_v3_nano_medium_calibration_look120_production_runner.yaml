@@ -1,0 +1,120 @@
+schema_version: fourgraph.p1_v3_nano_medium_calibration_look120_production_runner.v1
+task: P1_V3_NANO_MEDIUM_CALIBRATION_LOOK120_PRODUCTION_RUNNER_FREEZE
+status: offline_runner_frozen_live_disabled
+
+parents:
+  scoped_authorization:
+    path: configs/p1_v3_nano_medium_calibration_look120_live_authorization.yaml
+    sha256: D1FD593CBC404C3423450C07675623E22CCA74F1A05CF75337F533CC079D3685
+  protocol_checkpoint:
+    path: configs/p1_v3_nano_medium_sequential_calibration_live_authorization_checkpoint.yaml
+    sha256: 5A689D4A799734A1FE36C034875B15F4C88E84B79301D42A289C31A4AA82CFA1
+  exact_identity_plan:
+    path: data/manifests/p1_v3_successor_sequential_exact_identity_plan.json
+    sha256: 2AAC7BE19DA273602C04C3457672EBE42983199144740AD100C5A9D44B5BDA33
+  exact_identities:
+    path: data/manifests/p1_v3_successor_sequential_exact_identities.jsonl
+    sha256: 5957797094EE415FA898D82E3C5D660A1AB9323077BD1DA5E1A79D78F75E63F3
+
+cohort:
+  role: semantic_calibration
+  selector: role=semantic_calibration and sequence_index < 120
+  registered_prefix: P1V3SC
+  exact_scene_count: 120
+  identity_order: frozen_plan_order
+  forbidden_roles: [method_development, threshold_validation]
+  forbidden_namespaces: [P1V3SD, P1V3SV]
+
+materialization:
+  implementation: scripts/materialize_p1_v3_nano_calibration_look120.py
+  generator_config: configs/p1_v3_successor_method_development_preflight.yaml
+  generator_config_sha256: 95B5BE529948744E0E62A1DF2FD22592E9F616EEAC02EEA359988E05932AF7F7
+  scene_root: data/generated/p1_v3_nano_medium_calibration_look120
+  public_story_root: data/generated/p1_v3_nano_medium_calibration_look120_stories
+  observation_rows: 2000
+  scm_family: linear_non_gaussian_acyclic
+  story_variants: [full, partial, ambiguous, nonedge]
+  ambiguous_enabled: true
+  nonedge_enabled: true
+  materialize_only_registered_prefix: true
+  oracle_artifacts_public: false
+
+statistical_parent:
+  single_boss:
+    fits_per_scene: 1
+    prefix: single_boss
+  bootstrap_boss:
+    repetitions_per_scene: 200
+    sample_size: 2000
+    rows_with_replacement: true
+    prefix: bootstrap_boss
+  threshold_candidates: [C1, C2, C3, C4, C5, C6]
+
+semantic:
+  provider: openai
+  endpoint: /v1/responses
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  reasoning_effort: medium
+  max_output_tokens: 8192
+  structured_outputs: true
+  store: false
+  truncation: disabled
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  prompt_sha256: 26D2B4EB42F316F9DFB2CCB38D93A7E506E83FA0A43CBEF371B6B12ECA82A276
+  response_schema: schemas/semantic_sentence_id_response_v1.schema.json
+  schema_sha256: 9B448071DCAB8D81CF727B6FE481E98CD73BF810ED5FA16DC7830C24565EC591
+  prompt_variants: [P1, P2, P3, P4, P5, P6]
+  certification_story_variants: [full, partial]
+  diagnostic_subsets:
+    ambiguous:
+      source: exact_identity_plan.diagnostic_subsets.ambiguous_semantic_calibration
+      count: 120
+    nonedge:
+      source: exact_identity_plan.diagnostic_subsets.nonedge_semantic_calibration
+      count: 80
+  transport_retry_max: 1
+  semantic_validation_retry: false
+
+workload:
+  statistical_fits: 24120
+  single_boss_fits: 120
+  bootstrap_boss_fits: 24000
+  primary_semantic_calls: 1440
+  ambiguous_diagnostic_calls: 720
+  nonedge_diagnostic_calls: 480
+  expected_semantic_calls: 2640
+  call_formula: 120x2x6 certification + 120x6 ambiguous diagnostic + 80x6 nonedge diagnostic
+  attempt_ceiling: 2904
+
+execution:
+  concurrency: 1
+  resume: true
+  duplicate_policy: fail_closed
+  idempotency_key: scene_story_variant_prompt_variant_model_schema_graph_input_hash
+  statistical_cache_root: results/cache/p1_v3_nano_medium_calibration_look120/statistical
+  semantic_cache_root: results/cache/p1_v3_nano_medium_calibration_look120/semantic
+  raw_root: results/raw/p1_v3_nano_medium_calibration_look120
+  token_ledger: results/runtime/p1_v3_nano_medium_calibration_look120/token_ledger.jsonl
+  request_metadata: results/runtime/p1_v3_nano_medium_calibration_look120/request_metadata.jsonl
+  plan_output: data/manifests/p1_v3_nano_medium_calibration_look120_execution_plan.json
+  audit_output: data/manifests/p1_v3_nano_medium_calibration_look120_preflight_audit.json
+  materialize_before_live: true
+  provider_preflight_before_live: true
+  live_enabled_in_this_freeze: false
+
+budget:
+  total_tokens_hard_stop: 3000000
+  reset_local_time: '07:00:00'
+  reset_timezone: Asia/Ho_Chi_Minh
+  usage_source: provider_reported_usage
+  missing_usage_action: fail_closed_and_halt
+  overshoot_action: fail_closed_and_halt
+  automatic_next_look: false
+  automatic_day_resume: false
+
+boundary:
+  oracle_access: false
+  holdout_access: false
+  validation_access: false
+  downstream_reasoner: false
+  threshold_tuning: false
