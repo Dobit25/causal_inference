@@ -1,0 +1,86 @@
+schema_version: fourgraph.p1_v3_nano_medium_calibration_public_story_generation_amendment.v1
+task: P1_V3_NANO_MEDIUM_CALIBRATION_PUBLIC_STORY_GENERATION_AMENDMENT
+status: FROZEN_OFFLINE_GENERATION_AUTHORIZED
+
+parents:
+  t19_story_config:
+    path: configs/t19_p1_semantic_stories.yaml
+    sha256: D718E142974BABE425FAB19CBD273DC8484A8845A99E9ADEAD651F86733009E7
+  t19_generator:
+    path: src/fourgraph/p1_stories.py
+    sha256: 73915B96BBD7E690FB95E6C7D8CDAB7B88C815655255FEC54E31597BED6A1F81
+  exact_identities:
+    path: data/manifests/p1_v3_successor_sequential_exact_identities.jsonl
+    sha256: 5957797094EE415FA898D82E3C5D660A1AB9323077BD1DA5E1A79D78F75E63F3
+  materialization_story_checkpoint:
+    path: configs/p1_v3_nano_medium_calibration_look120_materialization_story_checkpoint.yaml
+    sha256: EC3A4483098A5912EE4418727CE18FF0A31531B6C64A81129027360DD27B63F0
+
+cohort:
+  role: semantic_calibration
+  selector: role=semantic_calibration and sequence_index < 120
+  exact_scene_count: 120
+  exact_identity_order: frozen_plan_order
+  namespace: P1V3SC
+  forbidden_roles: [method_development, threshold_validation]
+  forbidden_namespaces: [P1V3SD, P1V3SV]
+
+source_inputs:
+  allowed: [materialized_internal_scm_record]
+  scm_truth_use: only_to_construct_registered_public_data_generation_story
+  oracle_graph_public: false
+  statistical_outputs_allowed: false
+  holdout_inputs_allowed: false
+
+materialization:
+  scene_root: data/generated/p1_v3_nano_medium_calibration_look120
+  observation_rows: 2000
+
+generator:
+  implementation: src/fourgraph/p1_stories.py
+  version_hash: 73915B96BBD7E690FB95F6E7C8CDAB7B88C815655255FEC54E31597BED6A1F81
+  seed_config: configs/t19_p1_semantic_stories.yaml
+  master_seed: 1701
+  alias_assignment: seeded_per_scene_permutation_independent_of_graph
+  alias_lexicon: [Amber index, Beryl index, Cobalt index, Dahlia index, Ember index, Fallow index, Grove index]
+  same_alias_map_and_clause_order_across_variants: true
+  generation_order: frozen_plan_order
+
+variants:
+  public_story_variants: [full, partial, ambiguous]
+  full:
+    directional_claims: all_true_edges
+  partial:
+    directional_claims: lowest_sha256_rank_half_true_edges
+    half_rule: round_half_up
+  ambiguous:
+    directional_claims: none
+    all_true_edges_symmetric: true
+  nonedge:
+    story_variant: not_a_story_variant
+    handling: use_registered_public_story_plus_frozen_nonedge_pair_subset
+
+public_contract:
+  artifact_fields: [schema_version, artifact_id, study_id, scene_id, evidence_variant, builder_input]
+  model_view_fields: [story]
+  forbidden_fields_in_model_view: [study_id, scene_id, evidence_variant, alias_map, oracle_dag, oracle_cpdag, edges, weights, query, gold_answer, seeds]
+  canonical_ids_forbidden: true
+  machine_edge_notation_forbidden: true
+  oracle_metadata_forbidden: true
+  holdout_information_forbidden: true
+
+outputs:
+  story_root: data/generated/p1_v3_nano_medium_calibration_look120_stories
+  story_manifest: data/manifests/p1_v3_nano_medium_calibration_public_story_manifest.jsonl
+  input_manifest: data/manifests/p1_v3_nano_medium_calibration_public_semantic_input_manifest.json
+  audit: data/manifests/p1_v3_nano_medium_calibration_public_story_generation_audit.json
+  report: reports/p1_v3_nano_medium_calibration_public_story_generation_amendment.md
+  expected_scene_count: 120
+  expected_story_count: 360
+
+execution_boundary:
+  story_generation_api_calls: 0
+  semantic_api_calls: 0
+  holdout_stories: 0
+  oracle_scoring: 0
+  downstream_reasoner: 0
