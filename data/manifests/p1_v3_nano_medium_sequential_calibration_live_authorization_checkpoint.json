@@ -1,0 +1,33 @@
+{
+  "schema_version": "fourgraph.p1_v3_nano_medium_sequential_calibration_live_authorization_checkpoint_manifest.v1",
+  "status": "READY_PENDING_USER_AUTHORIZATION",
+  "config": {
+    "path": "configs/p1_v3_nano_medium_sequential_calibration_live_authorization_checkpoint.yaml",
+    "sha256": "5A689D4A799734A1FE36C034875B15F4C88E84B79301D42A289C31A4AA82CFA1"
+  },
+  "scope": {
+    "model": "gpt-5.4-nano-2026-03-17",
+    "reasoning_effort": "medium",
+    "cohort_role": "semantic_calibration",
+    "exact_scene_count": 440,
+    "registered_looks": [120, 160, 200, 240, 280, 320, 360, 400, 440],
+    "maximum_logical_calls": 6480,
+    "maximum_attempts": 7128
+  },
+  "gates": {
+    "precision_lower_confidence_bound": 0.95,
+    "coverage_scene_mean_floor": 0.20,
+    "graph_validity": 1.0,
+    "high_guardrail_precision": 0.90,
+    "ambiguous_error_ceiling": 0.05,
+    "familywise_failure_probability": 0.05
+  },
+  "execution_boundary": {
+    "scenes_materialized": 0,
+    "statistical_fits": 0,
+    "semantic_api_calls": 0,
+    "oracle_access": false,
+    "validation_access": false,
+    "holdout_access": false
+  }
+}

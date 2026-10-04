@@ -1,0 +1,122 @@
+schema_version: fourgraph.p1_v3_nano_medium_sequential_calibration_live_authorization_checkpoint.v1
+task: P1_V3_NANO_MEDIUM_SEQUENTIAL_CALIBRATION_LIVE_AUTHORIZATION_CHECKPOINT
+status: offline_checkpoint_ready_pending_user_authorization
+parents:
+  nano_protocol_amendment:
+    path: configs/p1_v3_nano_medium_successor_protocol_amendment.yaml
+    sha256: 67FD283FD824D87D1B2AFF8D7FCC6DA23BA784296AED2B068A54705244A1408F
+  nano_protocol_manifest:
+    path: data/manifests/p1_v3_nano_medium_successor_protocol_amendment.json
+    sha256: C5A4E4820832E00E41106E1072FBEF4719CED22A4BD92A5991A83160EFC79482
+  nano_protocol_audit:
+    path: data/manifests/p1_v3_nano_medium_successor_protocol_amendment_audit.json
+    sha256: 174F1790D2659B9E040BEB060F9003AACC334D593F7B9000853C5F96CA232A8C
+  exact_identity_plan:
+    path: data/manifests/p1_v3_successor_sequential_exact_identity_plan.json
+    sha256: 2AAC7BE19DA273602C04C3457672EBE42983199144740AD100C5A9D44B5BDA33
+  exact_identities:
+    path: data/manifests/p1_v3_successor_sequential_exact_identities.jsonl
+    sha256: 5957797094EE415FA898D82E3C5D660A1AB9323077BD1DA5E1A79D78F75E63F3
+  generator_conformance:
+    path: data/manifests/p1_v3_successor_sequential_generator_split_conformance_audit.json
+    sha256: CCC04D4CC694B1011AEBD3AA80F51721DC2919FA58CA55E861B2A7FB00A5CF6F
+  statistical_skeleton_review:
+    path: data/manifests/p1v3_statistical_skeleton_metric_audit.json
+    sha256: 079B47FB303A3724D317A4729D41F6D07B54BEE58A02715E3D2AA39EA6E51622
+  runtime_cost_preflight:
+    path: data/manifests/p1_v3_successor_runtime_cost_budget_preflight.json
+    sha256: F4B6A5FD0DF2B63B76AC2B80FB31BA62612E9CD678DF96F0218231AB386CBA4B
+  nano_rate_card:
+    path: configs/p1_v3_comparison_runtime_cost_official_rate_card.json
+    sha256: 7917E5E8A4A326415F570D90DBE581D38FF70062D4CC1B77342A11F3FC3E7061
+semantic_contract:
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  prompt_sha256: 26D2B4EB42F316F9DFB2CCB38D93A7E506E83FA0A43CBEF371B6B12ECA82A276
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  schema_sha256: 9B448071DCAB8D81CF727B6FE481E98CD73BF810ED5FA16DC7830C24565EC591
+  production_validator_sha256: 6F2B3F84EBD5CBD95FAFFD11E9C78253BC39F0C3BD26BB4E9C52B679602F8BD9
+  reference_validator_sha256: 59C35B9507DE7A76A98848669C0AF0859F595D03FFC50284A6A6E243728727ED
+  max_output_tokens: 8192
+  structured_outputs: true
+  truncation: disabled
+  prompt_variants: [P1, P2, P3, P4, P5, P6]
+  story_variants:
+    certification: [full, partial]
+    diagnostics: [ambiguous, nonedge]
+  shared_semantic_pool: true
+  pair_level_invalid_action: abstain_pair_only
+  retries: no_semantic_retry; transport_policy_must_be_pinned_by_runner
+cohort:
+  role: semantic_calibration
+  exact_identity_source: data/manifests/p1_v3_successor_sequential_exact_identities.jsonl
+  exact_scene_count: 440
+  exact_id_rule: role=semantic_calibration and included_in_registered_look
+  registered_looks: [120, 160, 200, 240, 280, 320, 360, 400, 440]
+  first_look_count: 120
+  final_look_count: 440
+  ambiguous_diagnostic_subset: 120
+  nonedge_diagnostic_subset: 80
+  development_ids_allowed: false
+  validation_ids_allowed: false
+  holdout_ids_allowed: false
+workload:
+  primary_full_partial_calls_per_scene: 12
+  diagnostic_calls_per_scene: 6
+  maximum_primary_calls: 5280
+  maximum_ambiguous_diagnostic_calls: 720
+  maximum_nonedge_diagnostic_calls: 480
+  maximum_logical_calls: 6480
+  attempt_ceiling_with_10_percent_transport_reserve: 7128
+  registered_look_calls:
+    120: 2640
+    160: 3120
+    200: 3600
+    240: 4080
+    280: 4560
+    320: 5040
+    360: 5520
+    400: 6000
+    440: 6480
+budget:
+  rate_card: configs/p1_v3_comparison_runtime_cost_official_rate_card.json
+  input_rate_usd_per_million: 0.20
+  output_including_reasoning_rate_usd_per_million: 1.25
+  measurement_basis: Phase_E_Nano_medium_360_call_usage
+  observed_input_tokens: 250261
+  observed_output_tokens: 401642
+  projected_max_input_tokens: 4504699
+  projected_max_output_tokens: 7223403
+  projected_max_total_tokens: 11728102
+  projected_max_point_cost_usd: 9.9378846
+  reserve_multiplier: 1.25
+  projected_max_cost_with_reserve_usd: 12.42235575
+  fresh_spend_attestation_required: true
+  cumulative_cost_stop_required_at_each_look: true
+provider_preflight:
+  required_before_live: true
+  exact_prompt_and_schema_required: true
+  existing_preflight_reuse: forbidden_if_hash_mismatch
+  study_calls_before_preflight: 0
+  truncation: disabled
+execution_policy:
+  materialize_only_registered_calibration_prefix: true
+  resume: true
+  idempotency: scene_story_prompt_identity
+  duplicate_policy: fail_closed
+  oracle_scoring: after_all_non_oracle_outputs_at_look_are_frozen
+  calibration_threshold_tuning: forbidden
+  validation_or_holdout_access: forbidden
+authorization:
+  user_authorization_granted: false
+  live_execution_authorized: false
+  next_action: user_review_then_fresh_spend_attestation_and_exact_provider_preflight
+evidence_boundary:
+  scenes_materialized: 0
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_access: false
+  calibration_access: false
+  validation_access: false
+  holdout_access: false

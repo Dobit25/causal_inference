@@ -1,0 +1,30 @@
+{
+  "schema_version": "fourgraph.p1_v3_nano_medium_sequential_calibration_live_authorization_checkpoint_audit.v1",
+  "status": "PASS_CHECKPOINT_PENDING_USER_AUTHORIZATION",
+  "config_sha256": "5A689D4A799734A1FE36C034875B15F4C88E84B79301D42A289C31A4AA82CFA1",
+  "manifest_sha256": "FCE503E4C14BF329D8DEC790E4299C9AA6C7A449276D43A7F98BB5F9A71D8CFF",
+  "checks": {
+    "nano_amendment_hashes_match": true,
+    "exact_identity_plan_hash_pinned": true,
+    "registered_looks_pinned": true,
+    "full_partial_certification_pinned": true,
+    "ambiguous_nonedge_diagnostics_pinned": true,
+    "provider_preflight_required_for_exact_contract": true,
+    "fresh_spend_attestation_required": true,
+    "user_authorization_granted": false,
+    "no_scenes_materialized": true,
+    "no_statistical_reruns": true,
+    "no_semantic_api_calls": true,
+    "no_oracle_access": true,
+    "no_validation_access": true,
+    "no_holdout_access": true,
+    "deterministic_replay": true
+  },
+  "budget": {
+    "maximum_logical_calls": 6480,
+    "attempt_ceiling": 7128,
+    "maximum_point_cost_usd": 9.9378846,
+    "maximum_cost_with_reserve_usd": 12.42235575
+  },
+  "next_action": "USER_AUTHORIZATION_AFTER_FRESH_SPEND_ATTESTATION_AND_EXACT_PROVIDER_PREFLIGHT"
+}
