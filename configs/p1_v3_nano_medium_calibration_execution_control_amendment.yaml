@@ -1,0 +1,59 @@
+schema_version: fourgraph.p1_v3_nano_medium_calibration_execution_control_amendment.v1
+task: P1_V3_NANO_MEDIUM_CALIBRATION_EXECUTION_CONTROL_AMENDMENT
+status: offline_freeze_only
+parent_checkpoint:
+  path: configs/p1_v3_nano_medium_sequential_calibration_live_authorization_checkpoint.yaml
+  sha256: 5A689D4A799734A1FE36C034875B15F4C88E84B79301D42A289C31A4AA82CFA1
+  audit_path: data/manifests/p1_v3_nano_medium_sequential_calibration_live_authorization_checkpoint_audit.json
+  audit_sha256: 78C522DBE488E95B4A6AA437E56613D7EC23C51345725511455D33F1BAF09494
+model:
+  snapshot: gpt-5.4-nano-2026-03-17
+  reasoning_effort: medium
+  scope: calibration_runner_only
+budget_control:
+  total_tokens_hard_stop: 3000000
+  accounting_source: provider_reported_usage.total_tokens
+  reset_local_time: '07:00:00'
+  reset_timezone: Asia/Ho_Chi_Minh
+  window_definition: "07:00 to 07:00_next_day (local Asia/Ho_Chi_Minh)"
+  strict_pre_call_reservation: true
+  no_overshoot_policy: true
+  missing_usage_action: fail_closed_and_halt
+  reservation_exceeds_remaining_action: fail_closed_and_halt
+  automatic_next_day_resume: false
+  automatic_next_phase_resume: false
+  daily_budget_scope: this_calibration_runner_only
+  external_project_calls_visible: false
+ledger:
+  append_only: true
+  path: results/runtime/p1_v3_nano_medium_calibration/token_ledger.jsonl
+  required_fields: [window_start, logical_id, attempt, input_tokens, output_tokens, reasoning_tokens, total_tokens, cost_usd, remaining_total_tokens]
+  duplicate_policy: fail_closed
+  retry_policy: new_attempt_identity_after_explicit_release_only
+  dangling_reservation_policy: fail_closed
+runner:
+  path: scripts/run_p1_v3_nano_medium_calibration.py
+  control_module: src/fourgraph/nano_calibration_control.py
+  concurrency: 1
+  dry_run_required_before_live: true
+  live_provider_adapter: not_enabled_by_this_amendment
+  idempotency_key: scene_story_variant_prompt_variant_model_schema
+cost_accounting:
+  input_rate_usd_per_million: 0.20
+  output_including_reasoning_rate_usd_per_million: 1.25
+  cost_source: configs/p1_v3_comparison_runtime_cost_official_rate_card.json
+  rate_card_sha256: 7917E5E8A4A326415F570D90DBE581D38FF70062D4CC1B77342A11F3FC3E7061
+offline_tests:
+  required: [exact_hard_stop, reset_at_0700_ict, missing_usage_fail_closed, retry_duplicate, dry_run_zero_calls]
+execution_boundary:
+  api_calls: 0
+  scenes_materialized: 0
+  statistical_fits: 0
+  oracle_access: false
+  validation_access: false
+  holdout_access: false
+authorization:
+  live_execution_authorized: false
+  fresh_spend_attestation_required: true
+  exact_provider_preflight_required: true
+  next_action: fresh_spend_attestation_then_provider_preflight_then_live_authorization

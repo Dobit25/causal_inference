@@ -1,0 +1,30 @@
+{
+  "schema_version": "fourgraph.p1_v3_nano_medium_calibration_execution_control_amendment_audit.v1",
+  "status": "PASS_OFFLINE_CONTROL_TESTS",
+  "config_sha256": "9C795506DEE2F12A5D2A5F988AAFF3AC8137993DED059831FD12CEC096AF2200",
+  "manifest_sha256": "C8874756EA500C76083DE478C84FAC9DF2C16C90FF027F1093BD56D6014A5BC7",
+  "runner_sha256": "FBC90A5C743EE6324159DD082D565B259916A212E7441D3A916112620DD132E4",
+  "control_module_sha256": "81AEF3F3E5864F0C3C33CC5134F793B3DA4F752321EC46AB1A9FBE036F47D9A6",
+  "checks": {
+    "exact_hard_stop": true,
+    "no_overshoot": true,
+    "reset_at_0700_ict": true,
+    "missing_usage_fail_closed": true,
+    "retry_and_duplicate_prevention": true,
+    "ledger_fields_complete": true,
+    "dry_run_api_calls": 0,
+    "study_scenes_materialized": 0,
+    "statistical_fits": 0,
+    "oracle_access": false,
+    "validation_access": false,
+    "holdout_access": false,
+    "automatic_next_day_resume": false,
+    "deterministic_replay": true
+  },
+  "token_hard_stop": {
+    "max_total_tokens": 3000000,
+    "reset_timezone": "Asia/Ho_Chi_Minh",
+    "reset_hour": 7
+  },
+  "next_action": "fresh_spend_attestation_and_exact_provider_preflight"
+}

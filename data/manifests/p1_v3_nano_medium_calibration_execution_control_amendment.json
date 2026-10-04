@@ -1,0 +1,39 @@
+{
+  "schema_version": "fourgraph.p1_v3_nano_medium_calibration_execution_control_amendment_manifest.v1",
+  "status": "PASS_OFFLINE_CONTROL_FREEZE",
+  "config": {
+    "path": "configs/p1_v3_nano_medium_calibration_execution_control_amendment.yaml",
+    "sha256": "9C795506DEE2F12A5D2A5F988AAFF3AC8137993DED059831FD12CEC096AF2200"
+  },
+  "hard_stop": {
+    "total_tokens": 3000000,
+    "reset_local_time": "07:00:00",
+    "timezone": "Asia/Ho_Chi_Minh",
+    "provider_usage_field": "total_tokens",
+    "no_overshoot": true,
+    "automatic_next_day_resume": false
+  },
+  "runner": {
+    "path": "scripts/run_p1_v3_nano_medium_calibration.py",
+    "control_module": "src/fourgraph/nano_calibration_control.py",
+    "runner_sha256": "FBC90A5C743EE6324159DD082D565B259916A212E7441D3A916112620DD132E4",
+    "control_module_sha256": "81AEF3F3E5864F0C3C33CC5134F793B3DA4F752321EC46AB1A9FBE036F47D9A6",
+    "ledger_path": "results/runtime/p1_v3_nano_medium_calibration/token_ledger.jsonl",
+    "concurrency": 1
+  },
+  "offline_test_status": {
+    "exact_hard_stop": "PASS",
+    "reset_at_0700_ict": "PASS",
+    "missing_usage_fail_closed": "PASS",
+    "retry_duplicate": "PASS",
+    "dry_run_zero_calls": "PASS"
+  },
+  "execution_boundary": {
+    "api_calls": 0,
+    "scenes_materialized": 0,
+    "statistical_fits": 0,
+    "oracle_access": false,
+    "validation_access": false,
+    "holdout_access": false
+  }
+}
