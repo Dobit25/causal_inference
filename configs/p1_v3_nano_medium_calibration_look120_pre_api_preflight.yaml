@@ -1,0 +1,37 @@
+schema_version: fourgraph.p1_v3_nano_medium_calibration_look120_pre_api_preflight.v1
+task: P1_V3_NANO_MEDIUM_CALIBRATION_LOOK120_PRE_API_PREFLIGHT
+status: FAIL_CLOSED_ENVIRONMENT_BLOCKER
+
+parents:
+  runner:
+    path: configs/p1_v3_nano_medium_calibration_look120_production_runner.yaml
+    sha256: E6048BD8B64B3B91B8E12533B97F7CE0FCD5FC42B8763E01289CECFA766CF2FC
+  story_amendment:
+    path: configs/p1_v3_nano_medium_calibration_public_story_generation_amendment.yaml
+    sha256: 7201E3A191797E629AEAAF1FCA4EDF52C680892ECDFD93D87EE7373FBC384F2E
+  story_audit:
+    path: data/manifests/p1_v3_nano_medium_calibration_public_story_generation_audit.json
+    sha256: 79DD97ADF1B69A480B60F63208C888DEAD842F3AA7F3A96558A1B3E454E9C940
+  materialized_scene_manifest:
+    path: data/generated/p1_v3_nano_medium_calibration_look120/manifest.json
+    sha256: 3F3878B43B19CDAF382D7253120961D4ACBE583862DA7A198FFA52C20B46D843
+
+environment:
+  python_required: 3.10.20
+  java_required: 21.0.10
+  r_required: 4.4.3
+  bnlearn_required: 5.3-20260901
+  tetrad_jar: data/raw/t05/py-tetrad/pytetrad/resources/tetrad-current.jar
+  tetrad_jar_sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051
+
+execution_boundary:
+  statistical_fits_before_pass: 0
+  semantic_api_calls: 0
+  oracle_access: false
+  validation_access: false
+  holdout_access: false
+
+authorization:
+  statistical_execution_authorized: false
+  semantic_live_authorization_requested: false
+  next_action: fix_exact_environment_then_rerun_preflight
