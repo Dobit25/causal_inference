@@ -1,0 +1,50 @@
+schema_version: fourgraph.p1_v3_nano_medium_calibration_look120_live_authorization_request.v2
+task: P1_V3_NANO_MEDIUM_CALIBRATION_LOOK120_LIVE_AUTHORIZATION_REQUEST_V2
+status: PENDING_USER_AUTHORIZATION_AND_PROVIDER_PREFLIGHT
+
+parents:
+  runner_config:
+    path: configs/p1_v3_nano_medium_calibration_look120_production_runner.yaml
+    sha256: E6048BD8B64B3B91B8E12533B97F7CE0FCD5FC42B8763E01289CECFA766CF2FC
+  materialized_scene_manifest:
+    path: data/generated/p1_v3_nano_medium_calibration_look120/manifest.json
+    sha256: 3F3878B43B19CDAF382D7253120961D4ACBE583862DA7A198FFA52C20B46D843
+  public_story_amendment:
+    path: configs/p1_v3_nano_medium_calibration_public_story_generation_amendment.yaml
+    sha256: 7201E3A191797E629AEAAF1FCA4EDF52C680892ECDFD93D87EE7373FBC384F2E
+  story_generation_audit:
+    path: data/manifests/p1_v3_nano_medium_calibration_public_story_generation_audit.json
+    sha256: 79DD97ADF1B69A480B60F63208C888DEAD842F3AA7F3A96558A1B3E454E9C940
+  public_story_manifest:
+    path: data/manifests/p1_v3_nano_medium_calibration_public_story_manifest.jsonl
+    sha256: C19FEB9A6A46E14D2B8BBEB775E419BAFEF66635CC79023B78526A3EA4C48D0F
+  public_input_manifest:
+    path: data/manifests/p1_v3_nano_medium_calibration_public_semantic_input_manifest.json
+    sha256: 44A01E823D45CBC3AB07D85926C847BD2E2520291C2CBFAFA90010B1BB913C26
+
+scope:
+  exact_scene_count: 120
+  exact_namespace: P1V3SC
+  semantic_model: gpt-5.4-nano-2026-03-17
+  reasoning_effort: medium
+  prompt_variants: [P1, P2, P3, P4, P5, P6]
+  story_inputs: [full, partial, ambiguous]
+  nonedge: frozen_pair_subset_over_registered_public_story
+  statistical_fits_required_before_semantic: true
+  downstream_reasoner: false
+  next_look_automatic: false
+
+preconditions:
+  fresh_provider_preflight_required: true
+  provider_reported_usage_required: true
+  token_hard_stop: 3000000
+  missing_usage_fail_closed: true
+  concurrency: 1
+  resume_and_idempotency: frozen_runner_policy
+
+boundary:
+  semantic_api_calls_before_authorization: 0
+  oracle_access: false
+  validation_access: false
+  holdout_access: false
+  threshold_tuning: false
