@@ -1,0 +1,67 @@
+schema_version: fourgraph.p1_v3_nano_medium_calibration_look120_materialization_story_checkpoint.v1
+task: P1_V3_NANO_MEDIUM_CALIBRATION_LOOK120_MATERIALIZATION_AND_PUBLIC_STORY_CHECKPOINT
+status: BLOCKED_PENDING_CALIBRATION_STORY_ARTIFACTS
+
+parents:
+  production_runner_config:
+    path: configs/p1_v3_nano_medium_calibration_look120_production_runner.yaml
+    sha256: E6048BD8B64B3B91B8E12533B97F7CE0FCD5FC42B8763E01289CECFA766CF2FC
+  production_runner:
+    path: scripts/run_p1_v3_nano_medium_calibration_look120.py
+    sha256: 0508C678225452393C414A718CC7C512777D8723984501AAE3443643B1381F6D
+  materializer:
+    path: scripts/materialize_p1_v3_nano_calibration_look120.py
+    sha256: 896B3879B7B244BE11DD48DCFD660244C86128692BF6CD564D4F9A9B3621EB85
+  execution_plan:
+    path: data/manifests/p1_v3_nano_medium_calibration_look120_execution_plan.json
+    sha256: 9BEF78AB517EF52BBDDDF27DC082663D1CDCB1AF1CF18DEBE5F0A0D139519A66
+
+cohort:
+  identity_source: data/manifests/p1_v3_successor_sequential_exact_identities.jsonl
+  selector: role=semantic_calibration and sequence_index < 120
+  exact_count: 120
+  registered_namespace: P1V3SC
+  order: frozen_plan_order
+  forbidden_roles: [method_development, threshold_validation]
+  forbidden_namespaces: [P1V3SD, P1V3SV]
+
+materialization:
+  scene_root: data/generated/p1_v3_nano_medium_calibration_look120
+  public_story_root: data/generated/p1_v3_nano_medium_calibration_look120_stories
+  required_rows_per_scene: 2000
+  required_generator_config: configs/p1_v3_successor_method_development_preflight.yaml
+  scene_write_authorized_by_this_checkpoint: false
+  scene_write_order: verify_story_contract_then_materialize
+  existing_scene_manifest_required: false
+
+public_stories:
+  required_before_live: true
+  source_protocol: T19_generator_only_if_calibration_amendment_is_frozen
+  current_t19_scope: method_development_only_P1V3SD000_P1V3SD029
+  calibration_story_amendment: missing
+  no_story_relabeling: true
+  no_copy_from_development: true
+  no_llm_rewriting: true
+  no_oracle_metadata_in_public_input: true
+  certification_variants: [full, partial]
+  diagnostic_semantic_context: [ambiguous, nonedge]
+  variant_mapping_must_be_registered: true
+
+live_gate:
+  materialized_scenes: 120
+  public_story_inputs: 120
+  story_hash_replay: true
+  mapping_audit: true
+  leakage_audit: true
+  provider_preflight: required
+  semantic_api_calls_before_gate: 0
+  oracle_access: false
+  validation_access: false
+  holdout_access: false
+  automatic_live_enable: false
+
+authorization:
+  current_look120_authorization_reused: forbidden_until_checkpoint_pass
+  live_execution_authorized_by_this_checkpoint: false
+  next_action_if_blocked: freeze_calibration_public_story_generation_amendment
+  next_action_if_pass: separate_live_execution_authorization
