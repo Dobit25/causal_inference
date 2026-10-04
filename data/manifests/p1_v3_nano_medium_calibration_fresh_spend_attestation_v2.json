@@ -1,0 +1,15 @@
+{
+  "schema_version": "fourgraph.p1_v3_nano_medium_calibration_fresh_spend_attestation.v2",
+  "status": "RECORDED_USER_CONFIRMATION",
+  "source": "user_reported_platform_project_settings_and_confirmation",
+  "received_date": "2026-10-04",
+  "project": "causal_builder",
+  "current_spend_usd": 0.0,
+  "project_spend_limit_usd": 18.0,
+  "remaining_project_limit_usd": 18.0,
+  "reset_in_days_reported": 27,
+  "hard_limit_enforced": true,
+  "api_key_recorded": false,
+  "scope": "calibration_authorization_only",
+  "live_execution_authorized": false
+}

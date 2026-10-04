@@ -1,0 +1,46 @@
+{
+  "schema_version": "fourgraph.p1_v3_nano_medium_calibration_live_authorization_checkpoint.v3",
+  "task": "P1_V3_NANO_MEDIUM_CALIBRATION_LIVE_AUTHORIZATION_CHECKPOINT_V3",
+  "status": "PASS_READY_FOR_EXPLICIT_LIVE_AUTHORIZATION",
+  "hashes": {
+    "checkpoint_config": "CF9D256B417893D0C753AE00890BEA89F93DDBCB153E0197E97FB2403E8689CC",
+    "spend_attestation": "B17A76637B9C11BA3CFE52AF7F1F0D0CC6D43B5142FE8A8F3EB8DFBDCAE08ECD",
+    "execution_control_amendment": "9C795506DEE2F12A5D2A5F988AAFF3AC8137993DED059831FD12CEC096AF2200",
+    "execution_control_audit": "06499211B3D2D995A5EF52993C211370DC623D9F4EBF948255A9893CFCCAB9A5",
+    "provider_preflight": "332E7D55850CFD765168D16FCE4B8FFC6D0BF6095B418622571B34B5E8F106D6"
+  },
+  "spend_attestation": {
+    "current_spend_usd": 0.0,
+    "project_spend_limit_usd": 18.0,
+    "remaining_project_limit_usd": 18.0,
+    "reset_in_days_reported": 27,
+    "hard_limit_enforced": true,
+    "api_key_recorded": false
+  },
+  "provider_preflight": {
+    "status": "PASS",
+    "model": "gpt-5.4-nano-2026-03-17",
+    "request_id": "resp_0f893cb36b10c652016ac26b3da78487d0bbb4d52b1b7fe177",
+    "input_tokens": 1274,
+    "output_tokens": 1392,
+    "reasoning_tokens": 640,
+    "total_tokens": 2666,
+    "context_limit_check": "provider_completed_without_truncation",
+    "study_scenes": 0
+  },
+  "checks": {
+    "fresh_spend_attestation_recorded": true,
+    "hard_limit_enforced_confirmed": true,
+    "provider_preflight_pass": true,
+    "exact_model_prompt_schema": true,
+    "hard_stop_3000000_pinned": true,
+    "study_api_calls_before_authorization": 0,
+    "oracle_access": false,
+    "validation_access": false,
+    "holdout_access": false
+  },
+  "live_authorization": {
+    "authorized": false,
+    "reason": "checkpoint is ready; separate explicit live calibration authorization remains required"
+  }
+}
