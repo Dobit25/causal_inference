@@ -1,0 +1,42 @@
+schema_version: fourgraph.p1v3_statistical_skeleton_metric_checkpoint.v1
+task: PHASE_F_INDEPENDENT_STATISTICAL_SKELETON_METRICS
+status: offline_only
+source:
+  phase_d_audit: data/manifests/p1v3_statistical_execution_audit.json
+  phase_d_audit_sha256: A320070B0362CC1645A46E357B9BCB4C83C97BF3170C3CF62753D4E3CFE4BF0D
+  algorithm_manifest: configs/p1v3_algorithm_manifest.yaml
+  algorithm_manifest_sha256: 4444709F243050BF14D3B48E20D253286EEBF70958BD851533F6C28AA98A7B28
+  ensemble_manifest: configs/p1v3_statistical_ensemble_manifest_v2.yaml
+  ensemble_manifest_sha256: 581AA295BE087265F3E99BFD337AB1DB47309C58E7EB3AEFEC9DDF271D8A11D2
+scope:
+  scenes: P1V3SD000-P1V3SD029
+  scene_count: 30
+  oracle: deterministic_development_blueprint_only
+  pair_unit: scene_method_unordered_observed_node_pair
+  direction_scored: false
+conditions:
+  baseline: [Single-BOSS]
+  bootstrap_sensitivity: [Bootstrap-C1, Bootstrap-C2, Bootstrap-C3, Bootstrap-C4, Bootstrap-C5, Bootstrap-C6]
+  heterogeneous_methods: [PC, MMPC, FGES]
+  primary_ensemble: Ensemble-3of5
+  optional_sensitivity: GFCI-sensitivity
+bootstrap:
+  repetitions: 200
+  adjacency_thresholds: {C1: 0.60, C2: 0.60, C3: 0.80, C4: 0.80, C5: 0.95, C6: 0.95}
+  direction_thresholds_affect_skeleton: false
+  method_level_primary_threshold: 0.80
+ensemble:
+  members: [Single-BOSS, Bootstrap-C3, PC, MMPC, FGES]
+  rule: majority_at_least_3_of_5
+  no_union_or_intersection: true
+metrics:
+  pooled: [tp, fp, fn, tn, precision, recall, f1, false_positive_rate]
+  scene_macro: [precision, recall, f1, false_positive_rate]
+  additional: [mean_predicted_edges, graph_validity, bootstrap_stability, ensemble_method_votes]
+execution_boundary:
+  statistical_reruns: 0
+  semantic_api_calls: 0
+  semantic_outputs_used: false
+  calibration_access: 0
+  holdout_access: 0
+  downstream_reasoner: false

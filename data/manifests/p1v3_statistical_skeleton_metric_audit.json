@@ -1,0 +1,88 @@
+{
+  "algorithm_manifest_sha256": "4444709F243050BF14D3B48E20D253286EEBF70958BD851533F6C28AA98A7B28",
+  "calibration_access": 0,
+  "dataset_records": 5520,
+  "dataset_sha256": "FA47EAD9F69885178862F44653F1A1319AE96270676E4C78FBB24EE4D7B66229",
+  "deterministic_replay": true,
+  "ensemble_manifest_sha256": "581AA295BE087265F3E99BFD337AB1DB47309C58E7EB3AEFEC9DDF271D8A11D2",
+  "graph_validity_failures": 0,
+  "holdout_access": 0,
+  "normalized_fit_records": 6150,
+  "oracle_access": "development_only_deterministic_reconstruction",
+  "oracle_commitments_verified": 30,
+  "phase_d_artifacts_unchanged": true,
+  "phase_d_audit_sha256": "A320070B0362CC1645A46E357B9BCB4C83C97BF3170C3CF62753D4E3CFE4BF0D",
+  "results_sha256": "1FDAE01F9236159542BC7DCBBC1065EC9078A391EBBD9629B68F4688B2B89D7A",
+  "scene_count": 30,
+  "scenes": [
+    "P1V3SD000",
+    "P1V3SD001",
+    "P1V3SD002",
+    "P1V3SD003",
+    "P1V3SD004",
+    "P1V3SD005",
+    "P1V3SD006",
+    "P1V3SD007",
+    "P1V3SD008",
+    "P1V3SD009",
+    "P1V3SD010",
+    "P1V3SD011",
+    "P1V3SD012",
+    "P1V3SD013",
+    "P1V3SD014",
+    "P1V3SD015",
+    "P1V3SD016",
+    "P1V3SD017",
+    "P1V3SD018",
+    "P1V3SD019",
+    "P1V3SD020",
+    "P1V3SD021",
+    "P1V3SD022",
+    "P1V3SD023",
+    "P1V3SD024",
+    "P1V3SD025",
+    "P1V3SD026",
+    "P1V3SD027",
+    "P1V3SD028",
+    "P1V3SD029"
+  ],
+  "schema_version": "fourgraph.p1v3_statistical_skeleton_metric_audit.v1",
+  "semantic_api_calls": 0,
+  "semantic_outputs_used": false,
+  "source_fit_counts": {
+    "BOSS": 30,
+    "Bootstrap-BOSS": 6000,
+    "FGES": 30,
+    "GFCI": 30,
+    "MMPC": 30,
+    "PC": 30
+  },
+  "source_graph_validity": {
+    "BOSS": {
+      "total": 30,
+      "valid": 30
+    },
+    "Bootstrap-BOSS": {
+      "total": 6000,
+      "valid": 6000
+    },
+    "FGES": {
+      "total": 30,
+      "valid": 30
+    },
+    "GFCI": {
+      "total": 30,
+      "valid": 30
+    },
+    "MMPC": {
+      "total": 30,
+      "valid": 30
+    },
+    "PC": {
+      "total": 30,
+      "valid": 30
+    }
+  },
+  "statistical_reruns": 0,
+  "status": "PASS_OFFLINE_SKELETON_METRICS"
+}

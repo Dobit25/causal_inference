@@ -1,0 +1,347 @@
+{
+  "conditions": {
+    "Bootstrap-C1": {
+      "bootstrap_stability": {
+        "max": 1.0,
+        "mean": 0.59651087,
+        "median": 0.9075,
+        "min": 0.0
+      },
+      "graph_validity": {
+        "total": 30,
+        "valid": 30
+      },
+      "mean_predicted_edges": 8.56666667,
+      "pooled": {
+        "f1": 0.90638298,
+        "false_positive_rate": 0.17813765,
+        "fn": 0,
+        "fp": 44,
+        "precision": 0.82879377,
+        "recall": 1.0,
+        "tn": 203,
+        "tp": 213
+      },
+      "scene_count": 30,
+      "scene_macro": {
+        "f1": 0.908041,
+        "fpr": 0.24809829,
+        "precision": 0.83757909,
+        "recall": 1.0
+      }
+    },
+    "Bootstrap-C2": {
+      "bootstrap_stability": {
+        "max": 1.0,
+        "mean": 0.59651087,
+        "median": 0.9075,
+        "min": 0.0
+      },
+      "graph_validity": {
+        "total": 30,
+        "valid": 30
+      },
+      "mean_predicted_edges": 8.56666667,
+      "pooled": {
+        "f1": 0.90638298,
+        "false_positive_rate": 0.17813765,
+        "fn": 0,
+        "fp": 44,
+        "precision": 0.82879377,
+        "recall": 1.0,
+        "tn": 203,
+        "tp": 213
+      },
+      "scene_count": 30,
+      "scene_macro": {
+        "f1": 0.908041,
+        "fpr": 0.24809829,
+        "precision": 0.83757909,
+        "recall": 1.0
+      }
+    },
+    "Bootstrap-C3": {
+      "bootstrap_stability": {
+        "max": 1.0,
+        "mean": 0.59651087,
+        "median": 0.9075,
+        "min": 0.0
+      },
+      "graph_validity": {
+        "total": 30,
+        "valid": 30
+      },
+      "mean_predicted_edges": 7.93333333,
+      "pooled": {
+        "f1": 0.93569845,
+        "false_positive_rate": 0.10931174,
+        "fn": 2,
+        "fp": 27,
+        "precision": 0.88655462,
+        "recall": 0.99061033,
+        "tn": 220,
+        "tp": 211
+      },
+      "scene_count": 30,
+      "scene_macro": {
+        "f1": 0.94200638,
+        "fpr": 0.16826109,
+        "precision": 0.90306638,
+        "recall": 0.99153439
+      }
+    },
+    "Bootstrap-C4": {
+      "bootstrap_stability": {
+        "max": 1.0,
+        "mean": 0.59651087,
+        "median": 0.9075,
+        "min": 0.0
+      },
+      "graph_validity": {
+        "total": 30,
+        "valid": 30
+      },
+      "mean_predicted_edges": 7.93333333,
+      "pooled": {
+        "f1": 0.93569845,
+        "false_positive_rate": 0.10931174,
+        "fn": 2,
+        "fp": 27,
+        "precision": 0.88655462,
+        "recall": 0.99061033,
+        "tn": 220,
+        "tp": 211
+      },
+      "scene_count": 30,
+      "scene_macro": {
+        "f1": 0.94200638,
+        "fpr": 0.16826109,
+        "precision": 0.90306638,
+        "recall": 0.99153439
+      }
+    },
+    "Bootstrap-C5": {
+      "bootstrap_stability": {
+        "max": 1.0,
+        "mean": 0.59651087,
+        "median": 0.9075,
+        "min": 0.0
+      },
+      "graph_validity": {
+        "total": 30,
+        "valid": 30
+      },
+      "mean_predicted_edges": 7.6,
+      "pooled": {
+        "f1": 0.9478458,
+        "false_positive_rate": 0.07692308,
+        "fn": 4,
+        "fp": 19,
+        "precision": 0.91666667,
+        "recall": 0.98122066,
+        "tn": 228,
+        "tp": 209
+      },
+      "scene_count": 30,
+      "scene_macro": {
+        "f1": 0.95377291,
+        "fpr": 0.1106044,
+        "precision": 0.93403199,
+        "recall": 0.98260582
+      }
+    },
+    "Bootstrap-C6": {
+      "bootstrap_stability": {
+        "max": 1.0,
+        "mean": 0.59651087,
+        "median": 0.9075,
+        "min": 0.0
+      },
+      "graph_validity": {
+        "total": 30,
+        "valid": 30
+      },
+      "mean_predicted_edges": 7.6,
+      "pooled": {
+        "f1": 0.9478458,
+        "false_positive_rate": 0.07692308,
+        "fn": 4,
+        "fp": 19,
+        "precision": 0.91666667,
+        "recall": 0.98122066,
+        "tn": 228,
+        "tp": 209
+      },
+      "scene_count": 30,
+      "scene_macro": {
+        "f1": 0.95377291,
+        "fpr": 0.1106044,
+        "precision": 0.93403199,
+        "recall": 0.98260582
+      }
+    },
+    "Ensemble-3of5": {
+      "graph_validity": {
+        "total": 30,
+        "valid": 30
+      },
+      "mean_predicted_edges": 7,
+      "pooled": {
+        "f1": 0.9929078,
+        "false_positive_rate": 0.0,
+        "fn": 3,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 0.98591549,
+        "tn": 247,
+        "tp": 210
+      },
+      "scene_count": 30,
+      "scene_macro": {
+        "f1": 0.99359477,
+        "fpr": 0.0,
+        "precision": 1.0,
+        "recall": 0.98796296
+      },
+      "vote_summary": {
+        "all_pair_vote_distribution": {
+          "0": 187,
+          "1": 32,
+          "2": 31,
+          "3": 8,
+          "4": 5,
+          "5": 197
+        },
+        "mean_votes_over_all_pairs": 2.44130435
+      }
+    },
+    "FGES": {
+      "graph_validity": {
+        "total": 30,
+        "valid": 30
+      },
+      "mean_predicted_edges": 7.53333333,
+      "pooled": {
+        "f1": 0.96127563,
+        "false_positive_rate": 0.06072874,
+        "fn": 2,
+        "fp": 15,
+        "precision": 0.93362832,
+        "recall": 0.99061033,
+        "tn": 232,
+        "tp": 211
+      },
+      "scene_count": 30,
+      "scene_macro": {
+        "f1": 0.96958119,
+        "fpr": 0.05333232,
+        "precision": 0.95453704,
+        "recall": 0.99166667
+      }
+    },
+    "GFCI-sensitivity": {
+      "graph_validity": {
+        "total": 30,
+        "valid": 30
+      },
+      "mean_predicted_edges": 6.73333333,
+      "pooled": {
+        "f1": 0.97349398,
+        "false_positive_rate": 0.0,
+        "fn": 11,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 0.94835681,
+        "tn": 247,
+        "tp": 202
+      },
+      "scene_count": 30,
+      "scene_macro": {
+        "f1": 0.97370969,
+        "fpr": 0.0,
+        "precision": 1.0,
+        "recall": 0.95330688
+      }
+    },
+    "MMPC": {
+      "graph_validity": {
+        "total": 30,
+        "valid": 30
+      },
+      "mean_predicted_edges": 6.73333333,
+      "pooled": {
+        "f1": 0.9686747,
+        "false_positive_rate": 0.00404858,
+        "fn": 12,
+        "fp": 1,
+        "precision": 0.9950495,
+        "recall": 0.94366197,
+        "tn": 246,
+        "tp": 201
+      },
+      "scene_count": 30,
+      "scene_macro": {
+        "f1": 0.969306,
+        "fpr": 0.00416667,
+        "precision": 0.99444444,
+        "recall": 0.94900794
+      }
+    },
+    "PC": {
+      "graph_validity": {
+        "total": 30,
+        "valid": 30
+      },
+      "mean_predicted_edges": 6.66666667,
+      "pooled": {
+        "f1": 0.968523,
+        "false_positive_rate": 0.0,
+        "fn": 13,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 0.93896714,
+        "tn": 247,
+        "tp": 200
+      },
+      "scene_count": 30,
+      "scene_macro": {
+        "f1": 0.96882346,
+        "fpr": 0.0,
+        "precision": 1.0,
+        "recall": 0.94298942
+      }
+    },
+    "Single-BOSS": {
+      "graph_validity": {
+        "total": 30,
+        "valid": 30
+      },
+      "mean_predicted_edges": 8.56666667,
+      "pooled": {
+        "f1": 0.90212766,
+        "false_positive_rate": 0.18218623,
+        "fn": 1,
+        "fp": 45,
+        "precision": 0.82490272,
+        "recall": 0.99530516,
+        "tn": 202,
+        "tp": 212
+      },
+      "scene_count": 30,
+      "scene_macro": {
+        "f1": 0.90416648,
+        "fpr": 0.24731787,
+        "precision": 0.83521377,
+        "recall": 0.9952381
+      }
+    }
+  },
+  "dataset_records": 5520,
+  "schema_version": "fourgraph.p1v3_statistical_skeleton_metric_results.v1",
+  "source": {
+    "algorithm_manifest_sha256": "4444709F243050BF14D3B48E20D253286EEBF70958BD851533F6C28AA98A7B28",
+    "ensemble_manifest_sha256": "581AA295BE087265F3E99BFD337AB1DB47309C58E7EB3AEFEC9DDF271D8A11D2",
+    "phase_d_audit_sha256": "A320070B0362CC1645A46E357B9BCB4C83C97BF3170C3CF62753D4E3CFE4BF0D",
+    "phase_d_recorded_jobs": 6150
+  }
+}
