@@ -36,6 +36,27 @@ def command_version(command: str, args: list[str]) -> dict[str, Any]:
         return {"present": False, "path": resolved, "version": str(exc)}
 
 
+def check_bnlearn(rscript: dict[str, Any], expected: str) -> dict[str, Any]:
+    if not rscript["present"]:
+        return {"present": False, "version": None, "mmpc": False}
+    normalized = expected.replace("-", ".")
+    expression = "library(bnlearn); cat(as.character(packageVersion('bnlearn')),'\\n'); cat(exists('mmpc', where='package:bnlearn'),'\\n')"
+    try:
+        proc = subprocess.run(
+            [rscript["path"], "-e", expression],
+            capture_output=True,
+            text=True,
+            timeout=15,
+            env={**__import__('os').environ, "R_LIBS_USER": "D:/Coding/R44/library"},
+        )
+        lines = [line.strip() for line in proc.stdout.splitlines() if line.strip()]
+        version = lines[0] if lines else None
+        mmpc = len(lines) > 1 and lines[1].lower() == "true"
+        return {"present": proc.returncode == 0, "version": version, "mmpc": mmpc, "expected": normalized}
+    except Exception as exc:  # pragma: no cover
+        return {"present": False, "version": None, "mmpc": False, "error": str(exc), "expected": normalized}
+
+
 def run() -> dict[str, Any]:
     cfg = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
     parent_hashes = {}
@@ -50,6 +71,7 @@ def run() -> dict[str, Any]:
     python_version = platform.python_version()
     java = command_version("java", ["-version"])
     rscript = command_version("Rscript", ["--version"])
+    bnlearn = check_bnlearn(rscript, cfg["environment"]["bnlearn_required"])
     jar_path = ROOT / cfg["environment"]["tetrad_jar"]
     jar = {"present": jar_path.is_file(), "sha256": sha256_file(jar_path) if jar_path.is_file() else None}
     checks = {
@@ -59,6 +81,7 @@ def run() -> dict[str, Any]:
         "python_exact": python_version == cfg["environment"]["python_required"],
         "java_present": java["present"],
         "rscript_present": rscript["present"],
+        "bnlearn_exact": bnlearn.get("version") == cfg["environment"]["bnlearn_required"].replace("-", ".") and bnlearn.get("mmpc") is True,
         "tetrad_hash": jar["sha256"] == cfg["environment"]["tetrad_jar_sha256"],
     }
     status = "PASS_READY_BEFORE_STATISTICAL_EXECUTION" if all(v is True or v == "PASS" for v in checks.values()) else "BLOCKED_ENVIRONMENT_BEFORE_STATISTICAL_EXECUTION"
@@ -68,7 +91,7 @@ def run() -> dict[str, Any]:
         "parent_hashes": parent_hashes,
         "scene_count": len(scene_manifest.get("records", [])),
         "story_count": story_audit.get("story_count"),
-        "environment": {"python": python_version, "java": java, "rscript": rscript, "tetrad_jar": jar},
+        "environment": {"python": python_version, "java": java, "rscript": rscript, "bnlearn": bnlearn, "tetrad_jar": jar},
         "checks": checks,
         "statistical_fits": 0,
         "semantic_api_calls": 0,

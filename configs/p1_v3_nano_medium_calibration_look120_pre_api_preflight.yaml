@@ -18,9 +18,13 @@ parents:
 
 environment:
   python_required: 3.10.20
+  python_executable: D:/Coding/Anaconda/envs/p1v3_py31020/python.exe
   java_required: 21.0.10
+  java_executable: D:/Coding/Anaconda/envs/cau/Library/bin/java.exe
   r_required: 4.4.3
+  rscript_executable: D:/Coding/R44/R-4.4.3/bin/x64/Rscript.exe
   bnlearn_required: 5.3-20260901
+  r_library: D:/Coding/R44/library
   tetrad_jar: data/raw/t05/py-tetrad/pytetrad/resources/tetrad-current.jar
   tetrad_jar_sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051
 
