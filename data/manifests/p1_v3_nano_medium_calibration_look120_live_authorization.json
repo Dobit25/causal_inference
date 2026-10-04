@@ -1,0 +1,38 @@
+{
+  "schema_version": "fourgraph.p1_v3_nano_medium_calibration_look120_live_authorization.v1",
+  "task": "P1_V3_NANO_MEDIUM_CALIBRATION_LOOK120_LIVE_AUTHORIZATION",
+  "status": "USER_AUTHORIZED_RUNNER_NOT_READY_FAIL_CLOSED",
+  "authorization": {
+    "explicit_user_authorization": true,
+    "scope": "semantic_calibration_look_120_only",
+    "execution_started": false,
+    "automatic_next_look": false,
+    "automatic_validation_or_holdout": false
+  },
+  "hashes": {
+    "parent_checkpoint": "CF9D256B417893D0C753AE00890BEA89F93DDBCB153E0197E97FB2403E8689CC",
+    "identity_plan": "5957797094EE415FA898D82E3C5D660A1AB9323077BD1DA5E1A79D78F75E63F3",
+    "prompt": "26D2B4EB42F316F9DFB2CCB38D93A7E506E83FA0A43CBEF371B6B12ECA82A276",
+    "schema": "9B448071DCAB8D81CF727B6FE481E98CD73BF810ED5FA16DC7830C24565EC591",
+    "runner": "FBC90A5C743EE6324159DD082D565B259916A212E7441D3A916112620DD132E4"
+  },
+  "look": {
+    "registered_look": 120,
+    "exact_scene_count": 120,
+    "identity_selector": "role=semantic_calibration and sequence_index < 120"
+  },
+  "checks": {
+    "hard_limit_enforced": true,
+    "hard_stop_tokens": 3000000,
+    "provider_preflight_pass": true,
+    "provider_adapter_enabled": false,
+    "materialization_adapter_ready": false,
+    "scenes_materialized": 0,
+    "statistical_fits": 0,
+    "semantic_api_calls": 0,
+    "oracle_access": false,
+    "validation_access": false,
+    "holdout_access": false
+  },
+  "disposition": "STOP_BEFORE_EXECUTION_PRODUCTION_RUNNER_REQUIRED"
+}

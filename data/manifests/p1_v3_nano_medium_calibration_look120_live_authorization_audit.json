@@ -1,0 +1,26 @@
+{
+  "schema_version": "fourgraph.p1_v3_nano_medium_calibration_look120_live_authorization_audit.v1",
+  "task": "P1_V3_NANO_MEDIUM_CALIBRATION_LOOK120_LIVE_AUTHORIZATION",
+  "status": "PASS_AUTHORIZATION_RECORDED_EXECUTION_BLOCKED",
+  "checks": {
+    "explicit_user_authorization": true,
+    "scope_exactly_look_120": true,
+    "parent_checkpoint_hash_pinned": true,
+    "identity_plan_hash_pinned": true,
+    "prompt_schema_hash_pinned": true,
+    "hard_limit_and_3m_stop_pinned": true,
+    "provider_preflight_pass": true,
+    "runner_provider_adapter_enabled": false,
+    "materialization_adapter_ready": false,
+    "fail_closed_before_api": true,
+    "study_scenes_materialized": 0,
+    "statistical_fits": 0,
+    "semantic_api_calls": 0,
+    "oracle_access": false,
+    "validation_access": false,
+    "holdout_access": false
+  },
+  "next_required_step": "implement_and_freeze_production_look120_materialization_statistical_semantic_runner",
+  "no_metric_oracle_scoring_started": true,
+  "no_automatic_resume": true
+}

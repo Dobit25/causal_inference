@@ -1,0 +1,45 @@
+schema_version: fourgraph.p1_v3_nano_medium_calibration_look120_live_authorization.v1
+task: P1_V3_NANO_MEDIUM_CALIBRATION_LOOK120_LIVE_AUTHORIZATION
+status: USER_AUTHORIZED_RUNNER_NOT_READY_FAIL_CLOSED
+authorization:
+  explicit_user_authorization: true
+  received_date: '2026-10-04'
+  scope: semantic_calibration_look_120_only
+  automatic_next_look: false
+  automatic_validation_or_holdout: false
+  user_authorized_api_calls: true
+  execution_started: false
+parent_checkpoint:
+  path: configs/p1_v3_nano_medium_calibration_live_authorization_checkpoint_v3.yaml
+  sha256: CF9D256B417893D0C753AE00890BEA89F93DDBCB153E0197E97FB2403E8689CC
+identity_plan:
+  path: data/manifests/p1_v3_successor_sequential_exact_identities.jsonl
+  sha256: 5957797094EE415FA898D82E3C5D660A1AB9323077BD1DA5E1A79D78F75E63F3
+  selector: role=semantic_calibration and sequence_index < 120
+  exact_scene_count: 120
+  registered_look: 120
+model:
+  snapshot: gpt-5.4-nano-2026-03-17
+  reasoning_effort: medium
+  prompt_sha256: 26D2B4EB42F316F9DFB2CCB38D93A7E506E83FA0A43CBEF371B6B12ECA82A276
+  schema_sha256: 9B448071DCAB8D81CF727B6FE481E98CD73BF810ED5FA16DC7830C24565EC591
+budget:
+  runner_total_tokens_hard_stop: 3000000
+  reset_local_time: '07:00:00'
+  reset_timezone: Asia/Ho_Chi_Minh
+  provider_usage_authoritative: true
+  missing_usage_fail_closed: true
+  no_overshoot: true
+execution_boundary:
+  scenes_materialized: 0
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_access: false
+  validation_access: false
+  holdout_access: false
+blocker:
+  runner_path: scripts/run_p1_v3_nano_medium_calibration.py
+  runner_sha256: FBC90A5C743EE6324159DD082D565B259916A212E7441D3A916112620DD132E4
+  provider_adapter_enabled: false
+  materialization_adapter_ready: false
+  disposition: STOP_BEFORE_EXECUTION
