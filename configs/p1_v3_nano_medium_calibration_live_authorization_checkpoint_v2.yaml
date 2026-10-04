@@ -1,0 +1,58 @@
+schema_version: fourgraph.p1_v3_nano_medium_calibration_live_authorization_checkpoint.v2
+task: P1_V3_NANO_MEDIUM_CALIBRATION_LIVE_AUTHORIZATION_CHECKPOINT_V2
+status: READY_PENDING_SEPARATE_LIVE_AUTHORIZATION
+parents:
+  execution_control_amendment:
+    path: configs/p1_v3_nano_medium_calibration_execution_control_amendment.yaml
+    sha256: 9C795506DEE2F12A5D2A5F988AAFF3AC8137993DED059831FD12CEC096AF2200
+  execution_control_audit:
+    path: data/manifests/p1_v3_nano_medium_calibration_execution_control_amendment_audit.json
+    sha256: 06499211B3D2D995A5EF52993C211370DC623D9F4EBF948255A9893CFCCAB9A5
+  provider_preflight:
+    path: data/manifests/p1_v3_nano_medium_provider_preflight.json
+    sha256: 332E7D55850CFD765168D16FCE4B8FFC6D0BF6095B418622571B34B5E8F106D6
+spend_attestation:
+  path: data/manifests/p1_v3_nano_medium_calibration_fresh_spend_attestation.json
+  sha256: ED34ABF595DFCC0F422DE8818CA78A3300B9D9A506E2AEA6EEAD071C42084CB1
+  source: user_reported_platform_project_settings
+  received_date: '2026-10-04'
+  project: causal_builder
+  current_spend_usd: 0.00
+  project_spend_limit_usd: 18.00
+  remaining_project_limit_usd: 18.00
+  reset_in_days_reported: 27
+  hard_limit_enforced: unknown
+  api_key_recorded: false
+provider_preflight:
+  status: PASS
+  model: gpt-5.4-nano-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  prompt_sha256: 26D2B4EB42F316F9DFB2CCB38D93A7E506E83FA0A43CBEF371B6B12ECA82A276
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  schema_sha256: 9B448071DCAB8D81CF727B6FE481E98CD73BF810ED5FA16DC7830C24565EC591
+  worst_case_nodes: 7
+  worst_case_pairs: 21
+  truncation: disabled
+  study_scenes: 0
+  semantic_study_calls: 0
+budget:
+  runner_total_tokens_hard_stop: 3000000
+  reset_local_time: '07:00:00'
+  reset_timezone: Asia/Ho_Chi_Minh
+  provider_usage_authoritative: true
+  missing_usage: fail_closed
+  overshoot: forbidden
+live_authorization:
+  explicit_user_live_calibration_authorization: false
+  calibration_api_calls_authorized: false
+  next_action: confirm_hard_limit_status_then_issue_separate_live_authorization
+  automatic_resume: false
+  automatic_next_phase_resume: false
+boundary:
+  provider_preflight_calls: 1
+  study_calibration_calls: 0
+  scenes_materialized: 0
+  oracle_access: false
+  validation_access: false
+  holdout_access: false

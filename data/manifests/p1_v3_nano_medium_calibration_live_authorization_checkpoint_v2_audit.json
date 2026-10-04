@@ -1,0 +1,32 @@
+{
+  "schema_version": "fourgraph.p1_v3_nano_medium_calibration_live_authorization_checkpoint.v2.audit",
+  "task": "P1_V3_NANO_MEDIUM_CALIBRATION_LIVE_AUTHORIZATION_CHECKPOINT_V2",
+  "status": "PASS_READY_NOT_AUTHORIZED",
+  "hashes": {
+    "checkpoint_manifest": "0D1E41710D55166352CDCF7400AE330714EABE9B7DD78B2ED166D04696175BCA",
+    "checkpoint_config": "4AADBFA3607BDD856BCA5996E2529F4BFE1FFFC8A068F0489DE5B436A6E39AFC",
+    "spend_attestation": "ED34ABF595DFCC0F422DE8818CA78A3300B9D9A506E2AEA6EEAD071C42084CB1",
+    "provider_preflight": "332E7D55850CFD765168D16FCE4B8FFC6D0BF6095B418622571B34B5E8F106D6"
+  },
+  "checks": {
+    "spend_attestation_recorded": true,
+    "provider_preflight_pass": true,
+    "execution_control_hash_pinned": true,
+    "prompt_schema_model_hash_pinned": true,
+    "hard_stop_total_tokens": 3000000,
+    "reset_timezone": "Asia/Ho_Chi_Minh",
+    "reset_local_time": "07:00:00",
+    "provider_reported_usage_authoritative": true,
+    "missing_usage_fail_closed": true,
+    "provider_preflight_calls": 1,
+    "study_calibration_calls": 0,
+    "scenes_materialized": 0,
+    "oracle_access": false,
+    "validation_access": false,
+    "holdout_access": false,
+    "hard_limit_status_verified": false,
+    "live_authorization": false
+  },
+  "next_action": "confirm_hard_limit_status_and_issue_separate_live_authorization",
+  "no_automatic_resume": true
+}
