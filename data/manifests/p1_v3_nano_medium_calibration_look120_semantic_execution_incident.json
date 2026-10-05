@@ -1,0 +1,32 @@
+{
+  "schema_version": "fourgraph.p1_v3_nano_medium_calibration_look120_semantic_execution_incident.v1",
+  "status": "STOPPED_FAIL_CLOSED_RUNNER_RESERVATION_MISMATCH",
+  "authorization": "p1_v3_nano_medium_calibration_nonedge_live_authorization",
+  "planned_logical_calls": 2640,
+  "provider_attempts": 1,
+  "persisted_semantic_responses": 0,
+  "missing_semantic_responses": 1,
+  "completed_logical_calls": 0,
+  "incident": {
+    "scene_id": "P1V3SC241",
+    "story_variant": "full",
+    "prompt_variant": "P1",
+    "attempt": 0,
+    "logical_id": "3A7FE1E5D6A6BFF362E19D296498916073643433EB02A4C8FBF64D97BB0E3910",
+    "reservation_total_tokens": 1726,
+    "provider_reported_total_tokens": 2262,
+    "provider_usage_recorded_in_ledger": true,
+    "response_body_persisted": false,
+    "request_metadata_persisted": false,
+    "error": "CalibrationBudgetError: provider usage exceeded reservation or hard stop",
+    "retry_performed": false,
+    "root_cause": "offline preflight estimate was lower than the first production prompt usage; local ledger rejected commit after provider response",
+    "scientific_output_usable": false
+  },
+  "token_hard_stop": 3000000,
+  "observed_tokens_in_ledger": 2262,
+  "oracle_access": false,
+  "holdout_access": false,
+  "statistical_reruns": 0,
+  "next_action": "create_separate_runner-remediation_amendment_before_any_resume"
+}
