@@ -1,0 +1,36 @@
+schema_version: fourgraph.p1_v3_nano_medium_calibration_nonedge_amendment.v1
+task: P1_V3_NANO_MEDIUM_CALIBRATION_PUBLIC_STORY_NONEDGE_AMENDMENT_FREEZE
+status: offline_frozen_requires_successor_live_authorization
+
+parent_live_authorization:
+  path: configs/p1_v3_nano_medium_calibration_look120_live_authorization_v2.yaml
+  sha256: 02CDF130FA1B70265AD94598F1AC8D9351BB1AA4A5FE2EA0AC71D65F2198DDB0
+pair_manifest:
+  path: data/manifests/p1_v3_nano_medium_calibration_nonedge_pair_manifest.json
+  sha256: 1181D674CC4209CBF3619123045FB04A08512B959416A9F13F25766B45A638B9
+  scene_count: 80
+  pairs_per_scene: 3
+  total_pairs: 240
+
+definition:
+  label: public-story non-edge diagnostic
+  input_story_variant: full
+  source: frozen public story text only
+  selection: unlisted alias pairs in direct-connection sentences' complement
+  statistical_parent_filter: forbidden
+  oracle_filter: forbidden
+  hidden_scm_filter: forbidden
+  holdout_access: forbidden
+  model_view: public aliases only; pair IDs are internal request metadata
+
+workload:
+  nonedge_diagnostic_calls: 480
+  formula: 80 scenes x 6 prompt variants
+  previous_authorization_workload: 2640
+  successor_authorization_required: true
+
+replay:
+  deterministic: true
+  source_story_hashes: pinned_in_pair_manifest
+  no_api_calls: true
+  no_statistical_rerun: true
