@@ -1,0 +1,56 @@
+schema_version: fourgraph.p1_v3_nano_medium_calibration_nonedge_live_authorization.v1
+task: P1_V3_NANO_MEDIUM_CALIBRATION_LOOK120_NONEDGE_AMENDED_LIVE_AUTHORIZATION
+status: LIVE_AUTHORIZED_BY_USER
+explicit_user_live_authorization: true
+scope: semantic_calibration_look_120_only
+model: gpt-5.4-nano-2026-03-17
+reasoning_effort: medium
+max_output_tokens: 8192
+provider_endpoint: /v1/responses
+structured_outputs: true
+store: false
+truncation: disabled
+prompt: prompts/p1_semantic_sentence_ids_v1.md
+response_schema: schemas/semantic_sentence_id_response_v1.schema.json
+prompt_variants: [P1, P2, P3, P4, P5, P6]
+certification_story_variants: [full, partial]
+diagnostic_story_variants: [ambiguous, public_story_nonedge_on_full_story]
+exact_scene_count: 120
+planned_semantic_calls: 2640
+planned_certification_calls: 1440
+planned_ambiguous_diagnostic_calls: 720
+planned_nonedge_diagnostic_calls: 480
+nonedge_pair_manifest:
+  path: data/manifests/p1_v3_nano_medium_calibration_nonedge_pair_manifest.json
+  scene_count: 80
+  pairs_per_scene: 3
+  selection: public_story_unlisted_pairs_only
+transport_retry_max: 1
+semantic_validation_retry: false
+concurrency: 1
+token_hard_stop: 3000000
+token_reset_local_time: '07:00:00'
+token_reset_timezone: Asia/Ho_Chi_Minh
+provider_usage_authoritative: true
+missing_usage_action: fail_closed_and_halt
+overshoot_action: fail_closed_and_halt
+automatic_next_look: false
+automatic_validation_or_holdout: false
+oracle_access: false
+validation_access: false
+holdout_access: false
+downstream_reasoner: false
+semantic_api_calls_before_authorization: 0
+hashes:
+  configs/p1_v3_nano_medium_calibration_look120_nonedge_amendment.yaml: 81AB1F92D533CBFF78FBDF7861A8D70118E7791AB727F7AEBA970B71FB5B8E8A
+  configs/p1_v3_nano_medium_calibration_look120_production_runner.yaml: E6048BD8B64B3B91B8E12533B97F7CE0FCD5FC42B8763E01289CECFA766CF2FC
+  configs/p1_v3_nano_medium_calibration_provider_environment_lock.yaml: 8D083F0831951DB80BD6BF5CB56A87631F75C0F69501E1FD397F09AA051B6EF5
+  data/manifests/p1_v3_nano_medium_calibration_look120_provider_preflight.json: 292E5AEB7901B7653755653F5354F7930215DE07AAAB9D0C1419B912D4CB3B97
+  data/manifests/p1_v3_nano_medium_calibration_look120_statistical_execution_audit.json: D6365AD47A4EEA0FB5D866530F19412856D83B2386884FE05A7C9FCBF31D4D34
+  data/manifests/p1_v3_nano_medium_calibration_nonedge_amendment_audit.json: A271D8D8C7BCB16E7EB759111F22915244B6CA1308BC046967E64C3FA944DC6D
+  data/manifests/p1_v3_nano_medium_calibration_nonedge_pair_manifest.json: 1181D674CC4209CBF3619123045FB04A08512B959416A9F13F25766B45A638B9
+  data/manifests/p1_v3_nano_medium_calibration_public_story_generation_audit.json: 79DD97ADF1B69A480B60F63208C888DEAD842F3AA7F3A96558A1B3E454E9C940
+  data/manifests/p1_v3_nano_medium_calibration_public_story_manifest.jsonl: C19FEB9A6A46E14D2B8BBEB775E419BAFEF66635CC79023B78526A3EA4C48D0F
+  data/manifests/p1_v3_successor_sequential_exact_identity_plan.json: 2AAC7BE19DA273602C04C3457672EBE42983199144740AD100C5A9D44B5BDA33
+  prompts/p1_semantic_sentence_ids_v1.md: 26D2B4EB42F316F9DFB2CCB38D93A7E506E83FA0A43CBEF371B6B12ECA82A276
+  schemas/semantic_sentence_id_response_v1.schema.json: 9B448071DCAB8D81CF727B6FE481E98CD73BF810ED5FA16DC7830C24565EC591
