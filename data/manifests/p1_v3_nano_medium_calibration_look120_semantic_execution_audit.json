@@ -1,0 +1,40 @@
+{
+  "schema_version": "fourgraph.p1_v3_nano_medium_calibration_look120_semantic_execution_audit.v2",
+  "status": "STOPPED_PROVIDER_RETRY_EXHAUSTED",
+  "planned_logical_calls": 2640,
+  "completed_logical_calls": 898,
+  "provider_attempts": 902,
+  "persisted_provider_errors": 4,
+  "new_provider_connection_incident": {
+    "scene_id": "P1V3SC220",
+    "story_variant": "partial",
+    "prompt_variant": "P5",
+    "attempts": 2,
+    "error_type": "APIConnectionError",
+    "retry_ceiling": 1,
+    "response_available": false,
+    "usage_available": false
+  },
+  "historical_incidents_preserved": 2,
+  "batch_policy": {
+    "batch_size": 360,
+    "batch_hard_stop_tokens": 3000000,
+    "completed_batch_summaries": [
+      {"batch_id": 0, "completed_calls": 360, "total_tokens": 796245, "exceeded": false},
+      {"batch_id": 1, "completed_calls": 360, "total_tokens": 816957, "exceeded": false}
+    ],
+    "batch_id_in_progress": 2,
+    "batch_2_completed_calls": 178
+  },
+  "usage": {
+    "carry_in_tokens": 2262,
+    "committed_tokens": 2010323,
+    "observed_tokens_including_carry_in": 2012585,
+    "committed_cost_usd": 1.74651295
+  },
+  "oracle_access": false,
+  "holdout_access": false,
+  "statistical_reruns": 0,
+  "phase_e_metrics_calculated": false,
+  "next_action": "separate_authorization_required_before_attempt_2_resume"
+}

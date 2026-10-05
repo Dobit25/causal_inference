@@ -1,0 +1,33 @@
+schema_version: fourgraph.p1_v3_nano_medium_calibration_look120_batch360_runner_remediation.v1
+task: P1_V3_NANO_MEDIUM_CALIBRATION_LOOK120_BATCH360_RUNNER_REMEDIATION
+status: offline_remediation_recorded_execution_stopped_on_provider_incident
+
+parent_authorization:
+  path: configs/p1_v3_nano_medium_calibration_nonedge_live_authorization.yaml
+  workload: 2640
+
+budget_scope:
+  batch_size: 360
+  max_tokens_per_batch: 3000000
+  accounting: provider_reported_usage
+  next_batch_allowed_only_if_previous_batch_exceeded: false
+  global_cross_batch_accumulation: false
+
+ledger:
+  reservation_is_estimate_only: true
+  actual_usage_authoritative: true
+  persist_response_before_usage_commit: true
+  historical_carry_in_tokens: 2262
+  historical_carry_in_is_scientific_response: false
+
+retry:
+  transport_retry_max: 1
+  provider_connection_retry_exhausted: stop_and_request_new_authorization
+
+boundaries:
+  prompt_change: false
+  schema_change: false
+  model_change: false
+  oracle_access: false
+  holdout_access: false
+  statistical_rerun: false

@@ -21,7 +21,8 @@ from openai import OpenAI
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from fourgraph.nano_calibration_control import CalibrationBudgetError, CalibrationTokenLedger  # noqa: E402
+from fourgraph.nano_calibration_control import CalibrationBudgetError  # noqa: E402
+from fourgraph.batch_calibration_control import BatchCalibrationTokenLedger  # noqa: E402
 from fourgraph.semantic_pair_contract_v2 import StablePair  # noqa: E402
 from fourgraph.semantic_sentence_id_contract import render_sentence_id_prompt, validate_response_by_pair  # noqa: E402
 
@@ -39,7 +40,7 @@ STAT_PATH = ROOT / "results/raw/p1_v3_nano_medium_calibration_look120_statistica
 SCHEMA = ROOT / "schemas/semantic_sentence_id_response_v1.schema.json"
 RAW_PATH = ROOT / "results/raw/p1_v3_nano_medium_calibration_look120/semantic_calls.jsonl"
 META_PATH = ROOT / "results/runtime/p1_v3_nano_medium_calibration_look120/request_metadata.jsonl"
-LEDGER_PATH = ROOT / "results/runtime/p1_v3_nano_medium_calibration_look120/token_ledger.jsonl"
+LEDGER_PATH = ROOT / "results/runtime/p1_v3_nano_medium_calibration_look120/token_ledger_batch360.jsonl"
 AUDIT_PATH = ROOT / "data/manifests/p1_v3_nano_medium_calibration_look120_semantic_execution_audit.json"
 
 
@@ -191,7 +192,11 @@ def run() -> dict[str, Any]:
         cache_by_id.setdefault(row["logical_id"], []).append(row)
     if len({(r["logical_id"], r.get("attempt", 0)) for r in cached}) != len(cached):
         raise RuntimeError("duplicate semantic cache identity")
-    ledger = CalibrationTokenLedger(LEDGER_PATH, max_total_tokens=3_000_000, reset_hour=7, timezone_name="Asia/Ho_Chi_Minh", input_rate_per_million=0.20, output_rate_per_million=1.25)
+    ledger = BatchCalibrationTokenLedger(LEDGER_PATH, max_batch_tokens=3_000_000, batch_size=360, input_rate_per_million=0.20, output_rate_per_million=1.25)
+    incident = ROOT / "data/manifests/p1_v3_nano_medium_calibration_look120_semantic_execution_incident.json"
+    if not LEDGER_PATH.exists() and incident.is_file():
+        incident_obj = json.loads(incident.read_text(encoding="utf-8"))
+        ledger.seed_carry_in(batch_id=0, logical_id=incident_obj["incident"]["logical_id"], attempt=0, total_tokens=int(incident_obj["incident"]["provider_reported_total_tokens"]), reason="prior_runner_incident_provider_usage_carry_in")
     key = os.environ.get("OPENAI_API_KEY")
     if not key:
         env = ROOT / ".env"
@@ -209,51 +214,71 @@ def run() -> dict[str, Any]:
     errors = 0
     last_request = 0.0
     estimate = int(json.loads((ROOT / "data/manifests/p1_v3_nano_medium_calibration_look120_provider_preflight.json").read_text())["total_tokens"])
-    for item in jobs:
-        existing = cache_by_id.get(item["logical_id"], [])
-        if any(r.get("status") in {"completed_valid", "completed_pair_invalid", "completed_schema_invalid"} for r in existing):
-            continue
-        attempt = len(existing)
-        try:
-            reservation = ledger.reserve(item["logical_id"], attempt, estimate, metadata={"scene_id": item["scene_id"], "story_variant": item["story_variant"], "prompt_variant": item["prompt_variant"]})
-        except CalibrationBudgetError as exc:
-            audit = {"status": "STOPPED_HARD_TOKEN_LIMIT", "planned": len(jobs), "completed": sum(any(r.get("status", "").startswith("completed") for r in cache_by_id.get(j["logical_id"], [])) for j in jobs), "provider_attempts": attempt_count, "errors": errors, "reason": str(exc), "token_snapshot": ledger.snapshot(), "oracle_access": False, "holdout_access": False}
+    for batch_id, start in enumerate(range(0, len(jobs), 360)):
+        batch_jobs = jobs[start:start + 360]
+        prior = ledger.summary(batch_id)
+        previous = ledger.summary(batch_id - 1) if batch_id > 0 else None
+        if (previous and previous.get("exceeded")) or (prior and prior.get("exceeded")):
+            audit = {"status": "STOPPED_BATCH_TOKEN_LIMIT", "planned": len(jobs), "completed": sum(any(r.get("status", "").startswith("completed") for r in cache_by_id.get(j["logical_id"], [])) for j in jobs), "provider_attempts": attempt_count, "new_calls": new_calls, "errors": errors, "stopped_after_batch": batch_id - 1, "batch_snapshot": ledger.snapshot(batch_id - 1), "oracle_access": False, "holdout_access": False}
             AUDIT_PATH.parent.mkdir(parents=True, exist_ok=True); AUDIT_PATH.write_bytes(canon(audit) + b"\n"); return audit
-        while True:
-            wait = 3.2 - (time.perf_counter() - last_request)
-            if wait > 0:
-                time.sleep(wait)
-            started = time.perf_counter()
-            try:
-                response = client.responses.create(model=item["model_snapshot"], input=item["prompt"], reasoning={"effort": "medium"}, max_output_tokens=8192, service_tier="default", store=False, text={"format": {"type": "json_schema", "name": "semantic_sentence_id_response_v1", "schema": schema, "strict": True}}, metadata={"task": "P1_V3_NANO_MEDIUM_CALIBRATION_LOOK120", "logical_id": item["logical_id"], "study_execution": "true"})
-                last_request = time.perf_counter()
-                usage = response.usage
-                usage_dict = {"input_tokens": int(usage.input_tokens), "output_tokens": int(usage.output_tokens), "total_tokens": int(getattr(usage, "total_tokens", usage.input_tokens + usage.output_tokens)), "reasoning_tokens": int(getattr(getattr(usage, "output_tokens_details", None), "reasoning_tokens", 0) or 0)}
-                ledger_record = ledger.commit_provider_usage(item["logical_id"], attempt, usage_dict, metadata={"request_id": getattr(response, "_request_id", None)})
+        for item in batch_jobs:
+            existing = cache_by_id.get(item["logical_id"], [])
+            if any(r.get("status") in {"completed_valid", "completed_pair_invalid", "completed_schema_invalid"} for r in existing):
+                continue
+            attempt = len(existing)
+            ledger.reserve(batch_id=batch_id, logical_id=item["logical_id"], attempt=attempt, estimated_total_tokens=estimate, metadata={"scene_id": item["scene_id"], "story_variant": item["story_variant"], "prompt_variant": item["prompt_variant"], "batch_id": batch_id})
+            while True:
+                wait = 3.2 - (time.perf_counter() - last_request)
+                if wait > 0:
+                    time.sleep(wait)
+                started = time.perf_counter()
                 try:
-                    parsed = json.loads(response.output_text or "")
-                    pairs = tuple(StablePair(**p) for p in item["pairs"])
-                    validation = validate_response_by_pair(parsed, pairs, item["story"])
-                    status = "completed_valid" if validation["response_valid"] else "completed_pair_invalid"
-                except Exception:
-                    parsed = None; validation = {"response_valid": False, "pairs": []}; status = "completed_schema_invalid"
-                rec = {"schema_version": "fourgraph.p1_v3_nano_calibration_semantic_raw.v1", "logical_id": item["logical_id"], "attempt": attempt, "status": status, "scene_id": item["scene_id"], "story_variant": item["story_variant"], "role": item["role"], "prompt_variant": item["prompt_variant"], "model_snapshot": response.model, "request_id": getattr(response, "_request_id", None), "input_tokens": usage_dict["input_tokens"], "output_tokens": usage_dict["output_tokens"], "reasoning_tokens": usage_dict["reasoning_tokens"], "total_tokens": usage_dict["total_tokens"], "latency_ms": round((time.perf_counter() - started) * 1000), "story_sha256": item["story_sha256"], "prompt_render_sha256": item["prompt_render_sha256"], "response_sha256": sha_bytes((response.output_text or "").encode()), "response_valid": validation["response_valid"], "valid_pair_count": sum(p.get("pair_valid") is True for p in validation.get("pairs", [])), "invalid_pair_count": sum(p.get("pair_valid") is False for p in validation.get("pairs", [])), "raw_text": response.output_text, "cost_usd": ledger_record["cost_usd"]}
-                append(RAW_PATH, rec); append(META_PATH, {k: rec[k] for k in ("logical_id", "attempt", "scene_id", "story_variant", "prompt_variant", "request_id", "model_snapshot", "input_tokens", "output_tokens", "reasoning_tokens", "total_tokens", "latency_ms", "cost_usd")})
-                cache_by_id.setdefault(item["logical_id"], []).append(rec); attempt_count += 1; new_calls += 1; break
-            except Exception as exc:
-                last_request = time.perf_counter()
-                try:
-                    ledger.release(item["logical_id"], attempt, reason=f"provider_error:{type(exc).__name__}")
-                except CalibrationBudgetError:
-                    pass
-                rec = {"schema_version": "fourgraph.p1_v3_nano_calibration_semantic_raw.v1", "logical_id": item["logical_id"], "attempt": attempt, "status": "provider_error", "scene_id": item["scene_id"], "story_variant": item["story_variant"], "role": item["role"], "prompt_variant": item["prompt_variant"], "error_type": type(exc).__name__, "error_message": str(exc)[:500], "retryable": retryable(exc), "latency_ms": round((time.perf_counter() - started) * 1000)}
-                append(RAW_PATH, rec); cache_by_id.setdefault(item["logical_id"], []).append(rec); attempt_count += 1; errors += 1
-                if not retryable(exc) or attempt >= 1:
-                    raise
-                attempt += 1
-                reservation = ledger.reserve(item["logical_id"], attempt, estimate, metadata={"retry": True})
+                    response = client.responses.create(model=item["model_snapshot"], input=item["prompt"], reasoning={"effort": "medium"}, max_output_tokens=8192, service_tier="default", store=False, text={"format": {"type": "json_schema", "name": "semantic_sentence_id_response_v1", "schema": schema, "strict": True}}, metadata={"task": "P1_V3_NANO_MEDIUM_CALIBRATION_LOOK120", "logical_id": item["logical_id"], "batch_id": str(batch_id), "study_execution": "true"})
+                    last_request = time.perf_counter()
+                    usage = response.usage
+                    usage_dict = {"input_tokens": int(usage.input_tokens), "output_tokens": int(usage.output_tokens), "total_tokens": int(getattr(usage, "total_tokens", usage.input_tokens + usage.output_tokens)), "reasoning_tokens": int(getattr(getattr(usage, "output_tokens_details", None), "reasoning_tokens", 0) or 0)}
+                    try:
+                        parsed = json.loads(response.output_text or "")
+                        pairs = tuple(StablePair(**p) for p in item["pairs"])
+                        validation = validate_response_by_pair(parsed, pairs, item["story"])
+                        status = "completed_valid" if validation["response_valid"] else "completed_pair_invalid"
+                    except Exception:
+                        validation = {"response_valid": False, "pairs": []}; status = "completed_schema_invalid"
+                    rec = {"schema_version": "fourgraph.p1_v3_nano_calibration_semantic_raw.v1", "logical_id": item["logical_id"], "attempt": attempt, "batch_id": batch_id, "status": status, "usage_committed": False, "scene_id": item["scene_id"], "story_variant": item["story_variant"], "role": item["role"], "prompt_variant": item["prompt_variant"], "model_snapshot": response.model, "request_id": getattr(response, "_request_id", None), "input_tokens": usage_dict["input_tokens"], "output_tokens": usage_dict["output_tokens"], "reasoning_tokens": usage_dict["reasoning_tokens"], "total_tokens": usage_dict["total_tokens"], "latency_ms": round((time.perf_counter() - started) * 1000), "story_sha256": item["story_sha256"], "prompt_render_sha256": item["prompt_render_sha256"], "response_sha256": sha_bytes((response.output_text or "").encode()), "response_valid": validation["response_valid"], "valid_pair_count": sum(p.get("pair_valid") is True for p in validation.get("pairs", [])), "invalid_pair_count": sum(p.get("pair_valid") is False for p in validation.get("pairs", [])), "raw_text": response.output_text}
+                    # Persist the response before ledger commit so a local ledger error cannot erase provider output.
+                    append(RAW_PATH, rec)
+                    append(META_PATH, {k: rec[k] for k in ("logical_id", "attempt", "batch_id", "scene_id", "story_variant", "prompt_variant", "request_id", "model_snapshot", "input_tokens", "output_tokens", "reasoning_tokens", "total_tokens", "latency_ms")})
+                    ledger_record = ledger.commit_provider_usage(batch_id=batch_id, logical_id=item["logical_id"], attempt=attempt, usage=usage_dict, metadata={"request_id": getattr(response, "_request_id", None)})
+                    rec["usage_committed"] = True; rec["cost_usd"] = ledger_record["cost_usd"]
+                    cache_by_id.setdefault(item["logical_id"], []).append(rec); attempt_count += 1; new_calls += 1; break
+                except Exception as exc:
+                    last_request = time.perf_counter()
+                    if isinstance(exc, CalibrationBudgetError):
+                        raise
+                    try:
+                        ledger.release(batch_id=batch_id, logical_id=item["logical_id"], attempt=attempt, reason=f"provider_error:{type(exc).__name__}")
+                    except CalibrationBudgetError:
+                        pass
+                    rec = {"schema_version": "fourgraph.p1_v3_nano_calibration_semantic_raw.v1", "logical_id": item["logical_id"], "attempt": attempt, "batch_id": batch_id, "status": "provider_error", "scene_id": item["scene_id"], "story_variant": item["story_variant"], "role": item["role"], "prompt_variant": item["prompt_variant"], "error_type": type(exc).__name__, "error_message": str(exc)[:500], "retryable": retryable(exc), "latency_ms": round((time.perf_counter() - started) * 1000)}
+                    append(RAW_PATH, rec); cache_by_id.setdefault(item["logical_id"], []).append(rec); attempt_count += 1; errors += 1
+                    local_metadata_error = type(exc).__name__ == "BadRequestError" and "metadata.batch_id" in str(exc)
+                    if local_metadata_error:
+                        # This request was rejected before provider processing; it
+                        # does not consume the registered provider retry slot.
+                        attempt += 1
+                        ledger.reserve(batch_id=batch_id, logical_id=item["logical_id"], attempt=attempt, estimated_total_tokens=estimate, metadata={"retry": True, "reason": "local_metadata_wiring_fix", "batch_id": batch_id})
+                        continue
+                    if not retryable(exc) or attempt >= 1:
+                        raise
+                    attempt += 1
+                    ledger.reserve(batch_id=batch_id, logical_id=item["logical_id"], attempt=attempt, estimated_total_tokens=estimate, metadata={"retry": True, "batch_id": batch_id})
+        summary = ledger.finalize_batch(batch_id=batch_id, planned_calls=len(batch_jobs))
+        if summary.get("exceeded"):
+            completed = sum(any(r.get("status", "").startswith("completed") for r in cache_by_id.get(j["logical_id"], [])) for j in jobs)
+            audit = {"status": "STOPPED_BATCH_TOKEN_LIMIT", "planned": len(jobs), "completed": completed, "provider_attempts": attempt_count, "new_calls": new_calls, "errors": errors, "stopped_after_batch": batch_id, "batch_summary": summary, "oracle_access": False, "holdout_access": False, "statistical_reruns": 0}
+            AUDIT_PATH.parent.mkdir(parents=True, exist_ok=True); AUDIT_PATH.write_bytes(canon(audit) + b"\n"); return audit
     completed = sum(any(r.get("status", "").startswith("completed") for r in cache_by_id.get(j["logical_id"], [])) for j in jobs)
-    audit = {"status": "PASS_SEMANTIC_LOOK120_COMPLETE" if completed == len(jobs) and errors == 0 else "COMPLETED_WITH_ERRORS", "planned": len(jobs), "completed": completed, "provider_attempts": attempt_count, "new_calls": new_calls, "errors": errors, "token_snapshot": ledger.snapshot(), "oracle_access": False, "holdout_access": False, "statistical_reruns": 0, "next_action": "stop_before_next_look_and_before_oracle_scoring"}
+    audit = {"status": "PASS_SEMANTIC_LOOK120_COMPLETE" if completed == len(jobs) and errors == 0 else "COMPLETED_WITH_ERRORS", "planned": len(jobs), "completed": completed, "provider_attempts": attempt_count, "new_calls": new_calls, "errors": errors, "batch_count": (len(jobs) + 359) // 360, "batch_size": 360, "batch_hard_stop_tokens": 3_000_000, "oracle_access": False, "holdout_access": False, "statistical_reruns": 0, "next_action": "stop_before_next_look_and_before_oracle_scoring"}
     AUDIT_PATH.parent.mkdir(parents=True, exist_ok=True); AUDIT_PATH.write_bytes(canon(audit) + b"\n"); return audit
 
 
