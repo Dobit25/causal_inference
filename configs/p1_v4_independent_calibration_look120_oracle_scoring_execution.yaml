@@ -1,0 +1,72 @@
+schema_version: fourgraph.p1_v4_independent_calibration_look120_oracle_scoring_execution_config.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_ORACLE_SCORING_EXECUTION
+
+authorization:
+  path: data/manifests/p1_v4_independent_calibration_look120_oracle_scoring_authorization.json
+  sha256: E907BFF525E975B301C93227393D8B0E3B9097D7F183889E515DF9864276FA91
+  required_status: AUTHORIZED_CALIBRATION_DEVELOPMENT_ORACLE_SCORING_EXECUTION
+  audit_path: data/manifests/p1_v4_independent_calibration_look120_oracle_scoring_authorization_audit.json
+  audit_sha256: 9970AB91D41456442C83CB71F705CC2CD22EE735D73F076CBAAA56F5B511EA87
+
+inputs:
+  checkpoint: data/manifests/p1_v4_independent_calibration_look120_oracle_scoring_authorization_checkpoint.json
+  checkpoint_sha256: D585E457D40A47B084D260882252D2476D7DF8B247F5A04DC054BBA96208F467
+  six_vote_groups: data/manifests/p1_v4_independent_calibration_look120_six_vote_groups.jsonl
+  six_vote_groups_sha256: 7910C6D40BF489D90B32C47CE9963D0220312367498A8F8418A99D3D98CF5944
+  pair_records: data/manifests/p1_v4_independent_calibration_look120_pair_rescore.jsonl
+  pair_records_sha256: D1D9236C2D93411168396802D105598D82B77395D44D2D98DF2580BBDCEFEB0E
+  materialization_manifest: data/manifests/p1_v4_independent_calibration_look120_materialization.json
+  materialization_manifest_sha256: 4A4A81B2DFFB669311FD542911EEB07CE8F6C0551D555F78BE9AFA5F417B2611
+  exact_identities: data/manifests/p1_v4_independent_calibration_exact_identities.jsonl
+  exact_identities_sha256: D9631C34515D2D6EDB5F6F1BA183CACBC99317E0E8D48AFE44774AEE37C9CB84
+  generation_config: configs/p1_v4_stage3_method_development_preflight.yaml
+  generation_config_sha256: 03ABB36A4E2F095CADF47AFE3BAA671A0B4E18BDA6BE0AD9806EF183CCBE8536
+  blueprint_builder: scripts/materialize_p1_v4_stage3.py
+  blueprint_builder_sha256: D3DB6B97119E100AE1C82E989BB75CEA779BEAF9336F2F25E570F0BC06C923A6
+  normalized_root: results/raw/p1_v4_independent_calibration/look120/statistical/normalized
+
+scope:
+  registered_look: 120
+  parent_conditions: [Constrained-BOSS, Constrained-FGES]
+  primary_parent: Constrained-BOSS
+  certification_variants: [full, partial]
+  diagnostic_variant: ambiguous
+  automatic_agreements: [VERY_HIGH, HIGH]
+  high_agreement: HIGH
+  maximum_calibration_scenes: 440
+
+sequential_gates:
+  risk:
+    error_ceiling: 0.05
+    alternatives: [0.005, 0.01, 0.02, 0.03, 0.04]
+    alpha_per_policy: 0.0125
+    minimum_contributing_scenes: 100
+  coverage:
+    floor: 0.20
+    alternatives: [0.25, 0.30, 0.35, 0.43, 0.55, 0.70]
+    alpha_per_policy: 0.0125
+  high_guardrail:
+    error_ceiling: 0.10
+    alternatives: [0.005, 0.01, 0.02, 0.04, 0.06, 0.08]
+    alpha: 0.025
+    minimum_contributing_scenes: 60
+  ambiguous:
+    error_ceiling: 0.05
+    alternatives: [0.005, 0.01, 0.02, 0.03, 0.04]
+    alpha: 0.025
+
+execution_rules:
+  confirmed_compelled: automatic_semantic_direction_must_match_parent
+  semantic_selected: automatic_semantic_direction_on_parent_undirected_edge
+  false_positive_adjacency_if_oriented: count_as_error
+  output_validity: consistent_dag_extension_required_fail_closed
+  meek_closure: forbidden
+  threshold_selection: forbidden
+
+outputs:
+  metric_dataset: data/manifests/p1_v4_independent_calibration_look120_oracle_metric_dataset.jsonl
+  partial_outputs: data/manifests/p1_v4_independent_calibration_look120_oracle_partial_outputs.jsonl
+  results: data/manifests/p1_v4_independent_calibration_look120_oracle_metric_results.json
+  risk_coverage: data/manifests/p1_v4_independent_calibration_look120_oracle_risk_coverage.json
+  audit: data/manifests/p1_v4_independent_calibration_look120_oracle_metric_audit.json
+  report: reports/p1_v4_independent_calibration_look120_oracle_metric_results.md

@@ -1,0 +1,124 @@
+schema_version: fourgraph.p1_v4_stage3_method_development_preflight_config.v1
+task: P1_V4_STAGE_3D_METHOD_DEVELOPMENT_PREFLIGHT_FREEZE
+status: offline_preflight_freeze_only
+
+parents:
+  stage3_protocol:
+    path: data/manifests/p1_v4_evidence_annotated_constrained_protocol.json
+    sha256: CEE459648A93728E40B368F218D6C3212E088C5C01EA14278A83B659846C88F3
+  stage3_conformance:
+    path: data/manifests/p1_v4_evidence_annotated_conformance_audit.json
+    sha256: B264630C40B9F84EF0DF67C7EA60C09FEC90B13B3B2FB2FC94F6CB5D83259FDF
+  exact_identities:
+    path: data/manifests/p1_v4_stage3_exact_identities.jsonl
+    sha256: 83A706C7CCE975A6052B97DB53AC573DF825C1FC4C1D36C5596A4D6216E8C72A
+  exact_identity_audit:
+    path: data/manifests/p1_v4_stage3_exact_identity_cohort_audit.json
+    sha256: F39D6ED908BB03BEEFB1EDDA9C125471D7AA1E5BA63C6DA391D844A60B7D2768
+  generator:
+    path: src/fourgraph/successor_generation.py
+    sha256: 80865B28D1E689A5CCB0A24D75C222074E159C3B34C11E169BF796CF172F498A
+  generator_reference:
+    path: src/fourgraph/successor_generation_reference.py
+    sha256: 9742FDF6D7C2E409FC137047D0149C291260E66B2BD99638DF50594FCB3F3BF6
+  story_generator:
+    path: src/fourgraph/p1_stories.py
+    sha256: 73915B96BBD7E690FB95E6C7D8CDAB7B88C815655255FEC54E31597BED6A1F81
+  prompt:
+    path: prompts/p1_semantic_sentence_ids_v1.md
+    sha256: 26D2B4EB42F316F9DFB2CCB38D93A7E506E83FA0A43CBEF371B6B12ECA82A276
+  schema:
+    path: schemas/semantic_sentence_id_response_v1.schema.json
+    sha256: 9B448071DCAB8D81CF727B6FE481E98CD73BF810ED5FA16DC7830C24565EC591
+  production_validator:
+    path: src/fourgraph/semantic_sentence_id_contract.py
+    sha256: 6F2B3F84EBD5CBD95FAFFD11E9C78253BC39F0C3BD26BB4E9C52B679602F8BD9
+  reference_validator:
+    path: src/fourgraph/semantic_sentence_id_contract_reference.py
+    sha256: 59C35B9507DE7A76A98848669C0AF0859F595D03FFC50284A6A6E243728727ED
+
+identity_scope:
+  role: method_development
+  exact_study_ids: P1V4SD000-P1V4SD029
+  scene_count: 30
+  calibration_or_validation_ids_allowed: false
+  holdout_ids_allowed: false
+
+generation:
+  family: linear_non_gaussian_acyclic
+  observational_sample_size: 2000
+  node_count_range: [5, 7]
+  edge_count_range: {5: [4, 7], 6: [5, 8], 7: [6, 9]}
+  minimum_oracle_cpdag_unresolved_edges: 2
+  public_story_variants: [full, partial]
+  ambiguous_or_nonedge_development_enabled: false
+  source_inputs: SCM_ground_truth_only_as_registered_data_generation_protocol
+  public_story_aliases_required: true
+  canonical_identifiers_forbidden_in_public_story: true
+
+statistical_workload:
+  single_boss_fits: 30
+  bootstrap_boss_fits: 6000
+  pc_fits: 30
+  mmpc_fits: 30
+  fges_fits: 30
+  constrained_boss_fits: 30
+  constrained_fges_fits: 30
+  total_fits: 6180
+  bootstrap_repetitions_per_scene: 200
+  candidate_skeleton: ensemble_3_of_5
+  constrained_boss_primary: true
+  constrained_fges_robustness_only: true
+
+semantic_workload:
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  reasoning_effort: medium
+  prompt_variants: [P1, P2, P3, P4, P5, P6]
+  public_story_variants: [full, partial]
+  raw_evidence_shared_between_constrained_tracks: true
+  calls_per_scene: 12
+  expected_logical_calls: 360
+  pair_universe: union_of_constrained_boss_and_constrained_fges_parent_adjacencies
+  max_pairs_per_scene: 21
+  automatic_chunking: forbidden
+  provider_preflight_required_before_live_semantic_execution: true
+
+execution_environment:
+  python: 3.10.20
+  java: 21.0.10
+  r: 4.4.3
+  bnlearn: 5.3-20260901
+  concurrency: 1
+  semantic_cache_key: [model_snapshot, reasoning_effort, prompt_hash, schema_hash, story_hash, pair_pool_hash, prompt_variant]
+  transport_retry: separate_authorization_required
+  validation_retry: forbidden
+  idempotency: exact_hash_bundle_required
+
+planning_envelope:
+  historical_reference_only:
+    source: P1V3_30_scene_shared_semantic_execution
+    calls: 360
+    total_tokens: 651903
+  live_token_and_cost_limit: must_be_attested_and_authorized_separately
+  no_api_authorization_in_this_checkpoint: true
+
+outputs:
+  preflight: data/manifests/p1_v4_stage3_method_development_preflight.json
+  audit: data/manifests/p1_v4_stage3_method_development_preflight_audit.json
+  report: reports/p1_v4_stage3_method_development_preflight.md
+  reserved_scene_root: data/generated/p1_v4_stage3_method_development
+  reserved_story_root: data/public/p1_v4_stage3_method_development
+  reserved_statistical_root: results/raw/p1_v4_stage3_method_development/statistical
+  reserved_semantic_root: results/raw/p1_v4_stage3_method_development/semantic
+
+execution_boundary:
+  scenes_materialized: 0
+  observations_generated: 0
+  stories_generated: 0
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_access: false
+  calibration_access: false
+  validation_access: false
+  holdout_access: false
+  live_authorization: false

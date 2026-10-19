@@ -1,0 +1,33 @@
+schema_version: fourgraph.p1_v4_stage3_cau_rerun_authorization_config.v1
+task: P1_V4_STAGE_3D_CAU_RERUN_LIVE_AUTHORIZATION
+
+parents:
+  environment_correction:
+    path: data/manifests/p1_v4_cau_environment_correction.json
+    sha256: 1DD68013E7EF9149B004081E98B41280EE2B08F79B6121609E20420413D1F642
+  environment_correction_audit:
+    path: data/manifests/p1_v4_cau_environment_correction_audit.json
+    sha256: EE6DAE359EB29346F7741BB36B14C7C762ABDAB339D3CEE96216A796AA55D734
+  original_preflight:
+    path: data/manifests/p1_v4_stage3_method_development_preflight.json
+    sha256: 0A8750552E3495588F61791BA91C1B0362EF2D77C8825FB15BCAA9CFCBE333F2
+  exact_identities:
+    path: data/manifests/p1_v4_stage3_exact_identities.jsonl
+    sha256: 83A706C7CCE975A6052B97DB53AC573DF825C1FC4C1D36C5596A4D6216E8C72A
+  historical_statistical_audit:
+    path: data/manifests/p1_v4_stage3_statistical_execution_audit.json
+    sha256: 1080C765D75DA2A52DAAD7A8E8AFABBB6C5CBEC9858554C2630A34E9D4EB96B6
+
+authorization:
+  user_explicit_live_authorization: true
+  materialize_exact_30_scenes: true
+  run_exact_6180_statistical_fits: true
+  semantic_api_calls: false
+  provider_preflight: false
+  oracle_access: false
+  holdout_access: false
+
+outputs:
+  checkpoint: data/manifests/p1_v4_stage3_cau_rerun_live_authorization.json
+  audit: data/manifests/p1_v4_stage3_cau_rerun_live_authorization_audit.json
+  report: reports/p1_v4_stage3_cau_rerun_live_authorization.md

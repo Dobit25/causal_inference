@@ -1,0 +1,1 @@
+{"all_resolved":true,"authorized_retries":2,"holdout_access":0,"oracle_access":0,"recorded_retries":2,"retry_response_sha256":"F6A33371EF33C940552149C7EC67BCFA7CD747969C8633C03A66111A14AE697E","retry_statuses":["completed_valid","completed_pair_invalid"],"semantic_api_calls":2,"task":"P1_V4_INDEPENDENT_CALIBRATION_LOOK120_MINI_TRANSPORT_RETRY_AMENDMENT"}

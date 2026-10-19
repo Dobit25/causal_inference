@@ -1,0 +1,62 @@
+schema_version: fourgraph.p1_v4_independent_calibration_look120_overlay_oracle_replay_authorization_config.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_EVIDENCE_ANNOTATED_OVERLAY_ORACLE_REPLAY
+status: explicit_authorization_record
+
+parents:
+  original_oracle_scoring_checkpoint:
+    path: data/manifests/p1_v4_independent_calibration_look120_oracle_scoring_authorization_checkpoint.json
+    sha256: D585E457D40A47B084D260882252D2476D7DF8B247F5A04DC054BBA96208F467
+  evidence_annotated_overlay_amendment:
+    path: data/manifests/p1_v4_look120_evidence_annotated_partial_graph_contract_amendment.json
+    sha256: B660440E2D314DF5C76004BA2864DD746BC6DEE14EE67032DAE9F95FB086C922
+  evidence_annotated_overlay_audit:
+    path: data/manifests/p1_v4_look120_evidence_annotated_partial_graph_contract_amendment_audit.json
+    sha256: B373DF9237BD49D745A8AFB0F616B2541AFB57E15FD82E70593C1C0B620C1991
+  frozen_six_vote_groups:
+    path: data/manifests/p1_v4_independent_calibration_look120_six_vote_groups.jsonl
+    sha256: 7910C6D40BF489D90B32C47CE9963D0220312367498A8F8418A99D3D98CF5944
+  frozen_pair_rescore:
+    path: data/manifests/p1_v4_independent_calibration_look120_pair_rescore.jsonl
+    sha256: D1D9236C2D93411168396802D105598D82B77395D44D2D98DF2580BBDCEFEB0E
+
+scope:
+  scenes: exact_120_calibration_scene_ids_from_original_checkpoint
+  oracle: calibration_development_only
+  parent_conditions: [Constrained-BOSS, Constrained-FGES]
+  certification_variants: [full, partial]
+  diagnostic_variant: ambiguous
+  overlay_contract: evidence_annotated_partial_graph
+
+authorized_calculations:
+  - parent_cpdag_metrics_as_context_only
+  - certified_compelled_precision_and_coverage
+  - semantic_selected_precision_and_coverage
+  - combined_published_direction_precision_and_coverage
+  - abstention_by_full_and_partial
+  - High_guardrail
+  - ambiguous_abstention_diagnostic
+  - false_positive_adjacency_orientation_errors
+  - scene_level_confidence_sequence_and_registered_futility_check
+  - overlay_compatibility_and_semantic_conflict_counts
+
+boundaries:
+  semantic_api_calls: 0
+  statistical_reruns: 0
+  parent_cpdag_mutation: forbidden
+  prompt_schema_model_threshold_tuning: forbidden
+  meek_closure: forbidden
+  downstream_reasoner: forbidden
+  look160_or_later_execution: forbidden
+  validation_access: forbidden
+  holdout_access: forbidden
+  overwrite_prior_incident_artifacts: forbidden
+
+outputs:
+  authorization: data/manifests/p1_v4_independent_calibration_look120_overlay_oracle_replay_authorization.json
+  audit: data/manifests/p1_v4_independent_calibration_look120_overlay_oracle_replay_authorization_audit.json
+  superseding_metric_dataset: data/manifests/p1_v4_independent_calibration_look120_overlay_oracle_metric_dataset.jsonl
+  superseding_overlay_outputs: data/manifests/p1_v4_independent_calibration_look120_overlay_oracle_outputs.jsonl
+  superseding_metric_results: data/manifests/p1_v4_independent_calibration_look120_overlay_oracle_metric_results.json
+  superseding_risk_coverage: data/manifests/p1_v4_independent_calibration_look120_overlay_oracle_risk_coverage.json
+  superseding_metric_audit: data/manifests/p1_v4_independent_calibration_look120_overlay_oracle_metric_audit.json
+  superseding_report: reports/p1_v4_independent_calibration_look120_overlay_oracle_metric_results.md

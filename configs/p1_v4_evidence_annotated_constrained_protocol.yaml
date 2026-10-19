@@ -1,0 +1,121 @@
+schema_version: fourgraph.p1_v4_evidence_annotated_constrained_protocol_config.v1
+task: P1_V4_STAGE_3A_EVIDENCE_ANNOTATED_CONSTRAINED_PROTOCOL_FREEZE
+status: offline_protocol_freeze_requested
+
+parents:
+  nano_medium_successor:
+    path: data/manifests/p1_v3_nano_medium_successor_protocol_amendment.json
+    sha256: C5A4E4820832E00E41106E1072FBEF4719CED22A4BD92A5991A83160EFC79482
+  constrained_parent_diagnostic:
+    path: data/manifests/p1_v3_ensemble_constrained_look120_diagnostic_audit.json
+    sha256: 142FB1F1FF89F25535F4111CE635B11060C6EFFA7FF50D8A2EA11D67B77D9BEC
+  constrained_semantic_replay:
+    path: data/manifests/p1_v3_ensemble_constrained_look120_semantic_replay_audit.json
+    sha256: 42F6F5EBFCBC0AE6B5B1A6AFBFA7D03CEC4A43ED8B0EA99DD049AD2541E8F001
+  compelled_audit:
+    path: data/manifests/p1_v3_look120_compelled_semantic_audit_final_audit.json
+    sha256: FB8B1DE9BE5955A2393FBADD681372E25E00089D7671D78C670CBF2EFA7EBC27
+
+research_question: >-
+  Can an evidence-annotated constrained statistical CPDAG publish only
+  independently certified causal directions while retaining statistical and
+  semantic uncertainty for all remaining adjacencies?
+
+semantic_contract:
+  provider: openai
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  production_validator: src/fourgraph/semantic_sentence_id_contract.py
+  reference_validator: src/fourgraph/semantic_sentence_id_contract_reference.py
+  prompt_variants: [P1, P2, P3, P4, P5, P6]
+  certification_story_variants: [full, partial]
+  diagnostic_story_variants: [ambiguous, nonedge]
+  automatic_agreement: [VERY_HIGH]
+  review_only_agreement: [HIGH, MEDIUM]
+  abstain_agreement: [UNCERTAIN, CONFLICT]
+  incomplete_action: abstain
+  invalid_pair_action: abstain_pair_only
+
+statistical_contract:
+  candidate_skeleton:
+    source: ensemble_3_of_5
+    members: [Single-BOSS, Bootstrap-BOSS, PC, MMPC, FGES]
+    majority_rule: at_least_3_of_5
+    bootstrap_method_level_rule: adjacency_stability_gte_0.80
+  primary_parent:
+    id: constrained_boss
+    algorithm: BOSS
+    score: BasisFunctionBicScore
+    penalty_discount: 1.0
+    truncation_limit: 3
+    allowed_edges: ensemble_3_of_5_skeleton
+  robustness_parent:
+    id: constrained_fges
+    algorithm: FGES
+    score: SemBicScore
+    penalty_discount: 1.0
+    allowed_edges: ensemble_3_of_5_skeleton
+  parent_requirements:
+    valid_cpdag: true
+    consistent_dag_extension: true
+    invalid_parent_action: FAIL_CLOSED_PARENT
+
+evidence_annotated_output:
+  schema: fourgraph.evidence_annotated_cpdag.v1
+  preserves_statistical_parent_separately: true
+  automatic_meek_closure: forbidden
+  diagnostic_meek_closure: allowed_but_never_certified_automatic
+  semantic_orientation_scope: parent_undirected_edges_only
+  compelled_audit_scope: parent_compelled_directions_only
+  global_consistency:
+    require_consistent_extension: true
+    require_parent_compelled_directions_preserved: true
+    require_parent_equivalence_class_preserved: true
+    conflict_action: FAIL_CLOSED_GLOBAL_CONFLICT
+  edge_labels:
+    - certified_compelled
+    - statistical_only_unpublished
+    - conflict_review_required
+    - certified_semantic_orientation
+    - unresolved
+  publication_rules:
+    certified_compelled: complete_six_vote_very_high_agrees_with_parent
+    certified_semantic_orientation: complete_six_vote_very_high_and_globally_consistent
+    high_or_medium: review_only_not_automatic
+    uncertain_conflict_or_incomplete: unresolved_not_automatic
+
+certification_gates:
+  independent_unit: scene
+  precision_lcb_minimum: 0.95
+  coverage_scene_mean_minimum: 0.20
+  compelled_retention_scene_mean_minimum: 0.20
+  parent_validity_required: 1.0
+  certification_variants: [full, partial]
+  false_adjacency_orientation_counts_as_error: true
+  no_meek_directions_in_primary_auto_denominator: true
+
+cohort_plan:
+  namespace: P1V4
+  method_development: 30
+  semantic_calibration_looks: [120, 160, 200, 240, 280, 320, 360, 400, 440]
+  threshold_validation_looks: [160, 200, 240, 280, 320, 360, 400, 440, 480]
+  final_holdout: existing_80_sealed
+  fresh_cohort_required: true
+  reuse_of_look120_or_previous_identity: forbidden
+
+execution_boundary:
+  new_scenes_materialized: 0
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_access: false
+  calibration_access: false
+  validation_access: false
+  holdout_access: false
+  live_authorization: false
+
+outputs:
+  protocol: data/manifests/p1_v4_evidence_annotated_constrained_protocol.json
+  audit: data/manifests/p1_v4_evidence_annotated_constrained_protocol_audit.json
+  report: reports/p1_v4_evidence_annotated_constrained_protocol.md

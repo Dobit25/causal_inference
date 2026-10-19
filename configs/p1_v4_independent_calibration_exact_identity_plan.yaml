@@ -1,0 +1,48 @@
+schema_version: fourgraph.p1_v4_independent_calibration_exact_identity_plan_config.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_EXACT_IDENTITY_PLAN_FREEZE
+status: offline_identity_adoption_only
+
+parents:
+  final_architecture_amendment:
+    path: data/manifests/p1_v4_final_architecture_precalibration_amendment.json
+    sha256: 6D3426B9BA195009AE6D01EB4C0453DE46DFC94F0A2C8FF621B749ADA04A834B
+  final_architecture_audit:
+    path: data/manifests/p1_v4_final_architecture_precalibration_amendment_audit.json
+    sha256: E546F5483B56054AA3132306C9F7528BDD0C23711DDB24365970FF64E04EDA33
+  source_exact_identities:
+    path: data/manifests/p1_v4_stage3_exact_identities.jsonl
+    sha256: 83A706C7CCE975A6052B97DB53AC573DF825C1FC4C1D36C5596A4D6216E8C72A
+  source_exact_plan:
+    path: data/manifests/p1_v4_stage3_exact_identity_cohort.json
+    sha256: 9008CA721BB84D826AEFBA4EB70E7B0BD8DB62F6ECEC6183E9C206C911348E76
+  source_exact_audit:
+    path: data/manifests/p1_v4_stage3_exact_identity_cohort_audit.json
+    sha256: F39D6ED908BB03BEEFB1EDDA9C125471D7AA1E5BA63C6DA391D844A60B7D2768
+
+adoption:
+  source_role: semantic_calibration
+  exact_scene_count: 440
+  required_namespace: P1V4SC
+  registered_looks: [120, 160, 200, 240, 280, 320, 360, 400, 440]
+  first_look: 120
+  diagnostics:
+    ambiguous_subset: 120
+    nonedge_subset: 80
+    nonedge_within_ambiguous: true
+  independent_from_development_prefix: P1V4SD
+  no_reallocation_or_seed_change: true
+
+boundaries:
+  scenes_materialized: 0
+  observations_generated: 0
+  stories_generated: 0
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_access: false
+  holdout_access: false
+
+outputs:
+  identities: data/manifests/p1_v4_independent_calibration_exact_identities.jsonl
+  plan: data/manifests/p1_v4_independent_calibration_exact_identity_plan.json
+  audit: data/manifests/p1_v4_independent_calibration_exact_identity_plan_audit.json
+  report: reports/p1_v4_independent_calibration_exact_identity_plan.md

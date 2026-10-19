@@ -1,0 +1,26 @@
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_PC_INCIDENT_CHECKPOINT
+scope: forensic_only
+incident:
+  execution_id: D823FF5FBE1D32979100E7E9185DEF94468A04F7569B8966F6A911FFB51B7DAC
+  scene_id: P1V4SC307
+  algorithm: PC
+  repetition: 0
+  recorded_error: "PDAG has no consistent DAG extension"
+  recorded_error_type: ValueError
+rules:
+  permitted_actions:
+    - hash_and_freeze_existing_artifacts
+    - inspect_existing_error_and_runner_source
+    - classify_evidence_sufficiency
+  forbidden_actions:
+    - rerun_statistical_fit
+    - resume_execution
+    - modify_adapter_or_validator
+    - modify_protocol_or_algorithm_parameters
+    - semantic_api_call
+    - oracle_access
+    - holdout_access
+outputs:
+  checkpoint: data/manifests/p1_v4_independent_calibration_look120_pc_incident_checkpoint.json
+  audit: data/manifests/p1_v4_independent_calibration_look120_pc_incident_checkpoint_audit.json
+  report: reports/p1_v4_independent_calibration_look120_pc_incident_checkpoint.md

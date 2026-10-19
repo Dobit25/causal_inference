@@ -1,0 +1,95 @@
+schema_version: fourgraph.p1_v4_final_architecture_precalibration_amendment_config.v1
+task: P1_V4_FINAL_ARCHITECTURE_PRECALIBRATION_AMENDMENT_FREEZE
+status: offline_protocol_freeze_only
+
+parents:
+  precalibration_model_policy:
+    path: data/manifests/p1_v4_stage3_precalibration_model_policy.json
+    sha256: 9123C2E0498857E72504E3D7CD6EFB687185FA7112ACF263F786D57B2B7FF657
+  parent_semantic_metrics:
+    path: data/manifests/p1_v4_stage3_parent_semantic_metric_results.json
+    sha256: 3C3A9DFB8780428B5795D69F397C332714C00C64756BEAC273A33568FE3BB2CB
+  compelled_audit_results:
+    path: data/manifests/p1_v4_stage3_compelled_audit_results.json
+    sha256: 15736B4C97DF57BD63068BBAD54DF5CAC34B3F7F0397581C439B13AC321A86A5
+  compelled_audit_final_audit:
+    path: data/manifests/p1_v4_stage3_compelled_audit_final_audit.json
+    sha256: 08C76986AE341BA2ABE42AD3652F38E6CE1E6B4DEDD3DA5DCA6F78FE64987C07
+
+semantic_contract:
+  model_snapshot: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  prompt_sha256: 26D2B4EB42F316F9DFB2CCB38D93A7E506E83FA0A43CBEF371B6B12ECA82A276
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  schema_sha256: 9B448071DCAB8D81CF727B6FE481E98CD73BF810ED5FA16DC7830C24565EC591
+  six_prompt_variants: [P1, P2, P3, P4, P5, P6]
+  automatic_agreements: [VERY_HIGH, HIGH]
+  invalid_pair_action: abstain_pair_only
+  story_variants:
+    certification: [full, partial]
+    diagnostics: [ambiguous, nonedge]
+
+architecture:
+  primary_parent: Constrained-BOSS
+  robustness_parent: Constrained-FGES
+  semantic_input_pool: union_of_primary_and_robustness_parent_adjacencies
+  maximum_pairs_per_scene: 21
+  model_sees_statistical_parent_direction: false
+  automatic_chunking: forbidden
+  closure: forbidden
+  parent_mutation: forbidden
+  output_states: [confirmed_compelled, semantic_selected, unresolved]
+  rules:
+    compelled:
+      input: parent_directed_edge
+      publish_if: automatic_semantic_direction_matches_parent_direction
+      conflict_or_no_confirmation: unresolved
+    undirected:
+      input: parent_undirected_edge
+      publish_if: automatic_semantic_direction
+      otherwise: unresolved
+    absent:
+      publish: false
+  condition_specific_filtering: required
+  false_positive_adjacency_if_oriented: counts_as_direction_error
+
+calibration:
+  independent_unit: scene
+  sequential_looks: [120, 160, 200, 240, 280, 320, 360, 400, 440]
+  full_partial_certification_separate: true
+  primary_precision:
+    metric: all_published_directions_combined_confirmed_compelled_and_semantic_selected
+    one_sided_lower_bound: 0.95
+    familywise_error_control: 0.025
+    confidence_sequence: registered_scene_level_confidence_sequence
+  coverage:
+    metric: published_directions_divided_by_primary_parent_adjacencies
+    minimum_scene_mean: 0.20
+  graph_validity: 1.0
+  high_guardrail:
+    applies_to: all_High_agreement_published_directions_by_source_and_variant
+    precision_lower_bound: 0.90
+    minimum_contributing_scenes: 60
+    insufficient_evidence: High_review_only
+    systematic_failure: stop_before_validation
+  ambiguous_diagnostic:
+    role: abstention_only
+    compelled_edges_included: false
+  nonedge_diagnostic:
+    role: hallucination_only
+    threshold_selection_role: none
+
+boundaries:
+  development_results_are_not_calibration_evidence: true
+  no_prompt_schema_threshold_or_model_tuning_after_freeze: true
+  no_calibration_scene_materialization: true
+  no_statistical_execution: true
+  no_semantic_api_calls: true
+  no_oracle_access: true
+  no_holdout_access: true
+
+outputs:
+  amendment: data/manifests/p1_v4_final_architecture_precalibration_amendment.json
+  audit: data/manifests/p1_v4_final_architecture_precalibration_amendment_audit.json
+  report: reports/p1_v4_final_architecture_precalibration_amendment.md

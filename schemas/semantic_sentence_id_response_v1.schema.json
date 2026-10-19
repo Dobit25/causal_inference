@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fourgraph.semantic_sentence_id_response.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "judgments"],
+  "properties": {
+    "schema_version": {"type": "string", "const": "fourgraph.semantic_sentence_id_response.v1"},
+    "judgments": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["pair_id", "status", "cause", "effect", "evidence_sentence_ids"],
+        "properties": {
+          "pair_id": {"type": "string", "minLength": 1},
+          "status": {"enum": ["DIRECTED", "NO_DIRECT_DIRECTION_EVIDENCE", "PROCESSING_UNCERTAIN"]},
+          "cause": {"type": ["string", "null"]},
+          "effect": {"type": ["string", "null"]},
+          "evidence_sentence_ids": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {"type": "string", "pattern": "^S[0-9]{3}$"}
+          }
+        }
+      }
+    }
+  }
+}

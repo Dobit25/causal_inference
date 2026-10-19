@@ -1,0 +1,33 @@
+schema_version: fourgraph.p1_v4_evidence_annotated_conformance_config.v1
+task: P1_V4_STAGE_3B_EVIDENCE_ANNOTATED_IMPLEMENTATION_CONFORMANCE
+status: offline_synthetic_conformance_only
+
+parent:
+  protocol: data/manifests/p1_v4_evidence_annotated_constrained_protocol.json
+  protocol_sha256: CEE459648A93728E40B368F218D6C3212E088C5C01EA14278A83B659846C88F3
+  audit: data/manifests/p1_v4_evidence_annotated_constrained_protocol_audit.json
+  audit_sha256: 58C55AFA1FEA68C933AE8865B36FA993975C3151A692399289E148538A5CB8B7
+
+fixtures:
+  - compatible_semantic_chain
+  - global_collider_conflict
+  - compelled_confirmation_and_conflict
+  - invalid_non_cpdag_parent
+  - incomplete_high_abstains
+  - duplicate_vote_group_rejected
+
+production: src/fourgraph/evidence_annotated_cpdag.py
+reference: src/fourgraph/evidence_annotated_cpdag_reference.py
+
+outputs:
+  records: data/manifests/p1_v4_evidence_annotated_conformance.jsonl
+  audit: data/manifests/p1_v4_evidence_annotated_conformance_audit.json
+  report: reports/p1_v4_evidence_annotated_conformance.md
+
+execution_boundary:
+  synthetic_fixtures_only: true
+  real_cohort_scenes_materialized: 0
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_access: false
+  holdout_access: false

@@ -1,0 +1,67 @@
+schema_version: fourgraph.p1_v4_stage3_public_semantic_inputs_cau_config.v1
+task: P1_V4_STAGE_3D_PUBLIC_SEMANTIC_INPUT_AND_PAIR_POOL_FREEZE_CAU
+status: offline_freeze_only
+
+parents:
+  semantic_protocol:
+    path: data/manifests/p1_v4_evidence_annotated_constrained_protocol.json
+    sha256: CEE459648A93728E40B368F218D6C3212E088C5C01EA14278A83B659846C88F3
+  statistical_execution_audit:
+    path: data/manifests/p1_v4_stage3_statistical_execution_cau_audit.json
+    sha256: 43FFA32C0BED1DDD0531B5ED8F62C6F192890456699BE547AB976E1192BB66ED
+  statistical_execution_config:
+    path: configs/p1_v4_stage3_statistical_execution_cau.yaml
+    sha256: FD65009807B47A4217A6CF9C040B4585A0C8373F104EA04F2C5471CF02D26CEE
+  exact_identities:
+    path: data/manifests/p1_v4_stage3_exact_identities.jsonl
+    sha256: 83A706C7CCE975A6052B97DB53AC573DF825C1FC4C1D36C5596A4D6216E8C72A
+  story_protocol:
+    path: configs/t19_p1_semantic_stories.yaml
+    sha256: D718E142974BABE425FAB19CBD273DC8484A8845A99E9ADEAD651F86733009E7
+  story_generator:
+    path: src/fourgraph/p1_stories.py
+    sha256: 73915B96BBD7E690FB95E6C7D8CDAB7B88C815655255FEC54E31597BED6A1F81
+  materializer:
+    path: scripts/materialize_p1_v4_stage3.py
+    sha256: D3DB6B97119E100AE1C82E989BB75CEA779BEAF9336F2F25E570F0BC06C923A6
+
+cohort:
+  exact_study_ids: P1V4SD000-P1V4SD029
+  scene_count: 30
+  role: method_development
+  source_scene_root: data/generated/p1_v4_stage3_method_development_cau
+  generation_config: configs/p1_v4_stage3_method_development_preflight.yaml
+
+public_stories:
+  variants: [full, partial]
+  generation_order: lexicographic_study_id_then_variant
+  source_truth_use: SCM_truth_used_only_to_construct_registered_public_story
+  public_model_view: story_only
+  aliases: seeded_per_scene_permutation_from_t19
+  canonical_identifiers_forbidden: true
+  oracle_and_statistical_metadata_forbidden: true
+
+semantic_pair_pools:
+  conditions:
+    constrained_boss: Constrained-BOSS
+    constrained_fges: Constrained-FGES
+  eligible_edges: parent_undirected_edges_only
+  shared_execution_pool: lexicographic_union_of_condition_pools
+  pair_id_scheme: pair_001_to_pair_N_in_shared_union_order
+  max_pairs_per_scene: 21
+  condition_specific_filtering: required_after_shared_raw_semantic_response
+  empty_shared_pool_action: fail_closed
+
+execution_boundary:
+  semantic_api_calls: 0
+  statistical_reruns: 0
+  oracle_access: false
+  holdout_access: false
+  downstream_reasoner: false
+
+outputs:
+  story_root: data/public/p1_v4_stage3_method_development_cau
+  public_story_manifest: data/manifests/p1_v4_stage3_public_semantic_inputs_cau.json
+  condition_pair_pools: data/manifests/p1_v4_stage3_condition_pair_pools_cau.json
+  audit: data/manifests/p1_v4_stage3_public_semantic_inputs_cau_audit.json
+  report: reports/p1_v4_stage3_public_semantic_inputs_cau.md

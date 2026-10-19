@@ -1,0 +1,39 @@
+schema_version: fourgraph.p1_v4_independent_calibration_look120_live_materialization_execution_authorization_config.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_LIVE_MATERIALIZATION_EXECUTION_AUTHORIZATION
+
+parents:
+  authorization_checkpoint:
+    path: data/manifests/p1_v4_independent_calibration_look120_live_materialization_authorization.json
+    sha256: E22DFFB6060B4B16261707F444D86C3EB830263179C969E257112B7738E0F283
+  authorization_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_live_materialization_authorization_audit.json
+    sha256: 64211C5D287559887760CD1469C3F0DA1BECE692A067D3AD91E8076D745354B3
+  materialization_preflight:
+    path: data/manifests/p1_v4_independent_calibration_look120_materialization_preflight.json
+    sha256: 783E70C2EC2B0E0E096A8323EFC5428274B4B9A075AD1E9D5FC079718D042317
+  exact_identity_plan:
+    path: data/manifests/p1_v4_independent_calibration_exact_identity_plan.json
+    sha256: 74BEDF9938B495F6534D9D2E0E8FAEA8158EF35DA2968D6F1E59BF53D817D655
+  t19_story_protocol:
+    path: configs/t19_p1_semantic_stories.yaml
+    sha256: D718E142974BABE425FAB19CBD273DC8484A8845A99E9ADEAD651F86733009E7
+  story_generator:
+    path: src/fourgraph/p1_stories.py
+    sha256: 73915B96BBD7E690FB95E6C7D8CDAB7B88C815655255FEC54E31597BED6A1F81
+
+authorization:
+  explicit_user_live_materialization_authorization_recorded: true
+  materialize_exact_scenes: 120
+  generate_exact_public_stories: 360
+  allowed_story_variants: [full, partial, ambiguous]
+  statistical_execution_authorized: false
+  semantic_api_calls_authorized: false
+  oracle_access_authorized: false
+  holdout_access_authorized: false
+  downstream_reasoner_authorized: false
+  automatic_continuation_authorized: false
+
+outputs:
+  authorization: data/manifests/p1_v4_independent_calibration_look120_live_materialization_execution_authorization.json
+  audit: data/manifests/p1_v4_independent_calibration_look120_live_materialization_execution_authorization_audit.json
+  report: reports/p1_v4_independent_calibration_look120_live_materialization_execution_authorization.md

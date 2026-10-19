@@ -1,0 +1,35 @@
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_PC_ISOLATED_REPLAY_AMENDMENT
+purpose: classify the frozen PC incident using one exact replay with pre-validation capture
+parent_incident_checkpoint:
+  path: data/manifests/p1_v4_independent_calibration_look120_pc_incident_checkpoint.json
+  sha256: 295C44943B4B0675F6133E18054485C1550E07E3A68A85EF1878A09A7F6A3770
+replay_identity:
+  scene_id: P1V4SC307
+  algorithm: PC
+  repetition: 0
+  seed: 2943857798028319146
+  original_execution_id: D823FF5FBE1D32979100E7E9185DEF94468A04F7569B8966F6A911FFB51B7DAC
+  replay_execution_id: PC_INCIDENT_REPLAY_D823FF5FBE1D32979100E7E9185DEF94468A04F7569B8966F6A911FFB51B7DAC
+frozen_algorithm:
+  ci_test: Fisher-Z
+  alpha: 0.01
+  depth: -1
+  stable_fas: true
+  background_knowledge: none
+  tetrad_jar_sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051
+capture:
+  persist_prevalidation_raw_graph: true
+  persist_validator_result: true
+  overwrite_existing_artifacts: false
+boundary:
+  exact_statistical_fits_authorized_by_amendment: 0
+  semantic_api_calls_authorized: false
+  oracle_access_authorized: false
+  holdout_access_authorized: false
+  protocol_parameter_changes: forbidden
+  phase_d_resume: forbidden
+outputs:
+  plan: data/manifests/p1_v4_independent_calibration_look120_pc_isolated_replay_plan.json
+  authorization_checkpoint: data/manifests/p1_v4_independent_calibration_look120_pc_isolated_replay_authorization.json
+  audit: data/manifests/p1_v4_independent_calibration_look120_pc_isolated_replay_authorization_audit.json
+  report: reports/p1_v4_independent_calibration_look120_pc_isolated_replay_amendment.md

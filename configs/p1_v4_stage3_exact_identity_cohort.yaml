@@ -1,0 +1,77 @@
+schema_version: fourgraph.p1_v4_stage3_exact_identity_cohort_config.v1
+task: P1_V4_STAGE_3C_EXACT_IDENTITY_COHORT_FREEZE
+status: offline_exact_identity_freeze_requested
+
+parents:
+  protocol_audit:
+    path: data/manifests/p1_v4_evidence_annotated_constrained_protocol_audit.json
+    sha256: 58C55AFA1FEA68C933AE8865B36FA993975C3151A692399289E148538A5CB8B7
+  conformance_audit:
+    path: data/manifests/p1_v4_evidence_annotated_conformance_audit.json
+    sha256: B264630C40B9F84EF0DF67C7EA60C09FEC90B13B3B2FB2FC94F6CB5D83259FDF
+
+allocator:
+  algorithm: sha256_rank_exact_marginals_then_prefix_balance
+  split_unit: scene
+  tie_break: sha256_then_study_id
+  component_seed_names: [graph_candidates, edge_weights, observations, query_order, story_template, bootstrap_boss]
+  strata:
+    node_count: [5, 6, 7]
+    primary_motif: [chain, fork, collider, mediator, diamond]
+    noise_family: [laplace, logistic, student_t_df5]
+    query_stratum: [valid_empty, one_minimal_nonempty, multiple_minimal, no_valid_adjustment_set]
+
+roles:
+  method_development:
+    namespace: P1V4SD
+    scene_count: 30
+    scene_number_start: 260000
+    master_seed: 941001
+    registered_looks: [30]
+    targets:
+      node_count: {5: 10, 6: 10, 7: 10}
+      primary_motif: {chain: 6, fork: 6, collider: 6, mediator: 6, diamond: 6}
+      noise_family: {laplace: 10, logistic: 10, student_t_df5: 10}
+      query_stratum: {valid_empty: 8, one_minimal_nonempty: 8, multiple_minimal: 7, no_valid_adjustment_set: 7}
+  semantic_calibration:
+    namespace: P1V4SC
+    scene_count: 440
+    scene_number_start: 261000
+    master_seed: 942001
+    registered_looks: [120, 160, 200, 240, 280, 320, 360, 400, 440]
+    targets:
+      node_count: {5: 147, 6: 147, 7: 146}
+      primary_motif: {chain: 88, fork: 88, collider: 88, mediator: 88, diamond: 88}
+      noise_family: {laplace: 147, logistic: 147, student_t_df5: 146}
+      query_stratum: {valid_empty: 110, one_minimal_nonempty: 110, multiple_minimal: 110, no_valid_adjustment_set: 110}
+  threshold_validation:
+    namespace: P1V4SV
+    scene_count: 480
+    scene_number_start: 262000
+    master_seed: 943001
+    registered_looks: [160, 200, 240, 280, 320, 360, 400, 440, 480]
+    targets:
+      node_count: {5: 160, 6: 160, 7: 160}
+      primary_motif: {chain: 96, fork: 96, collider: 96, mediator: 96, diamond: 96}
+      noise_family: {laplace: 160, logistic: 160, student_t_df5: 160}
+      query_stratum: {valid_empty: 120, one_minimal_nonempty: 120, multiple_minimal: 120, no_valid_adjustment_set: 120}
+
+diagnostic_subsets:
+  ambiguous: {semantic_calibration: 120, threshold_validation: 120}
+  nonedge: {semantic_calibration: 80, threshold_validation: 80}
+  containment: {nonedge_within_ambiguous: true}
+
+outputs:
+  identities: data/manifests/p1_v4_stage3_exact_identities.jsonl
+  plan: data/manifests/p1_v4_stage3_exact_identity_cohort.json
+  audit: data/manifests/p1_v4_stage3_exact_identity_cohort_audit.json
+  report: reports/p1_v4_stage3_exact_identity_cohort.md
+
+execution_boundary:
+  scenes_materialized: 0
+  observations_generated: 0
+  stories_generated: 0
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_access: false
+  holdout_access: false

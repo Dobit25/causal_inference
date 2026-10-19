@@ -1,0 +1,27 @@
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_VALID_METHOD_ENSEMBLE_RESUME_LIVE_AUTHORIZATION_CHECKPOINT
+parents:
+  amendment:
+    path: data/manifests/p1_v4_independent_calibration_look120_valid_method_ensemble_amendment.json
+    sha256: C707310ECA2946906F4134210C2161EB2F531C3C29954CD79ADF7D3FD57F034E
+  amendment_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_valid_method_ensemble_amendment_audit.json
+    sha256: C0AC487755BCFC52FA194CE40014E72169727C5F08ABA8304C1FAD30F0A1983B
+  resume_dry_run_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_valid_method_ensemble_resume_dry_run_audit.json
+    sha256: 6DAAABD87DDDE83FBB6CE35FEA5CA9943CF74896A2CC01929C3033C71CBD2F8F
+execution_policy:
+  permitted_execution_identities: exact_missing_only
+  terminal_artifacts_are_not_rerun: true
+  concurrency: 1
+  retry_policy: no_automatic_retry
+  historical_pc_error_artifact: retain_and_classify
+boundary:
+  semantic_api_calls: 0
+  oracle_access: 0
+  holdout_access: 0
+  parameter_or_threshold_change: forbidden
+outputs:
+  resume_plan: data/manifests/p1_v4_independent_calibration_look120_valid_method_ensemble_resume_plan.json
+  authorization_checkpoint: data/manifests/p1_v4_independent_calibration_look120_valid_method_ensemble_resume_authorization_checkpoint.json
+  audit: data/manifests/p1_v4_independent_calibration_look120_valid_method_ensemble_resume_authorization_audit.json
+  report: reports/p1_v4_independent_calibration_look120_valid_method_ensemble_resume_authorization.md

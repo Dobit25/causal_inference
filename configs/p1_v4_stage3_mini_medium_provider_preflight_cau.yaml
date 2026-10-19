@@ -1,0 +1,50 @@
+schema_version: fourgraph.p1_v4_stage3_mini_medium_provider_preflight_cau_config.v1
+task: P1_V4_STAGE_3D_MINI_MEDIUM_PROVIDER_PREFLIGHT_CAU
+
+parents:
+  semantic_protocol:
+    path: data/manifests/p1_v4_evidence_annotated_constrained_protocol.json
+    sha256: CEE459648A93728E40B368F218D6C3212E088C5C01EA14278A83B659846C88F3
+  statistical_execution_audit:
+    path: data/manifests/p1_v4_stage3_statistical_execution_cau_audit.json
+    sha256: 43FFA32C0BED1DDD0531B5ED8F62C6F192890456699BE547AB976E1192BB66ED
+  environment_correction:
+    path: data/manifests/p1_v4_cau_environment_correction.json
+    sha256: 1DD68013E7EF9149B004081E98B41280EE2B08F79B6121609E20420413D1F642
+  environment_lock:
+    path: configs/p1_v4_cau_environment.lock
+  mini_comparator_amendment:
+    path: data/manifests/p1_v4_stage3_mini_medium_paired_comparator_amendment.json
+    sha256: 04149BA6260BC7C284567DDA479F582835DD8A3734C55D78BE8CA17B55D154AD
+
+canonical_environment:
+  conda_environment: cau
+  python_executable: D:/Coding/Anaconda/envs/cau/python.exe
+  python_version: 3.10.21
+  openai_version: 3.6.0
+  jiter_version: 0.16.0
+
+semantic_contract:
+  model_snapshot: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  max_output_tokens: 8192
+  service_tier: default
+  store: false
+  truncation: disabled
+  automatic_prompt_chunking: forbidden
+
+preflight_input:
+  study_execution: false
+  study_scenes_loaded: 0
+  oracle_access: false
+  holdout_access: false
+  synthetic_nodes: 7
+  synthetic_pairs: 21
+  prompt_variant: P1
+
+outputs:
+  provider_preflight: data/manifests/p1_v4_stage3_mini_medium_provider_preflight_cau.json
+  audit: data/manifests/p1_v4_stage3_mini_medium_provider_preflight_cau_audit.json
+  report: reports/p1_v4_stage3_mini_medium_provider_preflight_cau.md

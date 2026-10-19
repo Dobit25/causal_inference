@@ -1,0 +1,44 @@
+schema_version: fourgraph.p1_v4_stage3_compelled_semantic_audit_config.v1
+task: P1_V4_STAGE_3D_MINI_MEDIUM_COMPELLED_DIRECTION_SEMANTIC_AUDIT
+scope:
+  scene_ids: P1V4SD000-P1V4SD029
+  variants: [full, partial]
+  prompt_variants: [P1, P2, P3, P4, P5, P6]
+  model_snapshot: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  conditions: [Constrained-BOSS, Constrained-FGES]
+parents:
+  parent_manifest: data/manifests/p1_v4_stage3_parent_cpdag_metric_inputs.json
+  parent_manifest_sha256: 9EE09B276F84D3DEC405678708CFA338838FD7D0676DC81A6F4DADF86746EE78
+  public_stories: data/manifests/p1_v4_stage3_public_semantic_inputs_cau.json
+  public_stories_sha256: 3AB14A10C5594821EF3A51CAEA13753A7494D0E844B40ED9B8B3FE90D2E3115D
+  t19_config: configs/t19_p1_semantic_stories.yaml
+  mini_preflight: data/manifests/p1_v4_stage3_mini_medium_provider_preflight_cau.json
+  mini_preflight_sha256: 61E6CE804D59EA63FE902CBD6A08C3D1869E17495FC4C4A759DBFB8209FC375B
+contract:
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  max_output_tokens: 8192
+  truncation: disabled
+  automatic_chunking: forbidden
+  direction_anchor: story_only_independent_of_statistical_parent
+  confirmed_only: automatic_very_high_or_high_and_matches_parent_direction
+  opposing_direction: conflict_and_abstain
+  parent_mutation: forbidden
+  closure: forbidden
+runtime:
+  python: D:/Coding/Anaconda/envs/cau/python.exe
+  cache_root: results/raw/p1_v4_stage3_method_development_cau/compelled_semantic_mini_medium
+  calls_per_minute: 19
+  sdk_retries: 0
+  transport_retry: separate_authorization_required
+outputs:
+  pool: data/manifests/p1_v4_stage3_compelled_audit_pair_pool.json
+  plan: data/manifests/p1_v4_stage3_compelled_audit_execution_plan.json
+  freeze_audit: data/manifests/p1_v4_stage3_compelled_audit_freeze_audit.json
+  authorization: data/manifests/p1_v4_stage3_compelled_audit_live_authorization.json
+  response_freeze: data/manifests/p1_v4_stage3_compelled_audit_response_freeze.json
+  groups: data/manifests/p1_v4_stage3_compelled_audit_six_vote_groups.jsonl
+  results: data/manifests/p1_v4_stage3_compelled_audit_results.json
+  audit: data/manifests/p1_v4_stage3_compelled_audit_final_audit.json
+  report: reports/p1_v4_stage3_compelled_audit.md

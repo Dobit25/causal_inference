@@ -1,0 +1,71 @@
+schema_version: fourgraph.p1_v4_stage3_shared_semantic_live_authorization_cau_config.v1
+task: P1_V4_STAGE_3D_SHARED_SEMANTIC_LIVE_AUTHORIZATION_CHECKPOINT_CAU
+status: authorization_checkpoint_only
+
+parents:
+  semantic_protocol:
+    path: data/manifests/p1_v4_evidence_annotated_constrained_protocol.json
+    sha256: CEE459648A93728E40B368F218D6C3212E088C5C01EA14278A83B659846C88F3
+  statistical_execution_audit:
+    path: data/manifests/p1_v4_stage3_statistical_execution_cau_audit.json
+    sha256: 43FFA32C0BED1DDD0531B5ED8F62C6F192890456699BE547AB976E1192BB66ED
+  public_story_manifest:
+    path: data/manifests/p1_v4_stage3_public_semantic_inputs_cau.json
+    sha256: 3AB14A10C5594821EF3A51CAEA13753A7494D0E844B40ED9B8B3FE90D2E3115D
+  condition_pair_pools:
+    path: data/manifests/p1_v4_stage3_condition_pair_pools_cau.json
+    sha256: 1CF5B7CA5B06A4AF0882A5197EA7759C3F5DA718E58E1D296E66046701A0860F
+  public_input_audit:
+    path: data/manifests/p1_v4_stage3_public_semantic_inputs_cau_audit.json
+    sha256: 47FCF1E5E46E37D000FAD897A8DE09904D6521A3DDAF9F265FB8821F91121A77
+  provider_preflight:
+    path: data/manifests/p1_v4_stage3_provider_preflight_cau.json
+    sha256: E141F37FD03D6407269CB74F09E6A1AC51CC97366CAA4AD7F9BE991E0C94D407
+  provider_preflight_audit:
+    path: data/manifests/p1_v4_stage3_provider_preflight_cau_audit.json
+
+semantic_contract:
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  prompt_sha256: 26D2B4EB42F316F9DFB2CCB38D93A7E506E83FA0A43CBEF371B6B12ECA82A276
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  schema_sha256: 9B448071DCAB8D81CF727B6FE481E98CD73BF810ED5FA16DC7830C24565EC591
+  prompt_variants: [P1, P2, P3, P4, P5, P6]
+  truncation: disabled
+  automatic_prompt_chunking: forbidden
+  shared_raw_evidence: true
+  condition_specific_filtering: required
+  condition_specific_closure: required_later_not_in_live_call
+
+scope:
+  exact_scene_ids: P1V4SD000-P1V4SD029
+  story_variants: [full, partial]
+  expected_story_inputs: 60
+  expected_logical_calls: 360
+  max_pairs_per_scene: 21
+  conditions_reusing_shared_raw_evidence: [constrained_boss, constrained_fges]
+  oracle_access: false
+  holdout_access: false
+  downstream_reasoner: false
+  threshold_tuning: false
+
+runtime:
+  canonical_environment: cau
+  python_executable: D:/Coding/Anaconda/envs/cau/python.exe
+  cache_root: results/raw/p1_v4_stage3_method_development_cau/semantic
+  transport_retry: separate_authorization_required
+  validation_retry: forbidden
+  idempotency_key: [model_snapshot, reasoning_effort, prompt_sha256, schema_sha256, story_content_sha256, pair_pool_sha256, prompt_variant]
+
+outputs:
+  execution_plan: data/manifests/p1_v4_stage3_shared_semantic_execution_plan_cau.json
+  checkpoint: data/manifests/p1_v4_stage3_shared_semantic_live_authorization_checkpoint_cau.json
+  audit: data/manifests/p1_v4_stage3_shared_semantic_live_authorization_audit_cau.json
+  report: reports/p1_v4_stage3_shared_semantic_live_authorization_cau.md
+
+execution_boundary:
+  semantic_api_calls_before_explicit_live_authorization: 0
+  live_execution_authorized: false
+  oracle_access: false
+  holdout_access: false

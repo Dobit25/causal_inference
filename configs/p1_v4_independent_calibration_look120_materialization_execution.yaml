@@ -1,0 +1,51 @@
+schema_version: fourgraph.p1_v4_independent_calibration_look120_materialization_execution_config.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_MATERIALIZATION_EXECUTION
+
+parents:
+  live_authorization:
+    path: data/manifests/p1_v4_independent_calibration_look120_live_materialization_execution_authorization.json
+    sha256: 7B4FD30659123270C4803A9F0B76A6AE94E3B79831B69151E08F0582C75EEB24
+  live_authorization_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_live_materialization_execution_authorization_audit.json
+    sha256: 45557F758A20A5498E24AD93577C24BB16B93002E7845087FA947E2FC0601379
+  materialization_preflight:
+    path: data/manifests/p1_v4_independent_calibration_look120_materialization_preflight.json
+    sha256: 783E70C2EC2B0E0E096A8323EFC5428274B4B9A075AD1E9D5FC079718D042317
+  exact_identities:
+    path: data/manifests/p1_v4_independent_calibration_exact_identities.jsonl
+    sha256: D9631C34515D2D6EDB5F6F1BA183CACBC99317E0E8D48AFE44774AEE37C9CB84
+  source_materializer:
+    path: scripts/materialize_p1_v4_stage3.py
+    sha256: D3DB6B97119E100AE1C82E989BB75CEA779BEAF9336F2F25E570F0BC06C923A6
+  story_protocol:
+    path: configs/t19_p1_semantic_stories.yaml
+    sha256: D718E142974BABE425FAB19CBD273DC8484A8845A99E9ADEAD651F86733009E7
+  story_generator:
+    path: src/fourgraph/p1_stories.py
+    sha256: 73915B96BBD7E690FB95E6C7D8CDAB7B88C815655255FEC54E31597BED6A1F81
+
+generation_source:
+  config: configs/p1_v4_stage3_method_development_preflight.yaml
+  sha256: 03ABB36A4E2F095CADF47AFE3BAA671A0B4E18BDA6BE0AD9806EF183CCBE8536
+
+runtime:
+  scene_root: data/generated/p1_v4_independent_calibration/look120
+  public_story_root: data/public/p1_v4_independent_calibration/look120
+  alias_mapping_storage: generated_scene_root_only
+  execution_order: frozen_look120_order
+  duplicate_policy: verify_bytes_or_fail_closed
+  atomic_write: true
+  concurrency: 1
+
+outputs:
+  materialization_manifest: data/manifests/p1_v4_independent_calibration_look120_materialization.json
+  public_input_manifest: data/manifests/p1_v4_independent_calibration_look120_public_inputs.json
+  audit: data/manifests/p1_v4_independent_calibration_look120_materialization_execution_audit_v2.json
+  report: reports/p1_v4_independent_calibration_look120_materialization_execution_v2.md
+
+boundary:
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_scoring_access: false
+  holdout_access: false
+  downstream_reasoner: false

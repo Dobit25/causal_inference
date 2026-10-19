@@ -1,0 +1,54 @@
+schema_version: fourgraph.p1_v4_independent_calibration_look120_live_materialization_authorization_config.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_LIVE_MATERIALIZATION_AUTHORIZATION_CHECKPOINT
+status: authorization_checkpoint_only
+
+parents:
+  materialization_preflight:
+    path: data/manifests/p1_v4_independent_calibration_look120_materialization_preflight.json
+    sha256: 783E70C2EC2B0E0E096A8323EFC5428274B4B9A075AD1E9D5FC079718D042317
+  materialization_preflight_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_materialization_preflight_audit.json
+    sha256: 9EC38F30F190D95F8CA6A6D2569CC8287ADABA6E38E9BA5CD293E609C2B4EA84
+  exact_identity_plan:
+    path: data/manifests/p1_v4_independent_calibration_exact_identity_plan.json
+    sha256: 74BEDF9938B495F6534D9D2E0E8FAEA8158EF35DA2968D6F1E59BF53D817D655
+  final_architecture_amendment:
+    path: data/manifests/p1_v4_final_architecture_precalibration_amendment.json
+    sha256: 6D3426B9BA195009AE6D01EB4C0453DE46DFC94F0A2C8FF621B749ADA04A834B
+  canonical_environment:
+    path: data/manifests/p1_v4_cau_environment_correction.json
+    sha256: 1DD68013E7EF9149B004081E98B41280EE2B08F79B6121609E20420413D1F642
+  materializer:
+    path: scripts/materialize_p1_v4_independent_calibration.py
+    sha256: 47DDB7CECC85B0B008FED877075A2581CA823C43378FC8BC265C568BB7ED618D
+
+scope:
+  exact_scene_count: 120
+  registered_look: 120
+  scene_namespace: P1V4SC
+  observational_rows_per_scene: 2000
+  public_story_variants: [full, partial, ambiguous]
+  scene_root: data/generated/p1_v4_independent_calibration/look120
+  public_story_root: data/public/p1_v4_independent_calibration/look120
+
+authorization:
+  checkpoint_created_from_offline_preflight: true
+  explicit_user_live_materialization_authorization_recorded: false
+  scene_materialization_authorized: false
+  story_generation_authorized: false
+  statistical_execution_authorized: false
+  semantic_api_calls_authorized: false
+  oracle_access_authorized: false
+  holdout_access_authorized: false
+
+guards:
+  exact_identity_hash_required: true
+  output_paths_must_be_absent_before_execution: true
+  materializer_execute_requires_successor_authorization: true
+  no_parameter_or_seed_override: true
+  no_partial_or_duplicate_scene_materialization: true
+
+outputs:
+  checkpoint: data/manifests/p1_v4_independent_calibration_look120_live_materialization_authorization.json
+  audit: data/manifests/p1_v4_independent_calibration_look120_live_materialization_authorization_audit.json
+  report: reports/p1_v4_independent_calibration_look120_live_materialization_authorization.md

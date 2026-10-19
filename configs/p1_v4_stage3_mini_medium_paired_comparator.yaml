@@ -1,0 +1,53 @@
+schema_version: fourgraph.p1_v4_stage3_mini_medium_paired_comparator_config.v1
+task: P1_V4_STAGE_3D_MINI_MEDIUM_PAIRED_COMPARATOR_AMENDMENT
+status: frozen_before_mini_provider_preflight
+
+parents:
+  nano_completion_audit:
+    path: data/manifests/p1_v4_stage3_nano_response_completion_audit.json
+    sha256: 3015CFA9E233FAD774F099B55CED4D7BD08DE84C6206699D768F843B6120B722
+  execution_plan:
+    path: data/manifests/p1_v4_stage3_shared_semantic_execution_plan_cau.json
+    sha256: 99A337F096DAD1BB529945AE019FC757FD12E02E6437C5A081103BE4D02F142D
+  public_story_manifest:
+    path: data/manifests/p1_v4_stage3_public_semantic_inputs_cau.json
+    sha256: 3AB14A10C5594821EF3A51CAEA13753A7494D0E844B40ED9B8B3FE90D2E3115D
+  condition_pair_pools:
+    path: data/manifests/p1_v4_stage3_condition_pair_pools_cau.json
+    sha256: 1CF5B7CA5B06A4AF0882A5197EA7759C3F5DA718E58E1D296E66046701A0860F
+
+paired_contract:
+  same_logical_inputs: true
+  same_scene_ids: P1V4SD000-P1V4SD029
+  same_story_variants: [full, partial]
+  same_pair_pools: true
+  same_prompt_sha256: 26D2B4EB42F316F9DFB2CCB38D93A7E506E83FA0A43CBEF371B6B12ECA82A276
+  same_schema_sha256: 9B448071DCAB8D81CF727B6FE481E98CD73BF810ED5FA16DC7830C24565EC591
+  same_prompt_variants: [P1, P2, P3, P4, P5, P6]
+  same_validator: fourgraph.semantic_sentence_id_contract.validate_response_by_pair
+  only_changed_factor:
+    model_snapshot: gpt-5.4-mini-2026-03-17
+    reasoning_effort: medium
+
+execution:
+  planned_logical_calls: 360
+  max_output_tokens: 8192
+  truncation: disabled
+  automatic_prompt_chunking: forbidden
+  sdk_retries: 0
+  transport_retry: separate_authorization_required
+  cache_root: results/raw/p1_v4_stage3_method_development_cau/semantic_mini_medium
+
+boundaries:
+  oracle_access: false
+  holdout_access: false
+  closure: false
+  metrics: false
+  downstream_reasoner: false
+  nano_rescore_before_mini_completion: forbidden
+
+outputs:
+  paired_execution_plan: data/manifests/p1_v4_stage3_mini_medium_paired_execution_plan.json
+  amendment: data/manifests/p1_v4_stage3_mini_medium_paired_comparator_amendment.json
+  audit: data/manifests/p1_v4_stage3_mini_medium_paired_comparator_audit.json
+  report: reports/p1_v4_stage3_mini_medium_paired_comparator.md

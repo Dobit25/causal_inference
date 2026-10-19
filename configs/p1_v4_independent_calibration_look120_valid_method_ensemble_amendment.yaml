@@ -1,0 +1,33 @@
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_VALID_METHOD_ENSEMBLE_AMENDMENT
+scope: offline_only
+parent_incident_audit:
+  path: data/manifests/p1_v4_independent_calibration_look120_pc_isolated_replay_execution_audit.json
+  sha256: C79F8F42C512BB700F6597FBA242800B3A1E8559219485678C84AF48659888FA
+registered_methods: [Single-BOSS, Bootstrap-BOSS, PC, MMPC, FGES]
+method_validity:
+  valid: graph satisfies its registered output contract
+  invalid_no_vote: graph output is parsed/persisted but fails its registered output contract
+  runtime_or_adapter_error: fail_closed_execution_stop
+  bootstrap_method_valid: all_200_bootstrap_runs_valid
+ensemble:
+  all_5_methods_valid:
+    rule: at_least_3_of_5
+  exactly_1_method_invalid:
+    rule: at_least_3_of_4
+  two_or_more_methods_invalid:
+    rule: FAIL_CLOSED_INSUFFICIENT_VALID_METHODS
+  repair_invalid_graph: forbidden
+  invalid_method_votes: forbidden
+constrained_parents:
+  valid_ensemble: run constrained BOSS and constrained FGES
+  insufficient_methods: persist fail-closed terminal records; do_not_run_constrained_fit
+boundary:
+  phase_d_resume_authorized: false
+  new_statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_access: 0
+  holdout_access: 0
+outputs:
+  amendment: data/manifests/p1_v4_independent_calibration_look120_valid_method_ensemble_amendment.json
+  audit: data/manifests/p1_v4_independent_calibration_look120_valid_method_ensemble_amendment_audit.json
+  dry_run_audit: data/manifests/p1_v4_independent_calibration_look120_valid_method_ensemble_resume_dry_run_audit.json

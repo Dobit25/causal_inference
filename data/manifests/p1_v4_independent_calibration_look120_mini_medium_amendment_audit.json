@@ -1,0 +1,18 @@
+{
+  "task": "P1_V4_INDEPENDENT_CALIBRATION_LOOK120_MINI_MEDIUM_MODEL_AMENDMENT_FREEZE",
+  "status": "PASS",
+  "config_sha256": "D8EB1F94313E308F5C6F713384F9E1498834FD136C608C46909FD22949E051B5",
+  "manifest_sha256": "70CED5A5088D26831601CEB125889BEADF3A31EE9A2405D1E1726CBEEDE53239",
+  "prompt_sha256": "26D2B4EB42F316F9DFB2CCB38D93A7E506E83FA0A43CBEF371B6B12ECA82A276",
+  "schema_sha256": "9B448071DCAB8D81CF727B6FE481E98CD73BF810ED5FA16DC7830C24565EC591",
+  "execution_plan_sha256": "E36AA6E62C1E257535186E6CE191310DA1FAFA18C7420730BA7D6E2B6F4C6288",
+  "checks": {
+    "model_is_mini_medium": true,
+    "nano_live_checkpoint_not_reused": true,
+    "same_inputs_and_contract_except_model": true,
+    "2160_logical_calls_pinned": true,
+    "no_provider_calls": true,
+    "no_oracle_or_holdout": true,
+    "no_statistical_reruns": true
+  }
+}

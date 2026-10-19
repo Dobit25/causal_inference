@@ -1,0 +1,44 @@
+schema_version: fourgraph.p1_v4_cau_environment_correction_config.v1
+task: P1_V4_ENVIRONMENT_CORRECTION_AMENDMENT
+
+decision:
+  canonical_runtime: cau
+  canonical_runtime_only_from_this_amendment: true
+  historical_runtime: p1v3_py31020
+  historical_artifacts_retained: true
+  historical_artifacts_are_not_official_after_correction: true
+  official_statistical_rerun_required: true
+
+scientific_invariants:
+  model_prompt_schema_cohort_algorithm_thresholds_unchanged: true
+  semantic_api_calls_authorized: false
+  oracle_access: false
+  holdout_access: false
+
+historical_phase_d:
+  audit: data/manifests/p1_v4_stage3_statistical_execution_audit.json
+  audit_sha256: 1080C765D75DA2A52DAAD7A8E8AFABBB6C5CBEC9858554C2630A34E9D4EB96B6
+  config: configs/p1_v4_stage3_statistical_execution.yaml
+  output_root: results/raw/p1_v4_stage3_method_development/statistical
+
+canonical_environment:
+  conda_environment: cau
+  python_executable: D:/Coding/Anaconda/envs/cau/python.exe
+  python_version: 3.10.21
+  openai_version: 3.6.0
+  jiter_version: 0.16.0
+  java_home: D:/Coding/Anaconda/envs/cau/Library/lib/jvm
+  java_executable: D:/Coding/Anaconda/envs/cau/Library/bin/java.exe
+  java_version: 21.0.10
+  rscript: D:/Coding/R44/R-4.4.3/bin/Rscript.exe
+  r_library: D:/Coding/R44/library
+  r_version: 4.4.3
+  bnlearn_version: 5.3-20260901
+  tetrad_jar: data/raw/t05/py-tetrad/pytetrad/resources/tetrad-current.jar
+  tetrad_jar_sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051
+
+outputs:
+  package_lock: configs/p1_v4_cau_environment.lock
+  amendment: data/manifests/p1_v4_cau_environment_correction.json
+  audit: data/manifests/p1_v4_cau_environment_correction_audit.json
+  report: reports/p1_v4_cau_environment_correction.md

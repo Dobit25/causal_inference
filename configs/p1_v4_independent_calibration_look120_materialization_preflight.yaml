@@ -1,0 +1,81 @@
+schema_version: fourgraph.p1_v4_independent_calibration_look120_materialization_preflight_config.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_GENERATOR_AND_MATERIALIZATION_PREFLIGHT
+status: offline_preflight_only
+
+parents:
+  final_architecture_amendment:
+    path: data/manifests/p1_v4_final_architecture_precalibration_amendment.json
+    sha256: 6D3426B9BA195009AE6D01EB4C0453DE46DFC94F0A2C8FF621B749ADA04A834B
+  final_architecture_audit:
+    path: data/manifests/p1_v4_final_architecture_precalibration_amendment_audit.json
+    sha256: E546F5483B56054AA3132306C9F7528BDD0C23711DDB24365970FF64E04EDA33
+  exact_identity_config:
+    path: configs/p1_v4_independent_calibration_exact_identity_plan.yaml
+    sha256: 059925E47D37F413AFCB1D837DF0A29FECF3D8E4E3422C710AA568F7A83E234E
+  exact_identities:
+    path: data/manifests/p1_v4_independent_calibration_exact_identities.jsonl
+    sha256: D9631C34515D2D6EDB5F6F1BA183CACBC99317E0E8D48AFE44774AEE37C9CB84
+  exact_identity_plan:
+    path: data/manifests/p1_v4_independent_calibration_exact_identity_plan.json
+    sha256: 74BEDF9938B495F6534D9D2E0E8FAEA8158EF35DA2968D6F1E59BF53D817D655
+  exact_identity_audit:
+    path: data/manifests/p1_v4_independent_calibration_exact_identity_plan_audit.json
+    sha256: 4BA2356CEA3EDF631A0D338110E1593040D15AAFEB1AE787C7262D9A90955A81
+  source_generation_preflight:
+    path: configs/p1_v4_stage3_method_development_preflight.yaml
+    sha256: 03ABB36A4E2F095CADF47AFE3BAA671A0B4E18BDA6BE0AD9806EF183CCBE8536
+  source_materializer:
+    path: scripts/materialize_p1_v4_stage3.py
+    sha256: D3DB6B97119E100AE1C82E989BB75CEA779BEAF9336F2F25E570F0BC06C923A6
+  story_protocol:
+    path: configs/t19_p1_semantic_stories.yaml
+    sha256: D718E142974BABE425FAB19CBD273DC8484A8845A99E9ADEAD651F86733009E7
+  story_generator:
+    path: src/fourgraph/p1_stories.py
+    sha256: 73915B96BBD7E690FB95E6C7D8CDAB7B88C815655255FEC54E31597BED6A1F81
+  canonical_environment:
+    path: data/manifests/p1_v4_cau_environment_correction.json
+    sha256: 1DD68013E7EF9149B004081E98B41280EE2B08F79B6121609E20420413D1F642
+
+selection:
+  calibration_namespace: P1V4SC
+  registered_look: 120
+  selection_rule: exact_prefix_of_frozen_execution_order
+  exact_scene_count: 120
+  allowed_role: semantic_calibration
+  ambiguous_subset_count: 120
+  nonedge_subset_count: 80
+  nonedge_nested_in_ambiguous: true
+
+generation:
+  family: linear_non_gaussian_acyclic
+  observational_sample_size: 2000
+  node_count_range: [5, 7]
+  edge_count_range: {5: [4, 7], 6: [5, 8], 7: [6, 9]}
+  minimum_oracle_cpdag_unresolved_edges: 2
+  component_seed_names: [graph_candidates, edge_weights, observations, query_order, story_template, bootstrap_boss]
+  public_story_variants: [full, partial, ambiguous]
+  public_story_source: registered_t19_deterministic_generator
+  public_aliases_required: true
+  canonical_identifiers_forbidden_in_public_story: true
+
+reserved_outputs:
+  scene_root: data/generated/p1_v4_independent_calibration/look120
+  public_story_root: data/public/p1_v4_independent_calibration/look120
+  materialization_manifest: data/manifests/p1_v4_independent_calibration_look120_materialization.json
+  public_input_manifest: data/manifests/p1_v4_independent_calibration_look120_public_inputs.json
+
+execution_boundary:
+  scenes_materialized: 0
+  observations_generated: 0
+  stories_generated: 0
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_access: false
+  holdout_access: false
+  live_authorization: false
+
+outputs:
+  preflight: data/manifests/p1_v4_independent_calibration_look120_materialization_preflight.json
+  audit: data/manifests/p1_v4_independent_calibration_look120_materialization_preflight_audit.json
+  report: reports/p1_v4_independent_calibration_look120_materialization_preflight.md

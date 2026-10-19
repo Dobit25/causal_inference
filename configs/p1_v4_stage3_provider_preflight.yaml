@@ -1,0 +1,35 @@
+schema_version: fourgraph.p1_v4_stage3_provider_preflight_config.v1
+task: P1_V4_STAGE_3D_PROVIDER_PREFLIGHT
+
+parents:
+  semantic_protocol:
+    path: data/manifests/p1_v4_evidence_annotated_constrained_protocol.json
+    sha256: CEE459648A93728E40B368F218D6C3212E088C5C01EA14278A83B659846C88F3
+  statistical_execution_audit:
+    path: data/manifests/p1_v4_stage3_statistical_execution_audit.json
+    sha256: 1080C765D75DA2A52DAAD7A8E8AFABBB6C5CBEC9858554C2630A34E9D4EB96B6
+  environment_lock:
+    path: configs/p1_v3_nano_medium_calibration_provider_environment_lock.yaml
+
+semantic_contract:
+  model_snapshot: gpt-5.4-nano-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  max_output_tokens: 8192
+  service_tier: default
+  store: false
+  truncation: disabled
+  automatic_prompt_chunking: forbidden
+
+preflight_input:
+  study_execution: false
+  study_scenes_loaded: 0
+  oracle_access: false
+  holdout_access: false
+  synthetic_nodes: 7
+  synthetic_pairs: 21
+  prompt_variant: P1
+
+outputs:
+  provider_preflight: data/manifests/p1_v4_stage3_provider_preflight.json

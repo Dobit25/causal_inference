@@ -1,0 +1,15 @@
+schema_version: fourgraph.p1_v4_stage3_fresh_spend_attestation_config.v1
+task: P1_V4_STAGE_3D_FRESH_SPEND_LIMIT_ATTESTATION
+status: user_provided_attestation_to_freeze
+attestation:
+  source: user_reported_project_settings
+  currency: USD
+  current_spend_usd: 0.27
+  project_spend_limit_usd: 18.00
+  hard_limit_enforced: true
+  reset_description: Resets in 24 days
+  valid_for_hours: 24
+  api_key_received: false
+  note: >-
+    This record attests project-level billing state only. It does not authorize
+    a semantic API request by itself.

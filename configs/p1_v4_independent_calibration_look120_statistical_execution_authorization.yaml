@@ -1,0 +1,13 @@
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_STATISTICAL_EXECUTION_AUTHORIZATION
+parents:
+  checkpoint: {path: data/manifests/p1_v4_independent_calibration_look120_statistical_parent_live_authorization.json, sha256: F2651F926E8B9A7A5AE321937EF5665ED1CF1ECAEEC86274A399324C4AA900F2}
+  plan: {path: data/manifests/p1_v4_independent_calibration_look120_statistical_parent_plan.json, sha256: DBC29E106321944DA5A236A37B0CDD9CEFF45579422E29049D7D9BEA5ABCF6BE}
+authorization:
+  explicit_user_live_statistical_authorization_recorded: true
+  exact_fits: 24720
+  semantic_api_calls_authorized: false
+  oracle_access_authorized: false
+  holdout_access_authorized: false
+outputs:
+  authorization: data/manifests/p1_v4_independent_calibration_look120_statistical_execution_authorization.json
+  audit: data/manifests/p1_v4_independent_calibration_look120_statistical_execution_authorization_audit.json

@@ -1,0 +1,49 @@
+{
+  "schema_version": "fourgraph.p1_v4_independent_calibration_look120_mini_medium_amendment.v1",
+  "task": "P1_V4_INDEPENDENT_CALIBRATION_LOOK120_MINI_MEDIUM_MODEL_AMENDMENT_FREEZE",
+  "status": "PASS_OFFLINE_READY_FOR_PROVIDER_PREFLIGHT",
+  "model": "gpt-5.4-mini-2026-03-17",
+  "reasoning_effort": "medium",
+  "supersedes_for_live_use": "data/manifests/p1_v4_independent_calibration_look120_semantic_authorization_checkpoint.json",
+  "superseded_nano_checkpoint_retained": true,
+  "contract": {
+    "prompt": "prompts/p1_semantic_sentence_ids_v1.md",
+    "prompt_sha256": "26D2B4EB42F316F9DFB2CCB38D93A7E506E83FA0A43CBEF371B6B12ECA82A276",
+    "schema": "schemas/semantic_sentence_id_response_v1.schema.json",
+    "schema_sha256": "9B448071DCAB8D81CF727B6FE481E98CD73BF810ED5FA16DC7830C24565EC591",
+    "prompt_variants": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5",
+      "P6"
+    ],
+    "story_variants": [
+      "full",
+      "partial",
+      "ambiguous"
+    ],
+    "max_pairs_per_scene": 21,
+    "truncation": "disabled",
+    "automatic_chunking": "forbidden",
+    "condition_specific_closure": true
+  },
+  "inputs": {
+    "execution_plan": "data/manifests/p1_v4_independent_calibration_look120_semantic_execution_plan.json",
+    "execution_plan_sha256": "E36AA6E62C1E257535186E6CE191310DA1FAFA18C7420730BA7D6E2B6F4C6288",
+    "scenes": 120,
+    "public_inputs": 360,
+    "logical_calls": 2160,
+    "public_inputs_sha256": "9493ECB59CE7BE3506B758381373CA864D24F32F3633AC9CCD8115360E943A7B"
+  },
+  "boundary": {
+    "provider_preflight_calls": 0,
+    "study_api_calls": 0,
+    "oracle_access": 0,
+    "holdout_access": 0,
+    "statistical_reruns": 0,
+    "status": "offline_only"
+  },
+  "next_gate": "MINI_MEDIUM_PROVIDER_PREFLIGHT"
+}

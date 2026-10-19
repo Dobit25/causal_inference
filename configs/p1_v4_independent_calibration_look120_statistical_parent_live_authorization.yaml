@@ -1,0 +1,26 @@
+schema_version: fourgraph.p1_v4_independent_calibration_look120_statistical_parent_live_authorization_config.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_STATISTICAL_PARENT_LIVE_AUTHORIZATION_CHECKPOINT
+parents:
+  preflight:
+    path: data/manifests/p1_v4_independent_calibration_look120_statistical_parent_preflight.json
+    sha256: 2AC4FF1C9FFC7A25CEDD7F9A363ABDD18C3A7101BDB1D2E048E6D601EDEBB870
+  preflight_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_statistical_parent_preflight_audit.json
+    sha256: DF5351CA4915D4767C9915B64D273700590AB2674167D9290EA6631725A3AE16
+  job_plan:
+    path: data/manifests/p1_v4_independent_calibration_look120_statistical_parent_plan.json
+    sha256: DBC29E106321944DA5A236A37B0CDD9CEFF45579422E29049D7D9BEA5ABCF6BE
+  materialization_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_materialization_execution_audit_v2.json
+    sha256: 464D99B4C2D38F320C2FA6B1C213049DC4574E6772F41843907B82D4867FAE93
+authorization:
+  explicit_user_live_statistical_authorization_recorded: false
+  statistical_execution_authorized: false
+  semantic_api_calls_authorized: false
+  oracle_access_authorized: false
+  holdout_access_authorized: false
+  downstream_reasoner_authorized: false
+outputs:
+  checkpoint: data/manifests/p1_v4_independent_calibration_look120_statistical_parent_live_authorization.json
+  audit: data/manifests/p1_v4_independent_calibration_look120_statistical_parent_live_authorization_audit.json
+  report: reports/p1_v4_independent_calibration_look120_statistical_parent_live_authorization.md

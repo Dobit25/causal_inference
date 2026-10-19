@@ -1,0 +1,67 @@
+schema_version: fourgraph.p1_v4_independent_calibration_look120_mini_semantic_live_authorization_config.v2
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_MINI_SEMANTIC_LIVE_AUTHORIZATION_CHECKPOINT_V2
+parents:
+  all_adjacency_pool_amendment:
+    path: data/manifests/p1_v4_independent_calibration_look120_mini_all_adjacency_pool_amendment.json
+    sha256: 5B2068B5D0E41AA372120635E44939F41E4E2779E3ED2201722B811B0BAFD5D3
+  execution_plan:
+    path: data/manifests/p1_v4_independent_calibration_look120_mini_semantic_execution_plan_v2.json
+    sha256: 7C19F3D66354F2BE7EA0327428C38C37680B25A089F72EAFFF9272D16823BD6D
+  provider_preflight_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_mini_provider_preflight_audit.json
+    sha256: C9CC92CF934C6C0B7360D1A37A6B045FDC36F5F82DB2AE8F4C6D728088CE942C
+  provider_preflight_authorization:
+    path: data/manifests/p1_v4_independent_calibration_look120_mini_provider_preflight_authorization_checkpoint_v2.json
+    sha256: B63E1F26E6BF52F366722AAC3138DA330852734AE93AF14110919BAE4511151E
+
+semantic_contract:
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  truncation: disabled
+  automatic_prompt_chunking: forbidden
+
+scope:
+  scenes: 120
+  story_variants: [full, partial, ambiguous]
+  public_inputs: 360
+  logical_calls: 2160
+  pair_records: 818
+  nonedge_diagnostic: excluded
+  conditions_reusing_raw_evidence: [constrained_boss, constrained_fges]
+
+runtime:
+  canonical_environment: cau
+  python_executable: D:/Coding/Anaconda/envs/cau/python.exe
+  concurrency: 1
+  cache_root: results/raw/p1_v4_independent_calibration/look120/mini_semantic_all_adjacencies
+  idempotency_key: [logical_id, model, reasoning_effort, prompt_sha256, schema_sha256, story_content_sha256, pair_pool_sha256]
+  transport_retry: forbidden_without_separate_explicit_authorization
+  validation_retry: forbidden
+  batch_size: 360
+
+token_control:
+  source: provider_reported_usage.total_tokens
+  hard_stop_tokens: 3000000
+  check_frequency: after_each_completed_batch
+  reset_time: '07:00:00'
+  timezone: Asia/Ho_Chi_Minh
+  missing_usage_action: fail_closed_and_halt
+  automatic_resume_after_reset: false
+  cost_accounting: record_usage_only_no_unpinned_rate_card
+
+boundary:
+  study_api_calls_before_explicit_live_authorization: 0
+  oracle_access: false
+  holdout_access: false
+  statistical_reruns: 0
+  metric_calculation: false
+  closure: forbidden
+
+outputs:
+  live_authorization_checkpoint: data/manifests/p1_v4_independent_calibration_look120_mini_semantic_live_authorization_checkpoint_v2.json
+  live_authorization_audit: data/manifests/p1_v4_independent_calibration_look120_mini_semantic_live_authorization_audit_v2.json
+  live_authorization: data/manifests/p1_v4_independent_calibration_look120_mini_semantic_live_authorization_v2.json
+  runner_audit: data/manifests/p1_v4_independent_calibration_look120_mini_semantic_execution_audit_v2.json
+  report: reports/p1_v4_independent_calibration_look120_mini_semantic_live_authorization_checkpoint_v2.md

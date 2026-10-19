@@ -1,0 +1,1 @@
+{"attestation_sha256":"877D0A4851B4A43878044C3F9864E143C8C6CD53BFB5C9AB8ED8858D69408CCC","checks":{"hard_limit_enforced":true,"no_api_key_recorded":true,"positive_attestation_window":true,"spend_nonnegative":true,"spend_within_project_limit":true},"status":"FROZEN_FRESH_SPEND_ATTESTATION"}

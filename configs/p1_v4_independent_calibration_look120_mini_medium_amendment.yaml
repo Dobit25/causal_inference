@@ -1,0 +1,42 @@
+schema_version: fourgraph.p1_v4_independent_calibration_look120_mini_medium_amendment.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_MINI_MEDIUM_MODEL_AMENDMENT_FREEZE
+status: OFFLINE_AMENDMENT_FROZEN_PENDING_PROVIDER_PREFLIGHT
+
+model_change:
+  previous_live_candidate: gpt-5.4-nano-2026-03-17
+  selected_model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  rationale: user_selected_mini_medium
+  same_look_mixed_models_forbidden: true
+  nano_checkpoint_retained_as_historical: true
+
+unchanged_contract:
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  prompt_variants: [P1, P2, P3, P4, P5, P6]
+  story_variants: [full, partial, ambiguous]
+  max_pairs_per_scene: 21
+  truncation: disabled
+  automatic_chunking: forbidden
+  invalid_pair_action: abstain_pair_only
+  closure: condition_specific_only
+  semantic_conditions: [constrained_boss, constrained_fges]
+
+inputs:
+  plan: data/manifests/p1_v4_independent_calibration_look120_semantic_execution_plan.json
+  plan_sha256: E36AA6E62C1E257535186E6CE191310DA1FAFA18C7420730BA7D6E2B6F4C6288
+  public_inputs_sha256: 9493ECB59CE7BE3506B758381373CA864D24F32F3633AC9CCD8115360E943A7B
+  scenes: 120
+  public_inputs: 360
+  logical_calls: 2160
+  nonedge_diagnostic: excluded_pending_exact_registered_pair_manifest
+
+boundaries:
+  study_api_calls_before_new_authorization: 0
+  oracle_access: 0
+  holdout_access: 0
+  statistical_reruns: 0
+  threshold_tuning: false
+  prompt_schema_changes: false
+
+next_gate: MINI_MEDIUM_PROVIDER_PREFLIGHT

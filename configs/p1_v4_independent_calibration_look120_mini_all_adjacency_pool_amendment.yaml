@@ -1,0 +1,37 @@
+schema_version: fourgraph.p1_v4_independent_calibration_look120_mini_all_adjacency_pool_amendment.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_MINI_ALL_ADJACENCY_POOL_AMENDMENT
+status: OFFLINE_FREEZE_REQUESTED
+
+parent_pool_definition:
+  include: [directed_compelled_adjacencies, undirected_adjacencies]
+  union_of: [constrained_boss, constrained_fges]
+  exclude: [non_adjacencies, self_loops]
+  purpose:
+    compelled: mini_confirmation_or_abstention
+    undirected: mini_selective_orientation_or_abstention
+
+unchanged_semantic_contract:
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  prompt_variants: [P1, P2, P3, P4, P5, P6]
+  truncation: disabled
+  automatic_prompt_chunking: forbidden
+  automatic: [VERY_HIGH, HIGH]
+  review_only: [MEDIUM]
+  abstain: [UNCERTAIN, CONFLICT]
+
+scope:
+  scenes: 120
+  variants: [full, partial, ambiguous]
+  logical_calls: 2160
+  nonedge_diagnostic: excluded
+  primary_meek_closure: forbidden
+
+boundary:
+  provider_calls: 0
+  study_api_calls: 0
+  oracle_access: 0
+  holdout_access: 0
+  statistical_reruns: 0

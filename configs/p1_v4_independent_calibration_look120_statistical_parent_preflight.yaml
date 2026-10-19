@@ -1,0 +1,63 @@
+schema_version: fourgraph.p1_v4_independent_calibration_look120_statistical_parent_preflight_config.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_STATISTICAL_PARENT_PREFLIGHT
+parents:
+  materialization_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_materialization_execution_audit_v2.json
+    sha256: 464D99B4C2D38F320C2FA6B1C213049DC4574E6772F41843907B82D4867FAE93
+  materialization_manifest:
+    path: data/manifests/p1_v4_independent_calibration_look120_materialization.json
+    sha256: 4A4A81B2DFFB669311FD542911EEB07CE8F6C0551D555F78BE9AFA5F417B2611
+  final_architecture:
+    path: data/manifests/p1_v4_final_architecture_precalibration_amendment.json
+    sha256: 6D3426B9BA195009AE6D01EB4C0453DE46DFC94F0A2C8FF621B749ADA04A834B
+  constrained_protocol:
+    path: data/manifests/p1_v4_evidence_annotated_constrained_protocol.json
+    sha256: CEE459648A93728E40B368F218D6C3212E088C5C01EA14278A83B659846C88F3
+  canonical_environment:
+    path: data/manifests/p1_v4_cau_environment_correction.json
+    sha256: 1DD68013E7EF9149B004081E98B41280EE2B08F79B6121609E20420413D1F642
+  tetrad_adapter:
+    path: scripts/adapters/tetrad_adapter.py
+    sha256: 84069B0F1B3A5881042F9E040D2948F672F5B31229C8FCB5B0FBC0A49B782FB5
+  mmpc_adapter:
+    path: scripts/adapters/mmpc_adapter.py
+    sha256: 66EE296FEF1556C0C902AC1A2F7762BCF367FFB6042F2FF6CBB3034BC6CA89AB
+
+environment:
+  conda_environment: cau
+  python: 3.10.21
+  java: 21.0.10
+  r: 4.4.3
+  bnlearn: 5.3-20260901
+  tetrad_jar: data/raw/t05/py-tetrad/pytetrad/resources/tetrad-current.jar
+  tetrad_sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051
+
+parameters:
+  boss: {penalty_discount: 1.0, truncation_limit: 3}
+  pc: {alpha: 0.01, depth: -1, stable_fas: true}
+  mmpc: {test: zf, alpha: 0.01, max_sx: null, undirected: true}
+  fges: {penalty_discount: 1.0, max_degree: -1, symmetric_first_step: false, faithfulness_assumed: false}
+  bootstrap: {repetitions: 200, sample_size: 2000, adjacency_stability_method_vote: 0.80}
+  ensemble: {members: [Single-BOSS, Bootstrap-BOSS, PC, MMPC, FGES], majority: 3}
+  constrained: {primary: Constrained-BOSS, robustness: Constrained-FGES, allowed_mask: ensemble_3_of_5_skeleton}
+
+runtime:
+  concurrency: 1
+  retries: 0
+  duplicate_policy: fail_closed_exact_execution_identity
+  output_root: results/raw/p1_v4_independent_calibration/look120/statistical
+  aggregation_root: data/manifests/p1_v4_independent_calibration_look120_statistical_aggregates
+
+boundary:
+  new_scene_materialization: 0
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_access: false
+  holdout_access: false
+  downstream_reasoner: false
+
+outputs:
+  plan: data/manifests/p1_v4_independent_calibration_look120_statistical_parent_plan.json
+  preflight: data/manifests/p1_v4_independent_calibration_look120_statistical_parent_preflight.json
+  audit: data/manifests/p1_v4_independent_calibration_look120_statistical_parent_preflight_audit.json
+  report: reports/p1_v4_independent_calibration_look120_statistical_parent_preflight.md

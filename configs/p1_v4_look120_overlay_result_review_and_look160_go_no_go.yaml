@@ -1,0 +1,111 @@
+schema_version: fourgraph.p1_v4_look120_overlay_result_review_go_no_go_config.v1
+task: P1_V4_LOOK120_OVERLAY_RESULT_REVIEW_AND_LOOK160_GO_NO_GO
+status: offline_review_requested
+
+dependencies:
+  overlay_execution_config:
+    path: configs/p1_v4_independent_calibration_look120_overlay_oracle_replay_execution.yaml
+    sha256: 3F943889DD3061976E2478A09C7C16CCEF15BEF1EE5A4D51B5CBB3C925BF6353
+  overlay_execution_runner:
+    path: scripts/replay_p1_v4_independent_calibration_look120_overlay_oracle.py
+    sha256: 69F06B256C62A0361EDAB386D8BA76C79D63590C8BEDD2E39635EF464170B9CE
+  overlay_authorization:
+    path: data/manifests/p1_v4_independent_calibration_look120_overlay_oracle_replay_authorization.json
+    sha256: 122AC1DC926AD1B19CEEABDD7C3896AE87712F00192835E18E99A7DE05404DAA
+  overlay_results:
+    path: data/manifests/p1_v4_independent_calibration_look120_overlay_oracle_metric_results.json
+    sha256: 65523F1BE82CBB6B1DEC99FD513FD5FA915D78D5A25D7B3358FE6A87F2E4EE41
+  overlay_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_overlay_oracle_metric_audit.json
+    sha256: A7C5D38B43C062BAAD219AED6899DFC183BACC8020EF725938CC832C503312B6
+  overlay_outputs:
+    path: data/manifests/p1_v4_independent_calibration_look120_overlay_oracle_outputs.jsonl
+    sha256: FCFBDE401D61E389274E53C7F48ABD818D1E088F09B4C91FBB1CBB70BFCCEF9C
+  overlay_metric_dataset:
+    path: data/manifests/p1_v4_independent_calibration_look120_overlay_oracle_metric_dataset.jsonl
+    sha256: 65BAD4CCF46FC7CCBA82BA6DDCDD82A24CC961E40450A83D5744077E3B21D626
+  overlay_risk_coverage:
+    path: data/manifests/p1_v4_independent_calibration_look120_overlay_oracle_risk_coverage.json
+    sha256: 4BEE65710AC196E1D1932B990D9743A93C4C3E786F9EB808B834FF9653A8BF6F
+  final_architecture:
+    path: data/manifests/p1_v4_final_architecture_precalibration_amendment.json
+    sha256: 6D3426B9BA195009AE6D01EB4C0453DE46DFC94F0A2C8FF621B749ADA04A834B
+  final_architecture_audit:
+    path: data/manifests/p1_v4_final_architecture_precalibration_amendment_audit.json
+    sha256: E546F5483B56054AA3132306C9F7528BDD0C23711DDB24365970FF64E04EDA33
+  exact_identity_plan:
+    path: data/manifests/p1_v4_independent_calibration_exact_identity_plan.json
+    sha256: 74BEDF9938B495F6534D9D2E0E8FAEA8158EF35DA2968D6F1E59BF53D817D655
+  exact_identity_plan_audit:
+    path: data/manifests/p1_v4_independent_calibration_exact_identity_plan_audit.json
+    sha256: 4BA2356CEA3EDF631A0D338110E1593040D15AAFEB1AE787C7262D9A90955A81
+  response_freeze_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_response_freeze_rescore_audit.json
+    sha256: C145BF445AFFE7B637C3B63A9A9172836EE4464E3C9B67425167B93AE4D6BF40
+  statistical_final_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_statistical_final_audit.json
+    sha256: 7CCEBB345F6F4B11E004F6E41F739F5C907AA107892D7D3F83E91CB060446312
+
+superseded_incident_evidence:
+  old_cpdag_scorer:
+    path: scripts/score_p1_v4_independent_calibration_look120_oracle.py
+    sha256: 311A0C67FE6C5CA0894DADB917A02A4A99DB65EE770E84F063D90E3FF21EFB69
+  old_results:
+    path: data/manifests/p1_v4_independent_calibration_look120_oracle_metric_results.json
+    sha256: C70AFF5FDBD49AF91A1C4D2EEDAB58740EB9CD5250B669FDF66068167D1E1BDE
+  old_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_oracle_metric_audit.json
+    sha256: 9627A03D55754920015D6CD6163CE346AB31077CCD9E54694B9BC45744472231
+  old_metric_dataset:
+    path: data/manifests/p1_v4_independent_calibration_look120_oracle_metric_dataset.jsonl
+    sha256: 9C1FE8E41C358315B8C855815D5ACB5FB58B4EB50CF57875D71D3006C6604D0B
+  old_partial_outputs:
+    path: data/manifests/p1_v4_independent_calibration_look120_oracle_partial_outputs.jsonl
+    sha256: 8A55FCDB765EA8DA200EA4A053B0521BCC22E5E6CDD563EB04984A76AD291EE4
+  overlay_validity_flag_pre_fix:
+    path: data/manifests/p1_v4_independent_calibration_look120_overlay_oracle_metric_results_implementation_incident_pre_fix.json
+    sha256: 25EB84A27F3C611E6A4221671EE5EF7AB24F20F245A5354FBA40FEAB90C69E6D
+
+expected_review:
+  registered_look: 120
+  next_registered_look: 160
+  primary_condition: Constrained-BOSS
+  robustness_condition: Constrained-FGES
+  certification_variants: [full, partial]
+  diagnostic_variant: ambiguous
+  coverage_gate_crosses: true
+  ambiguous_gate_passes: true
+  precision_confidence_sequence_crosses: false
+  high_guardrail_passes: false
+  futility: false
+  decision: CONTINUE_TO_REGISTERED_LOOK_160
+
+frozen_policy:
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt_sha256: 26D2B4EB42F316F9DFB2CCB38D93A7E506E83FA0A43CBEF371B6B12ECA82A276
+  schema_sha256: 9B448071DCAB8D81CF727B6FE481E98CD73BF810ED5FA16DC7830C24565EC591
+  automatic_agreements: [VERY_HIGH, HIGH]
+  review_only: [MEDIUM]
+  abstain: [UNCERTAIN, CONFLICT]
+  primary_parent: Constrained-BOSS
+  robustness_parent: Constrained-FGES
+  closure: forbidden
+  parent_mutation: forbidden
+  threshold_tuning: forbidden
+
+boundaries:
+  new_scene_materialization: 0
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_reads: 0
+  look160_execution: forbidden
+  validation_access: false
+  holdout_access: false
+  downstream_reasoner: false
+  automatic_follow_on: false
+
+outputs:
+  decision: data/manifests/p1_v4_look120_overlay_result_review_and_look160_go_no_go.json
+  audit: data/manifests/p1_v4_look120_overlay_result_review_and_look160_go_no_go_audit.json
+  report: reports/p1_v4_look120_overlay_result_review_and_look160_go_no_go.md

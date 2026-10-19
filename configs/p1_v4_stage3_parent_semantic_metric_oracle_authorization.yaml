@@ -1,0 +1,33 @@
+schema_version: fourgraph.p1_v4_stage3_parent_semantic_metric_oracle_authorization_config.v1
+task: P1_V4_STAGE_3D_PARENT_CPDAG_SEMANTIC_SELECTED_ORACLE_METRIC_EXECUTION
+status: explicit_authorization_record
+
+parent_checkpoint:
+  path: data/manifests/p1_v4_stage3_parent_semantic_metric_checkpoint.json
+  sha256: 35CEE50DFDF56EA936D2678A7589736CD813EE138B434884E0D3504866709DA9
+parent_checkpoint_audit:
+  path: data/manifests/p1_v4_stage3_parent_semantic_metric_checkpoint_audit.json
+  sha256: B05B1C891ED12A4BE27C7BD2F5B2AFBE8F1AD26839CC48D4340E1C9496AFD650
+
+scope:
+  scenes: P1V4SD000-P1V4SD029
+  parents: [Constrained-BOSS, Constrained-FGES]
+  models: [nano_medium, mini_medium]
+  variants: [full, partial]
+  oracle: development_only
+
+boundaries:
+  semantic_api_calls: 0
+  statistical_reruns: 0
+  closure: forbidden
+  threshold_tuning: forbidden
+  calibration: forbidden
+  holdout_access: forbidden
+
+outputs:
+  authorization: data/manifests/p1_v4_stage3_parent_semantic_metric_oracle_authorization.json
+  metric_dataset: data/manifests/p1_v4_stage3_parent_semantic_metric_dataset.jsonl
+  integrated_outputs: data/manifests/p1_v4_stage3_parent_semantic_partial_graph_outputs.jsonl
+  results: data/manifests/p1_v4_stage3_parent_semantic_metric_results.json
+  audit: data/manifests/p1_v4_stage3_parent_semantic_metric_audit.json
+  report: reports/p1_v4_stage3_parent_semantic_metric_results.md

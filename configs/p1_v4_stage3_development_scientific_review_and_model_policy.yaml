@@ -1,0 +1,49 @@
+schema_version: fourgraph.p1_v4_stage3_development_scientific_review_and_model_policy_config.v1
+task: P1_V4_STAGE_3D_DEVELOPMENT_SCIENTIFIC_REVIEW_AND_MODEL_POLICY_FREEZE
+status: offline_review_and_pre_calibration_policy_freeze
+
+parents:
+  parent_semantic_metric_results:
+    path: data/manifests/p1_v4_stage3_parent_semantic_metric_results.json
+    sha256: 3C3A9DFB8780428B5795D69F397C332714C00C64756BEAC273A33568FE3BB2CB
+  parent_semantic_metric_audit:
+    path: data/manifests/p1_v4_stage3_parent_semantic_metric_audit.json
+    sha256: 430398F85C4220D67D329B8BFCE08CE9AB9FF38FB355CA86B06B570132C2B503
+  parent_semantic_metric_dataset:
+    path: data/manifests/p1_v4_stage3_parent_semantic_metric_dataset.jsonl
+    sha256: 2218DF369433E0BF6D13FBBF31F6D4C7B2B84A290759D519BEE0EDC756D9908B
+  nano_six_vote_groups:
+    path: data/manifests/p1_v4_stage3_nano_medium_six_vote_groups.jsonl
+    sha256: 93955D3752C4101FBDC78A750D22EE3BB40F4243F85CE17C77FF147959B6DB70
+  mini_six_vote_groups:
+    path: data/manifests/p1_v4_stage3_mini_medium_six_vote_groups.jsonl
+    sha256: 61A9A426757382257874349129BDBC01D3A76F91D21BB5F37C70D7BF5BC6B6B1
+
+decision_rules:
+  development_only: true
+  do_not_tune_prompt_schema_or_threshold: true
+  no_closure_primary: true
+  choose_primary_model_by: higher_automatic_semantic_selected_coverage_with_zero_errors_on_frozen_development
+  constrained_parent_primary_by: higher_parent_compelled_precision_on_frozen_development
+  constrained_fges_role: robustness_comparator
+  semantic_policy:
+    automatic_agreements: [VERY_HIGH, HIGH]
+    closure: forbidden_until_new_independent_amendment
+    model_policy_status: candidate_only_pending_independent_calibration
+  parent_compelled_policy:
+    status: statistical_context_not_auto_certified
+    reason: development_compelled_precision_is_below_semantic_certification_target
+
+boundaries:
+  semantic_api_calls: 0
+  statistical_reruns: 0
+  additional_oracle_access: 0
+  calibration: 0
+  holdout_access: 0
+  threshold_tuning: 0
+
+outputs:
+  review: data/manifests/p1_v4_stage3_development_scientific_review.json
+  policy: data/manifests/p1_v4_stage3_precalibration_model_policy.json
+  audit: data/manifests/p1_v4_stage3_development_scientific_review_audit.json
+  report: reports/p1_v4_stage3_development_scientific_review.md

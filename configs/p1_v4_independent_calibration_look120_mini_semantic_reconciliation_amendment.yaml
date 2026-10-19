@@ -1,0 +1,56 @@
+schema_version: fourgraph.p1_v4_independent_calibration_look120_mini_semantic_reconciliation_amendment.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_MINI_SEMANTIC_RECONCILIATION_AMENDMENT
+status: OFFLINE_FREEZE_REQUESTED
+
+supersession:
+  supersedes_for_live_semantic_execution:
+    - data/manifests/p1_v4_independent_calibration_look120_semantic_authorization_checkpoint.json
+  superseded_nano_artifacts: retained_as_historical_only
+  mixed_model_execution_within_look: forbidden
+
+semantic_contract:
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  prompt_variants: [P1, P2, P3, P4, P5, P6]
+  truncation: disabled
+  automatic_prompt_chunking: forbidden
+  validator_mode: pair_level_fail_closed
+
+agreement_policy:
+  automatic: [VERY_HIGH, HIGH]
+  review_only: [MEDIUM]
+  abstain: [UNCERTAIN, CONFLICT]
+  incomplete: unresolved
+  invalid_pair: abstain_pair_only
+
+statistical_output_policy:
+  primary_parent: constrained_boss
+  robustness_parent: constrained_fges
+  shared_pair_pool: union_of_constrained_boss_and_constrained_fges_undirected_edges
+  raw_semantic_evidence: shared_then_condition_specific_filtering
+  primary_meek_closure: forbidden
+  compelled_publication: mini_confirmed_same_direction_only
+  undirected_publication: mini_very_high_or_high_only
+
+scope:
+  exact_scenes: 120
+  story_variants: [full, partial, ambiguous]
+  public_inputs: 360
+  scene_pair_records: 488
+  max_pairs_per_scene: 21
+  prompt_variants_per_input: 6
+  logical_calls: 2160
+  nonedge_diagnostic: excluded
+
+boundary:
+  provider_preflight_calls: 0
+  study_semantic_api_calls: 0
+  oracle_access: 0
+  holdout_access: 0
+  statistical_reruns: 0
+  metric_calculation: false
+  threshold_or_prompt_tuning: false
+
+next_gate: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_MINI_PROVIDER_PREFLIGHT

@@ -1,0 +1,64 @@
+schema_version: fourgraph.p1_v4_stage3_paired_oracle_scoring_authorization_checkpoint_config.v1
+task: P1_V4_STAGE_3D_PAIRED_ORACLE_SCORING_AUTHORIZATION_CHECKPOINT
+status: checkpoint_only_no_oracle_access
+
+parents:
+  offline_review:
+    path: data/manifests/p1_v4_stage3_paired_response_offline_review.json
+    sha256: 78EEBFA87A0BA02DBD3B5C9AA745BDF5A2ECE2DEA9A456B9F4B77FE634F8E47B
+  offline_review_audit:
+    path: data/manifests/p1_v4_stage3_paired_response_offline_review_audit.json
+    sha256: 95766B9FD52439DB51B34A0BDDC088858AAA0843F9211CD68E76A109B93FE24E
+  response_freeze:
+    path: data/manifests/p1_v4_stage3_paired_model_response_freeze.json
+    sha256: 9ECDF108CD0F14A025AF120C39EE29141E589ABE3667FB598325086636AD22C7
+  rescore_audit:
+    path: data/manifests/p1_v4_stage3_paired_model_rescore_audit.json
+    sha256: 6CA580E4AD16ACB89932AAA8E2808F80145BEF1D355F7CD60231453B8806B310
+  nano_six_vote_groups:
+    path: data/manifests/p1_v4_stage3_nano_medium_six_vote_groups.jsonl
+    sha256: 93955D3752C4101FBDC78A750D22EE3BB40F4243F85CE17C77FF147959B6DB70
+  mini_six_vote_groups:
+    path: data/manifests/p1_v4_stage3_mini_medium_six_vote_groups.jsonl
+    sha256: 61A9A426757382257874349129BDBC01D3A76F91D21BB5F37C70D7BF5BC6B6B1
+
+scope:
+  permitted_scene_ids: P1V4SD000-P1V4SD029
+  models: [nano_medium, mini_medium]
+  input_variants: [full, partial]
+  oracle_cohort: development_only
+  expected_six_vote_groups_per_model: 236
+  semantic_policy_for_scoring: automatic_candidate_only
+  automatic_agreements: [VERY_HIGH, HIGH]
+  review_agreement: MEDIUM
+  abstain_agreements: [UNCERTAIN, CONFLICT]
+
+registered_metrics_after_explicit_authorization:
+  - directional_correct_count
+  - directional_error_count
+  - orientation_precision
+  - candidate_fraction
+  - abstention_fraction
+  - full_partial_stratification
+  - scene_clustered_summary
+  - paired_nano_mini_descriptive_comparison
+
+forbidden_before_oracle_scoring:
+  - model_selection
+  - threshold_tuning
+  - prompt_or_schema_change
+  - closure
+  - statistical_rerun
+  - semantic_api_calls
+  - holdout_access
+  - downstream_reasoner
+
+authorization_boundary:
+  oracle_access_now: false
+  explicit_oracle_scoring_authorization_required: true
+  exact_frozen_group_artifacts_only: true
+
+outputs:
+  checkpoint: data/manifests/p1_v4_stage3_paired_oracle_scoring_authorization_checkpoint.json
+  audit: data/manifests/p1_v4_stage3_paired_oracle_scoring_authorization_checkpoint_audit.json
+  report: reports/p1_v4_stage3_paired_oracle_scoring_authorization_checkpoint.md

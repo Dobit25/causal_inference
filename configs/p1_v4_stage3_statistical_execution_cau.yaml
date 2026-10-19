@@ -1,0 +1,44 @@
+schema_version: fourgraph.p1_v4_stage3_statistical_execution_cau.v1
+task: P1_V4_STAGE_3D_STATISTICAL_EXECUTION_CAU_RERUN
+authorization_checkpoint: data/manifests/p1_v4_stage3_cau_rerun_live_authorization.json
+authorization_checkpoint_sha256: DEBAC95D316F62437205827AD97193E517C6FA530228D7C3493286D9AEB5137F
+preflight: data/manifests/p1_v4_stage3_method_development_preflight.json
+preflight_sha256: 0A8750552E3495588F61791BA91C1B0362EF2D77C8825FB15BCAA9CFCBE333F2
+identity_manifest: data/manifests/p1_v4_stage3_exact_identities.jsonl
+identity_manifest_sha256: 83A706C7CCE975A6052B97DB53AC573DF825C1FC4C1D36C5596A4D6216E8C72A
+environment_correction: data/manifests/p1_v4_cau_environment_correction.json
+environment_correction_sha256: 1DD68013E7EF9149B004081E98B41280EE2B08F79B6121609E20420413D1F642
+
+environment:
+  python: 3.10.21
+  python_executable: D:/Coding/Anaconda/envs/cau/python.exe
+  java: 21.0.10
+  java_home: D:/Coding/Anaconda/envs/cau/Library/lib/jvm
+  rscript: D:/Coding/R44/R-4.4.3/bin/Rscript.exe
+  r_library: D:/Coding/R44/library
+  bnlearn: 5.3-20260901
+  tetrad_jar: data/raw/t05/py-tetrad/pytetrad/resources/tetrad-current.jar
+  tetrad_jar_sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051
+
+parameters:
+  boss: {penalty_discount: 1.0, truncation_limit: 3}
+  pc: {alpha: 0.01, depth: -1, stable_fas: true}
+  mmpc: {test: zf, alpha: 0.01, max_sx: null, undirected: true}
+  fges: {penalty_discount: 1.0, max_degree: -1, symmetric_first_step: false, faithfulness_assumed: false}
+  bootstrap: {repetitions: 200, sample_size: 2000, adjacency_stability_method_vote: 0.80}
+
+runtime:
+  concurrency: 1
+  retry_count: 0
+  duplicate_policy: fail_closed
+  scene_root: data/generated/p1_v4_stage3_method_development_cau
+  raw_root: results/raw/p1_v4_stage3_method_development_cau/statistical/raw
+  normalized_root: results/raw/p1_v4_stage3_method_development_cau/statistical/normalized
+  error_root: results/raw/p1_v4_stage3_method_development_cau/statistical/errors
+  aggregation_root: data/manifests/p1_v4_stage3_statistical_aggregates_cau
+  plan_output: data/manifests/p1_v4_stage3_statistical_execution_cau_plan.json
+  audit_output: data/manifests/p1_v4_stage3_statistical_execution_cau_audit.json
+  execution_binding: data/manifests/p1_v4_stage3_statistical_execution_cau_binding.json
+  oracle_access: false
+  holdout_access: false
+  semantic_api_calls: 0

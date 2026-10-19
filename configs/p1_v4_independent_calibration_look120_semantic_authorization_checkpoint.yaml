@@ -1,0 +1,41 @@
+schema_version: fourgraph.p1_v4_independent_calibration_look120_semantic_authorization_checkpoint.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_SEMANTIC_LIVE_AUTHORIZATION_CHECKPOINT
+parents:
+  statistical_final_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_statistical_final_audit.json
+    sha256: 7CCEBB345F6F4B11E004F6E41F739F5C907AA107892D7D3F83E91CB060446312
+  public_inputs:
+    path: data/manifests/p1_v4_independent_calibration_look120_public_inputs.json
+    sha256: 9493ECB59CE7BE3506B758381373CA864D24F32F3633AC9CCD8115360E943A7B
+  provider_preflight_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_provider_preflight_audit.json
+    sha256: 9779BBB387EA11743273D5C1ACF108E7C6E8B646F38FE4F072EBB932D1F53AD7
+semantic_contract:
+  model: gpt-5.4-nano-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  prompt_variants: [P1, P2, P3, P4, P5, P6]
+  truncation: disabled
+  automatic_prompt_chunking: forbidden
+  shared_raw_evidence: true
+scope:
+  scenes: 120
+  story_variants: [full, partial, ambiguous]
+  expected_public_inputs: 360
+  expected_logical_calls: 2160
+  conditions_reusing_raw_evidence: [constrained_boss, constrained_fges]
+  pair_pool: union_of_constrained_boss_and_constrained_fges_undirected_edges
+  max_pairs_per_scene: 21
+  nonedge_diagnostic: excluded_pending_exact_registered_pair_manifest
+boundary:
+  study_api_calls_before_explicit_authorization: 0
+  oracle_access: false
+  holdout_access: false
+  downstream_reasoner: false
+  metric_calculation: false
+outputs:
+  execution_plan: data/manifests/p1_v4_independent_calibration_look120_semantic_execution_plan.json
+  checkpoint: data/manifests/p1_v4_independent_calibration_look120_semantic_authorization_checkpoint.json
+  audit: data/manifests/p1_v4_independent_calibration_look120_semantic_authorization_audit.json
+  report: reports/p1_v4_independent_calibration_look120_semantic_authorization_checkpoint.md

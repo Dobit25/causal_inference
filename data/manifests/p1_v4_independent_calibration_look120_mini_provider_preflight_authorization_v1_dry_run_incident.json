@@ -1,0 +1,13 @@
+{
+  "schema_version": "fourgraph.p1_v4_independent_calibration_look120_technical_incident.v1",
+  "task": "P1_V4_INDEPENDENT_CALIBRATION_LOOK120_MINI_PROVIDER_PREFLIGHT_AUTHORIZATION_CHECKPOINT",
+  "status": "DISPOSITIONED_NO_PROVIDER_CALL",
+  "incident": "Initial Mini preflight dry-run found a wrapper/config interface mismatch: the frozen generic preflight renderer requires semantic_protocol, statistical_execution_audit, and environment_lock parent aliases.",
+  "classification": "deterministic_execution_plumbing_defect_before_live_execution",
+  "scientific_impact": "none",
+  "provider_calls": 0,
+  "study_semantic_calls": 0,
+  "oracle_access": 0,
+  "holdout_access": 0,
+  "resolution": "Add alias-only parent references to the Mini preflight config and create a fresh v2 authorization checkpoint; no research parameter changed."
+}

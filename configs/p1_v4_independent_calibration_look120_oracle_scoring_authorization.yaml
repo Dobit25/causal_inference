@@ -1,0 +1,47 @@
+schema_version: fourgraph.p1_v4_independent_calibration_look120_oracle_scoring_authorization_config.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK120_ORACLE_SCORING_EXECUTION
+status: explicit_authorization_record
+
+parent_checkpoint:
+  path: data/manifests/p1_v4_independent_calibration_look120_oracle_scoring_authorization_checkpoint.json
+  sha256: D585E457D40A47B084D260882252D2476D7DF8B247F5A04DC054BBA96208F467
+parent_checkpoint_audit:
+  path: data/manifests/p1_v4_independent_calibration_look120_oracle_scoring_authorization_checkpoint_audit.json
+  sha256: BC73C1366A7A85481D36B496E955E03AF1218A9369C6B68230D9B24AC76E6BB9
+
+scope:
+  scenes: exact_120_calibration_scene_ids_from_parent_checkpoint
+  oracle: calibration_development_only
+  parents: [Constrained-BOSS, Constrained-FGES]
+  variants: [full, partial, ambiguous]
+  primary_parent: Constrained-BOSS
+
+authorized_calculations:
+  - scene_level_precision_lower_confidence_bound
+  - coverage_and_abstention_by_full_and_partial
+  - High_precision_lower_bound_guardrail
+  - confirmed_compelled_metrics
+  - semantic_selected_metrics
+  - end_to_end_partial_graph_metrics
+  - false_positive_adjacency_orientation_errors
+  - ambiguous_abstention_diagnostic
+  - pair_quality_diagnostics
+
+boundaries:
+  semantic_api_calls: 0
+  statistical_reruns: 0
+  prompt_schema_model_threshold_tuning: forbidden
+  closure: forbidden
+  downstream_reasoner: forbidden
+  calibration_look_progression: forbidden
+  validation_access: forbidden
+  holdout_access: forbidden
+  oracle_scope_expansion: forbidden
+
+outputs:
+  authorization: data/manifests/p1_v4_independent_calibration_look120_oracle_scoring_authorization.json
+  audit: data/manifests/p1_v4_independent_calibration_look120_oracle_scoring_authorization_audit.json
+  metric_dataset: data/manifests/p1_v4_independent_calibration_look120_oracle_metric_dataset.jsonl
+  metric_results: data/manifests/p1_v4_independent_calibration_look120_oracle_metric_results.json
+  metric_audit: data/manifests/p1_v4_independent_calibration_look120_oracle_metric_audit.json
+  report: reports/p1_v4_independent_calibration_look120_oracle_metric_results.md

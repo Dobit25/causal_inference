@@ -1,0 +1,54 @@
+schema_version: fourgraph.p1_v4_stage3_paired_response_offline_review_config.v1
+task: P1_V4_STAGE_3D_PAIRED_RESPONSE_OFFLINE_REVIEW
+status: review_only_before_oracle_scoring_authorization
+
+parents:
+  response_freeze:
+    path: data/manifests/p1_v4_stage3_paired_model_response_freeze.json
+    sha256: 9ECDF108CD0F14A025AF120C39EE29141E589ABE3667FB598325086636AD22C7
+  rescore_audit:
+    path: data/manifests/p1_v4_stage3_paired_model_rescore_audit.json
+    sha256: 6CA580E4AD16ACB89932AAA8E2808F80145BEF1D355F7CD60231453B8806B310
+  nano_pairs:
+    path: data/manifests/p1_v4_stage3_nano_medium_pair_rescore.jsonl
+    sha256: A46C07437A4D568653E0E9A5C06B692A521617C1B4EE3369625B9A86BDCF1BB8
+  mini_pairs:
+    path: data/manifests/p1_v4_stage3_mini_medium_pair_rescore.jsonl
+    sha256: D8C5EA645367B8F8D32BBBE39A4D983543E47BB75BC13A5A033E4AD82BCCAD96
+  nano_six_vote_groups:
+    path: data/manifests/p1_v4_stage3_nano_medium_six_vote_groups.jsonl
+    sha256: 93955D3752C4101FBDC78A750D22EE3BB40F4243F85CE17C77FF147959B6DB70
+  mini_six_vote_groups:
+    path: data/manifests/p1_v4_stage3_mini_medium_six_vote_groups.jsonl
+    sha256: 61A9A426757382257874349129BDBC01D3A76F91D21BB5F37C70D7BF5BC6B6B1
+
+review_scope:
+  expected_logical_responses_per_model: 360
+  expected_pair_records_per_model: 1416
+  expected_six_vote_groups_per_model: 236
+  permitted_outputs:
+    - input_completeness
+    - validator_consistency
+    - pair_validity_distribution
+    - agreement_distribution
+    - completeness_distribution
+    - paired_contract_transition_table
+  forbidden_outputs:
+    - oracle_read
+    - orientation_precision
+    - coverage_metric
+    - closure
+    - threshold_selection
+    - model_selection
+    - scientific_claim
+
+boundaries:
+  semantic_api_calls: 0
+  oracle_access: 0
+  holdout_access: 0
+  downstream_reasoner: 0
+
+outputs:
+  review: data/manifests/p1_v4_stage3_paired_response_offline_review.json
+  audit: data/manifests/p1_v4_stage3_paired_response_offline_review_audit.json
+  report: reports/p1_v4_stage3_paired_response_offline_review.md
