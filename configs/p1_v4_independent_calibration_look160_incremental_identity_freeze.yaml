@@ -1,0 +1,73 @@
+schema_version: fourgraph.p1_v4_independent_calibration_look160_incremental_identity_freeze_config.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK160_INCREMENTAL_EXACT_IDENTITY_FREEZE
+status: offline_identity_freeze_only
+
+parents:
+  exact_identities:
+    path: data/manifests/p1_v4_independent_calibration_exact_identities.jsonl
+    sha256: D9631C34515D2D6EDB5F6F1BA183CACBC99317E0E8D48AFE44774AEE37C9CB84
+  exact_identity_plan:
+    path: data/manifests/p1_v4_independent_calibration_exact_identity_plan.json
+    sha256: 74BEDF9938B495F6534D9D2E0E8FAEA8158EF35DA2968D6F1E59BF53D817D655
+  exact_identity_plan_audit:
+    path: data/manifests/p1_v4_independent_calibration_exact_identity_plan_audit.json
+    sha256: 4BA2356CEA3EDF631A0D338110E1593040D15AAFEB1AE787C7262D9A90955A81
+  look120_review_decision:
+    path: data/manifests/p1_v4_look120_overlay_result_review_and_look160_go_no_go.json
+    sha256: AA3957BAB7AFBB40226689C451561366A44D538756B751B5214BF05AD2D819AA
+  look120_review_audit:
+    path: data/manifests/p1_v4_look120_overlay_result_review_and_look160_go_no_go_audit.json
+    sha256: 7AEB17BDBF7B6E9D8BA2D2ED57E717E88751F9C97F6F5F443FA227E8C8CAD7A3
+  look120_materialization_manifest:
+    path: data/manifests/p1_v4_independent_calibration_look120_materialization.json
+    sha256: 4A4A81B2DFFB669311FD542911EEB07CE8F6C0551D555F78BE9AFA5F417B2611
+  look120_materialization_audit:
+    path: data/manifests/p1_v4_independent_calibration_look120_materialization_execution_audit_v2.json
+    sha256: 464D99B4C2D38F320C2FA6B1C213049DC4574E6772F41843907B82D4867FAE93
+
+selection:
+  previous_registered_look: 120
+  next_registered_look: 160
+  incremental_scene_count: 40
+  cumulative_scene_count: 160
+  execution_index_start_inclusive: 120
+  execution_index_end_exclusive: 160
+  expected_batch_id: semantic_calibration:120-160
+  expected_first_registered_look: 160
+  allowed_role: semantic_calibration
+  namespace: P1V4SC
+  seed_policy: copy_exact_component_seeds_from_frozen_identity_plan
+  reallocation: forbidden
+  seed_regeneration: forbidden
+  ordering: frozen_execution_order
+
+diagnostics:
+  ambiguous_policy: fixed_subset_frozen_at_look120
+  nonedge_policy: excluded_from_p1v4_calibration_execution
+  incremental_ambiguous_memberships_expected: 0
+  incremental_nonedge_memberships_expected: 0
+
+reserved_future_outputs:
+  generated_scene_root: data/generated/p1_v4_independent_calibration/look160_increment
+  public_story_root: data/public/p1_v4_independent_calibration/look160_increment
+  materialization_manifest: data/manifests/p1_v4_independent_calibration_look160_incremental_materialization.json
+  statistical_manifest: data/manifests/p1_v4_independent_calibration_look160_incremental_statistical_execution.json
+  semantic_manifest: data/manifests/p1_v4_independent_calibration_look160_incremental_semantic_execution.json
+
+boundaries:
+  new_scenes_materialized: 0
+  new_observations_generated: 0
+  new_stories_generated: 0
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_reads: 0
+  validation_access: false
+  holdout_access: false
+  downstream_reasoner: false
+  live_execution_authorized: false
+
+outputs:
+  incremental_identities: data/manifests/p1_v4_independent_calibration_look160_incremental_exact_identities.jsonl
+  incremental_plan: data/manifests/p1_v4_independent_calibration_look160_incremental_exact_identity_plan.json
+  audit: data/manifests/p1_v4_independent_calibration_look160_incremental_exact_identity_audit.json
+  report: reports/p1_v4_independent_calibration_look160_incremental_exact_identity_freeze.md
