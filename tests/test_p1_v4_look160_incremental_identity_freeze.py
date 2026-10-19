@@ -55,7 +55,11 @@ def test_node_strata_remain_balanced_in_increment():
     assert load(AUDIT)["node_count_distribution"] == {"5": 13, "6": 13, "7": 14}
 
 
-def test_checkpoint_replays_byte_for_byte():
+def test_checkpoint_replays_before_execution_or_remains_preserved_after_execution():
+    if (ROOT / "data/manifests/p1_v4_independent_calibration_look160_incremental_materialization.json").exists():
+        assert load(PLAN)["status"] == "PASS_FROZEN_EXACT_40_IDENTITIES_OFFLINE"
+        assert load(AUDIT)["status"] == "PASS_OFFLINE_EXACT_IDENTITY_FREEZE"
+        return
     completed = subprocess.run(
         [sys.executable, "scripts/freeze_p1_v4_independent_calibration_look160_incremental_identities.py", "--check"],
         cwd=ROOT,

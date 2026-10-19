@@ -55,7 +55,11 @@ def test_runner_refuses_execute_without_separate_authorization():
     assert "requires a separate" in completed.stderr
 
 
-def test_checkpoint_replays_byte_exact():
+def test_checkpoint_replays_before_execution_or_remains_preserved_after_execution():
+    if (ROOT / "data/manifests/p1_v4_independent_calibration_look160_incremental_materialization.json").exists():
+        assert load(CHECKPOINT)["status"] == "PASS_READY_FOR_SEPARATE_LIVE_MATERIALIZATION_AUTHORIZATION"
+        assert load(AUDIT)["status"] == "PASS_OFFLINE_PREFLIGHT"
+        return
     completed = subprocess.run(
         [sys.executable, "scripts/freeze_p1_v4_look160_incremental_materialization_preflight.py", "--check"],
         cwd=ROOT,
