@@ -1,0 +1,61 @@
+schema_version: fourgraph.p1_v4_look160_incremental_live_materialization_authorization_config.v1
+task: P1_V4_LOOK160_INCREMENTAL_LIVE_MATERIALIZATION_AUTHORIZATION_CHECKPOINT
+status: explicit_scoped_authorization_requested
+
+parents:
+  preflight_checkpoint:
+    path: data/manifests/p1_v4_look160_incremental_materialization_preflight_authorization_checkpoint.json
+    sha256: B93AD13F44C18AD55AAEE00E083AB59ADCB83CD0B779EEB042796AFD175E8844
+  preflight_audit:
+    path: data/manifests/p1_v4_look160_incremental_materialization_preflight_authorization_checkpoint_audit.json
+    sha256: FC26A22AE2927AF0A215D3F3A8A1F85D7C3611341FCAA04427A0C88BA0039787
+  incremental_identity_plan:
+    path: data/manifests/p1_v4_independent_calibration_look160_incremental_exact_identity_plan.json
+    sha256: A50920F411C271C5C2CE8682DA97DBF1828821DEF2B68BC6BDEB5BF262A09B56
+  incremental_identities:
+    path: data/manifests/p1_v4_independent_calibration_look160_incremental_exact_identities.jsonl
+    sha256: E61D1CFEC6F9E76B5ED87C8BC780B175FD94E73DD0AFC9AB4D5DE8B1922B5C90
+  production_runner:
+    path: scripts/materialize_p1_v4_look160_increment.py
+    sha256: 4E7C94FF0743F4E4CB7E28A884265DC5BFD50DB64168F77D815811E71BA05768
+
+authorization:
+  explicit_user_live_materialization_authorization_recorded: true
+  authorized_scene_count: 40
+  authorized_public_story_artifact_count: 120
+  authorized_story_variants: [full, partial, ambiguous]
+  exact_scene_ids_source: preflight_checkpoint.dry_run.scene_ids
+  generated_scene_root: data/generated/p1_v4_independent_calibration/look160_increment
+  public_story_root: data/public/p1_v4_independent_calibration/look160_increment
+  duplicate_policy: verify_bytes_or_fail_closed
+  atomic_write: true
+  concurrency: 1
+  statistical_execution_authorized: false
+  semantic_api_authorized: false
+  oracle_access_authorized: false
+  validation_access_authorized: false
+  holdout_access_authorized: false
+  downstream_reasoner_authorized: false
+  automatic_continuation_authorized: false
+
+pre_execution_requirements:
+  reverify_all_parent_hashes: true
+  require_empty_or_byte_identical_targets: true
+  require_exact_scene_order: true
+  require_exact_component_seeds: true
+  fail_closed_on_leakage: true
+  fail_closed_on_scope_drift: true
+
+side_effects_at_checkpoint:
+  scenes_materialized: 0
+  stories_generated: 0
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_reads: 0
+  validation_access: false
+  holdout_access: false
+
+outputs:
+  authorization: data/manifests/p1_v4_look160_incremental_live_materialization_authorization.json
+  audit: data/manifests/p1_v4_look160_incremental_live_materialization_authorization_audit.json
+  report: reports/p1_v4_look160_incremental_live_materialization_authorization.md
