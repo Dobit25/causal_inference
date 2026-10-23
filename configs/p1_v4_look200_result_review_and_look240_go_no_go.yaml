@@ -1,0 +1,29 @@
+schema_version: fourgraph.p1_v4_look200_result_review_and_look240_go_no_go_config.v1
+task: P1_V4_LOOK200_RESULT_REVIEW_AND_LOOK240_GO_NO_GO
+inputs:
+  results: {path: data/manifests/p1_v4_look200_cumulative_overlay_oracle_metric_results.json, sha256: C30AD5EFE23EC6DC28934D98D7319F44CC8FB29F01C6675A09D0536BEA5D9313}
+  audit: {path: data/manifests/p1_v4_look200_cumulative_overlay_oracle_metric_audit.json, sha256: 1BE4B226B859C23A50CA80B8BC968A543A6590284CFD63BFD842A43C12EB9635}
+  metric_dataset: {path: data/manifests/p1_v4_look200_cumulative_overlay_oracle_metric_dataset.jsonl, sha256: DEF1A1220236C6302030EBE825755502933785F24B08CFCBE6341D3E8653F6EC}
+  risk_coverage: {path: data/manifests/p1_v4_look200_cumulative_overlay_oracle_risk_coverage.json, sha256: 1B7B23D8B12B9E769279C2FDFFCC6FA0EB5FF97D1C7E132138A6EC21D4625134}
+  overlay_outputs: {path: data/manifests/p1_v4_look200_cumulative_overlay_outputs.jsonl, sha256: 50BDAD15F1960BB720075FDA8FB0774EE5191ACE0E68A5EC19FCDD8EACB16CE2}
+registered_decision:
+  current_look: 200
+  next_look_if_inconclusive: 240
+  maximum_calibration_scenes: 440
+  expected_status: CONTINUE_TO_LOOK_240
+  failed_gate: partial_high_guardrail_minimum_contributing_scenes
+  minimum_high_contributing_scenes: 60
+frozen_policy:
+  model_prompt_schema_agreement_unchanged: true
+  parent_methods_unchanged: true
+  thresholds_unchanged: true
+  tuning_forbidden: true
+boundaries:
+  semantic_api_calls: 0
+  statistical_reruns: 0
+  validation_access: 0
+  holdout_access: 0
+outputs:
+  review: data/manifests/p1_v4_look200_result_review_and_look240_go_no_go.json
+  audit: data/manifests/p1_v4_look200_result_review_and_look240_go_no_go_audit.json
+  report: reports/p1_v4_look200_result_review_and_look240_go_no_go.md

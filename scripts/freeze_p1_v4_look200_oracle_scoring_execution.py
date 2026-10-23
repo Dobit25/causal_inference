@@ -32,6 +32,17 @@ def build() -> tuple[dict, dict[Path, bytes]]:
 
     checkpoint = json.loads((ROOT / config["inputs"]["checkpoint"]["path"]).read_text(encoding="utf-8"))
     checkpoint_audit = json.loads((ROOT / config["inputs"]["checkpoint_audit"]["path"]).read_text(encoding="utf-8"))
+    freeze_path = ROOT / config["execution_freeze"]["path"]
+    if freeze_path.is_file():
+        # Replay preserves the historical fact recorded by the original freeze;
+        # a later, separately authorized artifact must not invalidate that freeze.
+        authorization_absent_at_freeze = json.loads(freeze_path.read_text(encoding="utf-8")).get(
+            "oracle_scoring_authorized"
+        ) is False
+    else:
+        authorization_absent_at_freeze = not (ROOT / config["authorization"]["path"]).exists() and not (
+            ROOT / config["authorization"]["audit_path"]
+        ).exists()
     checks.update(
         {
             "checkpoint_ready": checkpoint.get("status") == "PASS_READY_FOR_EXPLICIT_ORACLE_SCORING_AUTHORIZATION",
@@ -46,8 +57,7 @@ def build() -> tuple[dict, dict[Path, bytes]]:
             "output_paths_unique": len(set(config["outputs"].values())) == len(config["outputs"]),
             "output_paths_look200": all("look200" in path for path in config["outputs"].values()),
             "dry_run_boundary": all(value == 0 for value in config["boundaries"].values()),
-            "authorization_absent_at_freeze": not (ROOT / config["authorization"]["path"]).exists()
-            and not (ROOT / config["authorization"]["audit_path"]).exists(),
+            "authorization_absent_at_freeze": authorization_absent_at_freeze,
         }
     )
     passed = all(checks.values())
