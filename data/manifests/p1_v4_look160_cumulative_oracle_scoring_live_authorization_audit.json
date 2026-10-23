@@ -1,0 +1,1 @@
+{"authorization_sha256":"DC2EFC685BBBEB2C09D7BC588BD18DF641D93CFADC922440FE07963C0BC80AD0","checks":{"boundary":true,"checkpoint":true,"checkpoint_audit":true,"checkpoint_ready":true,"exact_160":true,"explicit":true},"holdout_access":0,"oracle_access_before_execution":0,"semantic_api_calls":0,"status":"PASS"}

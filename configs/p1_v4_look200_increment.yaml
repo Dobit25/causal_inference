@@ -1,0 +1,53 @@
+schema_version: fourgraph.p1_v4_look200_increment_config.v1
+task: P1_V4_INDEPENDENT_CALIBRATION_LOOK200_INCREMENT
+status: explicit_user_authorized_through_semantic_execution
+
+scope:
+  previous_look: 160
+  next_look: 200
+  index_start: 160
+  index_end: 200
+  batch_id: semantic_calibration:160-200
+  scenes: 40
+  story_variants_materialized: [full, partial, ambiguous]
+  story_variants_semantic: [full, partial]
+  prompts: [P1, P2, P3, P4, P5, P6]
+  semantic_calls: 480
+  statistical_fits: 8240
+
+parents:
+  identity_plan: data/manifests/p1_v4_independent_calibration_exact_identity_plan.json
+  identities: data/manifests/p1_v4_independent_calibration_exact_identities.jsonl
+  look160_results: data/manifests/p1_v4_look160_cumulative_overlay_oracle_metric_results.json
+  look160_audit: data/manifests/p1_v4_look160_cumulative_overlay_oracle_metric_audit.json
+  generation_contract: configs/p1_v4_stage3_method_development_preflight.yaml
+  story_protocol: configs/t19_p1_semantic_stories.yaml
+  semantic_protocol: data/manifests/p1_v4_independent_calibration_look120_mini_semantic_reconciliation_amendment.json
+  environment_lock: configs/p1_v4_cau_environment.lock
+
+roots:
+  generated: data/generated/p1_v4_independent_calibration/look200_increment
+  public: data/public/p1_v4_independent_calibration/look200_increment
+  statistical: results/raw/p1_v4_independent_calibration/look200_increment/statistical
+  semantic: results/raw/p1_v4_independent_calibration/look200_increment/mini_semantic
+
+semantic:
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  automatic: [VERY_HIGH, HIGH]
+  review_only: [MEDIUM]
+  abstain: [UNCERTAIN, CONFLICT]
+  ambiguous_increment: excluded_fixed_look120_diagnostic
+  nonedge: excluded
+  meek_closure: forbidden
+  token_hard_stop: 2500000
+  minimum_request_interval_seconds: 3.2
+
+boundaries:
+  oracle_access: false
+  holdout_access: false
+  validation_access: false
+  downstream_reasoner: false
+  threshold_tuning: false

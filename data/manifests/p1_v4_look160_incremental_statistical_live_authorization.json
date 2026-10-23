@@ -1,0 +1,1 @@
+{"concurrency":1,"exact_fits":8240,"holdout_access":0,"oracle_access":0,"plan_sha256":"2FF4031C0A598D26203A43CFE13ADD91E32E2AE8D870F5335A423F8125F06149","schema_version":"fourgraph.p1_v4_look160_incremental_statistical_authorization.v1","semantic_api_calls":0,"status":"PASS_LIVE_STATISTICAL_AUTHORIZATION"}

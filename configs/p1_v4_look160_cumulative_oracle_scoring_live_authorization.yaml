@@ -1,0 +1,16 @@
+schema_version: fourgraph.p1_v4_look160_cumulative_oracle_scoring_live_authorization_config.v1
+task: P1_V4_LOOK160_CUMULATIVE_ORACLE_SCORING_LIVE_AUTHORIZATION
+parents:
+  checkpoint: {path: data/manifests/p1_v4_look160_cumulative_oracle_scoring_authorization_checkpoint.json, sha256: 5E85F9BD560F652D5FF2E89AFD6D1DF2DB0882782EB58B720EBE37BE2782997A}
+  checkpoint_audit: {path: data/manifests/p1_v4_look160_cumulative_oracle_scoring_authorization_checkpoint_audit.json, sha256: D807BBEA8C373906E44A0DD71CF28751F53C030B0E218141217CDC71E84FC95F}
+authorization:
+  explicit_user_authorization: true
+  exact_calibration_scenes: 160
+  oracle_scope: calibration_only
+  semantic_api_calls: 0
+  statistical_reruns: 0
+  holdout_access: false
+  closure: forbidden
+outputs:
+  authorization: data/manifests/p1_v4_look160_cumulative_oracle_scoring_live_authorization.json
+  audit: data/manifests/p1_v4_look160_cumulative_oracle_scoring_live_authorization_audit.json

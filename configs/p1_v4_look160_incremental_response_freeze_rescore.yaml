@@ -1,0 +1,38 @@
+schema_version: fourgraph.p1_v4_look160_incremental_response_freeze_rescore_config.v1
+task: P1_V4_LOOK160_INCREMENTAL_RESPONSE_FREEZE_AND_OFFLINE_RESCORE
+parents:
+  execution_plan: {path: data/manifests/p1_v4_look160_incremental_mini_semantic_plan.json, sha256: E53DADA0B700204E5AD03C661BC5949E2C4D7CD99FDFC4AFA491A7E896042057}
+  execution_audit: {path: data/manifests/p1_v4_look160_incremental_mini_semantic_execution_audit.json, sha256: 34EB9BA0271D4395293A1487F314F78A92041C8B2A51862A3242820F81AD97C9}
+  raw_responses: {path: results/raw/p1_v4_independent_calibration/look160_increment/mini_semantic/raw_responses.jsonl, sha256: 6625AAD01FFB3DA01D60A930A01558C97F73CB8911A73FD358BD4144026BA834}
+  token_ledger: {path: results/raw/p1_v4_independent_calibration/look160_increment/mini_semantic/token_ledger.jsonl, sha256: B41DD94EFD28842118AA300F32C754F9A2DF0B79A2CAF960B482AC8141E1E4B3}
+  production_validator: {path: src/fourgraph/semantic_sentence_id_contract.py, sha256: 6F2B3F84EBD5CBD95FAFFD11E9C78253BC39F0C3BD26BB4E9C52B679602F8BD9}
+  reference_validator: {path: src/fourgraph/semantic_sentence_id_contract_reference.py, sha256: 59C35B9507DE7A76A98848669C0AF0859F595D03FFC50284A6A6E243728727ED}
+semantic_contract:
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  prompt_variants: [P1, P2, P3, P4, P5, P6]
+  aggregation: balanced_six_vote
+  automatic: [VERY_HIGH, HIGH]
+  review_only: [MEDIUM]
+  abstain: [UNCERTAIN, CONFLICT]
+scope:
+  scenes: 40
+  logical_calls: 480
+  expected_pair_records: 3408
+  expected_six_vote_groups: 568
+  story_variants: [full, partial]
+boundary:
+  semantic_api_calls: 0
+  oracle_access: 0
+  holdout_access: 0
+  precision_metrics: 0
+  threshold_selection: false
+  closure: forbidden
+outputs:
+  response_freeze: data/manifests/p1_v4_look160_incremental_response_freeze.json
+  pair_records: data/manifests/p1_v4_look160_incremental_pair_rescore.jsonl
+  six_vote_groups: data/manifests/p1_v4_look160_incremental_six_vote_groups.jsonl
+  audit: data/manifests/p1_v4_look160_incremental_response_freeze_rescore_audit.json
+  report: reports/p1_v4_look160_incremental_response_freeze_rescore.md

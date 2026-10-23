@@ -1,0 +1,36 @@
+schema_version: fourgraph.p1_v4_look200_incremental_mini_provider_preflight_config.v1
+task: P1_V4_LOOK200_INCREMENTAL_MINI_PROVIDER_PREFLIGHT
+parents:
+  semantic_protocol:
+    path: data/manifests/p1_v4_independent_calibration_look120_mini_semantic_reconciliation_amendment.json
+    sha256: A1C8A09E8856AB76B683DF3E1C5C7F8AACEED51BCF04D813CD3EFE5137927A4A
+  statistical_execution_audit:
+    path: data/manifests/p1_v4_look200_incremental_statistical_execution_audit.json
+    sha256: D49DBD8026D1F259C25A883EDF0C537BED13ED5263029CA2F96A510C25BEAEB1
+  environment_lock:
+    path: configs/p1_v4_cau_environment.lock
+semantic_contract:
+  model_snapshot: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  max_output_tokens: 8192
+  service_tier: default
+  store: false
+  truncation: disabled
+  automatic_prompt_chunking: forbidden
+preflight_input:
+  study_execution: false
+  study_scenes_loaded: 0
+  oracle_access: false
+  holdout_access: false
+  synthetic_nodes: 7
+  synthetic_pairs: 21
+  prompt_variant: P1
+authorization_scope:
+  provider_calls: 1
+  study_semantic_calls: 0
+  oracle_access: 0
+  holdout_access: 0
+outputs:
+  provider_preflight: data/manifests/p1_v4_look200_incremental_mini_provider_preflight.json

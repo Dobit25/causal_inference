@@ -1,0 +1,48 @@
+schema_version: fourgraph.p1_v4_look160_cumulative_oracle_scoring_authorization_checkpoint_config.v1
+task: P1_V4_LOOK160_CUMULATIVE_ORACLE_SCORING_AUTHORIZATION_CHECKPOINT
+parents:
+  look120_statistical_audit: {path: data/manifests/p1_v4_independent_calibration_look120_statistical_final_audit.json, sha256: 7CCEBB345F6F4B11E004F6E41F739F5C907AA107892D7D3F83E91CB060446312}
+  look120_statistical_plan: {path: data/manifests/p1_v4_independent_calibration_look120_statistical_parent_plan.json, sha256: DBC29E106321944DA5A236A37B0CDD9CEFF45579422E29049D7D9BEA5ABCF6BE}
+  look120_response_freeze: {path: data/manifests/p1_v4_independent_calibration_look120_response_freeze.json, sha256: 3DE40644BE82D81B53499D65C864C7CB08824FE9D0522D27F46855CE1A4AC23F}
+  look120_rescore_audit: {path: data/manifests/p1_v4_independent_calibration_look120_response_freeze_rescore_audit.json, sha256: C145BF445AFFE7B637C3B63A9A9172836EE4464E3C9B67425167B93AE4D6BF40}
+  look120_pair_records: {path: data/manifests/p1_v4_independent_calibration_look120_pair_rescore.jsonl, sha256: D1D9236C2D93411168396802D105598D82B77395D44D2D98DF2580BBDCEFEB0E}
+  look120_six_vote_groups: {path: data/manifests/p1_v4_independent_calibration_look120_six_vote_groups.jsonl, sha256: 7910C6D40BF489D90B32C47CE9963D0220312367498A8F8418A99D3D98CF5944}
+  increment_statistical_audit: {path: data/manifests/p1_v4_look160_incremental_statistical_execution_audit.json, sha256: FC53737C93CC7AE283001ACC3F93F2F3F5E5CC963A53C8FEAB72AF20998C6CDD}
+  increment_statistical_plan: {path: data/manifests/p1_v4_look160_incremental_statistical_plan.json, sha256: 2FF4031C0A598D26203A43CFE13ADD91E32E2AE8D870F5335A423F8125F06149}
+  increment_response_freeze: {path: data/manifests/p1_v4_look160_incremental_response_freeze.json, sha256: 6CDF4D85BA690A695902656E26E1D25F66A6EEBAEF8CC12D0134ADD01D630FBD}
+  increment_rescore_audit: {path: data/manifests/p1_v4_look160_incremental_response_freeze_rescore_audit.json, sha256: FCB4BD683DE4E4B082271F9409D30A6753D35526B9237C3A72426082D1110E69}
+  increment_pair_records: {path: data/manifests/p1_v4_look160_incremental_pair_rescore.jsonl, sha256: 9A89B91F9F60134C21EBDF8A40BC3901EA7CFB67E408902AF4086E3AB2B89566}
+  increment_six_vote_groups: {path: data/manifests/p1_v4_look160_incremental_six_vote_groups.jsonl, sha256: 963CACE6E7C1861B45763EFD4BE70395D4614B544DC0C3B9220E8EE72E65EDEF}
+scope:
+  cumulative_scenes: 160
+  look120_scenes: 120
+  incremental_scenes: 40
+  constrained_parent_graphs: 320
+  pair_records: 18132
+  six_vote_groups: 3022
+  full_groups: 1102
+  partial_groups: 1102
+  ambiguous_diagnostic_groups: 818
+  parent_conditions: [Constrained-BOSS, Constrained-FGES]
+semantic_policy:
+  automatic: [VERY_HIGH, HIGH]
+  review_only: [MEDIUM]
+  abstain: [UNCERTAIN, CONFLICT]
+  primary_closure: forbidden
+registered_metrics_after_explicit_authorization:
+  - precision_confidence_sequence
+  - coverage_and_abstention_full_partial
+  - high_guardrail
+  - compelled_confirmation_precision_coverage
+  - semantic_selected_precision_coverage
+  - ambiguous_diagnostic_first_120_only
+boundary:
+  oracle_access: 0
+  holdout_access: 0
+  semantic_api_calls: 0
+  statistical_reruns: 0
+  metrics_calculated: 0
+outputs:
+  checkpoint: data/manifests/p1_v4_look160_cumulative_oracle_scoring_authorization_checkpoint.json
+  audit: data/manifests/p1_v4_look160_cumulative_oracle_scoring_authorization_checkpoint_audit.json
+  report: reports/p1_v4_look160_cumulative_oracle_scoring_authorization_checkpoint.md

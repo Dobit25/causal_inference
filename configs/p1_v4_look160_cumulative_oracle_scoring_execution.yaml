@@ -1,0 +1,41 @@
+schema_version: fourgraph.p1_v4_look160_cumulative_oracle_scoring_execution_config.v1
+task: P1_V4_LOOK160_CUMULATIVE_ORACLE_SCORING_EXECUTION
+authorization:
+  path: data/manifests/p1_v4_look160_cumulative_oracle_scoring_live_authorization.json
+  sha256: DC2EFC685BBBEB2C09D7BC588BD18DF641D93CFADC922440FE07963C0BC80AD0
+  audit_path: data/manifests/p1_v4_look160_cumulative_oracle_scoring_live_authorization_audit.json
+  audit_sha256: 236A539337B214FB52B12061C40ED8E0A621699AF3782D3AE6312D6783F7A8AE
+inputs:
+  checkpoint: {path: data/manifests/p1_v4_look160_cumulative_oracle_scoring_authorization_checkpoint.json, sha256: 5E85F9BD560F652D5FF2E89AFD6D1DF2DB0882782EB58B720EBE37BE2782997A}
+  overlay_amendment: {path: data/manifests/p1_v4_look120_evidence_annotated_partial_graph_contract_amendment.json, sha256: B660440E2D314DF5C76004BA2864DD746BC6DEE14EE67032DAE9F95FB086C922}
+  look120_groups: {path: data/manifests/p1_v4_independent_calibration_look120_six_vote_groups.jsonl, sha256: 7910C6D40BF489D90B32C47CE9963D0220312367498A8F8418A99D3D98CF5944}
+  increment_groups: {path: data/manifests/p1_v4_look160_incremental_six_vote_groups.jsonl, sha256: 963CACE6E7C1861B45763EFD4BE70395D4614B544DC0C3B9220E8EE72E65EDEF}
+  look120_plan: {path: data/manifests/p1_v4_independent_calibration_look120_mini_semantic_execution_plan_v2.json, sha256: 7C19F3D66354F2BE7EA0327428C38C37680B25A089F72EAFFF9272D16823BD6D}
+  increment_plan: {path: data/manifests/p1_v4_look160_incremental_mini_semantic_plan.json, sha256: E53DADA0B700204E5AD03C661BC5949E2C4D7CD99FDFC4AFA491A7E896042057}
+  look120_materialization: {path: data/manifests/p1_v4_independent_calibration_look120_materialization.json, sha256: 4A4A81B2DFFB669311FD542911EEB07CE8F6C0551D555F78BE9AFA5F417B2611}
+  increment_materialization: {path: data/manifests/p1_v4_independent_calibration_look160_incremental_materialization.json, sha256: E36AE03D0B353C1607D70EC80C4D5259623F5D71ADB2931F3A6B75E96D2C2D12}
+  exact_identities: {path: data/manifests/p1_v4_independent_calibration_exact_identities.jsonl, sha256: D9631C34515D2D6EDB5F6F1BA183CACBC99317E0E8D48AFE44774AEE37C9CB84}
+  generation_config: {path: configs/p1_v4_stage3_method_development_preflight.yaml, sha256: 03ABB36A4E2F095CADF47AFE3BAA671A0B4E18BDA6BE0AD9806EF183CCBE8536}
+  blueprint_builder: {path: scripts/materialize_p1_v4_stage3.py, sha256: D3DB6B97119E100AE1C82E989BB75CEA779BEAF9336F2F25E570F0BC06C923A6}
+scope:
+  registered_look: 160
+  maximum_calibration_scenes: 440
+  next_registered_look: 200
+  parent_conditions: [Constrained-BOSS, Constrained-FGES]
+  primary_parent: Constrained-BOSS
+  certification_variants: [full, partial]
+  diagnostic_variant: ambiguous
+  automatic_agreements: [VERY_HIGH, HIGH]
+  high_agreement: HIGH
+sequential_gates:
+  risk: {error_ceiling: 0.05, alternatives: [0.005, 0.01, 0.02, 0.03, 0.04], alpha_per_policy: 0.0125, minimum_contributing_scenes: 100}
+  coverage: {floor: 0.20, alternatives: [0.25, 0.30, 0.35, 0.43, 0.55, 0.70], alpha_per_policy: 0.0125}
+  high_guardrail: {error_ceiling: 0.10, alternatives: [0.005, 0.01, 0.02, 0.04, 0.06, 0.08], alpha: 0.025, minimum_contributing_scenes: 60}
+  ambiguous: {error_ceiling: 0.05, alternatives: [0.005, 0.01, 0.02, 0.03, 0.04], alpha: 0.025}
+outputs:
+  metric_dataset: data/manifests/p1_v4_look160_cumulative_overlay_oracle_metric_dataset.jsonl
+  overlay_outputs: data/manifests/p1_v4_look160_cumulative_overlay_outputs.jsonl
+  results: data/manifests/p1_v4_look160_cumulative_overlay_oracle_metric_results.json
+  risk_coverage: data/manifests/p1_v4_look160_cumulative_overlay_oracle_risk_coverage.json
+  audit: data/manifests/p1_v4_look160_cumulative_overlay_oracle_metric_audit.json
+  report: reports/p1_v4_look160_cumulative_overlay_oracle_metric_results.md
