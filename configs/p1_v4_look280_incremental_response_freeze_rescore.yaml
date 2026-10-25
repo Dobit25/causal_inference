@@ -1,0 +1,22 @@
+schema_version: fourgraph.p1_v4_look280_incremental_response_freeze_rescore_config.v1
+task: P1_V4_LOOK280_INCREMENTAL_RESPONSE_FREEZE_RESCORE
+parents:
+  execution_plan: {path: data/manifests/p1_v4_look280_incremental_mini_semantic_plan.json, sha256: 8903D9F0BE6C491FE980AA50D0A0ACC6BDC4DE6CDE2D2FACA08B792F0D3CABDB}
+  execution_audit: {path: data/manifests/p1_v4_look280_incremental_mini_semantic_execution_audit.json, sha256: 70583B524952ED09C04351CF99FE4E894CE953E44AE697312294517C3F76E479}
+  raw_responses: {path: results/raw/p1_v4_independent_calibration/look280_increment/mini_semantic/raw_responses.jsonl, sha256: 18A434587FB766F1CC55F355F1AA0C97EFFEFEBC3E3F7F51F8558DC2364A4223}
+  request_metadata: {path: results/raw/p1_v4_independent_calibration/look280_increment/mini_semantic/request_metadata.jsonl, sha256: E4493703A834EDEEA785819F8FA0D2366C5DBD2C08C2ADCAC9FEAD93BA8A2FB9}
+  token_ledger: {path: results/raw/p1_v4_independent_calibration/look280_increment/mini_semantic/token_ledger.jsonl, sha256: 94FCBCEEB41ACE1E21F054704B2D61D5C13A92838D3BD02BB75A7BF3CE8ECF52}
+semantic_contract:
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+scope:
+  expected_pair_records: 3144
+  expected_six_vote_groups: 524
+outputs:
+  response_freeze: data/manifests/p1_v4_look280_incremental_response_freeze.json
+  pair_records: data/manifests/p1_v4_look280_incremental_pair_records.jsonl
+  six_vote_groups: data/manifests/p1_v4_look280_incremental_six_vote_groups.jsonl
+  audit: data/manifests/p1_v4_look280_incremental_response_freeze_rescore_audit.json
+  report: reports/p1_v4_look280_incremental_response_freeze_rescore.md

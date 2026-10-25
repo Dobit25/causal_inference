@@ -1,0 +1,18 @@
+schema_version: fourgraph.p1_v4_look280_result_review_and_look320_go_no_go_config.v1
+task: P1_V4_LOOK280_OVERLAY_RESULT_REVIEW_AND_LOOK320_GO_NO_GO
+inputs:
+  results: {path: data/manifests/p1_v4_look280_cumulative_overlay_oracle_metric_results.json, sha256: 71879B9CFD30E5B16679D8885889F6BF362671D127C343C438D32759F9FD5E36}
+  audit: {path: data/manifests/p1_v4_look280_cumulative_overlay_oracle_metric_audit.json, sha256: 4B3367C7785B234A88BCE8A2FEAD30F40FBF996E2061BDFF94744BF01ACC7A0B}
+  rescore_audit: {path: data/manifests/p1_v4_look280_incremental_response_freeze_rescore_audit.json, sha256: 3117739B9E8DC167C8319D6882CFE3461C51CDB4CE45AB619660F2CE38BF5916}
+registered:
+  expected_status: CONTINUE_TO_LOOK_320
+  minimum_high_contributing_scenes: 60
+  next_look: 320
+boundaries:
+  look320_execution_authorized: false
+  validation_authorized: false
+  holdout_authorized: false
+outputs:
+  review: data/manifests/p1_v4_look280_result_review_and_look320_go_no_go.json
+  audit: data/manifests/p1_v4_look280_result_review_and_look320_go_no_go_audit.json
+  report: reports/p1_v4_look280_result_review_and_look320_go_no_go.md
