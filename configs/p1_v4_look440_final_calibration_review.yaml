@@ -1,0 +1,23 @@
+schema_version: fourgraph.p1_v4_look440_final_calibration_review.v1
+task: P1_V4_LOOK440_FINAL_CALIBRATION_REVIEW
+inputs:
+  response_rescore_audit: {path: data/manifests/p1_v4_look440_incremental_response_freeze_rescore_audit.json, sha256: FAFC65DD32C13E334E6E7BB0DD13BE087F3A069B6100F11199237065100603BA}
+  oracle_config: {path: configs/p1_v4_look440_cumulative_oracle_scoring.yaml, sha256: 676CE64DFF34AF96D5DB5194A784D8C84BCCEB4C4A0F5E8F7243DC3C417BA579}
+  oracle_results: {path: data/manifests/p1_v4_look440_cumulative_overlay_oracle_metric_results.json, sha256: 2E9DA58F66065D721C243B65D35BDDFF579B6D27B2364A7FF6761EDE9B8BBA88}
+  oracle_audit: {path: data/manifests/p1_v4_look440_cumulative_overlay_oracle_metric_audit.json, sha256: 44D26FE60858371CA2E55774D8D8D7285E51FED961F4BE2B2AC0BD4911762D88}
+registered_logic:
+  pass: PASS_EARLY_CERTIFICATION
+  stop: STOP_FOR_FUTILITY
+  maximum_calibration_scenes: 440
+  high_minimum_contributing_scenes: 60
+boundaries:
+  additional_calibration_looks: forbidden
+  gate_reduction: forbidden
+  retuning_on_calibration: forbidden
+  validation_access: 0
+  holdout_access: 0
+  semantic_api_calls: 0
+outputs:
+  checkpoint: data/manifests/p1_v4_look440_final_calibration_review.json
+  audit: data/manifests/p1_v4_look440_final_calibration_review_audit.json
+  report: reports/p1_v4_look440_final_calibration_review.md
