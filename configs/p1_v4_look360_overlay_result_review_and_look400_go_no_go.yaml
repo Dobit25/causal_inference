@@ -1,0 +1,23 @@
+schema_version: fourgraph.p1_v4_look360_result_review.v1
+task: P1_V4_LOOK360_OVERLAY_RESULT_REVIEW_AND_LOOK400_GO_NO_GO
+inputs:
+  response_rescore_audit: {path: data/manifests/p1_v4_look360_incremental_response_freeze_rescore_audit.json, sha256: 3CD4D5DC4BBC33DBB70FF18BF5F54FB5153B37460AD647A863F12CFBA6328C3D}
+  oracle_config: {path: configs/p1_v4_look360_cumulative_oracle_scoring.yaml, sha256: 4305C3A7E28197698C6FF6A90E662B1605CFA90CB4C35D8C80ACC5C8DA1B0640}
+  oracle_results: {path: data/manifests/p1_v4_look360_cumulative_overlay_oracle_metric_results.json, sha256: D5C598767F71C9671D3C0F6F13A59F1F2EBA8F24DD248993AA0CC6E89EADD5B9}
+  oracle_audit: {path: data/manifests/p1_v4_look360_cumulative_overlay_oracle_metric_audit.json, sha256: 00B1CC00F2B5EADB59D486B4324D3DB09C879DCC74593A67DE4323D6C709F8A4}
+registered_logic:
+  pass: PASS_EARLY_CERTIFICATION
+  continue: CONTINUE_TO_LOOK_400
+  stop: STOP_FOR_FUTILITY
+  next_registered_look: 400
+  maximum_calibration_scenes: 440
+boundaries:
+  prompt_model_schema_agreement_changes: forbidden
+  parent_or_threshold_changes: forbidden
+  validation_access: 0
+  holdout_access: 0
+  semantic_api_calls: 0
+outputs:
+  checkpoint: data/manifests/p1_v4_look360_overlay_result_review_and_look400_go_no_go.json
+  audit: data/manifests/p1_v4_look360_overlay_result_review_audit.json
+  report: reports/p1_v4_look360_overlay_result_review.md

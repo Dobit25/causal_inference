@@ -1,0 +1,47 @@
+schema_version: fourgraph.p1_v4_look360_incremental_mini_semantic_live_config.v1
+task: P1_V4_LOOK360_INCREMENTAL_MINI_SEMANTIC_EXECUTION
+parents:
+  execution_plan:
+    path: data/manifests/p1_v4_look360_incremental_mini_semantic_plan.json
+    sha256: 5EAD2840D7831FD6D45CCB1B42FEA959F674B198E4912443AB033E33202EA8DC
+  provider_preflight:
+    path: data/manifests/p1_v4_look360_incremental_mini_provider_preflight.json
+    sha256: 26E1769DDEBB46842BAB36688A1E55ECF0D2C9AF18D1E2F574EDD48C2D8A86DB
+semantic_contract:
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  truncation: disabled
+  automatic_prompt_chunking: forbidden
+scope:
+  scenes: 40
+  story_variants: [full, partial]
+  logical_calls: 480
+  nonedge_diagnostic: excluded
+  conditions_reusing_raw_evidence: [constrained_boss, constrained_fges]
+runtime:
+  canonical_environment: cau
+  concurrency: 1
+  cache_root: results/raw/p1_v4_independent_calibration/look360_increment/mini_semantic
+  batch_size: 1
+  minimum_request_interval_seconds: 3.2
+  idempotency_key: [logical_id, model, reasoning_effort, prompt_sha256, schema_sha256, story_content_sha256, pair_pool_sha256]
+  transport_retry: forbidden_without_separate_explicit_authorization
+  validation_retry: forbidden
+token_control:
+  source: provider_reported_usage.total_tokens
+  hard_stop_tokens: 2500000
+  check_frequency: after_each_call
+  reset: none_within_this_authorization
+  missing_usage_action: fail_closed_and_halt
+boundary:
+  oracle_access: false
+  holdout_access: false
+  metric_calculation: false
+  closure: forbidden
+outputs:
+  live_authorization_checkpoint: data/manifests/p1_v4_look360_incremental_mini_live_authorization_checkpoint.json
+  live_authorization: data/manifests/p1_v4_look360_incremental_mini_live_authorization.json
+  live_authorization_audit: data/manifests/p1_v4_look360_incremental_mini_live_authorization_audit.json
+  runner_audit: data/manifests/p1_v4_look360_incremental_mini_semantic_execution_audit.json
