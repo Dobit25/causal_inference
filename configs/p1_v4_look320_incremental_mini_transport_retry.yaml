@@ -1,0 +1,37 @@
+schema_version: fourgraph.p1_v4_look320_incremental_mini_transport_retry.v1
+task: P1_V4_LOOK320_INCREMENTAL_MINI_SINGLE_TRANSPORT_RETRY
+parent_execution_audit:
+  path: data/manifests/p1_v4_look320_incremental_mini_semantic_execution_audit.json
+  sha256: 5B4020C408E0D83AD0BEC8E638EF1AB44B84F6599ACBDC4E4F16128DB2DD7141
+parent_raw_response_cache:
+  path: results/raw/p1_v4_independent_calibration/look320_increment/mini_semantic/raw_responses.jsonl
+  sha256: 15D1880E19B2CF48B50847153B9C7064530DF1AEC4C600793794FC2FCD74CD2A
+execution_plan:
+  path: data/manifests/p1_v4_look320_incremental_mini_semantic_plan.json
+  sha256: B4E88B88E34BCA091544A765F1F4334F9775924E548C4ABEEE24CB12F276049C
+semantic_contract:
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  truncation: disabled
+  automatic_prompt_chunking: forbidden
+retry_policy:
+  exact_logical_id: P1V4SC280/full/P1
+  eligible_error_type: APITimeoutError
+  require_no_response: true
+  require_no_provider_usage: true
+  max_new_attempts: 1
+  timeout_seconds: 120
+  automatic_retry: false
+  validation_retry: forbidden
+boundary:
+  oracle_access: false
+  holdout_access: false
+  metric_calculation: false
+  closure: forbidden
+outputs:
+  disposition: data/manifests/p1_v4_look320_incremental_mini_transport_retry_disposition.json
+  authorization: data/manifests/p1_v4_look320_incremental_mini_transport_retry_authorization.json
+  retry_response: results/raw/p1_v4_independent_calibration/look320_increment/mini_semantic/transport_retry_response.jsonl
+  audit: data/manifests/p1_v4_look320_incremental_mini_transport_retry_audit.json

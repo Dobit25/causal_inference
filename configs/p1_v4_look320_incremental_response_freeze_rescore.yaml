@@ -1,0 +1,26 @@
+schema_version: fourgraph.p1_v4_look320_incremental_response_freeze_rescore_config.v1
+task: P1_V4_LOOK320_INCREMENTAL_RESPONSE_FREEZE_RESCORE
+parents:
+  execution_plan: {path: data/manifests/p1_v4_look320_incremental_mini_semantic_plan.json, sha256: B4E88B88E34BCA091544A765F1F4334F9775924E548C4ABEEE24CB12F276049C}
+  execution_audit: {path: data/manifests/p1_v4_look320_incremental_mini_semantic_execution_audit.json, sha256: 5B4020C408E0D83AD0BEC8E638EF1AB44B84F6599ACBDC4E4F16128DB2DD7141}
+  raw_responses: {path: results/raw/p1_v4_independent_calibration/look320_increment/mini_semantic/raw_responses.jsonl, sha256: 15D1880E19B2CF48B50847153B9C7064530DF1AEC4C600793794FC2FCD74CD2A}
+  request_metadata: {path: results/raw/p1_v4_independent_calibration/look320_increment/mini_semantic/request_metadata.jsonl, sha256: 47924177871D750112B070ED06C6E3FA802BF48166B0A1F58E6DD1E02AC0FA0A}
+  token_ledger: {path: results/raw/p1_v4_independent_calibration/look320_increment/mini_semantic/token_ledger.jsonl, sha256: 5CB76F98386EF4EB0B66797BE2F794F08EAEC221CD93A3B22CBF3E50E85B6B7F}
+  retry_response: {path: results/raw/p1_v4_independent_calibration/look320_increment/mini_semantic/transport_retry_response.jsonl, sha256: AEBEF1AD5E1A9D40DBB9AB156B22DA807F06C252E25961FC9715AD3C284B9D7F}
+  retry_audit: {path: data/manifests/p1_v4_look320_incremental_mini_transport_retry_audit.json, sha256: 4C5D9A34A8CDF1A5B64975A2C684BAE13013FFC9DB162501C8D5C59F6ED41001}
+semantic_contract:
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+scope:
+  expected_pair_records: 3312
+  expected_six_vote_groups: 552
+  historical_provider_incidents: 1
+  authorized_transport_retries: 1
+outputs:
+  response_freeze: data/manifests/p1_v4_look320_incremental_response_freeze.json
+  pair_records: data/manifests/p1_v4_look320_incremental_pair_records.jsonl
+  six_vote_groups: data/manifests/p1_v4_look320_incremental_six_vote_groups.jsonl
+  audit: data/manifests/p1_v4_look320_incremental_response_freeze_rescore_audit.json
+  report: reports/p1_v4_look320_incremental_response_freeze_rescore.md
