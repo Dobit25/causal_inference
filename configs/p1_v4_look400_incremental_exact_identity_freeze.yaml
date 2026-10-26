@@ -1,0 +1,55 @@
+schema_version: fourgraph.p1_v4_look400_incremental_exact_identity_freeze_config.v1
+task: P1_V4_LOOK400_INCREMENTAL_EXACT_IDENTITY_FREEZE
+status: offline_identity_freeze_only
+parents:
+  look360_review:
+    path: data/manifests/p1_v4_look360_overlay_result_review_and_look400_go_no_go.json
+    sha256: F07A548572686535FF2406A7D72300595DFA64E616EA0366949170523726AEC4
+  look360_review_audit:
+    path: data/manifests/p1_v4_look360_overlay_result_review_audit.json
+    sha256: 6E737D6588BD79E38E38F34A9B8CEAEBD60DC73A1A0AC9746B1D7AD74789757A
+  exact_identity_plan:
+    path: data/manifests/p1_v4_independent_calibration_exact_identity_plan.json
+    sha256: 74BEDF9938B495F6534D9D2E0E8FAEA8158EF35DA2968D6F1E59BF53D817D655
+  exact_identities:
+    path: data/manifests/p1_v4_independent_calibration_exact_identities.jsonl
+    sha256: D9631C34515D2D6EDB5F6F1BA183CACBC99317E0E8D48AFE44774AEE37C9CB84
+  look360_incremental_plan:
+    path: data/manifests/p1_v4_look360_incremental_exact_identity_plan.json
+    sha256: 7278C4EAAB85133A92A9835EE28BC9609AFF85E22E2CA40B618B94DE52DC5F65
+  look360_incremental_audit:
+    path: data/manifests/p1_v4_look360_incremental_exact_identity_audit.json
+    sha256: 37A710EA5A7C59DA72FB78BE4FE292242A4B0D4609723A211072683845139DBD
+identity_selection:
+  previous_registered_look: 360
+  next_registered_look: 400
+  execution_index_start_inclusive: 360
+  execution_index_end_exclusive: 400
+  incremental_scene_count: 40
+  cumulative_scene_count: 400
+  expected_batch_id: semantic_calibration:360-400
+  allowed_role: semantic_calibration
+  namespace: P1V4SC
+  seed_policy: copy_from_frozen_parent_identity_plan
+frozen_policy:
+  model_prompt_schema_agreement_unchanged: true
+  parent_methods_unchanged: true
+  automatic_thresholds_unchanged: true
+  evidence_annotated_overlay_contract_unchanged: true
+  primary_meek_closure_forbidden: true
+  tuning_forbidden: true
+  ambiguous_subset_fixed_at_first_120: true
+  nonedge_excluded: true
+boundaries:
+  scenes_materialized: 0
+  stories_generated: 0
+  statistical_fits: 0
+  semantic_api_calls: 0
+  oracle_reads: 0
+  validation_access: 0
+  holdout_access: 0
+outputs:
+  incremental_identities: data/manifests/p1_v4_look400_incremental_exact_identities.jsonl
+  incremental_plan: data/manifests/p1_v4_look400_incremental_exact_identity_plan.json
+  identity_audit: data/manifests/p1_v4_look400_incremental_exact_identity_audit.json
+  report: reports/p1_v4_look400_incremental_exact_identity_freeze.md
