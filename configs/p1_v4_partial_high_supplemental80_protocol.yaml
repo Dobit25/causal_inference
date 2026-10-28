@@ -1,0 +1,203 @@
+schema_version: fourgraph.p1_v4_partial_high_supplemental80_protocol.v1
+task: P1_V4_PARTIAL_HIGH_SUPPLEMENTAL_80_PROTOCOL_AND_POWER_FREEZE
+status: offline_design_only
+
+historical_inputs:
+  review:
+    path: data/manifests/p1_v4_look440_final_calibration_review.json
+    sha256: 374FD46BDD2DC9C82E634EE72D08D4B115F3CDFD6324F1780DF5F20F677DFD6B
+  results:
+    path: data/manifests/p1_v4_look440_cumulative_overlay_oracle_metric_results.json
+    sha256: 2E9DA58F66065D721C243B65D35BDDFF579B6D27B2364A7FF6761EDE9B8BBA88
+  audit:
+    path: data/manifests/p1_v4_look440_cumulative_overlay_oracle_metric_audit.json
+    sha256: 44D26FE60858371CA2E55774D8D8D7285E51FED961F4BE2B2AC0BD4911762D88
+  scorer_config: configs/p1_v4_look440_cumulative_oracle_scoring.yaml
+  scene_arrays: data/manifests/p1_v4_look440_cumulative_overlay_oracle_risk_coverage.json
+  scored_records: data/manifests/p1_v4_look440_cumulative_overlay_oracle_metric_dataset.jsonl
+
+scientific_contract:
+  primary_parent: Constrained-BOSS
+  robustness_parent: Constrained-FGES
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  automatic: [VERY_HIGH, HIGH]
+  review_only: [MEDIUM]
+  abstain: [UNCERTAIN, CONFLICT]
+  story_variants: [full, partial]
+  prompts: [P1, P2, P3, P4, P5, P6]
+  pair_pool: union_of_all_constrained_boss_and_constrained_fges_adjacencies
+  max_pairs_per_scene: 21
+  shared_raw_evidence: true
+  condition_specific_filtering: true
+  publication_contract: evidence_annotated_overlay_on_immutable_parent_cpdag
+  compelled: publish_only_if_same_direction_confirmed_very_high_or_high
+  undirected: publish_only_if_very_high_or_high_and_parent_extension_compatible
+  incomplete_or_invalid: pair_abstention
+  primary_closure: forbidden
+  truncation: disabled
+  automatic_chunking: forbidden
+  new_ambiguous_calls: 0
+  new_nonedge_calls: 0
+  historical_ambiguous: fixed_120_scenes_diagnostic_only_no_new_replication_claim
+
+inference:
+  primary_endpoint: partial_high_guardrail_constrained_boss
+  combination: continue_original_component_capitals_and_equal_mixture_weights
+  new_alpha_allocation: 0
+  historical_decision: preserve_STOP_FOR_FUTILITY_at_440
+  high_minimum_contributing_scenes: 60
+  high_precision_floor: 0.90
+  overall_precision_floor: 0.95
+  coverage_floor: 0.20
+  additional_observation_count: 80
+  registered_supplemental_looks: [80]
+  combined_final_scene_count: 520
+  stop_when_high_count_reaches_60: forbidden
+  report: [extension_only, historical_440, combined_520]
+  certification_requires_all_primary_full_partial_and_historical_ambiguous_gates: true
+  insufficient_fresh_only_evidence: report_inconclusive_not_independent_replication
+  terminal_pass: PASS_SUPPLEMENTAL_CONFIRMATION
+  terminal_fail: STOP_SUPPLEMENTAL_NEGATIVE_OR_INCONCLUSIVE
+  validation_on_pass: preparation_only_separate_authorization_required
+  additional_scenes_after_80: forbidden
+  gate_change_or_retuning: forbidden
+  assumptions:
+    - independent_scene_generation_with_frozen_population_and_measurement_policy
+    - conditional_mean_null_at_each_contributing_scene_for_each_betting_process
+    - publication_and_HIGH_selection_are_oracle_blind
+    - alternatives_mixture_weights_alpha_and_scene_loss_definitions_fixed_since_original_process
+    - no_new_candidate_selection_no_alpha_reset_no_discarding_new_errors
+    - fixed_stratum_schedules_do_not_by_themselves_prove_conditional_mean_assumptions
+  joint_claim: intersection_union_all_gates_required
+  joint_false_certification_upper_bound: 0.025
+  simultaneous_all_individual_endpoint_95_percent_claim: forbidden
+
+identity_allocator:
+  namespace: P1V4SH
+  role: supplemental_high_confirmation
+  scene_count: 80
+  scene_number_start: 263000
+  master_seed: 944001
+  registered_looks: [80]
+  targets:
+    node_count: {5: 27, 6: 27, 7: 26}
+    primary_motif: {chain: 16, fork: 16, collider: 16, mediator: 16, diamond: 16}
+    noise_family: {laplace: 27, logistic: 27, student_t_df5: 26}
+    query_stratum: {valid_empty: 20, one_minimal_nonempty: 20, multiple_minimal: 20, no_valid_adjustment_set: 20}
+  reseeding_or_replacing_after_outcomes: forbidden
+  inherited_allocator: scripts/freeze_p1_v4_stage3_exact_identity_cohort.py
+  exclusion_glob: data/manifests/*exact_identit*.jsonl
+  prior_identity_sources:
+    - data/manifests/p1_v3_successor_exact_identities.jsonl
+    - data/manifests/p1_v3_successor_sequential_exact_identities.jsonl
+    - data/manifests/p1_v4_stage3_exact_identities.jsonl
+    - data/manifests/p1_v4_independent_calibration_exact_identities.jsonl
+    - data/manifests/p1_v4_independent_calibration_look160_incremental_exact_identities.jsonl
+    - data/manifests/p1_v4_look200_incremental_exact_identities.jsonl
+    - data/manifests/p1_v4_look240_incremental_exact_identities.jsonl
+    - data/manifests/p1_v4_look280_incremental_exact_identities.jsonl
+    - data/manifests/p1_v4_look320_incremental_exact_identities.jsonl
+    - data/manifests/p1_v4_look360_incremental_exact_identities.jsonl
+    - data/manifests/p1_v4_look400_incremental_exact_identities.jsonl
+    - data/manifests/p1_v4_look440_incremental_exact_identities.jsonl
+  sealed_holdout_identity_metadata: data/manifests/t18_p1_frozen_split.json
+
+power:
+  rng: PCG64DXSM
+  seed: 8644080
+  repetitions: 100000
+  null_repetitions: 100000
+  planning_rate_source: 53_over_440_not_known_population_rate
+  high_rates: [0.08, 0.10, 0.12045454545454545, 0.15, 0.20]
+  high_scene_error_rates: [0.0, 0.01, 0.02, 0.05, 0.10]
+  empirical_joint_scene_bootstrap_error_rates: [0.0, 0.01, 0.02, 0.05]
+  minimum_zero_error_reference_power: 0.80
+  null_monte_carlo_margin: 0.005
+  fresh_only_power_must_be_reported: true
+  simulation_is_empirical_result: false
+
+workload:
+  bootstrap_repetitions_per_scene: 200
+  single_boss_fits: 80
+  bootstrap_boss_fits: 16000
+  pc_fits: 80
+  mmpc_fits: 80
+  fges_fits: 80
+  constrained_boss_fits: 80
+  constrained_fges_fits: 80
+  total_statistical_identities: 16480
+  expected_study_semantic_calls: 960
+  expected_provider_preflight_calls: 1
+  study_calls_are_execution_plan_not_guarantee_before_empty_pool_audit: true
+  provider_usage_total_tokens_authoritative_reasoning_included_in_output: true
+  historical_look440_480_call_usage:
+    input_tokens: 309264
+    output_tokens: 386235
+    reasoning_tokens_within_output: 268043
+    total_tokens: 695499
+  empirical_960_call_token_planning_estimate:
+    input_tokens: 618528
+    output_tokens: 772470
+    reasoning_tokens_within_output: 536086
+    total_tokens: 1390998
+    additional_provider_preflight_tokens: unknown_until_live_preflight
+  live_budget_and_retry_authorization: separate_checkpoint_required
+  canonical_environment: cau
+  concurrency: 1
+
+source_contracts:
+  - configs/p1_v4_look440_increment.yaml
+  - configs/p1_v4_look440_incremental_mini_semantic_live.yaml
+  - data/manifests/p1_v4_look440_incremental_mini_semantic_plan.json
+  - data/manifests/p1_v4_look440_incremental_mini_semantic_execution_audit.json
+  - data/manifests/p1_v4_look440_incremental_statistical_plan.json
+  - data/manifests/p1_v4_look440_cumulative_oracle_scoring_checkpoint.json
+  - configs/p1_v4_stage3_method_development_preflight.yaml
+  - configs/t19_p1_semantic_stories.yaml
+  - configs/p1_v4_cau_environment_correction.yaml
+  - configs/p1_v4_cau_environment.lock
+  - configs/p1_v4_look120_evidence_annotated_partial_graph_contract_amendment.yaml
+  - prompts/p1_semantic_sentence_ids_v1.md
+  - schemas/semantic_sentence_id_response_v1.schema.json
+  - src/fourgraph/semantic_sentence_id_contract.py
+  - src/fourgraph/semantic_sentence_id_contract_reference.py
+  - src/fourgraph/sequential_evidence.py
+  - src/fourgraph/p1_stories.py
+  - scripts/materialize_p1_v4_stage3.py
+  - scripts/freeze_p1_v4_stage3_exact_identity_cohort.py
+  - scripts/replay_p1_v4_independent_calibration_look120_overlay_oracle.py
+  - scripts/run_p1_v4_look160_incremental_statistical.py
+  - scripts/run_p1_v4_independent_calibration_look120_mini_semantic.py
+  - scripts/freeze_and_rescore_p1_v4_look360_incremental.py
+
+reserved_paths:
+  generated: data/generated/p1_v4_partial_high_supplemental80
+  public: data/public/p1_v4_partial_high_supplemental80
+  raw: results/raw/p1_v4_partial_high_supplemental80
+  future_scorer: scripts/score_p1_v4_partial_high_supplemental80_oracle.py
+
+boundaries:
+  scenes_materialized: 0
+  stories_generated: 0
+  statistical_fits: 0
+  provider_preflight_calls: 0
+  semantic_api_calls: 0
+  new_oracle_access: 0
+  validation_data_access: 0
+  holdout_data_access: 0
+  live_execution_authorized: false
+  historical_scored_metrics_and_identity_metadata_read: true
+
+outputs:
+  protocol: data/manifests/p1_v4_partial_high_supplemental80_protocol.json
+  identities: data/manifests/p1_v4_partial_high_supplemental80_exact_identities.jsonl
+  identity_plan: data/manifests/p1_v4_partial_high_supplemental80_exact_identity_plan.json
+  inference: data/manifests/p1_v4_partial_high_supplemental80_inference_audit.json
+  power: data/manifests/p1_v4_partial_high_supplemental80_power.json
+  audit: data/manifests/p1_v4_partial_high_supplemental80_freeze_audit.json
+  report: reports/p1_v4_partial_high_supplemental80_protocol_and_power.md
+
+method_references:
+  - https://arxiv.org/abs/1810.08240
+  - https://ir.cwi.nl/pub/33561/

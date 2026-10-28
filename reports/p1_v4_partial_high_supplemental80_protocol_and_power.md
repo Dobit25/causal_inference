@@ -1,0 +1,13 @@
+# P1V4 Partial High supplemental 80: offline protocol and power freeze
+
+Status: **PASS_OFFLINE_FREEZE**. The original 440-scene result remains **STOP_FOR_FUTILITY / negative or inconclusive**. This separately registered 80-scene supplement has one terminal look at 80.
+
+The primary Constrained-BOSS Partial HIGH gate had 53 contributing scenes; 7 more are needed for its registered minimum of 60. At 53/440 the planning expectation is 9.63 new HIGH scenes. Under the optimistic zero-error and constant-rate scenario, simulated probability of passing the combined HIGH gate is **0.861** (Monte Carlo SE 0.0011). This is a planning estimate, not a result or guarantee. The full rate/error grid and joint scenario results are in the power artifact.
+
+The original e-process is continued by retaining the same mixture components, weights, loss definitions and alpha. There is no reset and no extra alpha allocation. This yields an anytime-valid test under the registered scene-level conditional-mean null; the observed stop at 440 remains part of the record. The fresh 80 scenes are also reported separately as an external check; their precision alone is not called a certified independent replication unless a separate test is registered. Scene strata and historical zero errors do not establish the conditional-mean assumption.
+
+The final decision requires all original primary Full and Partial risk/coverage/HIGH gates, overlay validity, and the fixed historical Ambiguous diagnostic. False-adjacency orientation is reported as a safety metric. Robustness FGES is reported separately. No scientific method is selected from the robustness result. If all pass, the disposition is PASS_SUPPLEMENTAL_CONFIRMATION and a separate validation authorization must follow; otherwise STOP_SUPPLEMENTAL_NEGATIVE_OR_INCONCLUSIVE. No inspection before the one registered look.
+
+Exactly 80 new deterministic IDs/seeds and strata are frozen in a separate namespace. Source, identity, and output SHA-256 values are recorded in the audit. Expected workload: 16,480 statistical identities and 960 Full/Partial Mini-medium logical calls, subject to pair-pool and provider preflight. Scaling the last recorded 480-call provider usage gives approximately 1,390,998 total study tokens (618,528 input and 772,470 output, of which 536,086 were reasoning). This is a planning estimate; provider usage in the future run is authoritative. No scene, story, fit, API call, new Oracle read, validation data, or holdout data was touched.
+
+Method basis: [time-uniform confidence sequences](https://arxiv.org/abs/1810.08240) and [safe anytime-valid inference](https://ir.cwi.nl/pub/33561/).
