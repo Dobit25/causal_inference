@@ -1,0 +1,42 @@
+schema_version: fourgraph.p1_v4_partial_high_supplemental80_statistical_execution.v1
+task: P1_V4_PARTIAL_HIGH_SUPPLEMENTAL80_STATISTICAL_EXECUTION
+status: authorized_for_exact_16480_after_materialization
+parents:
+  protocol: {path: data/manifests/p1_v4_partial_high_supplemental80_protocol.json, sha256: 219E15388063ADC2595101911A4B504C623BF04619C751EA533FB63CE5354D03}
+  exact_identities: {path: data/manifests/p1_v4_partial_high_supplemental80_exact_identities.jsonl, sha256: 1AAA1E8AD21D67A4426F9534F2729B0A690CF61C348706F505D8760DCDA0858C}
+  exact_plan: {path: data/manifests/p1_v4_partial_high_supplemental80_exact_identity_plan.json, sha256: 95ADF45CC3BF1A485F5EE11D9063B663FD8A9CE04C9F65EA7C70FDDAC0025CE4}
+  materialization_manifest: {path: data/manifests/p1_v4_partial_high_supplemental80_materialization.json, sha256: BF7934EBF9468DCB30923681084EE3EB0A642304EC1F6197969E278D26A3C6C8}
+  public_input_manifest: {path: data/manifests/p1_v4_partial_high_supplemental80_public_inputs.json, sha256: B443F22C1D330011C8A4620B37B44036AA64EB944F7247A641C9DAEF8FC46665}
+  frozen_statistical_config: {path: configs/p1_v4_look160_incremental_statistical_execution.yaml, sha256: AD48F4871984C13D80FFFF0238199FA32C83264E1045050A9FC2204F349497AD}
+  frozen_statistical_runner: {path: scripts/run_p1_v4_look160_incremental_statistical.py, sha256: CEC3C6E136271253E4EF138D04C28506F707526BF6BEBD05299ABC84C4831647}
+  tetrad_adapter: {path: scripts/adapters/tetrad_adapter.py, sha256: 84069B0F1B3A5881042F9E040D2948F672F5B31229C8FCB5B0FBC0A49B782FB5}
+  mmpc_adapter: {path: scripts/adapters/mmpc_adapter.py, sha256: 66EE296FEF1556C0C902AC1A2F7762BCF367FFB6042F2FF6CBB3034BC6CA89AB}
+  tetrad_jar: {path: data/raw/t05/py-tetrad/pytetrad/resources/tetrad-current.jar, sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051}
+scope:
+  exact_scenes: 80
+  exact_fits: 16480
+  by_algorithm:
+    Single-BOSS: 80
+    Bootstrap-BOSS: 16000
+    PC: 80
+    MMPC: 80
+    FGES: 80
+    Constrained-BOSS: 80
+    Constrained-FGES: 80
+  algorithms_in_order: [Single-BOSS, Bootstrap-BOSS, PC, MMPC, FGES, Constrained-BOSS, Constrained-FGES]
+  bootstrap_repetitions: 200
+  job_seed_formula: P1V4CAL|scene_id|algorithm|repetition
+  job_execution_id: SHA256_canonical_json_of_scene_algorithm_repetition_seed
+  concurrency: 1
+  retries: 0
+  existing_artifact_policy: verify_bytes_or_fail_closed
+  output_root: results/raw/p1_v4_partial_high_supplemental80/statistical
+  plan: data/manifests/p1_v4_partial_high_supplemental80_statistical_plan.json
+  authorization: data/manifests/p1_v4_partial_high_supplemental80_statistical_live_authorization.json
+  preflight_audit: data/manifests/p1_v4_partial_high_supplemental80_statistical_preflight_audit.json
+  final_audit: data/manifests/p1_v4_partial_high_supplemental80_statistical_execution_audit.json
+boundary:
+  semantic_api_calls: 0
+  oracle_access: 0
+  validation_access: 0
+  holdout_access: 0
