@@ -1,0 +1,83 @@
+schema_version: fourgraph.p1_v4_partial_high_supplemental80_materialization_preflight.v1
+task: P1_V4_PARTIAL_HIGH_SUPPLEMENTAL_80_MATERIALIZATION_PREFLIGHT_AND_LIVE_AUTHORIZATION
+status: offline_preflight_before_scoped_materialization
+
+parents:
+  protocol:
+    path: data/manifests/p1_v4_partial_high_supplemental80_protocol.json
+    sha256: 219E15388063ADC2595101911A4B504C623BF04619C751EA533FB63CE5354D03
+  exact_identities:
+    path: data/manifests/p1_v4_partial_high_supplemental80_exact_identities.jsonl
+    sha256: 1AAA1E8AD21D67A4426F9534F2729B0A690CF61C348706F505D8760DCDA0858C
+  exact_plan:
+    path: data/manifests/p1_v4_partial_high_supplemental80_exact_identity_plan.json
+    sha256: 95ADF45CC3BF1A485F5EE11D9063B663FD8A9CE04C9F65EA7C70FDDAC0025CE4
+  freeze_audit:
+    path: data/manifests/p1_v4_partial_high_supplemental80_freeze_audit.json
+    sha256: 2A8035DF1AEF6DE4DCEE7C046604E820AD0B343ABA482744539BD5EA306E2438
+  generation_config:
+    path: configs/p1_v4_stage3_method_development_preflight.yaml
+    sha256: 03ABB36A4E2F095CADF47AFE3BAA671A0B4E18BDA6BE0AD9806EF183CCBE8536
+  source_materializer:
+    path: scripts/materialize_p1_v4_stage3.py
+    sha256: D3DB6B97119E100AE1C82E989BB75CEA779BEAF9336F2F25E570F0BC06C923A6
+  source_construct_scene:
+    path: scripts/run_p1_v4_independent_calibration_look120_materialization.py
+    sha256: F1905CD4C2B9E99947F9B72593D05AF7D2AB849345A545F5D88DF8194B13BA47
+  observation_generator:
+    path: src/fourgraph/p1_generation.py
+    sha256: 0782337D96DBAC330100A062B64C1C0053E85973C662DA5D8A80E00BBB0C5D1C
+  story_config:
+    path: configs/t19_p1_semantic_stories.yaml
+    sha256: D718E142974BABE425FAB19CBD273DC8484A8845A99E9ADEAD651F86733009E7
+  story_generator:
+    path: src/fourgraph/p1_stories.py
+    sha256: 73915B96BBD7E690FB95E6C7D8CDAB7B88C815655255FEC54E31597BED6A1F81
+  environment_lock:
+    path: configs/p1_v4_cau_environment.lock
+    sha256: EA900B133FC4910C2E170F750AFAB8145791A1CEAD52AFEEE74380840392E82C
+
+scope:
+  scene_count: 80
+  namespace: P1V4SH
+  story_artifact_variants: [full, partial, ambiguous]
+  public_story_artifact_count: 240
+  semantic_study_variants_later: [full, partial]
+  new_ambiguous_semantic_calls: 0
+  observational_rows_per_scene: 2000
+  statistical_identity_count_later: 16480
+  semantic_logical_calls_later: 960
+  generated_root: data/generated/p1_v4_partial_high_supplemental80
+  public_root: data/public/p1_v4_partial_high_supplemental80
+  materialization_manifest: data/manifests/p1_v4_partial_high_supplemental80_materialization.json
+  public_input_manifest: data/manifests/p1_v4_partial_high_supplemental80_public_inputs.json
+
+runtime:
+  canonical_python_executable: D:/Coding/Anaconda/envs/cau/python.exe
+  python_version: 3.10.21
+  numpy_version: 1.26.4
+  concurrency: 1
+  artifact_write_policy: atomic_write_or_byte_equal_resume
+  no_story_truth_persistence: true
+
+boundaries:
+  materialized_scenes_before_preflight: 0
+  generated_story_artifacts_before_preflight: 0
+  statistical_fits: 0
+  provider_preflight_calls: 0
+  semantic_api_calls: 0
+  new_oracle_access: 0
+  validation_data_access: 0
+  holdout_data_access: 0
+  downstream_reasoner_calls: 0
+
+outputs:
+  preflight: data/manifests/p1_v4_partial_high_supplemental80_materialization_preflight.json
+  preflight_audit: data/manifests/p1_v4_partial_high_supplemental80_materialization_preflight_audit.json
+  authorization: data/manifests/p1_v4_partial_high_supplemental80_materialization_live_authorization.json
+  authorization_audit: data/manifests/p1_v4_partial_high_supplemental80_materialization_live_authorization_audit.json
+  report: reports/p1_v4_partial_high_supplemental80_materialization_preflight_and_authorization.md
+  execution_audit: data/manifests/p1_v4_partial_high_supplemental80_materialization_execution_audit.json
+  execution_report: reports/p1_v4_partial_high_supplemental80_materialization_execution.md
+
+next_step_after_checkpoint: execute_exact_80_scenes_materialization_only_with_new_checkpoint
