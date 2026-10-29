@@ -1,0 +1,31 @@
+schema_version: fourgraph.p1_v4_partial_high_supplemental80_response_freeze_rescore_config.v1
+task: P1_V4_PARTIAL_HIGH_SUPPLEMENTAL80_RESPONSE_FREEZE_AND_SIX_VOTE_RESCORE
+parents:
+  protocol: {path: data/manifests/p1_v4_partial_high_supplemental80_protocol.json, sha256: 219E15388063ADC2595101911A4B504C623BF04619C751EA533FB63CE5354D03}
+  execution_plan: {path: data/manifests/p1_v4_partial_high_supplemental80_mini_semantic_plan.json, sha256: 45FCA525134C475A2847975887EFA315A3999D496E60C79906CB42BD70A23091}
+  execution_audit: {path: data/manifests/p1_v4_partial_high_supplemental80_mini_semantic_execution_audit.json, sha256: B221918CCD7D8BD5B02E78AA8F9E02A593370F2B6F44E6CDC576C8A2972C1229}
+  raw_responses: {path: results/raw/p1_v4_partial_high_supplemental80/mini_semantic/raw_responses.jsonl, sha256: 68B3A00AFD6425751DA7F116A0F35B880D389B631FB4C8463B33FE108326FC44}
+  request_metadata: {path: results/raw/p1_v4_partial_high_supplemental80/mini_semantic/request_metadata.jsonl, sha256: FC741D4BF0CACBA035BA5B59B30F4F6607E352482632C37C95C652F7B6157F2D}
+  token_ledger: {path: results/raw/p1_v4_partial_high_supplemental80/mini_semantic/token_ledger.jsonl, sha256: A65E6DD830FE0840884379E83D4955D7D4C28853B62C2AC724D629A83BF4EBBF}
+  public_inputs: {path: data/manifests/p1_v4_partial_high_supplemental80_public_inputs.json, sha256: B443F22C1D330011C8A4620B37B44036AA64EB944F7247A641C9DAEF8FC46665}
+semantic_contract:
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+scope:
+  expected_scenes: 80
+  expected_logical_calls: 960
+  expected_pair_records: 6528
+  expected_six_vote_groups: 1088
+  variants: [full, partial]
+  prompts: [P1, P2, P3, P4, P5, P6]
+  no_oracle: true
+  no_validation: true
+  no_holdout: true
+outputs:
+  response_freeze: data/manifests/p1_v4_partial_high_supplemental80_response_freeze.json
+  pair_records: data/manifests/p1_v4_partial_high_supplemental80_pair_records.jsonl
+  six_vote_groups: data/manifests/p1_v4_partial_high_supplemental80_six_vote_groups.jsonl
+  audit: data/manifests/p1_v4_partial_high_supplemental80_response_freeze_rescore_audit.json
+  report: reports/p1_v4_partial_high_supplemental80_response_freeze_rescore.md
