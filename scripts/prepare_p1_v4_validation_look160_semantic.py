@@ -10,7 +10,7 @@ MAN=ROOT/'data/manifests'; GENERATED=ROOT/'data/generated/p1_v4_independent_vali
 NORMALIZED=ROOT/'results/raw/p1_v4_independent_validation/look160/statistical/normalized'
 STAT=MAN/'p1_v4_validation_look160_statistical_execution_audit.json'
 MAT=MAN/'p1_v4_validation_look160_materialization.json'; PUBLIC=MAN/'p1_v4_validation_look160_public_inputs.json'
-PLAN=MAN/'p1_v4_validation_look160_mini_semantic_plan.json'; AUDIT=MAN/'p1_v4_validation_look160_mini_semantic_plan_audit.json'
+PLAN=MAN/'p1_v4_validation_look160_mini_semantic_plan_v2.json'; AUDIT=MAN/'p1_v4_validation_look160_mini_semantic_plan_v2_audit.json'
 
 def cb(x):return (json.dumps(x,ensure_ascii=False,sort_keys=True,separators=(',',':'))+'\n').encode()
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest().upper()
@@ -53,11 +53,14 @@ def main():
   for variant in variants:
    story=stories[(sid,variant)];path=ROOT/story['artifact_path']
    if sha(path)!=story['artifact_sha256']:raise RuntimeError(f'story hash drift: {sid}/{variant}')
+   story_text=load(path).get('builder_input',{}).get('story')
+   if not isinstance(story_text,str) or not story_text:raise RuntimeError(f'missing public story text: {sid}/{variant}')
+   story_content_sha256=hashlib.sha256(story_text.encode('utf-8')).hexdigest().upper()
    for prompt in ('P1','P2','P3','P4','P5','P6'):
-    calls.append({'logical_id':f'{sid}/{variant}/{prompt}','study_id':sid,'variant':variant,'prompt_id':prompt,'model':'gpt-5.4-mini-2026-03-17','reasoning_effort':'medium','story_artifact_path':story['artifact_path'],'story_content_sha256':story['artifact_sha256'],'pair_count':len(pairs),'pair_ids':[x['pair_id'] for x in pairs],'pair_pool_sha256':ph,'conditions':['constrained_boss','constrained_fges']})
+    calls.append({'logical_id':f'{sid}/{variant}/{prompt}','study_id':sid,'variant':variant,'prompt_id':prompt,'model':'gpt-5.4-mini-2026-03-17','reasoning_effort':'medium','story_artifact_path':story['artifact_path'],'story_artifact_sha256':story['artifact_sha256'],'story_content_sha256':story_content_sha256,'pair_count':len(pairs),'pair_ids':[x['pair_id'] for x in pairs],'pair_pool_sha256':ph,'conditions':['constrained_boss','constrained_fges']})
  if len(calls)!=2640 or len({x['logical_id'] for x in calls})!=2640:raise RuntimeError(f'call count drift: {len(calls)}')
  counts=[len(x['pairs']) for x in pools.values()]
- plan={'schema_version':'fourgraph.p1_v4_validation_look160_mini_semantic_plan.v1','status':'FROZEN_API_NOT_AUTHORIZED','model':'gpt-5.4-mini-2026-03-17','reasoning_effort':'medium','logical_calls':calls,'pair_pools':pools,'certification_variants':['full','partial'],'ambiguous_subset_scenes':120,'nonedge':'excluded','primary_meek_closure':'forbidden'}
+ plan={'schema_version':'fourgraph.p1_v4_validation_look160_mini_semantic_plan.v2','status':'FROZEN_API_NOT_AUTHORIZED','model':'gpt-5.4-mini-2026-03-17','reasoning_effort':'medium','logical_calls':calls,'pair_pools':pools,'certification_variants':['full','partial'],'ambiguous_subset_scenes':120,'nonedge':'excluded','primary_meek_closure':'forbidden','v1_disposition':'superseded_before_api_due_story_content_hash_contract_defect'}
  write(PLAN,plan)
  audit={'status':'PASS_OFFLINE_SEMANTIC_PLAN_FREEZE','scenes':160,'parent_graphs':320,'logical_calls':2640,'full_partial_calls':1920,'ambiguous_calls':720,'scene_pair_records':sum(counts),'min_pairs':min(counts),'max_pairs':max(counts),'plan_sha256':sha(PLAN),'statistical_audit_sha256':sha(STAT),'public_input_manifest_sha256':sha(PUBLIC),'provider_preflight_calls':0,'study_api_calls':0,'oracle_access':0,'holdout_access':0}
  write(AUDIT,audit);print(json.dumps(audit,indent=2))

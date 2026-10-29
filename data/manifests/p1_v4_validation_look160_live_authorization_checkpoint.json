@@ -1,7 +1,7 @@
 {
   "schema_version": "fourgraph.p1_v4_validation_look160_live_authorization_checkpoint.v1",
-  "status": "STATISTICAL_COMPLETE_SEMANTIC_API_NOT_AUTHORIZED",
-  "user_consent_in_conversation": "materialization_and_statistical_only; semantic API authorization explicitly withheld on 2026-10-29",
+  "status": "BATCH1_480_SEMANTIC_CALLS_AUTHORIZED_NOT_EXECUTED",
+  "user_consent_in_conversation": "one synthetic provider preflight plus authorization for the first 480 study calls",
   "policy_freeze": {
     "path": "data/manifests/p1_v4_post_supplemental_policy_validation_freeze.json",
     "sha256": "BC4E0D568D436FC2B8D270BCEE3FC68C2D42A8718B94E5ABF4302F1324CD95FC"
@@ -16,19 +16,24 @@
     "error_artifacts": 0
   },
   "semantic_plan": {
-    "path": "data/manifests/p1_v4_validation_look160_mini_semantic_plan.json",
-    "sha256": "F03DE77B48E91D9FF6AC4EE6E4CFA6E5C5C599AC1936E148A26AC05285BDBDE7",
+    "path": "data/manifests/p1_v4_validation_look160_mini_semantic_plan_v2.json",
+    "sha256": "10DDDC3899C4C053286FFE1FA17A4A6DDA909B3FA3F600611F1B96E6D01E1534",
     "logical_calls": 2640,
     "study_api_calls_completed": 0
   },
   "validation_oracle_access_authorized_now": false,
   "holdout_access_authorized": false,
-  "provider_preflight_authorized_now": false,
-  "semantic_study_calls_authorized_now": 0,
-  "missing_live_gates": [
-    "provider_preflight_on_exact_mini_medium_contract",
-    "exact_validation_execution_plan_and_runner_dry_run",
-    "provider_usage_token_window_budget_and_resume_policy"
-  ],
+  "provider_preflight": {
+    "status": "PASS_PROVIDER_PREFLIGHT",
+    "calls": 1,
+    "tokens": 2018,
+    "request_id": "req_52e0842e3535475989292475ce6cad3d"
+  },
+  "provider_preflight_authorized_now": true,
+  "semantic_study_calls_authorized_now": 480,
+  "semantic_study_calls_executed": 0,
+  "batch1_authorization_sha256": "D9EDD02DB71D8401BFF354C26E078E2327467DFC494A1F39335CEDA81C186411",
+  "remaining_calls_after_batch1_require_new_authorization": 2160,
+  "missing_live_gates": [],
   "no_automatic_live_execution": true
 }
