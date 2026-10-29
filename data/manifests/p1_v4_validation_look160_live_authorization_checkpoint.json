@@ -1,6 +1,6 @@
 {
   "schema_version": "fourgraph.p1_v4_validation_look160_live_authorization_checkpoint.v1",
-  "status": "BATCH1_480_SEMANTIC_CALLS_AUTHORIZED_NOT_EXECUTED",
+  "status": "BATCH1_480_SEMANTIC_CALLS_COMPLETE",
   "user_consent_in_conversation": "one synthetic provider preflight plus authorization for the first 480 study calls",
   "policy_freeze": {
     "path": "data/manifests/p1_v4_post_supplemental_policy_validation_freeze.json",
@@ -31,7 +31,20 @@
   },
   "provider_preflight_authorized_now": true,
   "semantic_study_calls_authorized_now": 480,
-  "semantic_study_calls_executed": 0,
+  "semantic_study_calls_executed": 480,
+  "batch1_execution": {
+    "status": "AUTHORIZED_SLICE_COMPLETE",
+    "completed_valid_responses": 403,
+    "completed_pair_invalid_responses": 77,
+    "provider_errors": 0,
+    "valid_pair_judgments": 3093,
+    "invalid_pair_judgments": 297,
+    "input_tokens": 325446,
+    "output_tokens": 383677,
+    "reasoning_tokens": 258990,
+    "total_tokens": 709123,
+    "token_window_total_including_preflight": 711141
+  },
   "batch1_authorization_sha256": "D9EDD02DB71D8401BFF354C26E078E2327467DFC494A1F39335CEDA81C186411",
   "remaining_calls_after_batch1_require_new_authorization": 2160,
   "missing_live_gates": [],

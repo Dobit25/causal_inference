@@ -1,0 +1,37 @@
+{
+  "schema_version": "fourgraph.p1_v4_validation_look160_mini_batch1_execution_audit.v1",
+  "status": "PASS_AUTHORIZED_SLICE_COMPLETE",
+  "authorized_calls": 480,
+  "recorded_calls": 480,
+  "unique_logical_ids": 480,
+  "provider_errors": 0,
+  "retries": 0,
+  "response_statuses": {
+    "completed_valid": 403,
+    "completed_pair_invalid": 77
+  },
+  "pair_judgments": {
+    "valid": 3093,
+    "invalid": 297
+  },
+  "provider_usage": {
+    "input_tokens": 325446,
+    "output_tokens": 383677,
+    "reasoning_tokens": 258990,
+    "total_tokens": 709123
+  },
+  "token_window_used_including_preflight": 711141,
+  "token_hard_stop": 3000000,
+  "project_hard_stop_usd": 18.0,
+  "hashes": {
+    "raw_responses": "77B54C9030AB8AA5690981F62E34EB5BE66303E3375643269E41FF6991DD6E9C",
+    "request_metadata": "731BCE2A4A20F6E3487AD7779E7651F720F1A3AA0B941D475CC9EF4F17382171",
+    "token_ledger": "44E481C3C991F3B21B03CE09166B7410315B681D9018CDBEE67E25EA45ED47EB",
+    "runner_audit": "3AF5E548C9A4E8047FDADAF09C8CC550924AB537F88D9C53A39E2CB748D038C8"
+  },
+  "remaining_logical_calls": 2160,
+  "remaining_calls_authorized": 0,
+  "oracle_access": 0,
+  "holdout_access": 0,
+  "metrics_calculated": false
+}

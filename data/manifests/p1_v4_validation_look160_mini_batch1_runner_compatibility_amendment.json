@@ -1,0 +1,23 @@
+{
+  "schema_version": "fourgraph.p1_v4_validation_look160_mini_batch1_runner_compatibility_amendment.v1",
+  "status": "FROZEN_TECHNICAL_AMENDMENT",
+  "incident": "runner KeyError before first study request because config exposed daily_window_hard_stop_tokens but inherited runner reads hard_stop_tokens",
+  "study_calls_before_amendment": 0,
+  "change": "add hard_stop_tokens as an exact alias of daily_window_hard_stop_tokens and issue v2 authorization artifacts",
+  "hard_stop_tokens": 3000000,
+  "daily_window_hard_stop_tokens": 3000000,
+  "unchanged": [
+    "480 logical IDs",
+    "model",
+    "reasoning effort",
+    "prompt",
+    "schema",
+    "stories",
+    "pair pools",
+    "token threshold",
+    "USD 18 project hard stop"
+  ],
+  "parent_config_sha256": "8DE2C185743B82BF2B398B1F3BBBC73821351D38842FA8D76ED8EB8ECF8DA30D",
+  "oracle_access": 0,
+  "holdout_access": 0
+}

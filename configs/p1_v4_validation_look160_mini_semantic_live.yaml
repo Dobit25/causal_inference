@@ -31,6 +31,7 @@ runtime:
   validation_retry: forbidden
 token_control:
   source: provider_reported_usage.total_tokens
+  hard_stop_tokens: 3000000
   daily_window_hard_stop_tokens: 3000000
   reset_time: '07:00'
   timezone: Asia/Ho_Chi_Minh
@@ -49,7 +50,7 @@ boundary:
   metric_calculation: false
   closure: forbidden
 outputs:
-  live_authorization_checkpoint: data/manifests/p1_v4_validation_look160_mini_live_authorization_checkpoint.json
-  live_authorization: data/manifests/p1_v4_validation_look160_mini_live_authorization.json
-  live_authorization_audit: data/manifests/p1_v4_validation_look160_mini_live_authorization_audit.json
+  live_authorization_checkpoint: data/manifests/p1_v4_validation_look160_mini_live_authorization_checkpoint_v2.json
+  live_authorization: data/manifests/p1_v4_validation_look160_mini_live_authorization_v2.json
+  live_authorization_audit: data/manifests/p1_v4_validation_look160_mini_live_authorization_audit_v2.json
   runner_audit: data/manifests/p1_v4_validation_look160_mini_semantic_execution_audit.json

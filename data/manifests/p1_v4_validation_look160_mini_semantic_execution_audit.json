@@ -1,0 +1,1 @@
+{"holdout_access":0,"oracle_access":0,"planned_logical_calls":2640,"provider_usage":{"input_tokens":325446,"output_tokens":383677,"reasoning_tokens":258990,"total_tokens":709123},"recorded_logical_calls":480,"scheduled_this_run":480,"status":"AUTHORIZED_SLICE_COMPLETE","task":"P1_V4_VALIDATION_LOOK160_MINI_SEMANTIC_EXECUTION","token_hard_stop":3000000,"token_window_used":711141}
