@@ -1,0 +1,38 @@
+schema_version: fourgraph.p1_v4_validation_look160_materialization.v1
+task: P1_V4_VALIDATION_LOOK160_MATERIALIZATION
+status: explicit_user_authorization_recorded
+parents:
+  policy: {path: data/manifests/p1_v4_post_supplemental_policy_validation_freeze.json, sha256: BC4E0D568D436FC2B8D270BCEE3FC68C2D42A8718B94E5ABF4302F1324CD95FC}
+  policy_audit: {path: data/manifests/p1_v4_post_supplemental_policy_validation_freeze_audit.json, sha256: 302E4131C9C2479E84625548A594CC58DEBD2942C26152F27DB6CBB7AF777CD9}
+  exact_identities: {path: data/manifests/p1_v4_validation_look160_exact_identities.jsonl, sha256: B4CEF4162CCF18893015DEC1803CC6DE65218A13B0B0036B92699A93E30E41C0}
+  exact_plan: {path: data/manifests/p1_v4_validation_look160_exact_identity_plan.json, sha256: DC8E4F7AC46F3DE5CF8BA19002597498E6BAE8A905791E4802DB0ACEB103EC5A}
+  generation_config: {path: configs/p1_v4_stage3_method_development_preflight.yaml, sha256: 03ABB36A4E2F095CADF47AFE3BAA671A0B4E18BDA6BE0AD9806EF183CCBE8536}
+  story_config: {path: configs/t19_p1_semantic_stories.yaml, sha256: D718E142974BABE425FAB19CBD273DC8484A8845A99E9ADEAD651F86733009E7}
+  environment_lock: {path: configs/p1_v4_cau_environment.lock, sha256: EA900B133FC4910C2E170F750AFAB8145791A1CEAD52AFEEE74380840392E82C}
+scope:
+  scenes: 160
+  namespace: P1V4SV
+  public_story_variants: [full, partial, ambiguous]
+  certification_story_variants: [full, partial]
+  ambiguous_subset_scenes: 120
+  observations_per_scene: 2000
+  generated_root: data/generated/p1_v4_independent_validation/look160
+  public_root: data/public/p1_v4_independent_validation/look160
+  materialization_manifest: data/manifests/p1_v4_validation_look160_materialization.json
+  public_input_manifest: data/manifests/p1_v4_validation_look160_public_inputs.json
+runtime:
+  canonical_python_executable: D:/Coding/Anaconda/envs/cau/python.exe
+  python_version: 3.10.21
+  numpy_version: 1.26.4
+  write_policy: atomic_or_byte_equal_resume
+authorization:
+  materialization: true
+  statistical_execution: false
+  semantic_api: false
+  oracle: false
+  holdout: false
+outputs:
+  preflight: data/manifests/p1_v4_validation_look160_materialization_preflight.json
+  authorization: data/manifests/p1_v4_validation_look160_materialization_live_authorization.json
+  audit: data/manifests/p1_v4_validation_look160_materialization_audit.json
+  report: reports/p1_v4_validation_look160_materialization.md

@@ -94,4 +94,6 @@ boundaries:
 outputs:
   policy: data/manifests/p1_v4_post_supplemental_policy_validation_freeze.json
   audit: data/manifests/p1_v4_post_supplemental_policy_validation_freeze_audit.json
+  exact_identities: data/manifests/p1_v4_validation_look160_exact_identities.jsonl
+  exact_identity_plan: data/manifests/p1_v4_validation_look160_exact_identity_plan.json
   report: reports/p1_v4_post_supplemental_policy_validation_freeze.md

@@ -1,0 +1,23 @@
+schema_version: fourgraph.p1_v4_validation_look160_fresh_spend_attestation.v1
+task: P1_V4_VALIDATION_LOOK160_FRESH_SPEND_ATTESTATION
+recorded_at_local_date: '2026-10-29'
+source: user_supplied_platform_project_limits_transcription_no_api_key
+project:
+  current_spend_usd: 0.27
+  project_spend_limit_usd: 18.00
+  hard_limit_enforced: true
+  reset: in_3_days
+  allowed_models:
+    - gpt-5.4-nano-2026-03-17
+    - gpt-5.4-mini-2026-03-17
+  requested_model_allowed: true
+  api_key_recorded: false
+interpretation:
+  monetary_headroom_usd: 17.73
+  monetary_headroom_is_not_execution_budget: true
+  live_authorization_gate: fail_closed_until_provider_preflight_and_token_budget_are_frozen
+boundaries:
+  provider_calls: 0
+  validation_scenes_materialized: 0
+  validation_oracle_access: 0
+  holdout_access: 0

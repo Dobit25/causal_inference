@@ -1,0 +1,33 @@
+schema_version: fourgraph.p1_v4_validation_look160_statistical_execution.v1
+task: P1_V4_VALIDATION_LOOK160_STATISTICAL_EXECUTION
+status: explicit_user_authorization_recorded
+parents:
+  exact_identities: {path: data/manifests/p1_v4_validation_look160_exact_identities.jsonl, sha256: B4CEF4162CCF18893015DEC1803CC6DE65218A13B0B0036B92699A93E30E41C0}
+  exact_plan: {path: data/manifests/p1_v4_validation_look160_exact_identity_plan.json, sha256: DC8E4F7AC46F3DE5CF8BA19002597498E6BAE8A905791E4802DB0ACEB103EC5A}
+  materialization_manifest: {path: data/manifests/p1_v4_validation_look160_materialization.json, sha256: 717B1673C68636A9C85F34D7E23CA0EBCD40BB3ABB9BF7B14369E39B470F1568}
+  public_input_manifest: {path: data/manifests/p1_v4_validation_look160_public_inputs.json, sha256: 7B4A12A2A831B643668DC9F96E1AAE2B30AEF798DB52A4B569B73FDC421AB8C8}
+  frozen_statistical_config: {path: configs/p1_v4_look160_incremental_statistical_execution.yaml, sha256: AD48F4871984C13D80FFFF0238199FA32C83264E1045050A9FC2204F349497AD}
+  frozen_statistical_runner: {path: scripts/run_p1_v4_look160_incremental_statistical.py, sha256: CEC3C6E136271253E4EF138D04C28506F707526BF6BEBD05299ABC84C4831647}
+  tetrad_adapter: {path: scripts/adapters/tetrad_adapter.py, sha256: 84069B0F1B3A5881042F9E040D2948F672F5B31229C8FCB5B0FBC0A49B782FB5}
+  mmpc_adapter: {path: scripts/adapters/mmpc_adapter.py, sha256: 66EE296FEF1556C0C902AC1A2F7762BCF367FFB6042F2FF6CBB3034BC6CA89AB}
+  tetrad_jar: {path: data/raw/t05/py-tetrad/pytetrad/resources/tetrad-current.jar, sha256: 5A3BA56ADECE35DA8A209B39DB8B8BF29D4037FB79ED56C4B63F8D3B4C1A7051}
+scope:
+  exact_scenes: 160
+  exact_fits: 32960
+  by_algorithm:
+    Single-BOSS: 160
+    Bootstrap-BOSS: 32000
+    PC: 160
+    MMPC: 160
+    FGES: 160
+    Constrained-BOSS: 160
+    Constrained-FGES: 160
+  bootstrap_repetitions: 200
+  concurrency: 1
+  retries: 0
+  output_root: results/raw/p1_v4_independent_validation/look160/statistical
+  plan: data/manifests/p1_v4_validation_look160_statistical_plan.json
+  authorization: data/manifests/p1_v4_validation_look160_statistical_live_authorization.json
+  preflight_audit: data/manifests/p1_v4_validation_look160_statistical_preflight_audit.json
+  final_audit: data/manifests/p1_v4_validation_look160_statistical_execution_audit.json
+boundary: {semantic_api_calls: 0, oracle_access: 0, holdout_access: 0}

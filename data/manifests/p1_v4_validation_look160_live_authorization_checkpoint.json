@@ -1,18 +1,31 @@
 {
   "schema_version": "fourgraph.p1_v4_validation_look160_live_authorization_checkpoint.v1",
-  "status": "NOT_READY_NO_LIVE_EXECUTION",
-  "user_consent_in_conversation": true,
+  "status": "STATISTICAL_COMPLETE_SEMANTIC_API_NOT_AUTHORIZED",
+  "user_consent_in_conversation": "materialization_and_statistical_only; semantic API authorization explicitly withheld on 2026-10-29",
   "policy_freeze": {
     "path": "data/manifests/p1_v4_post_supplemental_policy_validation_freeze.json",
-    "sha256": "58CE842312C329F73C1B1E7F3F44607A4D47BEB254F52CC65C4E9B33564B74C3"
+    "sha256": "BC4E0D568D436FC2B8D270BCEE3FC68C2D42A8718B94E5ABF4302F1324CD95FC"
   },
   "registered_validation_first_look_scenes": 160,
   "estimated_statistical_fits": 32960,
   "estimated_semantic_calls": 2640,
+  "statistical_execution": {
+    "status": "PASS_STATISTICAL_EXECUTION",
+    "planned_fits": 32960,
+    "complete_terminal_records": 32960,
+    "error_artifacts": 0
+  },
+  "semantic_plan": {
+    "path": "data/manifests/p1_v4_validation_look160_mini_semantic_plan.json",
+    "sha256": "F03DE77B48E91D9FF6AC4EE6E4CFA6E5C5C599AC1936E148A26AC05285BDBDE7",
+    "logical_calls": 2640,
+    "study_api_calls_completed": 0
+  },
   "validation_oracle_access_authorized_now": false,
   "holdout_access_authorized": false,
+  "provider_preflight_authorized_now": false,
+  "semantic_study_calls_authorized_now": 0,
   "missing_live_gates": [
-    "fresh_project_spend_limit_hard_limit_reset_attestation",
     "provider_preflight_on_exact_mini_medium_contract",
     "exact_validation_execution_plan_and_runner_dry_run",
     "provider_usage_token_window_budget_and_resume_policy"

@@ -71,6 +71,21 @@ def build() -> tuple[dict, dict, str]:
     if not all(checks.values()):
         raise RuntimeError(f"Freeze gate failed: {[k for k, ok in checks.items() if not ok]}")
 
+    identity_bytes = b"".join(canonical_json(row) for row in first)
+    identity_plan = {
+        "schema_version": "fourgraph.p1_v4_validation_look160_exact_identity_plan.v1",
+        "status": "PASS_EXACT_IDENTITY_FREEZE",
+        "role": "threshold_validation",
+        "registered_look": 160,
+        "scene_count": 160,
+        "scene_ids_in_execution_order": [x["study_id"] for x in first],
+        "ambiguous_scene_ids": ambiguous,
+        "exact_identities_sha256": hashlib.sha256(identity_bytes).hexdigest().upper(),
+        "source_identity_manifest_sha256": config["sources"]["identities"]["sha256"],
+        "scenes_materialized": 0,
+        "oracle_access": 0,
+        "holdout_access": 0,
+    }
     policy = {
         "schema_version": "fourgraph.p1_v4_post_supplemental_policy_validation_freeze.v1",
         "status": "PASS_OFFLINE_POLICY_FREEZE",
@@ -80,7 +95,7 @@ def build() -> tuple[dict, dict, str]:
         "policy": config["policy"],
         "gates": config["gates"],
         "validation": config["validation"],
-        "first_look_identity_sha256": hashlib.sha256(canonical_json(first)).hexdigest().upper(),
+        "first_look_identity_sha256": identity_plan["exact_identities_sha256"],
         "first_look_scene_ids": [x["study_id"] for x in first],
         "first_look_ambiguous_scene_ids": ambiguous,
         "source_sha256": {name: source["sha256"] for name, source in config["sources"].items()},
@@ -109,16 +124,20 @@ def build() -> tuple[dict, dict, str]:
         "At the observed combined Partial HIGH frequency 64/520, 480 fresh validation scenes would yield approximately 59 HIGH-contributing scenes on average. Under an illustrative independent constant-rate binomial model, reaching the minimum 60 by look 480 has probability about 47%; this is planning arithmetic, not observed validation performance or a registered power guarantee. The 960-call supplemental execution used 1,409,160 provider total tokens; a simple linear extrapolation to the first 2,640 calls is about 3.88 million tokens, above the previously requested 3-million-token daily ceiling. Actual calls must be batched across reset windows and governed by provider-reported usage.\n\n"
         "Offline identity/hash audit PASS. No scene was materialized, no fit or API call was run, and no validation Oracle or holdout was opened by this checkpoint. The user's execution consent is recorded in the conversation, but a distinct live checkpoint still requires fresh project spend/limit/hard-limit/reset attestation, a provider preflight, an execution/token budget and exact runner plan. This artifact is not live authorization.\n"
     )
-    return policy, audit, report
+    return policy, audit, report, identity_bytes, identity_plan
 
 
 def main() -> None:
-    policy, audit, report = build()
+    policy, audit, report, identity_bytes, identity_plan = build()
     config = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
     for key, value in (("policy", canonical_json(policy)), ("audit", canonical_json(audit)), ("report", report.encode("utf-8"))):
         path = ROOT / config["outputs"][key]
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(value)
+    exact = ROOT / config["outputs"]["exact_identities"]
+    exact.parent.mkdir(parents=True, exist_ok=True)
+    exact.write_bytes(identity_bytes)
+    (ROOT / config["outputs"]["exact_identity_plan"]).write_bytes(canonical_json(identity_plan))
     print(audit["status"], audit["policy_sha256"], audit["first_look_semantic_calls_estimate"])
 
 
