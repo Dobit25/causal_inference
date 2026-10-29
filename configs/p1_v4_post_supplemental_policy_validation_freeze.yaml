@@ -1,0 +1,97 @@
+schema_version: fourgraph.p1_v4_post_supplemental_policy_validation_freeze.v1
+task: P1_V4_POST_SUPPLEMENTAL_POLICY_FREEZE_AND_VALIDATION_LOOK160_PREFLIGHT
+status: offline_freeze_only
+sources:
+  supplemental_protocol:
+    path: configs/p1_v4_partial_high_supplemental80_protocol.yaml
+    sha256: DD956327CF5A2F37D65B1F11A5B7F283E2F65C4942BAA37B46AB2857FAA2C1AA
+  supplemental_results:
+    path: data/manifests/p1_v4_partial_high_supplemental80_overlay_oracle_metric_results.json
+    sha256: E91F2B4629B152A5CE35B6BE80D701DAF892365DB706D600322AA8E346533F7A
+  supplemental_audit:
+    path: data/manifests/p1_v4_partial_high_supplemental80_overlay_oracle_metric_audit.json
+    sha256: 0303FEBC866FE737CC29B0374940EE938040F9F5113CB18EFD0B8A2CEB188D7E
+  supplemental_response_audit:
+    path: data/manifests/p1_v4_partial_high_supplemental80_response_freeze_rescore_audit.json
+    sha256: 73F0CA67770F09A80B2355E8B28D2340D9BC53AF8C5D2BFDA7D7C44118EBD3F5
+  original_look440_review:
+    path: data/manifests/p1_v4_look440_final_calibration_review.json
+    sha256: 374FD46BDD2DC9C82E634EE72D08D4B115F3CDFD6324F1780DF5F20F677DFD6B
+  original_look440_scorer:
+    path: configs/p1_v4_look440_cumulative_oracle_scoring.yaml
+    sha256: 676CE64DFF34AF96D5DB5194A784D8C84BCCEB4C4A0F5E8F7243DC3C417BA579
+  architecture:
+    path: configs/p1_v4_final_architecture_precalibration_amendment.yaml
+    sha256: D1C83F5D35939213B03B6BBE3DC6ABD109E29501890CD07D64D1284C1F2BAAA1
+  identity_config:
+    path: configs/p1_v4_stage3_exact_identity_cohort.yaml
+    sha256: 94A1B82FF720718FB1373D98DCCC2C191067E8B980FF323B50266F3433CBCE2E
+  identities:
+    path: data/manifests/p1_v4_stage3_exact_identities.jsonl
+    sha256: 83A706C7CCE975A6052B97DB53AC573DF825C1FC4C1D36C5596A4D6216E8C72A
+  prompt:
+    path: prompts/p1_semantic_sentence_ids_v1.md
+    sha256: 26D2B4EB42F316F9DFB2CCB38D93A7E506E83FA0A43CBEF371B6B12ECA82A276
+  schema:
+    path: schemas/semantic_sentence_id_response_v1.schema.json
+    sha256: 9B448071DCAB8D81CF727B6FE481E98CD73BF810ED5FA16DC7830C24565EC591
+policy:
+  original_440_decision: STOP_FOR_FUTILITY
+  supplemental_80_decision: PASS_SUPPLEMENTAL_CONFIRMATION
+  supplemental_is_not_independent_validation: true
+  primary_parent: Constrained-BOSS
+  robustness_parent: Constrained-FGES
+  robustness_not_certified_by_supplemental_high_guardrail: true
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  semantic_prompt_variants: [P1, P2, P3, P4, P5, P6]
+  semantic_pool: union_of_constrained_boss_and_constrained_fges_adjacencies
+  automatic: [VERY_HIGH, HIGH]
+  review_only: [MEDIUM]
+  abstain: [UNCERTAIN, CONFLICT]
+  compelled: publish_only_if_semantic_same_direction_automatic
+  parent_undirected: publish_only_if_semantic_automatic_and_extension_compatible
+  output: evidence_annotated_overlay_on_immutable_parent_cpdag
+  invalid_pair: abstain_pair_only
+  invalid_parent: fail_closed
+  closure: forbidden
+  prompt_schema_threshold_model_parent_tuning: forbidden
+validation:
+  role: independent_threshold_validation
+  namespace: P1V4SV
+  scene_count_maximum: 480
+  registered_looks: [160, 200, 240, 280, 320, 360, 400, 440, 480]
+  first_look: 160
+  identity_selection: role_threshold_validation_and_sequence_index_lt_160
+  certification_variants: [full, partial]
+  ambiguous_diagnostic_subset: 120
+  ambiguous_role: abstention_only
+  nonedge_diagnostic: excluded_from_p1v4_semantic_execution
+  first_look_expected_calls: 2640
+  oracle_access: only_after_response_freeze_and_separate_scoring_authorization
+  study_execution: requires_fresh_spend_attestation_provider_preflight_and_live_checkpoint
+  existing_final_holdout: sealed
+gates:
+  independent_unit: scene
+  precision_floor: 0.95
+  precision_alpha_per_full_partial_policy: 0.0125
+  coverage_floor_scene_mean: 0.20
+  coverage_alpha_per_full_partial_policy: 0.0125
+  high_precision_floor: 0.90
+  high_alpha: 0.025
+  high_minimum_contributing_scenes: 60
+  ambiguous_error_ceiling: 0.05
+  ambiguous_alpha: 0.025
+  parent_and_overlay_validity: 1.0
+  thresholds_and_e_process_components: inherit_frozen_look440_scorer_no_reselection
+boundaries:
+  study_scenes_materialized: 0
+  statistical_fits: 0
+  provider_calls: 0
+  validation_oracle_access: 0
+  holdout_access: 0
+  live_authorization_active: false
+outputs:
+  policy: data/manifests/p1_v4_post_supplemental_policy_validation_freeze.json
+  audit: data/manifests/p1_v4_post_supplemental_policy_validation_freeze_audit.json
+  report: reports/p1_v4_post_supplemental_policy_validation_freeze.md

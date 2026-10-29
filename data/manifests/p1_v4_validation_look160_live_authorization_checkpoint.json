@@ -1,0 +1,21 @@
+{
+  "schema_version": "fourgraph.p1_v4_validation_look160_live_authorization_checkpoint.v1",
+  "status": "NOT_READY_NO_LIVE_EXECUTION",
+  "user_consent_in_conversation": true,
+  "policy_freeze": {
+    "path": "data/manifests/p1_v4_post_supplemental_policy_validation_freeze.json",
+    "sha256": "58CE842312C329F73C1B1E7F3F44607A4D47BEB254F52CC65C4E9B33564B74C3"
+  },
+  "registered_validation_first_look_scenes": 160,
+  "estimated_statistical_fits": 32960,
+  "estimated_semantic_calls": 2640,
+  "validation_oracle_access_authorized_now": false,
+  "holdout_access_authorized": false,
+  "missing_live_gates": [
+    "fresh_project_spend_limit_hard_limit_reset_attestation",
+    "provider_preflight_on_exact_mini_medium_contract",
+    "exact_validation_execution_plan_and_runner_dry_run",
+    "provider_usage_token_window_budget_and_resume_policy"
+  ],
+  "no_automatic_live_execution": true
+}

@@ -1,0 +1,11 @@
+# P1V4 post-supplemental policy and validation look 160 freeze
+
+The original 440-scene STOP_FOR_FUTILITY remains unchanged. The separately registered 80-scene supplemental extension reached PASS_SUPPLEMENTAL_CONFIRMATION for primary Constrained-BOSS, but is not independent validation. Constrained-FGES remains a robustness comparator and did not independently meet the Partial HIGH minimum.
+
+The frozen publication policy is Mini-medium, six sentence-ID prompts, VERY_HIGH/HIGH automatic, MEDIUM review-only, UNCERTAIN/CONFLICT abstain, compelled confirmation and undirected semantic selection, no primary Meek closure. Parent CPDAGs remain immutable; the published graph is an evidence-annotated overlay. No model, prompt, schema, threshold, parent or e-process component is reselected.
+
+The independent P1V4SV cohort was pre-registered before the supplemental result. Its first look has exactly 160 scenes, including a fixed 120-scene Ambiguous diagnostic subset; Full and Partial are run on all 160. Expected workload is 32,960 statistical fits and 2,640 Mini-medium logical calls (1,920 Full/Partial plus 720 Ambiguous). Non-edge is excluded under the P1V4 execution policy. Later looks are 200 through 480 in steps of 40.
+
+At the observed combined Partial HIGH frequency 64/520, 480 fresh validation scenes would yield approximately 59 HIGH-contributing scenes on average. Under an illustrative independent constant-rate binomial model, reaching the minimum 60 by look 480 has probability about 47%; this is planning arithmetic, not observed validation performance or a registered power guarantee. The 960-call supplemental execution used 1,409,160 provider total tokens; a simple linear extrapolation to the first 2,640 calls is about 3.88 million tokens, above the previously requested 3-million-token daily ceiling. Actual calls must be batched across reset windows and governed by provider-reported usage.
+
+Offline identity/hash audit PASS. No scene was materialized, no fit or API call was run, and no validation Oracle or holdout was opened by this checkpoint. The user's execution consent is recorded in the conversation, but a distinct live checkpoint still requires fresh project spend/limit/hard-limit/reset attestation, a provider preflight, an execution/token budget and exact runner plan. This artifact is not live authorization.
