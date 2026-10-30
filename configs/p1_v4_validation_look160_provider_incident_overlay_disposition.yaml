@@ -1,0 +1,32 @@
+schema_version: fourgraph.p1_v4_validation_look160_provider_incident_overlay_disposition.v1
+task: P1_V4_VALIDATION_LOOK160_PROVIDER_INCIDENT_OVERLAY_DISPOSITION
+parents:
+  execution_plan:
+    path: data/manifests/p1_v4_validation_look160_mini_semantic_plan_v2.json
+    sha256: 10DDDC3899C4C053286FFE1FA17A4A6DDA909B3FA3F600611F1B96E6D01E1534
+  raw_responses:
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/raw_responses.jsonl
+    sha256: 87400D8B7C0381DB941D2F5E3A7AECB09606E72DC6AF343533CA93FAC3EEA51F
+  retry_overlay:
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/provider_incident_retry_overlay.jsonl
+    sha256: 86647D905722221C9706234F8B4969B87729DC75B6BFA4AA73218462F0192C46
+  retry_attempts:
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/provider_incident_retry_attempts.jsonl
+    sha256: 86647D905722221C9706234F8B4969B87729DC75B6BFA4AA73218462F0192C46
+  recovery_execution_audit:
+    path: data/manifests/p1_v4_validation_look160_provider_incident_recovery_execution_audit.json
+    sha256: C2B36D4856CC8138248F65463499C9BA90818A84C539F4FB03FF9128095EB4B0
+disposition:
+  mode: effective_overlay_view_only
+  original_raw_provider_errors: immutable
+  allowed_original_status: provider_error
+  allowed_overlay_statuses: [completed_valid, completed_pair_invalid, completed_schema_invalid]
+  exact_overlay_count: 6
+  replacement_key: logical_id
+  no_metric_calculation: true
+  no_oracle_access: true
+  no_holdout_access: true
+outputs:
+  manifest: data/manifests/p1_v4_validation_look160_provider_incident_overlay_disposition.json
+  audit: data/manifests/p1_v4_validation_look160_provider_incident_overlay_disposition_audit.json
+  report: reports/p1_v4_validation_look160_provider_incident_overlay_disposition.md
