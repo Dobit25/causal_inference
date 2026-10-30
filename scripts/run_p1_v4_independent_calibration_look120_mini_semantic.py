@@ -169,7 +169,13 @@ def run(execute: bool, config_path: Path = CONFIG, max_new_calls: int | None = N
             raise RuntimeError("pending IDs do not match the separately authorized execution slice")
     scheduled = pending[:cap]
     schema = json.loads((ROOT / cfg["semantic_contract"]["schema"]).read_text(encoding="utf-8"))
-    client = OpenAI(api_key=load_key(), max_retries=0)
+    client_kwargs: dict[str, Any] = {"api_key": load_key(), "max_retries": 0}
+    request_timeout_seconds = cfg.get("runtime", {}).get("request_timeout_seconds")
+    if request_timeout_seconds is not None:
+        if not isinstance(request_timeout_seconds, (int, float)) or not 1 <= float(request_timeout_seconds) <= 600:
+            raise RuntimeError("request_timeout_seconds must be between 1 and 600")
+        client_kwargs["timeout"] = float(request_timeout_seconds)
+    client = OpenAI(**client_kwargs)
     used = current_window_tokens(io["ledger"]); limit = int(cfg["token_control"]["hard_stop_tokens"]); batch_size = int(cfg["runtime"]["batch_size"])
     minimum_interval = float(cfg["runtime"]["minimum_request_interval_seconds"])
     last_started = 0.0

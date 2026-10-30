@@ -1,0 +1,31 @@
+{
+  "schema_version": "fourgraph.p1_v4_validation_look160_mini_batch23_resume_partial_execution_audit.v1",
+  "status": "STOPPED_FOR_SECOND_TRANSPORT_INCIDENT",
+  "authorized_retry_calls": 1,
+  "successful_retry_logical_id": "P1V4SV303/ambiguous/P5",
+  "authorized_new_calls": 776,
+  "new_calls_recorded": 213,
+  "total_calls_recorded": 877,
+  "remaining_in_authorized_slice": 563,
+  "next_pending_logical_id": "P1V4SV475/ambiguous/P2",
+  "provider_errors_recorded": 0,
+  "additional_retries": 0,
+  "response_statuses_for_new_calls": {
+    "completed_valid": 194,
+    "completed_pair_invalid": 19
+  },
+  "provider_usage_for_new_calls": {
+    "input_tokens": 140425,
+    "output_tokens": 171431,
+    "reasoning_tokens": 119371,
+    "total_tokens": 311856
+  },
+  "cache_hashes_after_stop": {
+    "raw_responses": "3A83D5F9DB55370CE5CDD4B7D4A426DBB3D24AB79212B37EFA73A69D35F4C26E",
+    "request_metadata": "FB6BEC79C97B255D55FA205635CCA81C1A2A9FCE8F622087723E09311EA47D24",
+    "token_ledger": "23712FA1872747ED632A5B27BBCC47649BEE82B78E4DB4292D73F34AD7F21052"
+  },
+  "oracle_access": 0,
+  "holdout_access": 0,
+  "metrics_calculated": false
+}

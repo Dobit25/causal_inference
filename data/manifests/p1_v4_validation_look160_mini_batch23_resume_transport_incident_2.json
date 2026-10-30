@@ -1,0 +1,36 @@
+{
+  "schema_version": "fourgraph.p1_v4_validation_look160_mini_batch23_resume_transport_incident.v1",
+  "status": "STOPPED_SECOND_TRANSPORT_HANG_NO_RESPONSE_NO_USAGE",
+  "observed_at": "2026-10-30T10:25:48+07:00",
+  "logical_id": "P1V4SV475/ambiguous/P2",
+  "scene_id": "P1V4SV475",
+  "variant": "ambiguous",
+  "prompt_id": "P2",
+  "model": "gpt-5.4-mini-2026-03-17",
+  "reasoning_effort": "medium",
+  "classification": "transport_request_hung_before_recordable_provider_response",
+  "evidence": {
+    "last_completed_logical_id": "P1V4SV475/ambiguous/P1",
+    "last_cache_write_at": "2026-10-30T10:14:28+07:00",
+    "response_available": false,
+    "request_id_available": false,
+    "provider_usage_available": false,
+    "raw_cache_row_created": false,
+    "authorized_retry_consumed_by": "P1V4SV303/ambiguous/P5",
+    "configured_client_timeout_seconds": 180,
+    "timeout_observed_to_not_return_control_before_process_stop": true
+  },
+  "disposition": {
+    "process_terminated_after_extended_no-output_wait": true,
+    "historical_877_responses_preserved": true,
+    "logical_call_remains_pending": true,
+    "automatic_retry_performed": false,
+    "required_next_action": "separate user decision: authorize an additional exact retry and, if desired, a technical transport-watchdog amendment before further resume"
+  },
+  "boundaries": {
+    "oracle_access": 0,
+    "holdout_access": 0,
+    "metrics_calculated": false,
+    "closure_run": false
+  }
+}
