@@ -1,0 +1,36 @@
+schema_version: fourgraph.p1_v4_validation_look160_mini_batch4_provider_error_disposition.v1
+task: P1_V4_VALIDATION_LOOK160_MINI_BATCH4_PROVIDER_ERROR_DISPOSITION
+parents:
+  execution_plan:
+    path: data/manifests/p1_v4_validation_look160_mini_semantic_plan_v2.json
+    sha256: 10DDDC3899C4C053286FFE1FA17A4A6DDA909B3FA3F600611F1B96E6D01E1534
+  batch4_config:
+    path: configs/p1_v4_validation_look160_mini_semantic_batch4.yaml
+    sha256: 6FB6653E18C89C5EE5B954F200BBB08CF6FCE1691212CEA8172F93F1EE095D7F
+  batch4_execution_audit:
+    path: data/manifests/p1_v4_validation_look160_mini_batch4_execution_audit.json
+    sha256: 429F816EECF1E3C5DA35C81461F0C1977C023461A4606BC2380EBCDF3F0E2451
+  raw_responses:
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/raw_responses.jsonl
+    sha256: F548E9E873282E3481FB4A6903F91C81221FFFEDE0CA00B1A9319708F1A7B74A
+disposition:
+  exact_new_provider_error_count: 7
+  status: provider_error
+  raw_records_immutable: true
+  semantic_output_present: false
+  usage_present: false
+  retry_authorized: false
+  oracle_access: 0
+  holdout_access: 0
+expected_ids:
+  - P1V4SV006/ambiguous/P5
+  - P1V4SV064/full/P2
+  - P1V4SV268/full/P3
+  - P1V4SV313/partial/P3
+  - P1V4SV335/full/P2
+  - P1V4SV340/ambiguous/P6
+  - P1V4SV373/partial/P3
+outputs:
+  manifest: data/manifests/p1_v4_validation_look160_mini_batch4_provider_error_disposition.json
+  audit: data/manifests/p1_v4_validation_look160_mini_batch4_provider_error_disposition_audit.json
+  report: reports/p1_v4_validation_look160_mini_batch4_provider_error_disposition.md
