@@ -1,0 +1,34 @@
+{
+  "schema_version": "fourgraph.p1_v4_validation_look160_mini_batch23_partial_execution_audit.v1",
+  "status": "STOPPED_FOR_TRANSPORT_INCIDENT",
+  "authorized_new_calls": 960,
+  "new_calls_recorded": 184,
+  "total_calls_recorded": 664,
+  "remaining_in_authorized_slice": 776,
+  "next_pending_logical_id": "P1V4SV303/ambiguous/P5",
+  "provider_errors_recorded": 0,
+  "retries": 0,
+  "response_statuses_for_new_calls": {
+    "completed_valid": 164,
+    "completed_pair_invalid": 20
+  },
+  "pair_judgments_for_new_calls": {
+    "valid": 1231,
+    "invalid": 61
+  },
+  "provider_usage_for_new_calls": {
+    "input_tokens": 124893,
+    "output_tokens": 151808,
+    "reasoning_tokens": 104185,
+    "total_tokens": 276701
+  },
+  "token_hard_stop": 3000000,
+  "cache_hashes_after_stop": {
+    "raw_responses": "ABB0791BDD6FF7F4BC50B76965FD75E4E07A763A999D5E886BEE4774DF4A5D97",
+    "request_metadata": "BDFBA46D316398DB7E0255EFA16FC0BB2CEAB418FBB233D291F18A69E8AB63FE",
+    "token_ledger": "D674049964A10F62D9F9549D7133A1CEA4D8768EF70900A52482288AB687CED5"
+  },
+  "oracle_access": 0,
+  "holdout_access": 0,
+  "metrics_calculated": false
+}

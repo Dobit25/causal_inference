@@ -1,0 +1,39 @@
+{
+  "schema_version": "fourgraph.p1_v4_validation_look160_mini_batch23_transport_incident.v1",
+  "status": "STOPPED_TRANSPORT_HANG_NO_RESPONSE_NO_USAGE",
+  "observed_at": "2026-10-30T09:41:41+07:00",
+  "logical_id": "P1V4SV303/ambiguous/P5",
+  "scene_id": "P1V4SV303",
+  "variant": "ambiguous",
+  "prompt_id": "P5",
+  "model": "gpt-5.4-mini-2026-03-17",
+  "reasoning_effort": "medium",
+  "pair_count": 8,
+  "story_content_sha256": "C386E6B2D28BA0D950405772A28E3EB06D186F9F99E4A15599EFE19C5F2F1201",
+  "pair_pool_sha256": "5E45CEE08986F1186013A0A0E123CCAA005B6EB24B9779DF56AB1640E2122389",
+  "classification": "transport_request_hung_before_recordable_provider_response",
+  "evidence": {
+    "last_completed_logical_id": "P1V4SV303/ambiguous/P4",
+    "last_cache_write_at": "2026-10-30T09:11:27+07:00",
+    "hung_process_started_at": "2026-10-30T08:53:35+07:00",
+    "request_id_available": false,
+    "response_available": false,
+    "provider_usage_available": false,
+    "raw_cache_row_created": false,
+    "automatic_retry_performed": false
+  },
+  "disposition": {
+    "process_terminated_after_extended_no-output_wait": true,
+    "historical_664_responses_preserved": true,
+    "logical_call_remains_pending": true,
+    "retry_authorized": false,
+    "remaining_authorized_slice_not_executed": true,
+    "required_next_action": "separate explicit transport-retry authorization for this logical call, then resume the still-pending authorized IDs from cache"
+  },
+  "boundaries": {
+    "oracle_access": 0,
+    "holdout_access": 0,
+    "metrics_calculated": false,
+    "closure_run": false
+  }
+}
