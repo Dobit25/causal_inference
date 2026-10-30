@@ -1,0 +1,1 @@
+{"config_sha256":"F7DC864E3D5B93342BCEEEC47130784CC425C3BE038EA8B1F6BC21BDC3EA49DE","elapsed_ms":314,"no_api_calls":true,"parent_deadline_seconds":0.25,"schema_version":"fourgraph.p1_v4_external_watchdog_self_test.v1","status":"PASS","worker_exitcode":-15,"worker_sleep_seconds":2.0,"worker_terminated":true}
