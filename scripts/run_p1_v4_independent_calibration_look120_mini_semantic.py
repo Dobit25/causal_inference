@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import multiprocessing
 import os
 import sys
 import time
@@ -56,6 +57,88 @@ def load_key() -> str:
                 if value:
                     return value
     raise RuntimeError("OPENAI_API_KEY is missing")
+
+
+class ExternalWatchdogTimeout(RuntimeError):
+    """A request worker did not finish before the separately frozen deadline."""
+
+
+class ExternalWatchdogWorkerError(RuntimeError):
+    """The one-shot worker returned an API or worker error."""
+
+
+def _watchdog_worker(
+    send_connection: Any,
+    model: str,
+    prompt: str,
+    reasoning_effort: str,
+    schema: dict[str, Any],
+    attempt_timeout_seconds: float,
+) -> None:
+    """Perform exactly one provider attempt in an isolated child process."""
+    try:
+        client = OpenAI(api_key=load_key(), max_retries=0, timeout=attempt_timeout_seconds)
+        response = client.responses.create(
+            model=model,
+            input=prompt,
+            reasoning={"effort": reasoning_effort},
+            max_output_tokens=8192,
+            service_tier="default",
+            store=False,
+            text={"format": {"type": "json_schema", "name": "semantic_sentence_id_response_v1", "schema": schema, "strict": True}},
+        )
+        usage = response.usage
+        send_connection.send({
+            "ok": True,
+            "model": response.model,
+            "request_id": getattr(response, "_request_id", None),
+            "raw_text": response.output_text or "",
+            "input_tokens": int(usage.input_tokens),
+            "output_tokens": int(usage.output_tokens),
+            "reasoning_tokens": int(getattr(getattr(usage, "output_tokens_details", None), "reasoning_tokens", 0) or 0),
+            "total_tokens": getattr(usage, "total_tokens", None),
+        })
+    except BaseException as exc:
+        send_connection.send({"ok": False, "error_type": type(exc).__name__, "error_message": str(exc)[:1000]})
+    finally:
+        send_connection.close()
+
+
+def watchdog_response(job: dict[str, Any], schema: dict[str, Any], watchdog: dict[str, Any]) -> dict[str, Any]:
+    """Run one isolated API attempt; a parent-enforced deadline terminates only that worker."""
+    timeout = float(watchdog["worker_deadline_seconds"])
+    attempt_timeout = float(watchdog["sdk_attempt_timeout_seconds"])
+    if not 1 <= attempt_timeout < timeout <= 600:
+        raise RuntimeError("malformed external watchdog timeouts")
+    context = multiprocessing.get_context("spawn")
+    receive_connection, send_connection = context.Pipe(duplex=False)
+    worker = context.Process(
+        target=_watchdog_worker,
+        args=(send_connection, job["model"], job["prompt"], job["reasoning_effort"], schema, attempt_timeout),
+    )
+    worker.start()
+    send_connection.close()
+    if not receive_connection.poll(timeout):
+        worker.terminate()
+        worker.join(timeout=15)
+        if worker.is_alive():
+            worker.kill()
+            worker.join(timeout=15)
+        receive_connection.close()
+        raise ExternalWatchdogTimeout(f"worker exceeded {timeout:g}s deadline")
+    result = receive_connection.recv()
+    receive_connection.close()
+    worker.join(timeout=15)
+    if worker.is_alive():
+        worker.terminate()
+        worker.join(timeout=15)
+    if not isinstance(result, dict) or result.get("ok") is not True:
+        error_type = result.get("error_type", "ExternalWatchdogWorkerError") if isinstance(result, dict) else "ExternalWatchdogWorkerError"
+        error_message = result.get("error_message", "worker returned no result") if isinstance(result, dict) else "worker returned malformed result"
+        raise ExternalWatchdogWorkerError(f"{error_type}: {error_message}")
+    if not isinstance(result.get("total_tokens"), int):
+        raise RuntimeError("missing provider-reported total_tokens")
+    return result
 
 def io_paths(cfg: dict[str, Any]) -> dict[str, Path]:
     base = ROOT / cfg["runtime"]["cache_root"]
@@ -169,6 +252,9 @@ def run(execute: bool, config_path: Path = CONFIG, max_new_calls: int | None = N
             raise RuntimeError("pending IDs do not match the separately authorized execution slice")
     scheduled = pending[:cap]
     schema = json.loads((ROOT / cfg["semantic_contract"]["schema"]).read_text(encoding="utf-8"))
+    watchdog = cfg.get("runtime", {}).get("external_watchdog")
+    if watchdog is not None and (not isinstance(watchdog, dict) or watchdog.get("enabled") is not True):
+        raise RuntimeError("external_watchdog must be an enabled mapping when configured")
     client_kwargs: dict[str, Any] = {"api_key": load_key(), "max_retries": 0}
     request_timeout_seconds = cfg.get("runtime", {}).get("request_timeout_seconds")
     if request_timeout_seconds is not None:
@@ -186,18 +272,22 @@ def run(execute: bool, config_path: Path = CONFIG, max_new_calls: int | None = N
         started = time.perf_counter()
         last_started = started
         try:
-            response = client.responses.create(model=job["model"], input=job["prompt"], reasoning={"effort": job["reasoning_effort"]}, max_output_tokens=8192, service_tier="default", store=False, text={"format": {"type": "json_schema", "name": "semantic_sentence_id_response_v1", "schema": schema, "strict": True}}, metadata={"task": cfg["task"], "logical_id": job["logical_id"], "study_execution": "true"})
-            usage = response.usage
-            total = getattr(usage, "total_tokens", None)
-            if not isinstance(total, int):
-                raise RuntimeError("missing provider-reported total_tokens")
-            raw_text = response.output_text or ""
+            if watchdog is None:
+                response = client.responses.create(model=job["model"], input=job["prompt"], reasoning={"effort": job["reasoning_effort"]}, max_output_tokens=8192, service_tier="default", store=False, text={"format": {"type": "json_schema", "name": "semantic_sentence_id_response_v1", "schema": schema, "strict": True}}, metadata={"task": cfg["task"], "logical_id": job["logical_id"], "study_execution": "true"})
+                usage = response.usage
+                total = getattr(usage, "total_tokens", None)
+                if not isinstance(total, int):
+                    raise RuntimeError("missing provider-reported total_tokens")
+                response_fields = {"model": response.model, "request_id": getattr(response, "_request_id", None), "raw_text": response.output_text or "", "input_tokens": int(usage.input_tokens), "output_tokens": int(usage.output_tokens), "reasoning_tokens": int(getattr(getattr(usage, "output_tokens_details", None), "reasoning_tokens", 0) or 0), "total_tokens": total}
+            else:
+                response_fields = watchdog_response(job, schema, watchdog)
+            raw_text = response_fields["raw_text"]
             try:
                 validation = validate_response_by_pair(json.loads(raw_text), job["pairs"], job["story"])
                 status = "completed_valid" if validation["response_valid"] else "completed_pair_invalid"
             except Exception as exc:
                 validation = {"response_valid": False, "pairs": [], "validation_exception": f"{type(exc).__name__}: {exc}"}; status = "completed_schema_invalid"
-            record = {"logical_id": job["logical_id"], "status": status, "scene_id": job["study_id"], "variant": job["variant"], "prompt_id": job["prompt_id"], "model": response.model, "reasoning_effort": job["reasoning_effort"], "request_id": getattr(response, "_request_id", None), "input_tokens": int(usage.input_tokens), "output_tokens": int(usage.output_tokens), "reasoning_tokens": int(getattr(getattr(usage, "output_tokens_details", None), "reasoning_tokens", 0) or 0), "total_tokens": total, "latency_ms": round((time.perf_counter()-started)*1000), "response_sha256": sha_text(raw_text), "story_content_sha256": job["story_content_sha256"], "pair_pool_sha256": job["pair_pool_sha256"], "prompt_render_sha256": job["prompt_render_sha256"], "raw_text": raw_text, "response_valid": validation["response_valid"], "valid_pair_count": sum(row.get("pair_valid") is True for row in validation.get("pairs", [])), "invalid_pair_count": sum(row.get("pair_valid") is False for row in validation.get("pairs", []))}
+            record = {"logical_id": job["logical_id"], "status": status, "scene_id": job["study_id"], "variant": job["variant"], "prompt_id": job["prompt_id"], "model": response_fields["model"], "reasoning_effort": job["reasoning_effort"], "request_id": response_fields["request_id"], "input_tokens": response_fields["input_tokens"], "output_tokens": response_fields["output_tokens"], "reasoning_tokens": response_fields["reasoning_tokens"], "total_tokens": response_fields["total_tokens"], "latency_ms": round((time.perf_counter()-started)*1000), "response_sha256": sha_text(raw_text), "story_content_sha256": job["story_content_sha256"], "pair_pool_sha256": job["pair_pool_sha256"], "prompt_render_sha256": job["prompt_render_sha256"], "raw_text": raw_text, "response_valid": validation["response_valid"], "valid_pair_count": sum(row.get("pair_valid") is True for row in validation.get("pairs", [])), "invalid_pair_count": sum(row.get("pair_valid") is False for row in validation.get("pairs", [])), "external_watchdog": watchdog is not None}
         except Exception as exc:
             record = {"logical_id": job["logical_id"], "status": "provider_error", "scene_id": job["study_id"], "variant": job["variant"], "prompt_id": job["prompt_id"], "model": job["model"], "reasoning_effort": job["reasoning_effort"], "error_type": type(exc).__name__, "error_message": str(exc)[:1000], "latency_ms": round((time.perf_counter()-started)*1000), "story_content_sha256": job["story_content_sha256"], "pair_pool_sha256": job["pair_pool_sha256"], "prompt_render_sha256": job["prompt_render_sha256"]}
         append(io["raw"], record); append(io["metadata"], {key: record.get(key) for key in ("logical_id", "status", "scene_id", "variant", "prompt_id", "model", "request_id", "input_tokens", "output_tokens", "reasoning_tokens", "total_tokens", "error_type")})
