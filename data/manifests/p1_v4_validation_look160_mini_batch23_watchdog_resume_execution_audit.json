@@ -1,0 +1,53 @@
+{
+  "schema_version": "fourgraph.p1_v4_validation_look160_mini_batch23_watchdog_resume_execution_audit.v1",
+  "status": "COMPLETE_SCOPE_WITH_PROVIDER_INCIDENTS",
+  "authorized_scope": {
+    "successful_second_retry": "P1V4SV475/ambiguous/P2",
+    "new_logical_ids": 563,
+    "terminal_records_written": 563,
+    "automatic_retries": 0
+  },
+  "cache": {
+    "planned_logical_calls": 2640,
+    "terminal_records": 1440,
+    "not_yet_executed": 1200,
+    "raw_responses_sha256": "87400D8B7C0381DB941D2F5E3A7AECB09606E72DC6AF343533CA93FAC3EEA51F",
+    "request_metadata_sha256": "16D55B4F1D8F52C8D75A3864A60B7E3A007200998BA255BE3589B518342EC1C9",
+    "token_ledger_sha256": "46DB5E6F676907792EEF9D34B1B5D2FEC35D12EC4D950F5BB325BDA9EFEB160E"
+  },
+  "response_statuses_all_recorded": {
+    "completed_valid": 1245,
+    "completed_pair_invalid": 189,
+    "provider_error": 6
+  },
+  "pair_judgments_all_recorded": {
+    "valid": 9160,
+    "invalid": 715
+  },
+  "provider_usage_all_recorded": {
+    "input_tokens": 966458,
+    "output_tokens": 1169841,
+    "reasoning_tokens": 804678,
+    "total_tokens": 2136299
+  },
+  "token_window": {
+    "used": 1427176,
+    "hard_stop": 3000000
+  },
+  "provider_incidents": [
+    {"logical_id": "P1V4SV206/full/P3", "error_type": "ExternalWatchdogWorkerError", "provider_error": "APIConnectionError", "latency_ms": 24512},
+    {"logical_id": "P1V4SV200/ambiguous/P4", "error_type": "ExternalWatchdogWorkerError", "provider_error": "InternalServerError_520", "latency_ms": 8203},
+    {"logical_id": "P1V4SV451/full/P2", "error_type": "ExternalWatchdogWorkerError", "provider_error": "APIConnectionError", "latency_ms": 21769},
+    {"logical_id": "P1V4SV081/full/P1", "error_type": "ExternalWatchdogWorkerError", "provider_error": "APIConnectionError", "latency_ms": 21458},
+    {"logical_id": "P1V4SV199/partial/P6", "error_type": "ExternalWatchdogWorkerError", "provider_error": "APIConnectionError", "latency_ms": 22003},
+    {"logical_id": "P1V4SV079/partial/P6", "error_type": "ExternalWatchdogWorkerError", "provider_error": "APIConnectionError", "latency_ms": 21890}
+  ],
+  "boundaries": {
+    "oracle_access": 0,
+    "holdout_access": 0,
+    "metric_calculation": false,
+    "closure": false,
+    "statistical_reruns": 0
+  },
+  "required_next_action": "incident disposition before any later semantic execution, response freeze, re-score, Oracle scoring, or metric calculation"
+}
