@@ -1,0 +1,62 @@
+schema_version: fourgraph.p1_v4_validation_look160_mini_remaining720.v1
+task: P1_V4_VALIDATION_LOOK160_MINI_REMAINING_720_EXECUTION
+parents:
+  execution_plan:
+    path: data/manifests/p1_v4_validation_look160_mini_semantic_plan_v2.json
+    sha256: 10DDDC3899C4C053286FFE1FA17A4A6DDA909B3FA3F600611F1B96E6D01E1534
+  provider_preflight:
+    path: data/manifests/p1_v4_validation_look160_mini_provider_preflight.json
+    sha256: D5B4C39D9EED19D2BDB09FF7D77E00CF80CA3A84BCE10DCEDE26A63DAE17196B
+  raw_responses:
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/raw_responses.jsonl
+    sha256: F548E9E873282E3481FB4A6903F91C81221FFFEDE0CA00B1A9319708F1A7B74A
+  merged_retry_overlay:
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/all_retry_overlays.jsonl
+    sha256: 34978A5227D1405AB926816C41928062E2BC2A931E3B66C71A208EA8CFE52B83
+semantic_contract:
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+  truncation: disabled
+  automatic_prompt_chunking: forbidden
+scope:
+  scenes: 160
+  logical_calls: 2640
+  authorized_new_calls: 720
+runtime:
+  canonical_environment: cau
+  concurrency: 1
+  cache_root: results/raw/p1_v4_independent_validation/look160/mini_semantic
+  batch_size: 480
+  minimum_request_interval_seconds: 3.2
+  transport_retry_overlay:
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/all_retry_overlays.jsonl
+    sha256: 34978A5227D1405AB926816C41928062E2BC2A931E3B66C71A208EA8CFE52B83
+  external_watchdog:
+    enabled: true
+    worker_deadline_seconds: 180
+    sdk_attempt_timeout_seconds: 165
+token_control:
+  source: provider_reported_usage.total_tokens
+  hard_stop_tokens: 3000000
+  daily_window_hard_stop_tokens: 3000000
+  reset_time: '07:00'
+  timezone: Asia/Ho_Chi_Minh
+  check_frequency: after_each_call_and_batch_summary
+  batch_boundary_stop_rule: stop_after_completed_batch_if_window_total_reaches_or_exceeds_limit
+  missing_usage_action: fail_closed_and_halt
+spend_control:
+  attested_current_spend_usd: 0.27
+  project_hard_stop_usd: 18.0
+  hard_limit_enforced: true
+boundary:
+  oracle_access: false
+  holdout_access: false
+  metric_calculation: false
+  closure: forbidden
+outputs:
+  live_authorization_checkpoint: data/manifests/p1_v4_validation_look160_mini_remaining720_authorization_checkpoint.json
+  live_authorization: data/manifests/p1_v4_validation_look160_mini_remaining720_authorization.json
+  live_authorization_audit: data/manifests/p1_v4_validation_look160_mini_remaining720_authorization_audit.json
+  runner_audit: data/manifests/p1_v4_validation_look160_mini_remaining720_execution_audit.json
