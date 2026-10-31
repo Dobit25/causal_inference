@@ -1,0 +1,26 @@
+{
+  "schema_version": "fourgraph.p1_v4_validation_look160_mini_remaining720_pause_audit.v1",
+  "status": "PAUSED_BY_USER_BEFORE_SCOPE_COMPLETION",
+  "reason": "explicit_user_request_to_stop_background_execution",
+  "authorized_scope": 720,
+  "new_calls_recorded_before_pause": 307,
+  "remaining_authorized_calls": 413,
+  "total_cache_records": 2227,
+  "raw_statuses_in_new_slice": {
+    "completed_valid": 268,
+    "completed_pair_invalid": 33,
+    "provider_error": 6
+  },
+  "raw_responses_sha256_at_pause": "2C263D4D6231D699710BBD7D04157A33CCAA2FED343CCBDA132B8A5D29EAA8A1",
+  "token_ledger_sha256_at_pause": "9312BFA60EF789E6FD9E00AFEB6A9C5E51AD5A1ED41BDE56C9E3F2FB79FF3D0E",
+  "token_ledger_records": 2209,
+  "provider_total_tokens_all_ledger_records": 3308408,
+  "last_recorded_logical_id": "P1V4SV431/partial/P1",
+  "runner_final_audit_written": false,
+  "api_calls_after_pause": 0,
+  "oracle_access": 0,
+  "holdout_access": 0,
+  "metric_calculation": false,
+  "response_freeze": false,
+  "resume_policy": "resume only after explicit user authorization; use cache/idempotency and do not rerun recorded logical IDs"
+}
