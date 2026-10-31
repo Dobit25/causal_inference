@@ -1,0 +1,34 @@
+schema_version: fourgraph.p1_v4_validation_look160_mini_effective_overlay_reconciliation.v1
+task: P1_V4_VALIDATION_LOOK160_MINI_EFFECTIVE_OVERLAY_RECONCILIATION
+scope:
+  planned_logical_calls: 2640
+  terminal_raw_records: 1920
+  require_exact_raw_records: true
+  oracle_access: false
+  holdout_access: false
+  metric_calculation: false
+  api_calls: 0
+parents:
+  raw_responses: results/raw/p1_v4_independent_validation/look160/mini_semantic/raw_responses.jsonl
+  raw_responses_sha256: F548E9E873282E3481FB4A6903F91C81221FFFEDE0CA00B1A9319708F1A7B74A
+overlays:
+  - name: historical_provider_incident_overlay
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/provider_incident_retry_overlay.jsonl
+    sha256: 86647D905722221C9706234F8B4969B87729DC75B6BFA4AA73218462F0192C46
+  - name: batch4_provider_retry_overlay
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/batch4_provider_retry_overlay.jsonl
+    sha256: 8DB9B7AA202E12CCB269A7838C088B5766E30A6F759C4C2C39A47BF9E43453CF
+  - name: sv064_provider_retry_overlay
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/sv064_provider_retry_overlay.jsonl
+    sha256: F508B7FBBE9A68917F7B5888E833E16680AAF9372EBFA4E811696279F193C281
+policy:
+  raw_records_immutable: true
+  overlay_only_for_raw_provider_error: true
+  duplicate_logical_id: fail_closed
+  unexpected_overlay_id: fail_closed
+  unresolved_provider_error: fail_closed
+  completed_pair_invalid_is_terminal_response: true
+outputs:
+  effective_responses: data/manifests/p1_v4_validation_look160_mini_effective_responses.jsonl
+  reconciliation_audit: data/manifests/p1_v4_validation_look160_mini_effective_overlay_reconciliation_audit.json
+  report: reports/p1_v4_validation_look160_mini_effective_overlay_reconciliation.md
