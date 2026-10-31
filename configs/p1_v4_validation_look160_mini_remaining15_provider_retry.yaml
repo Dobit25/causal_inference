@@ -1,0 +1,60 @@
+schema_version: fourgraph.p1_v4_validation_look160_mini_remaining15_provider_retry.v1
+task: P1_V4_VALIDATION_LOOK160_MINI_REMAINING15_PROVIDER_RETRY
+parents:
+  execution_plan:
+    path: data/manifests/p1_v4_validation_look160_mini_semantic_plan_v2.json
+    sha256: 10DDDC3899C4C053286FFE1FA17A4A6DDA909B3FA3F600611F1B96E6D01E1534
+  raw_responses:
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/raw_responses.jsonl
+    sha256: 294FDB83E771EC4CAC556E86A6426CE8434CB051001FFFAAC1C6F044CC495725
+retry_scope:
+  maximum_attempts_per_logical_id: 1
+  overwrite_original_error: false
+  logical_ids:
+    - P1V4SV066/ambiguous/P4
+    - P1V4SV031/full/P1
+    - P1V4SV031/partial/P1
+    - P1V4SV208/partial/P6
+    - P1V4SV208/ambiguous/P3
+    - P1V4SV391/partial/P3
+    - P1V4SV141/full/P5
+    - P1V4SV239/partial/P4
+    - P1V4SV286/partial/P6
+    - P1V4SV338/full/P6
+    - P1V4SV230/partial/P6
+    - P1V4SV389/partial/P6
+    - P1V4SV025/partial/P1
+    - P1V4SV025/partial/P2
+    - P1V4SV025/partial/P4
+semantic_contract:
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+scope:
+  logical_calls: 2640
+runtime:
+  cache_root: results/raw/p1_v4_independent_validation/look160/mini_semantic
+  external_watchdog:
+    enabled: true
+    worker_deadline_seconds: 180
+    sdk_attempt_timeout_seconds: 165
+  retry_overlay: results/raw/p1_v4_independent_validation/look160/mini_semantic/resume413_provider_retry_overlay.jsonl
+  retry_attempts: results/raw/p1_v4_independent_validation/look160/mini_semantic/resume413_provider_retry_attempts.jsonl
+  retry_token_ledger: results/raw/p1_v4_independent_validation/look160/mini_semantic/resume413_provider_retry_token_ledger.jsonl
+token_control:
+  hard_stop_tokens: 3000000
+spend_control:
+  project_hard_stop_usd: 18.0
+  hard_limit_enforced: true
+boundary:
+  oracle_access: false
+  holdout_access: false
+  metrics_calculated: false
+outputs:
+  disposition: data/manifests/p1_v4_validation_look160_mini_remaining15_provider_error_disposition.json
+  disposition_audit: data/manifests/p1_v4_validation_look160_mini_remaining15_provider_error_disposition_audit.json
+  authorization_checkpoint: data/manifests/p1_v4_validation_look160_mini_remaining15_provider_retry_authorization_checkpoint.json
+  authorization: data/manifests/p1_v4_validation_look160_mini_remaining15_provider_retry_authorization.json
+  authorization_audit: data/manifests/p1_v4_validation_look160_mini_remaining15_provider_retry_authorization_audit.json
+  execution_audit: data/manifests/p1_v4_validation_look160_mini_remaining15_provider_retry_execution_audit.json
+  report: reports/p1_v4_validation_look160_mini_remaining15_provider_retry.md
