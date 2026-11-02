@@ -1,0 +1,71 @@
+schema_version: fourgraph.p1_v4_validation_look160_response_freeze_rescore_config.v1
+task: P1_V4_VALIDATION_LOOK160_RESPONSE_FREEZE_AND_RESCORE_OFFLINE
+parents:
+  frozen_policy:
+    path: data/manifests/p1_v4_post_supplemental_policy_validation_freeze.json
+    sha256: BC4E0D568D436FC2B8D270BCEE3FC68C2D42A8718B94E5ABF4302F1324CD95FC
+  execution_plan:
+    path: data/manifests/p1_v4_validation_look160_mini_semantic_plan_v2.json
+    sha256: 10DDDC3899C4C053286FFE1FA17A4A6DDA909B3FA3F600611F1B96E6D01E1534
+  raw_responses:
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/raw_responses.jsonl
+    sha256: 294FDB83E771EC4CAC556E86A6426CE8434CB051001FFFAAC1C6F044CC495725
+  request_metadata:
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/request_metadata.jsonl
+    sha256: C28494B0A223169C690C9040E04118A606EDA473AD3B5DC6E1F5C74179F7C296
+  base_token_ledger:
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/token_ledger.jsonl
+    sha256: CB9FC77A9FE730876D9AC5E9859ACDF7D1F0C4B3D2B8B047D058F5A8D9D92E74
+  production_validator:
+    path: src/fourgraph/semantic_sentence_id_contract.py
+    sha256: 6F2B3F84EBD5CBD95FAFFD11E9C78253BC39F0C3BD26BB4E9C52B679602F8BD9
+  reference_validator:
+    path: src/fourgraph/semantic_sentence_id_contract_reference.py
+    sha256: 59C35B9507DE7A76A98848669C0AF0859F595D03FFC50284A6A6E243728727ED
+  job_builder:
+    path: scripts/run_p1_v4_independent_calibration_look120_mini_semantic.py
+    sha256: 5122CFC9A056B06F7001B00CACB10891546E25828CB59C8E9CCBD20BC4276067
+overlays:
+  - name: historical_provider_incident
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/provider_incident_retry_overlay.jsonl
+    sha256: 86647D905722221C9706234F8B4969B87729DC75B6BFA4AA73218462F0192C46
+    token_ledger: results/raw/p1_v4_independent_validation/look160/mini_semantic/provider_incident_retry_token_ledger.jsonl
+    token_ledger_sha256: 184092BA5412B977599447EE4A2E9967BB90EB62003442CE99A5312B17AE3322
+  - name: batch4_provider_retry
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/batch4_provider_retry_overlay.jsonl
+    sha256: 8DB9B7AA202E12CCB269A7838C088B5766E30A6F759C4C2C39A47BF9E43453CF
+    token_ledger: results/raw/p1_v4_independent_validation/look160/mini_semantic/batch4_provider_retry_token_ledger.jsonl
+    token_ledger_sha256: 00AA63593C9C095B39E0ABFD221CC9BC67D91141638D15877CEAC28BE2898479
+  - name: sv064_provider_retry
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/sv064_provider_retry_overlay.jsonl
+    sha256: F508B7FBBE9A68917F7B5888E833E16680AAF9372EBFA4E811696279F193C281
+    token_ledger: results/raw/p1_v4_independent_validation/look160/mini_semantic/sv064_provider_retry_token_ledger.jsonl
+    token_ledger_sha256: B773E99797067161B15EB5CB6808EE9F8ED33F282C53FAC2392443C33E5C5B3C
+  - name: resume413_provider_retry
+    path: results/raw/p1_v4_independent_validation/look160/mini_semantic/resume413_provider_retry_overlay_v2.jsonl
+    sha256: DD2BD6AFDBBD5ACD0486212BC8606B7838D37792ACC86915A581B8788590BFDB
+    token_ledger: results/raw/p1_v4_independent_validation/look160/mini_semantic/resume413_provider_retry_token_ledger_v2.jsonl
+    token_ledger_sha256: AED867A3DC8FAB5167E07BE3A9841F0C3AE184F08957DAF423E79E509E38A492
+semantic_contract:
+  model: gpt-5.4-mini-2026-03-17
+  reasoning_effort: medium
+  prompt: prompts/p1_semantic_sentence_ids_v1.md
+  schema: schemas/semantic_sentence_id_response_v1.schema.json
+scope:
+  expected_scenes: 160
+  expected_logical_calls: 2640
+  expected_raw_provider_errors: 28
+  expected_overlay_replacements: 28
+  expected_pair_records: 18252
+  expected_six_vote_groups: 3042
+  variants: [full, partial, ambiguous]
+  prompts: [P1, P2, P3, P4, P5, P6]
+  no_oracle: true
+  no_holdout: true
+outputs:
+  effective_responses: data/manifests/p1_v4_validation_look160_effective_responses.jsonl
+  response_freeze: data/manifests/p1_v4_validation_look160_response_freeze.json
+  pair_records: data/manifests/p1_v4_validation_look160_pair_rescore.jsonl
+  six_vote_groups: data/manifests/p1_v4_validation_look160_six_vote_groups.jsonl
+  audit: data/manifests/p1_v4_validation_look160_response_freeze_rescore_audit.json
+  report: reports/p1_v4_validation_look160_response_freeze_rescore.md
